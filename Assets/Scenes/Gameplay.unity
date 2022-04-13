@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 145199177}
   - component: {fileID: 145199176}
-  - component: {fileID: 145199178}
   - component: {fileID: 145199179}
   - component: {fileID: 145199180}
   - component: {fileID: 145199181}
@@ -209,22 +208,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &145199178
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145199175}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0010486345, y: -0.010136883}
-  m_Size: {x: 0.12434612, y: 0.16489363}
-  m_Direction: 0
 --- !u!114 &145199179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +235,13 @@ MonoBehaviour:
   coyoteTimeThreshold: 0.1
   jumpBuffer: 0.1
   jumpEarlyGravityTreshold: 4
+  characterBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.6, z: 0}
   timeLeftGrounded: 0
+  detectorCount: 3
+  rayLenght: 0.1
+  rayBuffer: 0.1
 --- !u!114 &145199180
 MonoBehaviour:
   m_ObjectHideFlags: 0

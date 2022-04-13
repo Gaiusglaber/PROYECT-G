@@ -1,9 +1,24 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ProjectG.Player.Controller
 {
+    public struct RayRange
+    {
+        public readonly Vector2 Start;
+        public readonly Vector2 End;
+        public readonly Vector2 Dir;
+
+        public RayRange(float x1, float y1, float x2, float y2, Vector2 direction)
+        {
+            Start = new Vector2(x1, y1);
+            End = new Vector2(x2, y2);
+            Dir = direction;
+        }
+    }
+
     public class PlayerController : MonoBehaviour
     {
         #region EXPOSED_FIELDS
@@ -21,11 +36,15 @@ namespace ProjectG.Player.Controller
         [Header("---JUMP---")]
         [SerializeField] private float jumpHeight = 0;
         [SerializeField] private float jumpApexThreshold = 0;
-        [SerializeField] private float coyoteTimeThreshold= 0;
-        [SerializeField] private float jumpBuffer= 0;
+        [SerializeField] private float coyoteTimeThreshold = 0;
+        [SerializeField] private float jumpBuffer = 0;
         [SerializeField] private float jumpEarlyGravityTreshold = 4;
         [Header("---COLLISION---")]
+        [SerializeField] private Bounds characterBounds = default;
         [SerializeField] private float timeLeftGrounded = 0;
+        [SerializeField] private int detectorCount = 3;
+        [SerializeField] private float rayLenght = 0.1f;
+        [SerializeField, Range(0.1f, 0.3f)] private float rayBuffer = 0.1f;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -45,6 +64,12 @@ namespace ProjectG.Player.Controller
         private float horizontalSpeed = 0;
         private float verticalSpeed = 0;
         private float apexBonus = 2;
+        private int freeColliderInteractions = 10;
+
+        private RayRange upRay = default;
+        private RayRange downRay = default;
+        private RayRange leftRay = default;
+        private RayRange rightRay = default;
         #endregion
 
         #region PROPERTIES
@@ -92,48 +117,58 @@ namespace ProjectG.Player.Controller
         #endregion
 
         #region PRIVATE_METHODS
-        private void GroundCollision()
+        private void CalculateRayRanged()
         {
-            Ray2D rayDown = new Ray2D(transform.position, -transform.transform.up);
-            Debug.DrawRay(rayDown.origin, rayDown.direction * .65f, Color.red);
-            bool groundCheck = Physics2D.Raycast(rayDown.origin, rayDown.direction, .65f, groundLayer.value);
+            Bounds pjBounds = new Bounds(transform.position + characterBounds.center, characterBounds.size);
 
-            if(onGround && !groundCheck)
+            downRay = new RayRange(pjBounds.min.x + rayBuffer, pjBounds.min.y, pjBounds.max.x - rayBuffer, pjBounds.min.y, Vector2.down);
+            upRay = new RayRange(pjBounds.min.x + rayBuffer, pjBounds.max.y, pjBounds.max.x - rayBuffer, pjBounds.max.y, Vector2.up);
+            leftRay = new RayRange(pjBounds.min.x, pjBounds.min.y + rayBuffer, pjBounds.min.x, pjBounds.max.y - rayBuffer, Vector2.left);
+            rightRay = new RayRange(pjBounds.max.x, pjBounds.min.y + rayBuffer, pjBounds.max.x, pjBounds.max.y - rayBuffer, Vector2.right);
+        }
+        private void CheckCollisions()
+        {
+            CalculateRayRanged();
+
+            bool groundCheck = RunDetection(downRay);
+            if (onGround && !groundCheck)
             {
                 timeLeftGrounded = Time.time;
             }
-            else if(!onGround && groundCheck)
+            else if (!onGround && groundCheck)
             {
                 coyoteUsable = true;
                 LandingFrame = true;
             }
 
-
             onGround = groundCheck;
+
+            colTop = RunDetection(upRay);
+            colRight = RunDetection(rightRay);
+            colLeft = RunDetection(leftRay);
+
+            bool RunDetection(RayRange range)
+            {
+                return EvaluateRayPositions(range).Any(point => Physics2D.Raycast(point, range.Dir, rayLenght, groundLayer));
+            }
         }
-        private void CheckCollisions()
+
+        private IEnumerable<Vector2> EvaluateRayPositions(RayRange range)
         {
-            GroundCollision();
-
-            Ray2D rayLeft = new Ray2D(transform.position, -transform.transform.right);
-            Ray2D rayRight = new Ray2D(transform.position, transform.transform.right);
-            Ray2D rayTop = new Ray2D(transform.position, transform.transform.up);
-
-            Debug.DrawRay(rayLeft.origin, rayLeft.direction * .65f, Color.blue);
-            Debug.DrawRay(rayRight.origin, rayRight.direction * .65f, Color.yellow);
-            Debug.DrawRay(rayTop.origin, rayTop.direction * .65f, Color.green);
-
-            colLeft = Physics2D.Raycast(rayLeft.origin, rayLeft.direction, .65f, groundLayer.value);
-            colRight = Physics2D.Raycast(rayRight.origin, rayRight.direction, .65f, groundLayer.value);
-            colTop = Physics2D.Raycast(rayTop.origin, rayTop.direction, .65f, groundLayer.value);
+            for (int i = 0; i < detectorCount; i++)
+            {
+                float t = (float)i / (detectorCount - 1);
+                yield return Vector2.Lerp(range.Start, range.End, t);
+            }
         }
+
         private void CalculateHorizontalMove()
         {
-            if(Input.GetAxisRaw("Horizontal") != 0)
+            if (Input.GetAxisRaw("Horizontal") != 0)
             {
                 horizontalSpeed += Input.GetAxisRaw("Horizontal") * acceleration * Time.deltaTime;
 
-                horizontalSpeed = Mathf.Clamp(horizontalSpeed,-movementClamp, movementClamp);
+                horizontalSpeed = Mathf.Clamp(horizontalSpeed, -movementClamp, movementClamp);
 
                 float apexBonus = Mathf.Sign(Input.GetAxisRaw("Horizontal")) * this.apexBonus * apexPoint;
                 horizontalSpeed += apexBonus * Time.deltaTime;
@@ -143,7 +178,7 @@ namespace ProjectG.Player.Controller
                 horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, deAcceleration * Time.deltaTime);
             }
 
-            if(horizontalSpeed > 0 && colRight || horizontalSpeed < 0 && colLeft)
+            if (horizontalSpeed > 0 && colRight || horizontalSpeed < 0 && colLeft)
             {
                 horizontalSpeed = 0;
             }
@@ -158,7 +193,7 @@ namespace ProjectG.Player.Controller
 
             float newFallSpeed = 0;
 
-            if(endedJumpEarly && verticalSpeed > 0)
+            if (endedJumpEarly && verticalSpeed > 0)
             {
                 newFallSpeed = fallSpeed * jumpEarlyGravityTreshold;
             }
@@ -169,14 +204,14 @@ namespace ProjectG.Player.Controller
 
             verticalSpeed -= newFallSpeed * Time.deltaTime;
 
-            if(verticalSpeed < fallClamp)
+            if (verticalSpeed < fallClamp)
             {
                 verticalSpeed = fallClamp;
             }
         }
         private void CalculateApexJump()
         {
-            if(!onGround)
+            if (!onGround)
             {
                 apexPoint = Mathf.InverseLerp(jumpApexThreshold, 0, Mathf.Abs(Velocity.y));
                 fallSpeed = Mathf.Lerp(minFallSpeed, maxFallSpeed, apexPoint);
@@ -188,14 +223,16 @@ namespace ProjectG.Player.Controller
         }
         private void CalculateJump()
         {
-            if(Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))
             {
                 lastJumpPressed = Time.time;
             }
 
-            if(Input.GetButtonDown("Jump") && CanUseCoyote || BufferedJump)
+            if (Input.GetButtonDown("Jump") && CanUseCoyote || BufferedJump)
             {
+                //Jump instantaneo
                 verticalSpeed = jumpHeight;
+
                 endedJumpEarly = false;
                 coyoteUsable = false;
                 timeLeftGrounded = float.MinValue;
@@ -206,12 +243,13 @@ namespace ProjectG.Player.Controller
                 JumpingFrame = false;
             }
 
-            if(!onGround && Input.GetButtonUp("Jump") && !endedJumpEarly && Velocity.y > 0)
+            //Chequea si el jump corto antes para aplicar down acceleration
+            if (!onGround && Input.GetButtonUp("Jump") && !endedJumpEarly && Velocity.y > 0)
             {
                 endedJumpEarly = true;
             }
 
-            if(colTop)
+            if (colTop)
             {
                 if (verticalSpeed > 0)
                     verticalSpeed = 0;
@@ -219,14 +257,62 @@ namespace ProjectG.Player.Controller
         }
         private void MovePlayer()
         {
+            Vector3 position = transform.position + characterBounds.center;
             RawMovement = new Vector3(horizontalSpeed, verticalSpeed);
             Vector3 movement = RawMovement * Time.deltaTime;
-            transform.position += movement;
+            Vector3 furthestPoint = position + movement;
+
+            //Chequeo mas adelante si hay alguna cosa a que colisionar
+            Collider2D hit = Physics2D.OverlapBox(furthestPoint, characterBounds.size, 0, groundLayer);
+            if (hit == null)
+            {
+                transform.position += movement;
+                return;
+            }
+
+            Vector2 posToMove = transform.position;
+
+            //Ta feo pero esto hace que si chocas en la esquina de algun lado se suba auto al lugar del hit en esa direccion.
+            for (int i = 1; i < freeColliderInteractions; i++)
+            {
+                float t = (float)i / freeColliderInteractions;
+                Vector2 posToTry = Vector2.Lerp(position, furthestPoint, t);
+
+                if (Physics2D.OverlapBox(posToTry, characterBounds.size, 0, groundLayer))
+                {
+                    transform.position = posToMove;
+
+                    if (i == 1)
+                    {
+                        if (verticalSpeed < 0)
+                        {
+                            verticalSpeed = 0;
+                        }
+                        Vector3 direction = transform.position - hit.transform.position;
+                        transform.position += direction.normalized * movement.magnitude;
+                    }
+
+                    return;
+                }
+
+                posToMove = posToTry;
+            }
         }
         #endregion
 
         #region PUBLIC_METHODS
 
+        #endregion
+
+        #region CORUTINES
+
+        #endregion
+
+        #region ON_GIZMOS
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireCube(transform.position + characterBounds.center, characterBounds.size);
+        }
         #endregion
     }
 }
