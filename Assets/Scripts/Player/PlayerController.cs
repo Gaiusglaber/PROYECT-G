@@ -24,6 +24,7 @@ namespace ProjectG.Player.Controller
         #region EXPOSED_FIELDS
         [Header("---FOR TEST---")]
         [SerializeField] private bool controllerEnable = false;
+        [SerializeField] private float timeUntilActivatePlayer = 0;
         [SerializeField] private LayerMask groundLayer = default;
         [Header("---MOVEMENT---")]
         [SerializeField] private float acceleration = 0;
@@ -34,6 +35,7 @@ namespace ProjectG.Player.Controller
         [SerializeField] private float minFallSpeed = 0;
         [SerializeField] private float maxFallSpeed = 0;
         [Header("---JUMP---")]
+        [SerializeField] private bool hollowKnightJump = false;
         [SerializeField] private float jumpHeight = 0;
         [SerializeField] private float jumpApexThreshold = 0;
         [SerializeField] private float coyoteTimeThreshold = 0;
@@ -96,6 +98,12 @@ namespace ProjectG.Player.Controller
         #endregion
 
         #region UNITY_CALLS
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(timeUntilActivatePlayer);
+
+            controllerEnable = true;
+        }
         private void Update()
         {
             if (!controllerEnable)
@@ -175,12 +183,13 @@ namespace ProjectG.Player.Controller
             }
             else
             {
-                horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, deAcceleration * Time.deltaTime);
+                horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, (deAcceleration / 6f) * Time.deltaTime);
             }
 
             if (horizontalSpeed > 0 && colRight || horizontalSpeed < 0 && colLeft)
             {
                 horizontalSpeed = 0;
+                Debug.Log("HOR 0");
             }
         }
         private void CalculteGravity()
@@ -192,10 +201,16 @@ namespace ProjectG.Player.Controller
             }
 
             float newFallSpeed = 0;
-
-            if (endedJumpEarly && verticalSpeed > 0)
+            if(hollowKnightJump)
             {
-                newFallSpeed = fallSpeed * jumpEarlyGravityTreshold;
+                if (endedJumpEarly && verticalSpeed > 0)
+                {
+                    newFallSpeed = fallSpeed * jumpEarlyGravityTreshold;
+                }
+                else
+                {
+                    newFallSpeed = fallSpeed;
+                }
             }
             else
             {
