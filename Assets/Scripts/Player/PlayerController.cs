@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectG.Player.Controller
+namespace ProyectG.Player.Controller
 {
     public struct RayRange
     {
@@ -94,33 +94,6 @@ namespace ProjectG.Player.Controller
             {
                 return (onGround && lastJumpPressed + jumpBuffer > Time.time);
             }
-        }
-        #endregion
-
-        #region UNITY_CALLS
-        private IEnumerator Start()
-        {
-            yield return new WaitForSeconds(timeUntilActivatePlayer);
-
-            controllerEnable = true;
-        }
-        private void Update()
-        {
-            if (!controllerEnable)
-                return;
-
-            Velocity = (transform.position - lastPosition) / Time.deltaTime;
-            lastPosition = transform.position;
-
-            CheckCollisions();
-
-            CalculateApexJump();
-            CalculteGravity();
-            CalculateJump();
-
-            CalculateHorizontalMove();
-
-            MovePlayer();
         }
         #endregion
 
@@ -316,7 +289,36 @@ namespace ProjectG.Player.Controller
         #endregion
 
         #region PUBLIC_METHODS
+        public void Init()
+        {
+            IEnumerator WaitSecondsForActivate()
+            {
+                yield return new WaitForSeconds(timeUntilActivatePlayer);
 
+                controllerEnable = true;
+            }
+
+            StartCoroutine(WaitSecondsForActivate());
+        }
+
+        public void UpdatePlayerController()
+        {
+            if (!controllerEnable)
+                return;
+
+            Velocity = (transform.position - lastPosition) / Time.deltaTime;
+            lastPosition = transform.position;
+
+            CheckCollisions();
+
+            CalculateApexJump();
+            CalculteGravity();
+            CalculateJump();
+
+            CalculateHorizontalMove();
+
+            MovePlayer();
+        }
         #endregion
 
         #region CORUTINES
