@@ -23,6 +23,8 @@ namespace ProyectG.Gameplay.Objects.Inventory
         private InventoryModel inventoryModel = null;
         #endregion
 
+        public InventoryModel Model => inventoryModel;
+
         #region PUBLIC_METHODS
         public void Init()
         {

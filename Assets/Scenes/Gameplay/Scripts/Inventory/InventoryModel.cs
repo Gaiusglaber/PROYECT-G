@@ -54,6 +54,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         {
             GetSlot(slot).SetPosition(newPos);
         }
+
+        public void AttachObjectAtSlot(GameObject obj, Vector2Int gridPosition)
+        {
+            GetSlot(gridPosition).PlaceItem(obj);
+        }
         #endregion
 
         #region PRIVATE_METHODS
