@@ -5,6 +5,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+using ProyectG.Gameplay.Interfaces;
+
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
     public class SlotInventoryView : MonoBehaviour, IPointerDownHandler
@@ -44,6 +46,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             set
             {
                 transform.position = value;
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out IDraggable dragObject))
+            {
+                Debug.Log("Hay un draggable encima o");
+
+                dragObject.AttachToSlot(SlotPosition, transform);
             }
         }
 

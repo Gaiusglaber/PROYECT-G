@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,10 @@ using UnityEngine.UI;
 using ProyectG.Gameplay.Interfaces;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using System;
 
 using Pathfinders.Toolbox.Lerpers;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class ItemBase : MonoBehaviour, IDraggable
 {
     #region EXPOSED_FIELDS
@@ -19,7 +20,6 @@ public class ItemBase : MonoBehaviour, IDraggable
     [SerializeField] private string description = string.Empty;
     [SerializeField] private int value = 0;
 
-    [SerializeField] private Vector3Lerper.SMOOTH_TYPE typeLerp = default;
     [SerializeField] private float followSpeed = 0;
     #endregion
 
@@ -31,8 +31,20 @@ public class ItemBase : MonoBehaviour, IDraggable
 
     private float currentLerpTime = 0;
     private float lerpTime = 0;
-
     private float finalPerc = 0;
+    private Vector3Lerper positionLerper = null;
+
+    private bool prepareToAttachOnSlot = false;
+    private bool isAttachedToSlot = false;
+
+    private Camera mainCamera = null;
+
+    private (Vector2, Transform) slotPositionAttached = default;
+
+    float timeToGoBackSlot = 0.5f;
+    float time = 0;
+
+    private BoxCollider2D myCollider = null;
     #endregion
 
     #region PROPERTIES
@@ -40,13 +52,40 @@ public class ItemBase : MonoBehaviour, IDraggable
     #endregion
 
     #region INITIALIZATION
+    public void Init(Action onEndDrag = null)
+    {
+        myCollider = GetComponent<BoxCollider2D>();
+
+        mainCamera = Camera.main;
+
+        lerpTime = followSpeed;
+
+        positionLerper = new Vector3Lerper(followSpeed * 0.5f, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
+    }
     private void Start()
     {
-        lerpTime = followSpeed;
+        Init();
     }
+    #endregion
 
+    #region INTERACTION
+    /// <summary>
+    /// El update termina de desplazar el objeto si este no alcanzo el mouse hasta el final
+    /// </summary>
     private void Update()
     {
+        if(isAttachedToSlot && prepareToAttachOnSlot)
+        {
+            if(time < timeToGoBackSlot)
+                time += Time.deltaTime;
+            else
+            {
+                time = 0;
+                prepareToAttachOnSlot = false;
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+            }
+        }
+
         if (!Dragged)
             return;
 
@@ -65,6 +104,7 @@ public class ItemBase : MonoBehaviour, IDraggable
 
         SetDraggedPosition(eventData);
     }
+
     #endregion
 
     #region DRAG_IMPLEMENTATION
@@ -72,12 +112,12 @@ public class ItemBase : MonoBehaviour, IDraggable
     {
         isDragging = true;
 
+        prepareToAttachOnSlot = false;
+
         gameObject.transform.SetParent(canvas.transform, false);
         gameObject.transform.SetAsLastSibling();
 
         draggingPlane = canvas.transform as RectTransform;
-
-        Debug.Log("Empezo drag");
 
         this.eventData = eventData;
 
@@ -99,13 +139,12 @@ public class ItemBase : MonoBehaviour, IDraggable
             draggingPlane = eventData.pointerEnter.transform as RectTransform;
         }
 
-        Debug.Log("Clacula drag");
         this.eventData = eventData;
 
         RectTransform objectDragging = gameObject.transform as RectTransform;
         Vector3 globalMouse = default;
 
-        if(RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingPlane, eventData.position, eventData.pressEventCamera, out globalMouse))
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingPlane, eventData.position, eventData.pressEventCamera, out globalMouse))
         {
             objectDragging.position = Vector3.Lerp(objectDragging.position, globalMouse, finalPerc);
             objectDragging.rotation = draggingPlane.rotation;
@@ -114,12 +153,55 @@ public class ItemBase : MonoBehaviour, IDraggable
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("Termino drag");
-
         this.eventData = eventData;
         currentLerpTime = 0;
         isDragging = false;
+
+        prepareToAttachOnSlot = true;
     }
 
+    public void AttachToSlot(Vector2 positionSlot, Transform parent)
+    {
+        if(!isDragging)
+        {
+            if (prepareToAttachOnSlot)
+            {
+                
+                isAttachedToSlot = true;
+                slotPositionAttached.Item1 = positionSlot;
+                slotPositionAttached.Item2 = parent;
+                myCollider.enabled = false;
+            }
+
+            StartCoroutine(AttachToPosition(positionSlot, ()=> { transform.SetParent(parent); myCollider.enabled = true; } ));
+        }
+    }
+    #endregion
+
+    #region CORUTINES
+    private IEnumerator AttachToPosition(Vector2 targetPosition, Action callbackAtEndPosition = null)
+    {
+        if(prepareToAttachOnSlot)
+        {
+            isAttachedToSlot = true;
+        }
+
+        positionLerper.SetValues(transform.position, targetPosition, true);
+
+        while (!positionLerper.Reached)
+        {
+            positionLerper.Update();
+
+            transform.position = positionLerper.CurrentValue;
+
+            yield return null;
+        }
+
+        transform.position = positionLerper.CurrentValue;
+
+        callbackAtEndPosition?.Invoke();
+
+        yield return null;
+    }
     #endregion
 }
