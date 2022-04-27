@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DragonBones;
+
 namespace ProjectG.Player.Controller
 {
     public struct RayRange
@@ -47,6 +49,8 @@ namespace ProjectG.Player.Controller
         [SerializeField] private int detectorCount = 3;
         [SerializeField] private float rayLenght = 0.1f;
         [SerializeField, Range(0.1f, 0.3f)] private float rayBuffer = 0.1f;
+        [Header("---ANIMATIONS---")]
+        [SerializeField] private UnityArmatureComponent customAnimator = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -72,6 +76,8 @@ namespace ProjectG.Player.Controller
         private RayRange downRay = default;
         private RayRange leftRay = default;
         private RayRange rightRay = default;
+
+        private string lastAnimationExecuted = string.Empty;
         #endregion
 
         #region PROPERTIES
@@ -180,16 +186,18 @@ namespace ProjectG.Player.Controller
 
                 float apexBonus = Mathf.Sign(Input.GetAxisRaw("Horizontal")) * this.apexBonus * apexPoint;
                 horizontalSpeed += apexBonus * Time.deltaTime;
+
+                SetAnimation("movilidad");
             }
             else
             {
                 horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, (deAcceleration / 6f) * Time.deltaTime);
+                SetAnimation("idle");
             }
 
             if (horizontalSpeed > 0 && colRight || horizontalSpeed < 0 && colLeft)
             {
                 horizontalSpeed = 0;
-                Debug.Log("HOR 0");
             }
         }
         private void CalculteGravity()
@@ -277,6 +285,8 @@ namespace ProjectG.Player.Controller
             Vector3 movement = RawMovement * Time.deltaTime;
             Vector3 furthestPoint = position + movement;
 
+            SetDirectionArmature(horizontalSpeed);
+
             //Chequeo mas adelante si hay alguna cosa a que colisionar
             Collider2D hit = Physics2D.OverlapBox(furthestPoint, characterBounds.size, 0, groundLayer);
             if (hit == null)
@@ -311,6 +321,35 @@ namespace ProjectG.Player.Controller
                 }
 
                 posToMove = posToTry;
+            }
+        }
+        #endregion
+
+        #region ANIMATION
+        private void SetAnimation(string idAnimation, int playTimes = -1)
+        {
+            if(!customAnimator.animation.isPlaying)
+            {
+                customAnimator.animation.Play(idAnimation, playTimes);
+                lastAnimationExecuted = idAnimation;
+            }
+            else
+            {
+                if(lastAnimationExecuted != idAnimation)
+                {
+                    customAnimator.animation.Stop();
+                }
+            }
+        }
+        private void SetDirectionArmature(float horizontalSpeed)
+        {
+            if(horizontalSpeed < 0)
+            {
+                customAnimator._armature.flipX = true;
+            }
+            else
+            {
+                customAnimator._armature.flipX = false;
             }
         }
         #endregion
