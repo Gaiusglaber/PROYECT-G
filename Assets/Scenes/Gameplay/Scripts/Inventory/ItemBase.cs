@@ -15,12 +15,8 @@ public class ItemBase : MonoBehaviour, IDraggable
 {
     #region EXPOSED_FIELDS
     [SerializeField] private Canvas canvas = null;
-    [SerializeField] private Image iconAttach = null;
-    [SerializeField] private string nameItem = string.Empty;
-    [SerializeField] private string description = string.Empty;
-    [SerializeField] private int value = 0;
-
     [SerializeField] private float followSpeed = 0;
+    [SerializeField] private string itemType = string.Empty;
     #endregion
 
     #region PRIVATE_FIELDS
@@ -48,6 +44,7 @@ public class ItemBase : MonoBehaviour, IDraggable
     #endregion
 
     #region PROPERTIES
+    public string ItemType => itemType;
     public bool Dragged => isDragging;
     #endregion
 
@@ -82,6 +79,7 @@ public class ItemBase : MonoBehaviour, IDraggable
             {
                 time = 0;
                 prepareToAttachOnSlot = false;
+                myCollider.enabled = false;
                 AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
             }
         }
@@ -104,7 +102,6 @@ public class ItemBase : MonoBehaviour, IDraggable
 
         SetDraggedPosition(eventData);
     }
-
     #endregion
 
     #region DRAG_IMPLEMENTATION
@@ -118,6 +115,10 @@ public class ItemBase : MonoBehaviour, IDraggable
         gameObject.transform.SetAsLastSibling();
 
         draggingPlane = canvas.transform as RectTransform;
+
+        RectTransform objectDragging = gameObject.transform as RectTransform;
+
+        objectDragging.position = eventData.position;
 
         this.eventData = eventData;
 
@@ -160,21 +161,26 @@ public class ItemBase : MonoBehaviour, IDraggable
         prepareToAttachOnSlot = true;
     }
 
-    public void AttachToSlot(Vector2 positionSlot, Transform parent)
+    public bool AttachToSlot(Vector2 positionSlot, Transform parent)
     {
         if(!isDragging)
         {
             if (prepareToAttachOnSlot)
             {
-                
                 isAttachedToSlot = true;
                 slotPositionAttached.Item1 = positionSlot;
                 slotPositionAttached.Item2 = parent;
-                myCollider.enabled = false;
             }
 
-            StartCoroutine(AttachToPosition(positionSlot, ()=> { transform.SetParent(parent); myCollider.enabled = true; } ));
+            StartCoroutine(AttachToPosition(positionSlot, () => {
+                transform.SetParent(parent);
+                myCollider.enabled = true;
+            }));
+
+            return true;
         }
+
+        return false;
     }
     #endregion
 

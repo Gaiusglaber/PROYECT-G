@@ -17,6 +17,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private Transform parentView = null;
 
         private SlotInventoryView[,] slotsView = null;
+
+        private int maxRowsInventory = 0;
+        private int maxColsInventory = 0;
         #endregion
 
         #region PROPERTIES
@@ -27,25 +30,49 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public void Init(InventoryModel model, Transform parentTarget)
         {
             parentView = parentTarget;
+            maxRowsInventory = model.GridRows;
+            maxColsInventory = model.GridCols;
 
-            InitializeSlotsView(model.GridRows,model.GridCols);
+            InitializeSlotsView(maxRowsInventory, maxColsInventory);
 
-            for (int x = 0; x < model.GridRows; x++)
+            for (int x = 0; x < maxRowsInventory; x++)
             {
-                for (int y = 0; y < model.GridCols; y++)
+                for (int y = 0; y < maxColsInventory; y++)
                 {
-                    Vector2Int gPos = new Vector2Int(x, y);
+                    Vector2Int gridPos = new Vector2Int(x, y);
                     Vector2 finalWorldPosition = new Vector2((parentView.position.x - (model.GridCols * 0.5f)), 
-                        (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gPos).SlotPosition;
+                        (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
-                    model.GetSlot(gPos).SetPosition(finalWorldPosition);
+                    model.SetSlotPosition(gridPos, finalWorldPosition);
+
+                    Vector2 nextSlotPosition = finalWorldPosition + model.GetSlot(gridPos).NextSlotPosition;
+                    model.GetSlot(gridPos).SetPositionNextSlot(nextSlotPosition);
+
                     slotsView[x, y] = newSlotInv;
                 }
             }
 
+            CheckNextSlotsFromSlots(model);
+
             IsOpen = true;
             OpenInventory();
+        }
+
+        public void UpdateSlotsView()
+        {
+            if (!IsOpen)
+                return;
+
+            for (int x = 0; x < maxRowsInventory; x++)
+            {
+                for (int y = 0; y < maxColsInventory; y++)
+                {
+                    Vector2Int gridPos = new Vector2Int(x, y);
+
+                    GetSlotFromGrid(gridPos).UpdateSlot();
+                }
+            }
         }
 
         public void OpenInventory()
@@ -55,9 +82,48 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             IsOpen = !IsOpen;
             animator.SetBool("IsOpen", IsOpen);
         }
+
+        public SlotInventoryView GetSlotFromGrid(Vector2Int gridPos)
+        {
+            return IsValidPosition(gridPos) ? slotsView[gridPos.x, gridPos.y] : null;
+        }
         #endregion
 
         #region PRIVATE_METHODS
+        private bool IsValidPosition(Vector2Int pos)
+        {
+            return (pos.x < maxRowsInventory && pos.x >= 0 &&
+                pos.y < maxColsInventory && pos.y >= 0) ? true : false;
+        }
+        private void CheckNextSlotsFromSlots(InventoryModel model)
+        {
+            for (int x = 0; x < model.GridRows; x++)
+            {
+                for (int y = 0; y < model.GridCols; y++)
+                {
+                    Vector2Int gridPos = new Vector2Int(x, y);
+                    Vector2Int nextPosGrid = new Vector2Int(gridPos.x, gridPos.y + 1);
+
+                    if(GetSlotFromGrid(nextPosGrid) != null)
+                    {
+                        GetSlotFromGrid(gridPos).NextSlotFromThis = GetSlotFromGrid(nextPosGrid).transform;
+                    }
+                    else
+                    {
+                        nextPosGrid = new Vector2Int(gridPos.x + 1, 0);
+
+                        if(GetSlotFromGrid(nextPosGrid) != null)
+                        {
+                            GetSlotFromGrid(gridPos).NextSlotFromThis = GetSlotFromGrid(nextPosGrid).transform;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         private void InitializeSlotsView(int rows, int cols)
         {
             slotsView = new SlotInventoryView[rows, cols];

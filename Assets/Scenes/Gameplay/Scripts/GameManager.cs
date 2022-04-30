@@ -71,6 +71,8 @@ namespace ProjectG.Gameplay.Managers
             if (inventory == null) return;
 
             inventory.CheckState();
+
+            inventory.UpdateInventory();
         }
         #endregion
     }

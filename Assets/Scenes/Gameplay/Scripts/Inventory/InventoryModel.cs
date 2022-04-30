@@ -40,7 +40,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     gridSlots[x, y] = new SlotInventoryModel();
 
                     Vector2 slotPosition = new Vector2((x * (slotSize.x) + OffsetSlots), (y * (slotSize.y) + OffsetSlots));
-                    gridSlots[x, y].SetupSlot(new Vector2Int(x, y), slotPosition, onItemAttach);
+                    Vector2 nextSlotPosition = new Vector2(slotPosition.x + (slotSize.x + OffsetSlots), slotPosition.y + (slotSize.y + OffsetSlots));
+
+                    gridSlots[x, y].SetupSlot(new Vector2Int(x, y), slotPosition, nextSlotPosition, onItemAttach);
                 }
             }
         }

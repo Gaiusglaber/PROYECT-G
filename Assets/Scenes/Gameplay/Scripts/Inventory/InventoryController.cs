@@ -36,6 +36,14 @@ namespace ProyectG.Gameplay.Objects.Inventory
             inventoryView.Init(inventoryModel, viewParent); //visual del inventario
         }
 
+        public void UpdateInventory()
+        {
+            if (inventoryView == null)
+                return;
+
+            inventoryView.UpdateSlotsView();
+        }
+
         public void CheckState()
         {
             if (inventoryView == null) return;
