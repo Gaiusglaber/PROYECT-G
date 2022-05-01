@@ -47,7 +47,7 @@ namespace ProyectG.Gameplay.UI{
         #region PUBLIC_METHODS
         public void UpdateEnergy(int valueToUpdate)
         {
-			cantEnergy = valueToUpdate > maxEnergy ? maxEnergy : valueToUpdate;
+			cantEnergy += valueToUpdate > maxEnergy ? maxEnergy : valueToUpdate;
 			StartCoroutine(LerpBar(GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
 		}
