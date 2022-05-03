@@ -8,21 +8,38 @@ namespace ProyectG.Gameplay.UI
     {
         //Temp
         [SerializeField] private EnergyHandler energyHandler;
-        private const int generateEnergyValue = 10;
+        [SerializeField] private int generateEnergyValue = 10;
+        int energyToGenerate = 0;
+        private bool isCollidingWithPlayer;
 
         void Start()
         {
-            
+            isCollidingWithPlayer = false;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void Update()
+        {
+            if (isCollidingWithPlayer)
+            {
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    energyToGenerate += generateEnergyValue;
+                    energyHandler.UpdateEnergy(energyToGenerate);
+                }
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            isCollidingWithPlayer = false;
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                if (Input.GetKeyDown(KeyCode.H))
-                {
-                    energyHandler.UpdateEnergy(generateEnergyValue);
-                }
+                Debug.Log("Esta dentro del collider!");
+                isCollidingWithPlayer = true;
             }
         }
     }
