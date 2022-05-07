@@ -8,8 +8,8 @@ namespace ProyectG.Gameplay.UI
     {
         //Temp
         [SerializeField] private EnergyHandler energyHandler;
-        [SerializeField] private int generateEnergyValue = 10;
-        int energyToGenerate = 0;
+        [SerializeField] private int generateEnergyValue = 100;
+        int energyToGenerate = 5000;
         private bool isCollidingWithPlayer;
 
         void Start()
