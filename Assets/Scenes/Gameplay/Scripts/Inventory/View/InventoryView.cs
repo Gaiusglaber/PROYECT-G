@@ -9,8 +9,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
     public class InventoryView : MonoBehaviour
     {
         #region EXPOSED_FIELDS
+        [Header("REFERENCES")]
         [SerializeField] private SlotInventoryView prefabSlots = null;
         [SerializeField] private Animator animator = null;
+        [SerializeField] private Canvas mainCanvas = null;
+        [SerializeField] private GameObject prefabItemView = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -44,8 +47,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
+                    newSlotInv.Init(prefabItemView, mainCanvas);
+                    
                     model.SetSlotPosition(gridPos, finalWorldPosition);
-
                     Vector2 nextSlotPosition = finalWorldPosition + model.GetSlot(gridPos).NextSlotPosition;
                     model.GetSlot(gridPos).SetPositionNextSlot(nextSlotPosition);
 
@@ -55,8 +59,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             CheckNextSlotsFromSlots(model);
 
-            IsOpen = true;
-            OpenInventory();
+            IsOpen = false;
         }
 
         public void UpdateSlotsView()
@@ -86,6 +89,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public SlotInventoryView GetSlotFromGrid(Vector2Int gridPos)
         {
             return IsValidPosition(gridPos) ? slotsView[gridPos.x, gridPos.y] : null;
+        }
+
+        public void UpdateInventoryView(InventoryModel inventoryModel)
+        {
+            for (int x = 0; x < maxRowsInventory; x++)
+            {
+                for (int y = 0; y < maxColsInventory; y++)
+                {
+                    Vector2Int gridPos = new Vector2Int(x, y);
+
+                    GetSlotFromGrid(gridPos).UpdateSlotViewWithItems(inventoryModel.GetSlot(gridPos).StackOfItems);
+                }
+            }
         }
         #endregion
 

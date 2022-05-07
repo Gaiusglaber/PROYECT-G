@@ -5,7 +5,7 @@ using UnityEngine;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
 
-namespace ProyectG.Gameplay.Objects.Inventory
+namespace ProyectG.Gameplay.Objects.Inventory.Controller
 {
     public class InventoryController : MonoBehaviour   //Controlador del inventario
     {
@@ -17,6 +17,8 @@ namespace ProyectG.Gameplay.Objects.Inventory
         [Header("REFERENCES")]
         [SerializeField] private Transform viewParent = default;
         [SerializeField] private InventoryView inventoryView = null;
+        [Header("ITEM DATABASE")]
+        [SerializeField] private List<ItemModel> allItemsAviable = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -34,6 +36,19 @@ namespace ProyectG.Gameplay.Objects.Inventory
 
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
             inventoryView.Init(inventoryModel, viewParent); //visual del inventario
+
+            inventoryModel.SetOnSomeItemAttached(inventoryView.UpdateInventoryView);
+
+            //Testing
+
+            Vector2Int gridPos = new Vector2Int(0, 0);
+            List<ItemModel> testItems = new List<ItemModel>() { allItemsAviable[0], allItemsAviable[0] , allItemsAviable[0] , allItemsAviable[0] };
+            List<ItemModel> testItems1 = new List<ItemModel>() { allItemsAviable[1], allItemsAviable[1] , allItemsAviable[1] };
+            List<ItemModel> testItems2 = new List<ItemModel>() { allItemsAviable[2]};
+            
+            inventoryModel.AttachItemsToSlot(testItems, gridPos);
+            inventoryModel.AttachItemsToSlot(testItems1, new Vector2Int(gridPos.x, gridPos.y+1));
+            inventoryModel.AttachItemsToSlot(testItems2, new Vector2Int(gridPos.x, gridPos.y +2));
         }
 
         public void UpdateInventory()
@@ -51,6 +66,14 @@ namespace ProyectG.Gameplay.Objects.Inventory
             if (Input.GetKeyDown(KeyCode.I))
             {
                 inventoryView.OpenInventory();
+            }
+
+            if (!inventoryView.IsOpen)
+                return;
+
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+
             }
         }
         #endregion

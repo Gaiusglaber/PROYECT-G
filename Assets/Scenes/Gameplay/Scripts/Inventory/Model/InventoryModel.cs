@@ -17,6 +17,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         private float offsetSlots = 1.5f;
 
         private SlotInventoryModel[,] gridSlots = null;
+
+        private Action<InventoryModel> onItemsAddedToInventory = null;
         #endregion
 
         #region PROPERTIES
@@ -26,7 +28,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Vector2Int tamGridSlots, Vector2 slotSize, Action onItemAttach = null)
+        public void Init(Vector2Int tamGridSlots, Vector2 slotSize)
         {
             maxRowsInventory = tamGridSlots.x;
             maxColsInventory = tamGridSlots.y;
@@ -42,9 +44,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     Vector2 slotPosition = new Vector2((x * (slotSize.x) + OffsetSlots), (y * (slotSize.y) + OffsetSlots));
                     Vector2 nextSlotPosition = new Vector2(slotPosition.x + (slotSize.x + OffsetSlots), slotPosition.y + (slotSize.y + OffsetSlots));
 
-                    gridSlots[x, y].SetupSlot(new Vector2Int(x, y), slotPosition, nextSlotPosition, onItemAttach);
+                    gridSlots[x, y].SetupSlot(new Vector2Int(x, y), slotPosition, nextSlotPosition, AddedItemsToInventory);
                 }
             }
+        }
+
+        public void SetOnSomeItemAttached(Action<InventoryModel> onItemAttach = null)
+        {
+            onItemsAddedToInventory = onItemAttach;
         }
 
         public SlotInventoryModel GetSlot(Vector2Int gridPosition)
@@ -57,13 +64,23 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             GetSlot(slot).SetPosition(newPos);
         }
 
-        public void AttachObjectAtSlot(GameObject obj, Vector2Int gridPosition)
+        //USE THIS TO ATTACH AN ITEM/ITEMS TO THE INVENTORY
+        public void AttachItemsToSlot(List<ItemModel> stackOfItems, Vector2Int gridPosition)
         {
-            GetSlot(gridPosition).PlaceItem(obj);
+            GetSlot(gridPosition).PlaceItems(stackOfItems);
+        }
+
+        public List<ItemModel> GetItemsOnSlot(Vector2Int gridPosition)
+        {
+            return GetSlot(gridPosition).StackOfItems;
         }
         #endregion
 
         #region PRIVATE_METHODS
+        private void AddedItemsToInventory()
+        {
+            onItemsAddedToInventory?.Invoke(this);
+        }
         private bool IsValidPosition(Vector2Int pos)
         {
             return (pos.x < maxRowsInventory && pos.x >= 0 && 

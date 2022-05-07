@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ProyectG.Gameplay.Objects.Inventory.Data
 {
-    public class SlotInventoryModel : MonoBehaviour
+    public class SlotInventoryModel
     {
         #region EXPOSED_FIELDS
         #endregion
@@ -16,11 +14,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         private Vector2 position = default;
         private Vector2 nextPosition = default;
 
-        private GameObject itemAttach = null;
+        private List<ItemModel> stackOfItemsInSlot = new List<ItemModel>();
         #endregion
 
         #region PROPERTIES
-        public GameObject ItemAttached => itemAttach;
+        public List<ItemModel> StackOfItems { get { return stackOfItemsInSlot; } }
         public Vector2 SlotPosition => position;
         public Vector2 NextSlotPosition => nextPosition;
         public Vector2Int GridPosition => gridPosition;
@@ -50,11 +48,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             nextPosition = positionNext;
         }
 
-        public void PlaceItem(GameObject itemToAttach) //Esto despues seria x item clase que tendria despues su icono y model x
+        public void PlaceItems(List<ItemModel> itemToAttach) //Esto despues seria x item clase que tendria despues su icono y model x
         {
             if (itemToAttach == null) return;
 
-            itemAttach = itemToAttach;
+            stackOfItemsInSlot.AddRange(itemToAttach);
 
             OnItemAttached?.Invoke();
         }

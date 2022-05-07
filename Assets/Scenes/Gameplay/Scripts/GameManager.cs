@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using ProyectG.Player.Controller;
-using ProyectG.Gameplay.Objects.Inventory;
+using ProyectG.Gameplay.Objects.Inventory.Controller;
 
 namespace ProjectG.Gameplay.Managers
 {
