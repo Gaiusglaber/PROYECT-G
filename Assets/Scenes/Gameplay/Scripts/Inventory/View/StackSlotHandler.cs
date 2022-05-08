@@ -91,6 +91,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (stackedItems.Count < 1)
+                return;
+
             isDragging = true;
 
             prepareToAttachOnSlot = false;
@@ -111,7 +114,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (!Dragged || gameObject == null)
+            if (!Dragged || gameObject == null || stackedItems.Count < 1)
                 return;
 
             SetDraggedPosition(eventData);

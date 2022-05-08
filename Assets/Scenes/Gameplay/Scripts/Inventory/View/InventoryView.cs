@@ -3,6 +3,8 @@ using UnityEngine;
 
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
+using TMPro;
+
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
     public class InventoryView : MonoBehaviour
@@ -13,6 +15,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private Animator animator = null;
         [SerializeField] private Canvas mainCanvas = null;
         [SerializeField] private GameObject prefabItemView = null;
+        [SerializeField] private TMP_Text stackModeState = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -65,6 +68,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void UpdateSlots(bool stackTake)
         {
+            SetStateTxtStackInfo(stackTake);
+            
             if (!IsOpen)
                 return;
 
@@ -113,6 +118,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PRIVATE_METHODS
+        private void SetStateTxtStackInfo(bool stackState)
+        {
+            stackModeState.text = stackState ? "STACK DRAG: ENABLE" : "STACK DRAG: DISABLE";
+        }
+
         private void OnInventoryViewChanged()
         {
             onInventoryChange?.Invoke(this);
