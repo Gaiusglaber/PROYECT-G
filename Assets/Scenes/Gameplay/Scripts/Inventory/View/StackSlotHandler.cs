@@ -1,142 +1,95 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using ProyectG.Gameplay.Interfaces;
-using ProyectG.Gameplay.Objects.Inventory.Data;
 
 using Pathfinders.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
-    [RequireComponent(typeof(BoxCollider2D))]
-    public class ItemView : MonoBehaviour, IDraggable
+    public class StackSlotHandler : MonoBehaviour, IDraggable
     {
         #region EXPOSED_FIELDS
-        [SerializeField] private float followSpeed = 0;
-        [SerializeField] private Image itemImage = null;
+        [SerializeField] private float speedFollow = 0;
+
         #endregion
 
         #region PRIVATE_FIELDS
         private Canvas canvas = null;
-
-        private RectTransform draggingPlane;
-        private bool isDragging = false;
-
+        private Camera mainCamera = null;
         private PointerEventData eventData = null;
+        private RectTransform draggingPlane;
 
-        private float currentLerpTime = 0;
-        private float lerpTime = 0;
-        private float finalPerc = 0;
         private Vector3Lerper positionLerper = null;
 
+        private bool isDragging = false;
         private bool prepareToAttachOnSlot = false;
         private bool isAttachedToSlot = false;
-        private bool dragDisable = false;
-
-        private Camera mainCamera = null;
 
         private (Vector2, Transform) slotPositionAttached = default;
-
-        private Vector2Int slotGridPosition = default;
 
         float timeToGoBackSlot = 0.5f;
         float time = 0;
 
         private BoxCollider2D myCollider = null;
 
-        private string itemId;
+        private Stack<ItemView> stackedItems = new Stack<ItemView>();
         #endregion
 
         #region PROPERTIES
-        public string ItemType { get { return itemId; } }
         public bool Dragged => isDragging;
+        public int SizeStack => stackedItems.Count;
         #endregion
 
-        #region INITIALIZATION
-        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, ItemModel itemData = null, Action onEndDrag = null)
+        #region UNITY_CALLS
+        private void Update()
         {
-            time = 0;
-            timeToGoBackSlot = 0.5f;
+            RestorePosition();
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (isDragging)
+            {
+                return;
+            }
+
+            if(collision.TryGetComponent(out SlotInventoryView slotView))
+            {
+                if(!isAttachedToSlot)
+                {
+                    AttachToSlot(slotView.SlotPosition, slotView.transform);
+                    isAttachedToSlot = true;
+                }
+            }
+        }
+        #endregion
+
+        #region PUBLIC_METHODS
+        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached)
+        {
+            positionLerper = new Vector3Lerper(speedFollow, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
 
             canvas = mainCanvas;
-
-            myCollider = GetComponent<BoxCollider2D>();
-
             mainCamera = Camera.main;
 
-            lerpTime = followSpeed;
-
-            if(itemData != null)
-            {
-                itemId = itemData.itemId;
-                itemImage.sprite = itemData.itemSprite;
-            }
-            else
-            {
-                itemId = "stacker";
-            }
-
-            //slotGridPosition = slotAttached.SlotPosition;
-
-            positionLerper = new Vector3Lerper(followSpeed * 0.5f, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
+            myCollider = GetComponent<BoxCollider2D>();
 
             slotPositionAttached.Item1 = slotAttached.SlotPosition;
             slotPositionAttached.Item2 = slotAttached.transform;
 
-            //Aplica el lerp del nuevo item creado al slot al que fue enviado
-            isAttachedToSlot = true;
-            AttachToSlot(slotAttached.SlotPosition, slotAttached.gameObject.transform);
-        }
-        #endregion
-
-        #region INTERACTION
-        /// <summary>
-        /// El update termina de desplazar el objeto si este no alcanzo el mouse hasta el final
-        /// </summary>
-        private void Update()
-        {
-            if (isAttachedToSlot && prepareToAttachOnSlot)
+            if (!isAttachedToSlot)
             {
-                if (time < timeToGoBackSlot)
-                    time += Time.deltaTime;
-                else
-                {
-                    time = 0;
-                    prepareToAttachOnSlot = false;
-                    myCollider.enabled = false;
-                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
-                }
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                isAttachedToSlot = true;
             }
-
-            if (!Dragged || dragDisable)
-                return;
-
-            currentLerpTime += Time.deltaTime;
-            if (currentLerpTime > lerpTime)
-            {
-                currentLerpTime = lerpTime;
-            }
-
-            float perc = currentLerpTime / lerpTime;
-            float smooth = perc;
-            smooth = perc * perc;
-            perc = smooth;
-
-            finalPerc = perc;
-
-            SetDraggedPosition(eventData);
         }
-        #endregion
 
-        #region DRAG_IMPLEMENTATION
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (dragDisable)
-                return;
-
             isDragging = true;
 
             prepareToAttachOnSlot = false;
@@ -157,13 +110,54 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (dragDisable)
-                return;
-
             if (!Dragged || gameObject == null)
                 return;
 
             SetDraggedPosition(eventData);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            this.eventData = eventData;
+            isDragging = false;
+
+            prepareToAttachOnSlot = true;
+        }
+        
+        public void StackItemsInside(List<ItemView> listOfItems)
+        {
+            for (int i = 0; i < listOfItems.Count; i++)
+            {
+                stackedItems.Push(listOfItems[i]);
+            }
+        }
+
+        public List<ItemView> GetStackFormStack()   //no supe como llamarlo mejor xd
+        {
+            List<ItemView> allReturnedItems = new List<ItemView>();
+
+            allReturnedItems.AddRange(stackedItems);
+            stackedItems.Clear();
+
+            return allReturnedItems;
+        }
+        #endregion
+
+        #region PRIVATE_METHODS
+        private void RestorePosition()
+        {
+            if (isAttachedToSlot && prepareToAttachOnSlot)
+            {
+                if (time < timeToGoBackSlot)
+                    time += Time.deltaTime;
+                else
+                {
+                    time = 0;
+                    prepareToAttachOnSlot = false;
+                    myCollider.enabled = false;
+                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                }
+            }
         }
 
         private void SetDraggedPosition(PointerEventData eventData)
@@ -174,29 +168,20 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             this.eventData = eventData;
-
+            
             RectTransform objectDragging = gameObject.transform as RectTransform;
             Vector3 globalMouse = default;
 
             if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingPlane, eventData.position, eventData.pressEventCamera, out globalMouse))
             {
-                objectDragging.position = Vector3.Lerp(objectDragging.position, globalMouse, finalPerc);
+                objectDragging.position = Vector3.Lerp(objectDragging.position, globalMouse, speedFollow);
                 objectDragging.rotation = draggingPlane.rotation;
             }
         }
 
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            this.eventData = eventData;
-            currentLerpTime = 0;
-            isDragging = false;
-
-            prepareToAttachOnSlot = true;
-        }
-
         public bool AttachToSlot(Vector2 positionSlot, Transform parent)
         {
-            if(parent == null)
+            if (parent == null)
             {
                 AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
                 return false;
@@ -221,23 +206,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             return false;
-        }
-
-        public void SwitchStateItem(bool state)
-        {
-            if(itemId == "stacker")
-            {
-                dragDisable = false;
-                return;
-            }
-
-            dragDisable = state;
-        }
-
-        public void SwitchStateCollider(bool state)
-        {
-            myCollider.enabled = state;
-            enabled = state;
         }
         #endregion
 

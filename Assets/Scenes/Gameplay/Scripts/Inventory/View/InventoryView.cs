@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 using ProyectG.Gameplay.Objects.Inventory.Data;
@@ -23,6 +22,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private int maxRowsInventory = 0;
         private int maxColsInventory = 0;
+
+        private Action<InventoryView> onInventoryChange = null;
         #endregion
 
         #region PROPERTIES
@@ -47,7 +48,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
-                    newSlotInv.Init(prefabItemView, mainCanvas);
+                    newSlotInv.Init(prefabItemView, mainCanvas, OnInventoryViewChanged);
                     
                     model.SetSlotPosition(gridPos, finalWorldPosition);
                     Vector2 nextSlotPosition = finalWorldPosition + model.GetSlot(gridPos).NextSlotPosition;
@@ -62,7 +63,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             IsOpen = false;
         }
 
-        public void UpdateSlotsView()
+        public void UpdateSlots(bool stackTake)
         {
             if (!IsOpen)
                 return;
@@ -73,7 +74,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     Vector2Int gridPos = new Vector2Int(x, y);
 
-                    GetSlotFromGrid(gridPos).UpdateSlot();
+                    GetSlotFromGrid(gridPos).UpdateSlot(stackTake);
                 }
             }
         }
@@ -91,6 +92,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             return IsValidPosition(gridPos) ? slotsView[gridPos.x, gridPos.y] : null;
         }
 
+
         public void UpdateInventoryView(InventoryModel inventoryModel)
         {
             for (int x = 0; x < maxRowsInventory; x++)
@@ -103,14 +105,25 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
         }
+
+        public void SetOnInventoryChange(Action<InventoryView> onInventoryChange)
+        {
+            this.onInventoryChange = onInventoryChange;
+        }
         #endregion
 
         #region PRIVATE_METHODS
+        private void OnInventoryViewChanged()
+        {
+            onInventoryChange?.Invoke(this);
+        }
+
         private bool IsValidPosition(Vector2Int pos)
         {
             return (pos.x < maxRowsInventory && pos.x >= 0 &&
                 pos.y < maxColsInventory && pos.y >= 0) ? true : false;
         }
+
         private void CheckNextSlotsFromSlots(InventoryModel model)
         {
             for (int x = 0; x < model.GridRows; x++)
@@ -140,6 +153,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
         }
+
         private void InitializeSlotsView(int rows, int cols)
         {
             slotsView = new SlotInventoryView[rows, cols];

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private Image iconItemAttach = null;
         [SerializeField] private BoxCollider2D colliderSprite = null;
         [SerializeField] private TextMeshProUGUI slotStack = null;
+        [SerializeField] private StackSlotHandler stackHandler = null;
+        [SerializeField] private LayerMask checkOnly = default;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -31,13 +34,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private List<ItemView> objectsAttach = new List<ItemView>();
 
         private Canvas mainCanvas = null;
+
+        private bool attachedStackDone = false;
+
+        private Action callUpdateInventory = null;
         #endregion
 
         #region UNITY_CALLS
-        
         #endregion
 
         #region PROPERTIES
+        public List<ItemView> StackOfItemsView { get { return objectsAttach; } }
+
         public UnityAction OnInteract
         {
             get
@@ -61,6 +69,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
+        public Vector2 NextSlotPosition 
+        {
+            get
+            {
+                if (NextSlotFromThis != null)
+                    return NextSlotFromThis.position;
+                else
+                    return SlotPosition;
+            }            
+        }
+
         public Transform NextSlotFromThis
         {
             get
@@ -75,18 +94,23 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(GameObject prefabItemView, Canvas mainCanvas)
+        public void Init(GameObject prefabItemView, Canvas mainCanvas, Action onInventoryUpdate)
         {
             this.mainCanvas = mainCanvas;
             this.prefabItemView = prefabItemView;
+            callUpdateInventory = onInventoryUpdate;
 
             nextSlotFromThis = null;
-            slotStack.text = string.Empty;
+            slotStack.text = "0";
+
+            stackHandler.Init(mainCanvas, this);
+
+            stackHandler.enabled = false;
         }
 
-        public void UpdateSlot()
+        public void UpdateSlot(bool onStackTake)
         {
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, colliderSprite.size, 0, transform.forward);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, colliderSprite.size, 0, transform.forward, 1, checkOnly);
 
             if(!IsStackUpdated(hits))
             {
@@ -96,6 +120,39 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         AddItemToSlotStack(newItem);
                     }
+                }
+                //callUpdateInventory?.Invoke();
+            }
+
+            if (onStackTake)
+            {
+                if (!stackHandler.enabled)
+                {
+                    stackHandler.enabled=true;
+                }
+
+                if (!attachedStackDone)
+                {
+                    SaveItemsInStack();
+                    StartCoroutine(AttachItemsToParent(true, stackHandler.transform));
+                    attachedStackDone = true;
+                }
+
+                slotStack.text = stackHandler.SizeStack.ToString();
+            }
+            else
+            {
+                if(attachedStackDone)
+                {
+                    RestoreItemsFromStack();
+                    StartCoroutine(AttachItemsToParent(false, transform, () =>
+                    {
+                        if(stackHandler.enabled)
+                        {
+                            stackHandler.enabled = false;
+                        }
+                    }));
+                    attachedStackDone = false;
                 }
             }
         }
@@ -145,7 +202,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             for (int i = 0; i < itemsOnSlotLogic.Count; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, itemsOnSlotLogic[i], this);
+                newItem.GenerateItem(mainCanvas, this, itemsOnSlotLogic[i]);
 
                 if (!objectsAttach.Contains(newItem))
                 {
@@ -166,19 +223,21 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     objectsAttach.Remove(objectsAttach[i]);
                 }
             }
+
+            slotStack.text = objectsAttach.Count.ToString();
         }
 
         private bool IsStackUpdated(RaycastHit2D [] actualItemsInsideSlot)
         {
             //Debug.Log(actualItemsInsideSlot.Length-1);
 
-            if(objectsAttach.Count == (actualItemsInsideSlot.Length - 1))   //Sin contar el mismo slot que tiene su collider
+            if(objectsAttach.Count == actualItemsInsideSlot.Length)   //Sin contar el mismo slot que tiene su collider
             {
                 return true;
             }
             else
             {
-                int amountToRemove = objectsAttach.Count - (actualItemsInsideSlot.Length-1);
+                int amountToRemove = objectsAttach.Count - actualItemsInsideSlot.Length;
 
                 if (amountToRemove < 0)
                     return false;
@@ -187,6 +246,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     RemoveItemFromSlotStack(objectsAttach[objectsAttach.Count - 1]);
                 }
+
+                //scallUpdateInventory?.Invoke();
+                slotStack.text = objectsAttach.Count.ToString();
+
                 return false;
             }
         }
@@ -196,7 +259,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if(!objectsAttach.Contains(item))
             {
                 objectsAttach.Add(item);
-                Debug.Log("Item added to list");
+                //callUpdateInventory?.Invoke();
                 slotStack.text = objectsAttach.Count.ToString();
             }
         }
@@ -206,8 +269,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if (objectsAttach.Contains(item))
             {
                 objectsAttach.Remove(item);
-                Debug.Log("Item removed from list");
-                slotStack.text = objectsAttach.Count.ToString();
+            }
+
+            if (objectsAttach.Count < 1)
+            {
+                slotStack.text = "";
             }
         }
 
@@ -223,7 +289,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     }
                     else
                     {
-                        if(newItem.AttachToSlot(NextSlotFromThis.position, NextSlotFromThis))
+                        if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis))
                         {
                             return;
                         }
@@ -237,6 +303,50 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     item.AttachToSlot(SlotPosition, transform);
                 }                
             }
+        }
+        #endregion
+
+        #region CORUTINES
+        private IEnumerator AttachItemsToParent(bool stateItemsInside,Transform newParent, Action onEndedAttch = null)
+        {
+            for (int i = 0; i < objectsAttach.Count; i++)
+            {
+                if(objectsAttach[i] != null)
+                {
+                    objectsAttach[i].transform.SetParent(newParent);
+                    objectsAttach[i].SwitchStateItem(stateItemsInside);
+
+                    objectsAttach[i].SwitchStateCollider(!stateItemsInside);
+                }
+            }
+
+            bool allWithNewParent = true;
+
+            for (int i = 0; i < objectsAttach.Count; i++)
+            {
+                if (objectsAttach[i].transform.parent != newParent)
+                {
+                    allWithNewParent = false;
+                }
+            }
+
+            if(allWithNewParent)
+            {
+                onEndedAttch?.Invoke();
+            }
+
+            yield break;
+        }
+
+        private void SaveItemsInStack()
+        {
+            stackHandler.StackItemsInside(objectsAttach);
+        }
+
+        private void RestoreItemsFromStack()
+        {
+            objectsAttach.AddRange(stackHandler.GetStackFormStack());
+            slotStack.text = objectsAttach.Count.ToString();
         }
         #endregion
     }

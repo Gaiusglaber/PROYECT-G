@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +13,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
     {
         #region EXPOSED_FIELDS
         [Header("MAIN SETTINGS")]
-        [SerializeField, Tooltip("This is a grid size, so the amount of slots will be rows per column [ Note->(x * y) ].")] 
+        [SerializeField, Tooltip("This is a grid size, so the amount of slots will be rows per column [ Note->(x * y) ].")]
         private Vector2Int bagSlots = default;
         [SerializeField, Tooltip("The logic spacing between slots.")] private Vector2 slotsSize = default;
         [Header("REFERENCES")]
@@ -23,6 +25,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
         #region PRIVATE_FIELDS
         private InventoryModel inventoryModel = null;
+
+        private bool stackTake = false;
         #endregion
 
         public InventoryModel Model => inventoryModel;
@@ -37,18 +41,23 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
             inventoryView.Init(inventoryModel, viewParent); //visual del inventario
 
-            inventoryModel.SetOnSomeItemAttached(inventoryView.UpdateInventoryView);
+            inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
+            inventoryView.SetOnInventoryChange(inventoryModel.UpdateInventoryModel);
 
+            inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
             //Testing
 
-            Vector2Int gridPos = new Vector2Int(0, 0);
-            List<ItemModel> testItems = new List<ItemModel>() { allItemsAviable[0], allItemsAviable[0] , allItemsAviable[0] , allItemsAviable[0] };
-            List<ItemModel> testItems1 = new List<ItemModel>() { allItemsAviable[1], allItemsAviable[1] , allItemsAviable[1] };
-            List<ItemModel> testItems2 = new List<ItemModel>() { allItemsAviable[2]};
-            
-            inventoryModel.AttachItemsToSlot(testItems, gridPos);
-            inventoryModel.AttachItemsToSlot(testItems1, new Vector2Int(gridPos.x, gridPos.y+1));
-            inventoryModel.AttachItemsToSlot(testItems2, new Vector2Int(gridPos.x, gridPos.y +2));
+            GenerateItems(allItemsAviable[0].itemId, 5);
+            /*for (int i = 0; i < allItemsAviable.Count; i++)
+            {
+                GenerateItems(allItemsAviable[i].itemId, 1);
+            }*/
+        }
+
+        public void OnDeleteItems()
+        {
+            Vector2Int pos = new Vector2Int(0, 0);
+            RemoveItems(pos, 1);
         }
 
         public void UpdateInventory()
@@ -56,7 +65,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             if (inventoryView == null)
                 return;
 
-            inventoryView.UpdateSlotsView();
+            inventoryView.UpdateSlots(stackTake);
         }
 
         public void CheckState()
@@ -71,17 +80,63 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             if (!inventoryView.IsOpen)
                 return;
 
-            if(Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-
+                stackTake = true;
             }
+            else
+            {
+                stackTake = false;
+            }
+        }
+
+        public void GenerateItems(string idItem, int amount, Vector2Int gridPosition = default)
+        {
+            ItemModel itemToAttach = allItemsAviable.Find(t => t.itemId == idItem);
+            List<ItemModel> newStackOfItems = new List<ItemModel>();
+
+            for (int i = 0; i < amount; i++)
+            {
+                newStackOfItems.Add(itemToAttach);
+            }
+
+            inventoryModel.AttachItemsToSlot(newStackOfItems, gridPosition);
+        }
+
+        public void RemoveItems(Vector2Int gridPosition, int amount= 0, bool allItems = true)
+        {
+            inventoryModel.DeattachItemsFromSlot(gridPosition, amount, allItems);
         }
         #endregion
 
         #region PRIVATE_METHODS
+        private ItemModel GetItemModelFromId(string idItem)
+        {
+            ItemModel resultItem = null;
+
+            for (int i = 0; i < allItemsAviable.Count; i++)
+            {
+                if(allItemsAviable[i].itemId == idItem)
+                {
+                    resultItem = allItemsAviable[i];
+                    break;
+                }
+            }
+
+            if (resultItem == null)
+                Debug.LogWarning("That item id is not in the database of items aviables.");
+
+            return resultItem;
+        }
+
         private void InitilizeMVC()
         {
             inventoryModel = new InventoryModel();
+        }
+
+        private bool ItemsMatch(ItemModel item, string id)
+        {
+            return item.itemId == id;
         }
         #endregion
     }
