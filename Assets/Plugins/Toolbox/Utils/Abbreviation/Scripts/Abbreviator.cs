@@ -2,7 +2,7 @@
 
 using System.Globalization;
 
-namespace Pathfinders.Toolbox.Utils.Abbreviation
+namespace ProyectG.Toolbox.Utils.Abbreviation
 {
     public class Abbreviator : MonoBehaviour
     {

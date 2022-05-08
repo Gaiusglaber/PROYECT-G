@@ -1,6 +1,6 @@
 using UnityEngine.SceneManagement;
 
-namespace Pathfinders.Toolbox.Utils.SceneUtils
+namespace ProyectG.Toolbox.Utils.SceneUtils
 {
     public static class SceneUtils
     {

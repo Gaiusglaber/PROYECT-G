@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using Pathfinders.Toolbox.Fill;
+using ProyectG.Toolbox.Fill;
 
-namespace Pathfinders.Toolbox.Utils.UI
+namespace ProyectG.Toolbox.Utils.UI
 {
     public class ImageFill : AbstractFill
     {

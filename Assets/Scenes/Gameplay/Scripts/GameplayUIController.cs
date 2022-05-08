@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using Pathfinders.Toolbox.Lerpers;
+using ProyectG.Toolbox.Lerpers;
 using ProyectG.Gameplay.Objects;
 
 namespace ProyectG.Gameplay.UI

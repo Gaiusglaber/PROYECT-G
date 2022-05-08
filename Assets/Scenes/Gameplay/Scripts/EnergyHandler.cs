@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Pathfinders.Toolbox.Lerpers;
+using ProyectG.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.UI{
 

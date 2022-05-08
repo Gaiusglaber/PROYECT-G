@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Pathfinders.Toolbox.Singletons
+namespace ProyectG.Toolbox.Singletons
 {
     public class GenericSingleton<T> : MonoBehaviour where T : Component
     {

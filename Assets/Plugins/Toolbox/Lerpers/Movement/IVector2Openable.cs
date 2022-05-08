@@ -1,4 +1,4 @@
-namespace Pathfinders.Toolbox.Lerpers.Movement
+namespace ProyectG.Toolbox.Lerpers.Movement
 {
     public interface IVector2Openable
     {

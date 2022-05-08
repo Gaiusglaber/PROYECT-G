@@ -1,8 +1,8 @@
 using UnityEngine;
 
-using Pathfinders.Toolbox.Lerpers;
+using ProyectG.Toolbox.Lerpers;
 
-namespace Pathfinders.Toolbox.Camera
+namespace ProyectG.Toolbox.Camera
 {
     public class CameraController : MonoBehaviour
     {

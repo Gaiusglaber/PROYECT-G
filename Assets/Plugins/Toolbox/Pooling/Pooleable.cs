@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Pathfinders.Toolbox.Pooling
+namespace ProyectG.Toolbox.Pooling
 {
     public abstract class Pooleable : MonoBehaviour
     {

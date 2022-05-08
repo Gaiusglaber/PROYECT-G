@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Pathfinders.Toolbox.Lerpers
+namespace ProyectG.Toolbox.Lerpers
 {
     public class Vector3LerperMono : AbstractLerperMono<Vector3>
     {

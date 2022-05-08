@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Pathfinders.Toolbox.Utils.Abbreviation
+namespace ProyectG.Toolbox.Utils.Abbreviation
 {
     [CreateAssetMenu(fileName = "AbbreviatorTier_", menuName = "Toolbox/AbbreviatorTier", order = 0)]
     public class AbbreviatorTier : ScriptableObject
