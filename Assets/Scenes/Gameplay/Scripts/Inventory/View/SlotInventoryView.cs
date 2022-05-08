@@ -144,15 +144,21 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if(attachedStackDone)
                 {
-                    RestoreItemsFromStack();
-                    StartCoroutine(AttachItemsToParent(false, transform, () =>
+                    if(!stackHandler.Dragged)
                     {
-                        if(stackHandler.enabled)
+                        if(stackHandler.HasEndedRestoreDrag())
                         {
-                            stackHandler.enabled = false;
+                            RestoreItemsFromStack();
+                            StartCoroutine(AttachItemsToParent(false, transform, () =>
+                            {
+                                if(stackHandler.enabled)
+                                {
+                                    stackHandler.enabled = false;
+                                }
+                            }));
+                            attachedStackDone = false;
                         }
-                    }));
-                    attachedStackDone = false;
+                    }
                 }
             }
         }

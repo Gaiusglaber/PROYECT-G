@@ -28,6 +28,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool isDragging = false;
         private bool prepareToAttachOnSlot = false;
         private bool isAttachedToSlot = false;
+        private bool onRestoreDrag = false;
 
         private (Vector2, Transform) slotPositionAttached = default;
 
@@ -122,8 +123,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             isDragging = false;
 
             prepareToAttachOnSlot = true;
+            onRestoreDrag = true;
         }
-        
+
         public void StackItemsInside(List<ItemView> listOfItems)
         {
             for (int i = 0; i < listOfItems.Count; i++)
@@ -200,6 +202,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     transform.SetParent(parent);
                     myCollider.enabled = true;
+                    onRestoreDrag = false;
                 }));
 
                 return true;
@@ -207,6 +210,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             return false;
         }
+
+
+        public bool HasEndedRestoreDrag()
+        {
+            return !onRestoreDrag ? true : false;
+        }
+
         #endregion
 
         #region CORUTINES

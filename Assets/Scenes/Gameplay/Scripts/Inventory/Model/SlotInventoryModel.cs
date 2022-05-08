@@ -92,6 +92,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     PlaceItems(newListOfItems);
                 }
             }
+
+            Debug.Log("SLOT {"+ GridPosition+"} has " + stackOfItemsInSlot.Count + " items inside");
         }
 
         public void RemoveItems(int amount = 0, bool allItems = true)
