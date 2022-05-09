@@ -21,31 +21,28 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         #region PRIVATE_FIELDS
         private Canvas canvas = null;
-
+        private Camera mainCamera = null;
         private RectTransform draggingPlane;
-        private bool isDragging = false;
-
+        private BoxCollider2D myCollider = null;
+        private Vector3Lerper positionLerper = null;
         private PointerEventData eventData = null;
 
         private float currentLerpTime = 0;
         private float lerpTime = 0;
         private float finalPerc = 0;
-        private Vector3Lerper positionLerper = null;
+        private float timeToGoBackSlot = 0.5f;
+        private float time = 0;
 
+        private bool isDragging = false;
         private bool prepareToAttachOnSlot = false;
         private bool isAttachedToSlot = false;
         private bool dragDisable = false;
+        private bool itemInitialized = false;
 
-        private Camera mainCamera = null;
+        private Action<Vector2Int, Vector2Int> onEndedChangeOfSlot = null;
 
-        private (Vector2, Transform) slotPositionAttached = default;
-
+        private (Vector2, Vector2Int ,Transform) slotPositionAttached = default;
         private Vector2Int slotGridPosition = default;
-
-        float timeToGoBackSlot = 0.5f;
-        float time = 0;
-
-        private BoxCollider2D myCollider = null;
 
         private string itemId;
         #endregion
@@ -56,18 +53,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region INITIALIZATION
-        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, ItemModel itemData = null, Action onEndDrag = null)
+        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, ItemModel itemData = null, Action<Vector2Int,Vector2Int> onEndDrag = null)
         {
+            onEndedChangeOfSlot = onEndDrag;
+
             time = 0;
             timeToGoBackSlot = 0.5f;
+            lerpTime = followSpeed;
+
 
             canvas = mainCanvas;
-
             myCollider = GetComponent<BoxCollider2D>();
-
             mainCamera = Camera.main;
-
-            lerpTime = followSpeed;
 
             if(itemData != null)
             {
@@ -84,11 +81,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             positionLerper = new Vector3Lerper(followSpeed * 0.5f, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
 
             slotPositionAttached.Item1 = slotAttached.SlotPosition;
-            slotPositionAttached.Item2 = slotAttached.transform;
+            slotPositionAttached.Item2 = slotAttached.GridPosition;
+            slotPositionAttached.Item3 = slotAttached.transform;
 
             //Aplica el lerp del nuevo item creado al slot al que fue enviado
+            itemInitialized = false;
             isAttachedToSlot = true;
-            AttachToSlot(slotAttached.SlotPosition, slotAttached.gameObject.transform);
+            AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition, slotAttached.gameObject.transform);
         }
         #endregion
 
@@ -107,7 +106,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     time = 0;
                     prepareToAttachOnSlot = false;
                     myCollider.enabled = false;
-                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
                 }
             }
 
@@ -194,27 +193,36 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             prepareToAttachOnSlot = true;
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Transform parent)
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent)
         {
             if(parent == null)
             {
-                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
                 return false;
             }
 
             if (!isDragging)
             {
+                (Vector2, Vector2Int, Transform) lastSlotPosition = slotPositionAttached;
+
                 if (prepareToAttachOnSlot)
                 {
                     isAttachedToSlot = true;
                     slotPositionAttached.Item1 = positionSlot;
-                    slotPositionAttached.Item2 = parent;
+                    slotPositionAttached.Item2 = gridPos;
+                    slotPositionAttached.Item3 = parent;
                 }
 
                 StartCoroutine(AttachToPosition(positionSlot, () =>
                 {
+                    if(itemInitialized)
+                    {
+                        onEndedChangeOfSlot?.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                    }
+
                     transform.SetParent(parent);
                     myCollider.enabled = true;
+                    itemInitialized = true;
                 }));
 
                 return true;

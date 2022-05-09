@@ -26,7 +26,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private int maxRowsInventory = 0;
         private int maxColsInventory = 0;
 
-        private Action<InventoryView> onInventoryChange = null;
+        private Action<Vector2Int,Vector2Int> onSomeItemMoved = null;
         #endregion
 
         #region PROPERTIES
@@ -34,7 +34,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(InventoryModel model, Transform parentTarget)
+        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved)
         {
             parentView = parentTarget;
             maxRowsInventory = model.GridRows;
@@ -42,17 +42,20 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             InitializeSlotsView(maxRowsInventory, maxColsInventory);
 
+            this.onSomeItemMoved = onSomeItemMoved;
+
             for (int x = 0; x < maxRowsInventory; x++)
             {
                 for (int y = 0; y < maxColsInventory; y++)
                 {
                     Vector2Int gridPos = new Vector2Int(x, y);
-                    Vector2 finalWorldPosition = new Vector2((parentView.position.x - (model.GridCols * 0.5f)), 
+                    Vector2 finalWorldPosition = new Vector2((parentView.position.x - (model.GridCols * 0.5f)),
                         (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
-                    newSlotInv.Init(prefabItemView, mainCanvas, OnInventoryViewChanged);
-                    
+                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos, true);
+                    newSlotInv.SetOnSomeItemMoved(onSomeItemMoved);
+
                     model.SetSlotPosition(gridPos, finalWorldPosition);
                     Vector2 nextSlotPosition = finalWorldPosition + model.GetSlot(gridPos).NextSlotPosition;
                     model.GetSlot(gridPos).SetPositionNextSlot(nextSlotPosition);
@@ -79,7 +82,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     Vector2Int gridPos = new Vector2Int(x, y);
 
-                    GetSlotFromGrid(gridPos).UpdateSlot(stackTake);
+                    GetSlotFromGrid(gridPos).UpdateViewSlot(stackTake);
                 }
             }
         }
@@ -110,22 +113,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
         }
-
-        public void SetOnInventoryChange(Action<InventoryView> onInventoryChange)
-        {
-            this.onInventoryChange = onInventoryChange;
-        }
         #endregion
 
         #region PRIVATE_METHODS
         private void SetStateTxtStackInfo(bool stackState)
         {
             stackModeState.text = stackState ? "STACK DRAG: ENABLE" : "STACK DRAG: DISABLE";
-        }
-
-        private void OnInventoryViewChanged()
-        {
-            onInventoryChange?.Invoke(this);
         }
 
         private bool IsValidPosition(Vector2Int pos)
@@ -145,7 +138,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                     if(GetSlotFromGrid(nextPosGrid) != null)
                     {
-                        GetSlotFromGrid(gridPos).NextSlotFromThis = GetSlotFromGrid(nextPosGrid).transform;
+                        GetSlotFromGrid(gridPos).NextSlotFromThis = GetSlotFromGrid(nextPosGrid);
                     }
                     else
                     {
@@ -153,7 +146,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                         if(GetSlotFromGrid(nextPosGrid) != null)
                         {
-                            GetSlotFromGrid(gridPos).NextSlotFromThis = GetSlotFromGrid(nextPosGrid).transform;
+                            GetSlotFromGrid(gridPos).NextSlotFromThis = GetSlotFromGrid(nextPosGrid);
                         }
                         else
                         {

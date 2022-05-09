@@ -30,7 +30,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool isAttachedToSlot = false;
         private bool onRestoreDrag = false;
 
-        private (Vector2, Transform) slotPositionAttached = default;
+        private (Vector2,Vector2Int,Transform) slotPositionAttached = default;
 
         float timeToGoBackSlot = 0.5f;
         float time = 0;
@@ -62,7 +62,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if(!isAttachedToSlot)
                 {
-                    AttachToSlot(slotView.SlotPosition, slotView.transform);
+                    AttachToSlot(slotView.SlotPosition, slotView.GridPosition ,slotView.transform);
                     isAttachedToSlot = true;
                 }
             }
@@ -80,11 +80,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             myCollider = GetComponent<BoxCollider2D>();
 
             slotPositionAttached.Item1 = slotAttached.SlotPosition;
-            slotPositionAttached.Item2 = slotAttached.transform;
+            slotPositionAttached.Item2 = slotAttached.GridPosition;
+            slotPositionAttached.Item3 = slotAttached.transform;
 
             if (!isAttachedToSlot)
             {
-                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
                 isAttachedToSlot = true;
             }
         }
@@ -160,7 +161,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     time = 0;
                     prepareToAttachOnSlot = false;
                     myCollider.enabled = false;
-                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
                 }
             }
         }
@@ -184,11 +185,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Transform parent)
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent)
         {
             if (parent == null)
             {
-                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2);
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
                 return false;
             }
 
@@ -198,7 +199,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     isAttachedToSlot = true;
                     slotPositionAttached.Item1 = positionSlot;
-                    slotPositionAttached.Item2 = parent;
+                    slotPositionAttached.Item2 = gridPos;
+                    slotPositionAttached.Item3 = parent;
                 }
 
                 StartCoroutine(AttachToPosition(positionSlot, () =>

@@ -10,6 +10,6 @@ namespace ProyectG.Gameplay.Interfaces
         /// Esta interfaz implementa de forma directa todo lo necesario para dragear algo.
         /// </summary>
         /// 
-        public bool AttachToSlot(Vector2 positionSlot, Transform parent);
+        public bool AttachToSlot(Vector2 positionSlot,Vector2Int gridPos,Transform parent);
     }
 }

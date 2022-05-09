@@ -96,7 +96,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             Debug.Log("SLOT {"+ GridPosition+"} has " + stackOfItemsInSlot.Count + " items inside");
         }
 
-        public void RemoveItems(int amount = 0, bool allItems = true)
+        public void RemoveItems(int amount = 0, bool allItems = true, bool updateView = true)
         {
             if (amount != 0)
                 allItems = false;
@@ -117,7 +117,39 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                 }
             }
 
-            OnItemAttached?.Invoke();
+            if(updateView)
+            {
+                OnItemAttached?.Invoke();
+            }
+        }
+
+        public void PlaceOneItem(ItemModel itemToAttach)
+        {
+            if (stackOfItemsInSlot.Count < 1)
+            {
+                isEmpty = true;
+            }
+
+            if(isEmpty)
+            {
+                stackOfItemsInSlot.Add(itemToAttach);
+                isEmpty = false;
+            }
+            else
+            {
+                if(stackOfItemsInSlot[0] != null)
+                {
+                    if (AreItemsEquals(itemToAttach.itemId, stackOfItemsInSlot[0].itemId))
+                    {
+                        stackOfItemsInSlot.Add(itemToAttach);
+                        stackOfItemsInSlot = stackOfItemsInSlot.Distinct().ToList();
+                    }
+                    else
+                    {
+                        NextGridSlot.PlaceOneItem(itemToAttach);
+                    }
+                }
+            }
         }
 
         public void PlaceItems(List<ItemModel> itemToAttach)

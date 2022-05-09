@@ -39,10 +39,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             Vector2 initialPos = new Vector2(viewParent.position.x, viewParent.position.y);
 
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
-            inventoryView.Init(inventoryModel, viewParent); //visual del inventario
+            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots); //visual del inventario
 
             inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
-            inventoryView.SetOnInventoryChange(inventoryModel.UpdateInventoryModel);
 
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
             //Testing
@@ -50,7 +49,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             GenerateItems(allItemsAviable[0].itemId, 5);
             /*for (int i = 0; i < allItemsAviable.Count; i++)
             {
-                GenerateItems(allItemsAviable[i].itemId, 1);
+                GenerateItems(allItemsAviable[i].itemId, 5);
             }*/
         }
 

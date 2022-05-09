@@ -20,6 +20,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private Image iconItemAttach = null;
         [SerializeField] private BoxCollider2D colliderSprite = null;
         [SerializeField] private TextMeshProUGUI slotStack = null;
+        [SerializeField] private TextMeshProUGUI debugGridPos = null;
         [SerializeField] private StackSlotHandler stackHandler = null;
         [SerializeField] private LayerMask checkOnly = default;
         #endregion
@@ -27,7 +28,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PRIVATE_FIELDS
         private UnityAction atInteract = null;
 
-        private Transform nextSlotFromThis = default;
+        private SlotInventoryView nextSlotFromThis = default;
 
         private GameObject prefabItemView = null;
 
@@ -37,13 +38,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private bool attachedStackDone = false;
 
-        private Action callUpdateInventory = null;
+        private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
+
+        private Vector2Int gridPosition = default;
         #endregion
 
         #region UNITY_CALLS
         #endregion
 
         #region PROPERTIES
+        public Vector2Int GridPosition { get { return gridPosition; } }
+
         public List<ItemView> StackOfItemsView { get { return objectsAttach; } }
 
         public UnityAction OnInteract
@@ -74,13 +79,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             get
             {
                 if (NextSlotFromThis != null)
-                    return NextSlotFromThis.position;
+                    return NextSlotFromThis.transform.position;
                 else
                     return SlotPosition;
             }            
         }
 
-        public Transform NextSlotFromThis
+        public SlotInventoryView NextSlotFromThis
         {
             get
             {
@@ -94,11 +99,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(GameObject prefabItemView, Canvas mainCanvas, Action onInventoryUpdate)
+        public void Init(GameObject prefabItemView, Canvas mainCanvas, Vector2Int gridPos, bool debugTxtGrid = false)
         {
             this.mainCanvas = mainCanvas;
             this.prefabItemView = prefabItemView;
-            callUpdateInventory = onInventoryUpdate;
 
             nextSlotFromThis = null;
             slotStack.text = "0";
@@ -106,9 +110,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackHandler.Init(mainCanvas, this);
 
             stackHandler.enabled = false;
+
+            gridPosition = gridPos;
+
+            debugGridPos.text = gridPosition.ToString();
+            debugGridPos.gameObject.SetActive(debugTxtGrid);
+        }
+        public void SetOnSomeItemMoved(Action<Vector2Int, Vector2Int> onSomeItemMoved)
+        {
+              callUpdateSlots = onSomeItemMoved;
         }
 
-        public void UpdateSlot(bool onStackTake)
+        public void UpdateViewSlot(bool onStackTake)
         {
             RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, colliderSprite.size, 0, transform.forward, 1, checkOnly);
 
@@ -118,10 +131,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     if (hit.collider.TryGetComponent(out ItemView newItem))
                     {
-                        AddItemToSlotStack(newItem);
+                        ViewAddToSlot(newItem);
                     }
                 }
-                //callUpdateInventory?.Invoke();
             }
 
             if (onStackTake)
@@ -165,7 +177,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void UpdateSlotViewWithItems(List<ItemModel> itemsToStackInSlot)
         {
-            CheckSlotStackCorrect(itemsToStackInSlot);
+            UpdateViewWithModelInfo(itemsToStackInSlot);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -182,7 +194,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PRIVATE_METHODS
-        private void CheckSlotStackCorrect(List<ItemModel> itemsOnLogicSlot)
+        private void UpdateViewWithModelInfo(List<ItemModel> itemsOnLogicSlot)
         {
             if(objectsAttach.Count == itemsOnLogicSlot.Count)
             {
@@ -194,21 +206,31 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 if (amountToRemove < 0)
                 {
-                    CreateAndAddItemsToSlot(itemsOnLogicSlot);
+                    CreateAndAddItemsFromData(itemsOnLogicSlot);
                 }
                 else
                 {
-                    RemoveItemsFromViewSlot(amountToRemove);
+                    RemoveItemsFromDataUpdate(amountToRemove);
                 }
             }
         }
 
-        private void CreateAndAddItemsToSlot(List<ItemModel> itemsOnSlotLogic)
+        #region UPDATE_SLOTVIEW_WITH_MODEL
+        /// <summary>
+        /// Only used to comunicate view with model, if model changes adding some new item, the view inventory will create this items,
+        /// and add them to the correct slot.
+        /// 
+        /// DO NOT USE THIS METHODS TO HANDLE ITEMS. (This is because it CREATES and REMOVE items,
+        /// while the drag and change of inventory needs to be with always the same data.)
+        /// </summary>
+        /// <param name="itemsOnSlotLogic"></param>
+        /// 
+        private void CreateAndAddItemsFromData(List<ItemModel> itemsOnSlotLogic)
         {
             for (int i = 0; i < itemsOnSlotLogic.Count; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, this, itemsOnSlotLogic[i]);
+                newItem.GenerateItem(mainCanvas, this, itemsOnSlotLogic[i], callUpdateSlots);
 
                 if (!objectsAttach.Contains(newItem))
                 {
@@ -219,7 +241,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             slotStack.text = objectsAttach.Count.ToString();
         }
 
-        private void RemoveItemsFromViewSlot(int diference)
+        private void RemoveItemsFromDataUpdate(int diference)
         {
             for (int i = 0; i < diference; i++)
             {
@@ -232,11 +254,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             slotStack.text = objectsAttach.Count.ToString();
         }
+        #endregion
 
+
+        /// <summary>
+        /// Used to check if the slot has correct items view, if not will update the items on list.
+        /// </summary>
+        /// <param name="actualItemsInsideSlot"></param>
+        /// <returns></returns>
         private bool IsStackUpdated(RaycastHit2D [] actualItemsInsideSlot)
         {
-            //Debug.Log(actualItemsInsideSlot.Length-1);
-
             if(objectsAttach.Count == actualItemsInsideSlot.Length)   //Sin contar el mismo slot que tiene su collider
             {
                 return true;
@@ -250,27 +277,26 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 for (int i = 0; i < amountToRemove; i++)
                 {
-                    RemoveItemFromSlotStack(objectsAttach[objectsAttach.Count - 1]);
+                    ViewRemoveFromSlot(objectsAttach[objectsAttach.Count - 1]);
                 }
 
-                //scallUpdateInventory?.Invoke();
                 slotStack.text = objectsAttach.Count.ToString();
 
                 return false;
             }
         }
 
-        private void AddItemToSlotStack(ItemView item)
+        private void ViewAddToSlot(ItemView item)
         {
             if(!objectsAttach.Contains(item))
             {
                 objectsAttach.Add(item);
-                //callUpdateInventory?.Invoke();
+
                 slotStack.text = objectsAttach.Count.ToString();
             }
         }
 
-        private void RemoveItemFromSlotStack(ItemView item)
+        private void ViewRemoveFromSlot(ItemView item)
         {
             if (objectsAttach.Contains(item))
             {
@@ -291,11 +317,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     if(newItem.ItemType == objectsAttach[0].ItemType)
                     {
-                        newItem.AttachToSlot(SlotPosition, transform);
+                        newItem.AttachToSlot(SlotPosition, GridPosition,transform);
                     }
                     else
                     {
-                        if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis))
+                        if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition , NextSlotFromThis.transform))
                         {
                             return;
                         }
@@ -306,7 +332,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (collision.TryGetComponent(out ItemView item))
                 {
-                    item.AttachToSlot(SlotPosition, transform);
+                    item.AttachToSlot(SlotPosition, GridPosition ,transform);
                 }                
             }
         }
