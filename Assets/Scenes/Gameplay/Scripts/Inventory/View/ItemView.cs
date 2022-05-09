@@ -50,6 +50,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PROPERTIES
         public string ItemType { get { return itemId; } }
         public bool Dragged => isDragging;
+
+        public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
         #endregion
 
         #region INITIALIZATION
@@ -195,12 +197,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent)
         {
-            if(parent == null)
-            {
-                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
-                return false;
-            }
-
             if (!isDragging)
             {
                 (Vector2, Vector2Int, Transform) lastSlotPosition = slotPositionAttached;

@@ -117,7 +117,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             Debug.Log("SWITCHED ITEM FROM {" + originalSlot + "} TO {" + newSlot + "}");
 
             ItemModel copyOfItem = new ItemModel();
-            CopyItemModel(ref copyOfItem, GetSlot(originalSlot).StackOfItems[0]);
+
+            if(GetSlot(originalSlot).StackOfItems.Count > 0)
+            {
+                CopyItemModel(ref copyOfItem, GetSlot(originalSlot).StackOfItems[0]);
+            }
 
             GetSlot(originalSlot).RemoveItems(1, false, false);
             GetSlot(newSlot).PlaceOneItem(copyOfItem);

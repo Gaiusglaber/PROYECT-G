@@ -305,7 +305,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (objectsAttach.Count < 1)
             {
-                slotStack.text = "";
+                slotStack.text = string.Empty;
             }
         }
 
@@ -321,9 +321,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     }
                     else
                     {
-                        if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition , NextSlotFromThis.transform))
+                        if(NextSlotFromThis != null)
                         {
-                            return;
+                            if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition , NextSlotFromThis.transform))
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            newItem.AttachToSlot(newItem.SlotPositionAttached.Item1, newItem.SlotPositionAttached.Item2, newItem.SlotPositionAttached.Item3);
                         }
                     }
                 }

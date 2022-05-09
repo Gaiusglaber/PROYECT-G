@@ -46,11 +46,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
             //Testing
 
-            GenerateItems(allItemsAviable[0].itemId, 5);
-            /*for (int i = 0; i < allItemsAviable.Count; i++)
+            //GenerateItems(allItemsAviable[0].itemId, 5);
+            for (int i = 0; i < allItemsAviable.Count; i++)
             {
                 GenerateItems(allItemsAviable[i].itemId, 5);
-            }*/
+            }
         }
 
         public void OnDeleteItems()

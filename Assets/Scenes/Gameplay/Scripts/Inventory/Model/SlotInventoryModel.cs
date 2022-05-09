@@ -125,6 +125,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
         public void PlaceOneItem(ItemModel itemToAttach)
         {
+            if (itemToAttach == null)
+                return;
+
             if (stackOfItemsInSlot.Count < 1)
             {
                 isEmpty = true;
