@@ -149,7 +149,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     }
                     else
                     {
-                        NextGridSlot.PlaceOneItem(itemToAttach);
+                        if(NextGridSlot != null)
+                        {
+                            NextGridSlot.PlaceOneItem(itemToAttach);
+                        }
                     }
                 }
             }

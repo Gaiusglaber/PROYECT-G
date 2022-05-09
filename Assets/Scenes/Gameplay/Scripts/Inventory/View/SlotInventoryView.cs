@@ -19,7 +19,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private Image slotFrame = null;
         [SerializeField] private Image iconItemAttach = null;
         [SerializeField] private BoxCollider2D colliderSprite = null;
-        [SerializeField] private TextMeshProUGUI slotStack = null;
+        [SerializeField] private TextMeshProUGUI amountOutStack = null;
         [SerializeField] private TextMeshProUGUI debugGridPos = null;
         [SerializeField] private StackSlotHandler stackHandler = null;
         [SerializeField] private LayerMask checkOnly = default;
@@ -49,6 +49,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PROPERTIES
+        public string AmountOutStack { get { return amountOutStack.text; } set { amountOutStack.text = value; } }
         public StackSlotHandler StackHandler { get { return stackHandler; } set { stackHandler = value; } }
 
         public Vector2Int GridPosition { get { return gridPosition; } }
@@ -109,7 +110,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             this.prefabItemView = prefabItemView;
 
             nextSlotFromThis = null;
-            slotStack.text = "0";
+            amountOutStack.text = string.Empty;
 
             stackHandler.Init(mainCanvas, this);
 
@@ -156,7 +157,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     attachedStackDone = true;
                 }
 
-                slotStack.text = stackHandler.SizeStack.ToString();
+                amountOutStack.text = string.Empty;
             }
             else
             {
@@ -179,6 +180,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                             attachedStackDone = false;
                         }
                     }
+
+                    stackHandler.StackAmount = string.Empty;
                 }
             }
         }
@@ -246,7 +249,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
 
-            slotStack.text = objectsAttach.Count.ToString();
+            amountOutStack.text = objectsAttach.Count.ToString();
         }
 
         private void RemoveItemsFromDataUpdate(int diference)
@@ -260,7 +263,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
 
-            slotStack.text = objectsAttach.Count.ToString();
+            amountOutStack.text = objectsAttach.Count.ToString();
         }
         #endregion
 
@@ -288,7 +291,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     ViewRemoveFromSlot(objectsAttach[objectsAttach.Count - 1]);
                 }
 
-                slotStack.text = objectsAttach.Count.ToString();
+                amountOutStack.text = objectsAttach.Count.ToString();
 
                 return false;
             }
@@ -300,7 +303,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 objectsAttach.Add(item);
 
-                slotStack.text = objectsAttach.Count.ToString();
+                amountOutStack.text = objectsAttach.Count.ToString();
             }
         }
 
@@ -313,7 +316,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (objectsAttach.Count < 1)
             {
-                slotStack.text = string.Empty;
+                amountOutStack.text = string.Empty;
             }
         }
 
@@ -334,6 +337,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         stack.SwipeStackSlots(this);
                     }
                 }
+
                 return;
             }
 
@@ -412,7 +416,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private void RestoreItemsFromStack()
         {
             objectsAttach.AddRange(stackHandler.GetStackFormStack());
-            slotStack.text = objectsAttach.Count.ToString();
+
+            amountOutStack.text = objectsAttach.Count.ToString();
         }
         #endregion
     }

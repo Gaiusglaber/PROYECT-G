@@ -8,13 +8,15 @@ using ProyectG.Gameplay.Interfaces;
 
 using Pathfinders.Toolbox.Lerpers;
 
+using TMPro;
+
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
     public class StackSlotHandler : MonoBehaviour, IDraggable, ISwitchable
     {
         #region EXPOSED_FIELDS
         [SerializeField] private float speedFollow = 0;
-
+        [SerializeField] private TextMeshProUGUI stackAmount = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -47,9 +49,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PROPERTIES
         public bool Dragged => isDragging;
         public int SizeStack => stackedItems.Count;
-
+        public string StackAmount { get { return stackAmount.text; } set { stackAmount.text = value; } }
         public SlotInventoryView ActualSlot { get { return actualSlot; } }
-
         public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
         public (Vector2, Vector2Int, Transform) LastslotPositionAttached { get { return lastslotPositionAttached; } }
         #endregion
@@ -57,7 +58,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region UNITY_CALLS
         private void Update()
         {
-            //RestorePosition();
+            RestorePosition();
         }
 
         private void OnTriggerStay2D(Collider2D collision)
@@ -90,6 +91,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             slotPositionAttached.Item3 = slotAttached.transform;
 
             actualSlot = slotAttached;
+
+            StackAmount = string.Empty;
 
             if (!isAttachedToSlot)
             {
@@ -144,6 +147,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 stackedItems.Push(listOfItems[i]);
             }
+
+            StackAmount = SizeStack.ToString();
         }
 
         public List<ItemView> GetStackFormStack()   //no supe como llamarlo mejor xd
@@ -153,6 +158,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             allReturnedItems.AddRange(stackedItems);
             stackedItems.Clear();
 
+            StackAmount = string.Empty;
+
             return allReturnedItems;
         }
         #endregion
@@ -160,7 +167,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PRIVATE_METHODS
         private void RestorePosition()
         {
-            if (onSwipingStack)
+            if (onSwipingStack || !onRestoreDrag)
                 return;
 
             if (isAttachedToSlot && prepareToAttachOnSlot)
@@ -239,6 +246,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if(!isDragging)
             {
                 actualSlot = newSlot;
+
+                slotPositionAttached.Item1 = newSlot.SlotPosition;
+                slotPositionAttached.Item2 = newSlot.GridPosition;
+                slotPositionAttached.Item3 = newSlot.transform;
 
                 StartCoroutine(AttachToPosition(newSlot.SlotPosition, ()=> {
 
