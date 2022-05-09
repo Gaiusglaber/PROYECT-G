@@ -1,6 +1,9 @@
 using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+using ProyectG.Gameplay.Objects.Inventory.View;
 
 namespace ProyectG.Gameplay.Interfaces
 {
@@ -11,5 +14,10 @@ namespace ProyectG.Gameplay.Interfaces
         /// </summary>
         /// 
         public bool AttachToSlot(Vector2 positionSlot,Vector2Int gridPos,Transform parent);
+    }
+
+    public interface ISwitchable
+    {
+        public bool SwipeStackSlots(SlotInventoryView newSlot, Action<SlotInventoryView> callback = null);
     }
 }

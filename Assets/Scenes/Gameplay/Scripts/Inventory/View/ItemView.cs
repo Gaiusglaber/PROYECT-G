@@ -270,6 +270,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             yield return null;
         }
+
+        public bool SwipeStackSlots(Vector2 positionSlot, Vector2Int gridPos, Transform parent, Action callback = null)
+        {
+            //Nope;
+            return false;
+        }
         #endregion
     }
 }

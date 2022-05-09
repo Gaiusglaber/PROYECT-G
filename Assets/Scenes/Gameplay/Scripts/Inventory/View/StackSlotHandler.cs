@@ -10,7 +10,7 @@ using Pathfinders.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
-    public class StackSlotHandler : MonoBehaviour, IDraggable
+    public class StackSlotHandler : MonoBehaviour, IDraggable, ISwitchable
     {
         #region EXPOSED_FIELDS
         [SerializeField] private float speedFollow = 0;
@@ -29,8 +29,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool prepareToAttachOnSlot = false;
         private bool isAttachedToSlot = false;
         private bool onRestoreDrag = false;
+        private bool onSwipingStack = false;
 
         private (Vector2,Vector2Int,Transform) slotPositionAttached = default;
+        private (Vector2,Vector2Int,Transform) lastslotPositionAttached = default;
+
+        private SlotInventoryView actualSlot = null;
 
         float timeToGoBackSlot = 0.5f;
         float time = 0;
@@ -43,22 +47,24 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PROPERTIES
         public bool Dragged => isDragging;
         public int SizeStack => stackedItems.Count;
+
+        public SlotInventoryView ActualSlot { get { return actualSlot; } }
+
+        public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
+        public (Vector2, Vector2Int, Transform) LastslotPositionAttached { get { return lastslotPositionAttached; } }
         #endregion
 
         #region UNITY_CALLS
         private void Update()
         {
-            RestorePosition();
+            //RestorePosition();
         }
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (isDragging)
-            {
-                return;
-            }
+            if (isDragging) { return; }
 
-            if(collision.TryGetComponent(out SlotInventoryView slotView))
+            if (collision.TryGetComponent(out SlotInventoryView slotView))
             {
                 if(!isAttachedToSlot)
                 {
@@ -82,6 +88,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             slotPositionAttached.Item1 = slotAttached.SlotPosition;
             slotPositionAttached.Item2 = slotAttached.GridPosition;
             slotPositionAttached.Item3 = slotAttached.transform;
+
+            actualSlot = slotAttached;
 
             if (!isAttachedToSlot)
             {
@@ -152,6 +160,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PRIVATE_METHODS
         private void RestorePosition()
         {
+            if (onSwipingStack)
+                return;
+
             if (isAttachedToSlot && prepareToAttachOnSlot)
             {
                 if (time < timeToGoBackSlot)
@@ -195,6 +206,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (!isDragging)
             {
+                lastslotPositionAttached = slotPositionAttached;
+
                 if (prepareToAttachOnSlot)
                 {
                     isAttachedToSlot = true;
@@ -216,6 +229,34 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             return false;
         }
 
+        public bool SwipeStackSlots(SlotInventoryView newSlot, Action<SlotInventoryView> callback = null)
+        {
+            myCollider.enabled = false;
+            onSwipingStack = true;
+
+            SlotInventoryView auxSlot = actualSlot;
+
+            if(!isDragging)
+            {
+                actualSlot = newSlot;
+
+                StartCoroutine(AttachToPosition(newSlot.SlotPosition, ()=> {
+
+                    actualSlot.StackHandler = this;
+                    transform.SetParent(newSlot.transform);
+                    myCollider.enabled = true;
+                    onRestoreDrag = false;
+
+                    onSwipingStack = false;
+
+                    callback?.Invoke(auxSlot);
+                }));
+
+                return true;
+            }
+
+            return false;
+        }
 
         public bool HasEndedRestoreDrag()
         {
@@ -225,7 +266,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region CORUTINES
-        private IEnumerator AttachToPosition(Vector2 targetPosition, Action callbackAtEndPosition = null)
+        public IEnumerator AttachToPosition(Vector2 targetPosition, Action callbackAtEndPosition = null)
         {
             if (prepareToAttachOnSlot)
             {

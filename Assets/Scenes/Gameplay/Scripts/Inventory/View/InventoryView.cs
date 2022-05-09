@@ -53,7 +53,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
-                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos, true);
+                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos);
                     newSlotInv.SetOnSomeItemMoved(onSomeItemMoved);
 
                     model.SetSlotPosition(gridPos, finalWorldPosition);

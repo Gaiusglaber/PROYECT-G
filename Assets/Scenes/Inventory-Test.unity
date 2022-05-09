@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcde605baa5eba41ae82f344957c376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bagSlots: {x: 2, y: 3}
+  bagSlots: {x: 6, y: 3}
   slotsSize: {x: 105, y: 105}
   viewParent: {fileID: 993603994}
   inventoryView: {fileID: 993603995}

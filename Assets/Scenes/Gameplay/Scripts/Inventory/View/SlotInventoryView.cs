@@ -37,6 +37,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private Canvas mainCanvas = null;
 
         private bool attachedStackDone = false;
+        private bool onStackTakeMode = false;
+        private bool switchedStacks = false;
 
         private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
 
@@ -47,6 +49,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PROPERTIES
+        public StackSlotHandler StackHandler { get { return stackHandler; } set { stackHandler = value; } }
+
         public Vector2Int GridPosition { get { return gridPosition; } }
 
         public List<ItemView> StackOfItemsView { get { return objectsAttach; } }
@@ -136,6 +140,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
 
+            onStackTakeMode = onStackTake;
+
             if (onStackTake)
             {
                 if (!stackHandler.enabled)
@@ -156,7 +162,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if(attachedStackDone)
                 {
-                    if(!stackHandler.Dragged)
+                    switchedStacks = false;
+
+                    if (!stackHandler.Dragged)
                     {
                         if(stackHandler.HasEndedRestoreDrag())
                         {
@@ -311,9 +319,28 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private void OnTriggerStay2D(Collider2D collision)
         {
+            //Stack handle
+            if (onStackTakeMode)
+            {
+                if (collision.TryGetComponent(out StackSlotHandler stack))
+                {
+                    if (!stack.Dragged && stack != stackHandler && !switchedStacks)
+                    {
+                        switchedStacks = true;
+
+                        SlotInventoryView stackIncomingSlot = stack.ActualSlot;
+
+                        stackHandler.SwipeStackSlots(stackIncomingSlot);
+                        stack.SwipeStackSlots(this);
+                    }
+                }
+                return;
+            }
+
             if (objectsAttach.Count > 0)
             {
-                if(collision.TryGetComponent(out ItemView newItem))
+                //ItemHandle
+                if (collision.TryGetComponent(out ItemView newItem))
                 {
                     if(newItem.ItemType == objectsAttach[0].ItemType)
                     {
