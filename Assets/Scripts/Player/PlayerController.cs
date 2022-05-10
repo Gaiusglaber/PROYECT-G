@@ -186,13 +186,28 @@ namespace ProjectG.Player.Controller
 
                 float apexBonus = Mathf.Sign(Input.GetAxisRaw("Horizontal")) * this.apexBonus * apexPoint;
                 horizontalSpeed += apexBonus * Time.deltaTime;
-
-                SetAnimation("movilidad");
+                
+                if (onGround)
+                {
+                    SetAnimation("movilidad");
+                }
+                else
+                {
+                    SetAnimation("Salto", 1);
+                }
             }
             else
             {
                 horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, (deAcceleration / 6f) * Time.deltaTime);
-                SetAnimation("idle");
+                
+                if(!onGround)
+                {
+                    SetAnimation("Salto", 1);
+                }
+                else
+                {
+                    SetAnimation("idle");
+                }
             }
 
             if (horizontalSpeed > 0 && colRight || horizontalSpeed < 0 && colLeft)
@@ -248,7 +263,7 @@ namespace ProjectG.Player.Controller
         {
             if (Input.GetButtonDown("Jump"))
             {
-                lastJumpPressed = Time.time;
+                lastJumpPressed = Time.time;                
             }
 
             if (Input.GetButtonDown("Jump") && CanUseCoyote || BufferedJump)
