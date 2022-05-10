@@ -183,8 +183,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     {
                         stackOfItemsInSlot.AddRange(itemToAttach);
 
-                        stackOfItemsInSlot = stackOfItemsInSlot.Distinct().ToList();
-
                         OnItemAttached?.Invoke();
                     }
                     else

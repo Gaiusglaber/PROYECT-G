@@ -53,6 +53,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             }
         }
 
+        public void OnCreateSomeItems()
+        {
+            for (int i = 0; i < allItemsAviable.Count; i++)
+            {
+                GenerateItems(allItemsAviable[i].itemId, 5);
+            }
+        }
+
         public void OnDeleteItems()
         {
             Vector2Int pos = new Vector2Int(0, 0);
