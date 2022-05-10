@@ -24,6 +24,13 @@ namespace ProyectG.Gameplay.UI
         [SerializeField] private Vector2 posToLerpPanel = Vector2.zero;
         [SerializeField] private GameObject panel = null;
         [SerializeField] private Volume volume = null;
+
+        [Header("TEMPORAL")]
+        [SerializeField] private GameObject panelControlls = null;
+        [SerializeField] private Button onOpenControlls = null;
+        [SerializeField] private Button onCloseControlls = null;
+        [SerializeField] private Vector2 panelOpenDestination = default;
+        [SerializeField] private Vector2 panelCloseDestination = default;
         #endregion
         #region PRIVATE_FIELDS
         private DepthOfField dof = null;
@@ -40,6 +47,10 @@ namespace ProyectG.Gameplay.UI
             initialPos = panel.GetComponent<RectTransform>().anchoredPosition;
             initialdof = dof.focusDistance.value;
             panelLerper = new Vector2Lerper(panelLerperSpeed, AbstractLerper<Vector2>.SMOOTH_TYPE.EASE_OUT);
+
+            onOpenControlls.onClick.AddListener(ShowControlls);
+            onCloseControlls.onClick.AddListener(HideControlls);
+            onCloseControlls.gameObject.SetActive(false);
         }
         #endregion
         #region PUBLIC_METHODS
@@ -59,10 +70,29 @@ namespace ProyectG.Gameplay.UI
         }
         #endregion
         #region PRIVATE_METHODS
+        private void ShowControlls()
+        {
+            StartCoroutine(LerpPanel(panelControlls, panelOpenDestination));
+        }
+        private void HideControlls()
+        {
+            StartCoroutine(LerpPanel(panelControlls, panelCloseDestination));
+        }
         #endregion
         #region PUBLIC_CORROUTINES
         #endregion
         #region PRIVATE_CORROUTINES
+        private IEnumerator LerpPanel(GameObject panel, Vector2 destPos)
+        {
+            RectTransform panelPosition = panel.GetComponent<RectTransform>();
+            panelLerper.SetValues(panelPosition.anchoredPosition, destPos, true);
+            while (panelLerper.On)
+            {
+                panelLerper.Update();
+                panelPosition.anchoredPosition = panelLerper.CurrentValue;
+                yield return new WaitForEndOfFrame();
+            }
+        }
         private IEnumerator LerpPanel(Vector2 destPos)
         {
             RectTransform panelPosition = panel.GetComponent<RectTransform>();
