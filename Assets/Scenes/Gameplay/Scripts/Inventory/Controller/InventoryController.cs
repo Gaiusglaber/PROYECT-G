@@ -56,24 +56,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryView.SetOnHandleInventory(BlendBackground);
             inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
-
-            //Testing
-            //GenerateItems(allItemsAviable[0].itemId, 5);
-            for (int i = 0; i < allItemsAviable.Count; i++)
-            {
-                GenerateItems(allItemsAviable[i].itemId, 5);
-            }
         }
 
-        public void OnCreateSomeItems()
+        public void GenerateItem(string idItem)
         {
-            for (int i = 0; i < allItemsAviable.Count; i++)
-            {
-                GenerateItems(allItemsAviable[i].itemId, 5);
-            }
+            GenerateItems(idItem, 1);
         }
 
-        public void OnDeleteItems()
+        public void OnDeleteItem()
         {
             Vector2Int pos = new Vector2Int(0, 0);
             RemoveItems(pos, 1);

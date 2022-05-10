@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ProyectG.Gameplay.Objects.Inventory.Data
 {
     [Serializable]
-    [CreateAssetMenu(fileName = "ItemModel", menuName = "ScriptableObjects/Data/Items")]
+    [CreateAssetMenu(fileName = "ItemModel", menuName = "ScriptableObjects/Data/Items", order = 0)]
     public class ItemModel : ScriptableObject
     {
         #region PROTECTED_FIELDS

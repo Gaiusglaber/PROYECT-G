@@ -5,6 +5,8 @@ using UnityEngine;
 using ProyectG.Player.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 
+using ProyectG.Gameplay.Objects;
+
 namespace ProjectG.Gameplay.Managers
 {
     public class GameManager : MonoBehaviour
@@ -16,6 +18,9 @@ namespace ProjectG.Gameplay.Managers
         [Header("Main References")]
         [SerializeField] private PlayerController playerPrefab = null;
         [SerializeField] private InventoryController inventory = null;
+
+        [Header("FOR TESTING")]
+        [SerializeField] private WorldItem testItem = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -28,6 +33,8 @@ namespace ProjectG.Gameplay.Managers
             InitializePlayer();
 
             inventory.Init();
+
+            testItem.SetOnItemTaked(inventory.GenerateItem);
         }
 
         private void Update()

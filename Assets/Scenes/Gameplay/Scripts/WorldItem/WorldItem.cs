@@ -2,10 +2,12 @@ using System;
 using UnityEngine;
 using ProyectG.Toolbox.Lerpers;
 
-namespace ProyectG.Gameplay.Objects{
+namespace ProyectG.Gameplay.Objects
+{
 	public class WorldItem : MonoBehaviour
 	{
 		#region EXPOSED_FIELDS
+        [SerializeField] private SpriteRenderer spriteAttach = null;
 		[SerializeField] protected WorldItemSO data = null;
 		[SerializeField] protected float fallSpeed = 0;
 		#endregion
@@ -13,26 +15,50 @@ namespace ProyectG.Gameplay.Objects{
 		#region PRIVATE_FIELDS
 		private Vector2Lerper posLerper = null;
         private Vector2Lerper sizeLerper = null;
+
+        private Action<string> onTakedItem = null;
+
+        private bool itemAddedToInventory = false;
+        private bool worldItemTaked = false;
         #endregion
 
         #region PROPERTIES
+        public Action<string> OnTakedItem { get { return onTakedItem; } set { onTakedItem = value; } }
         #endregion
 
         #region UNITY_CALLS
         protected void Start()
         {
-			posLerper = new Vector2Lerper(fallSpeed, AbstractLerper<Vector2>.SMOOTH_TYPE.STEP_SMOOTHER);
+            spriteAttach = GetComponent<SpriteRenderer>();
+            posLerper = new Vector2Lerper(fallSpeed, AbstractLerper<Vector2>.SMOOTH_TYPE.STEP_SMOOTHER);
+            sizeLerper = new Vector2Lerper(fallSpeed, Vector2Lerper.SMOOTH_TYPE.EXPONENTIAL);
+
+            worldItemTaked = false;
+            itemAddedToInventory = false;
+
+            sizeLerper.SetValues(Vector2.zero, Vector2.one, true);
         }
         protected void Update()
         {
             UpdateLerpers();
         }
+
+        protected void OnTriggerEnter2D(Collider2D collision)
+        {
+            if(collision.CompareTag("Player"))
+            {
+                posLerper.SetValues(transform.position, collision.transform.position, true);
+                sizeLerper.SetValues(Vector2.one, Vector2.zero, true);
+                worldItemTaked = true;
+                Debug.Log("EL PLAYER ESTA ARRIBAAAAA OWO");
+            }
+        }
         #endregion
 
         #region PUBLIC_METHODS
-        public virtual void Spawn()
+        public void SetOnItemTaked(Action<string> onItemTaked)
         {
-
+            onTakedItem = onItemTaked;
         }
 		#endregion
 
@@ -48,7 +74,25 @@ namespace ProyectG.Gameplay.Objects{
             {
                 sizeLerper.Update();
                 transform.localScale = sizeLerper.CurrentValue;
+
+                if(sizeLerper.Reached)
+                {
+                    if(worldItemTaked)
+                    {
+                        if(!itemAddedToInventory)
+                        {
+                            onTakedItem?.Invoke(data.itemModel.itemId);
+                            itemAddedToInventory = true;
+                            Destroy(gameObject, 0.5f);
+                        }
+                    }
+                }
             }
+        }
+
+        private void SetItemData()
+        {
+            spriteAttach.sprite = data.sprite;
         }
 		#endregion
 
