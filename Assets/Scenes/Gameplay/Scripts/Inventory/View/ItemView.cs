@@ -17,6 +17,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region EXPOSED_FIELDS
         [SerializeField] private float followSpeed = 0;
         [SerializeField] private Image itemImage = null;
+        [SerializeField] private bool useLerpAnimations = true;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -209,9 +210,25 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     slotPositionAttached.Item3 = parent;
                 }
 
-                StartCoroutine(AttachToPosition(positionSlot, () =>
+                if(useLerpAnimations)
                 {
-                    if(itemInitialized)
+                    StartCoroutine(AttachToPosition(positionSlot, () =>
+                    {
+                        if(itemInitialized)
+                        {
+                            onEndedChangeOfSlot?.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                        }
+
+                        transform.SetParent(parent);
+                        myCollider.enabled = true;
+                        itemInitialized = true;
+                    }));
+                }
+                else
+                {
+                    transform.position = positionSlot;
+
+                    if (itemInitialized)
                     {
                         onEndedChangeOfSlot?.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
                     }
@@ -219,7 +236,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     transform.SetParent(parent);
                     myCollider.enabled = true;
                     itemInitialized = true;
-                }));
+                }
 
                 return true;
             }

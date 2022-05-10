@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followSpeed: 0.45
   itemImage: {fileID: 3507272483325874768}
+  useLerpAnimations: 0
 --- !u!61 &3507272483325874775
 BoxCollider2D:
   m_ObjectHideFlags: 0

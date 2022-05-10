@@ -17,6 +17,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region EXPOSED_FIELDS
         [SerializeField] private float speedFollow = 0;
         [SerializeField] private TextMeshProUGUI stackAmount = null;
+        [SerializeField] private bool useLerpAnimations = true;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -223,12 +224,22 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     slotPositionAttached.Item3 = parent;
                 }
 
-                StartCoroutine(AttachToPosition(positionSlot, () =>
+                if (useLerpAnimations)
                 {
+                    StartCoroutine(AttachToPosition(positionSlot, () =>
+                    {
+                        transform.SetParent(parent);
+                        myCollider.enabled = true;
+                        onRestoreDrag = false;
+                    }));
+                }
+                else
+                {
+                    transform.position = positionSlot;
                     transform.SetParent(parent);
                     myCollider.enabled = true;
                     onRestoreDrag = false;
-                }));
+                }
 
                 return true;
             }
@@ -251,17 +262,30 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 slotPositionAttached.Item2 = newSlot.GridPosition;
                 slotPositionAttached.Item3 = newSlot.transform;
 
-                StartCoroutine(AttachToPosition(newSlot.SlotPosition, ()=> {
+                if(useLerpAnimations)
+                {
+                    StartCoroutine(AttachToPosition(newSlot.SlotPosition, ()=> {
 
+                        actualSlot.StackHandler = this;
+                        transform.SetParent(newSlot.transform);
+                        myCollider.enabled = true;
+                        onRestoreDrag = false;
+
+                        onSwipingStack = false;
+
+                        callback?.Invoke(auxSlot);
+                    }));
+                }
+                else
+                {
                     actualSlot.StackHandler = this;
+                    transform.position = newSlot.SlotPosition;
                     transform.SetParent(newSlot.transform);
                     myCollider.enabled = true;
                     onRestoreDrag = false;
-
                     onSwipingStack = false;
-
                     callback?.Invoke(auxSlot);
-                }));
+                }
 
                 return true;
             }
