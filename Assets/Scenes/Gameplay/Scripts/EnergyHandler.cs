@@ -20,6 +20,11 @@ namespace ProyectG.Gameplay.UI{
 		[SerializeField] private int initialEnergy = 0;
 		[SerializeField] private Color energyColor = Color.white;
 		[SerializeField] private Color maxEnergyColor = Color.white;
+		[SerializeField] private float energyDecreaseInterval = 2.0f;
+		[SerializeField] private int decreceEnergy = 150;
+
+		private float timer = 0;
+
 		#endregion
 
 		#region PRIVATE_FIELDS
@@ -42,10 +47,16 @@ namespace ProyectG.Gameplay.UI{
 			StartCoroutine(LerpBar(GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
         }
-        #endregion
 
-        #region PUBLIC_METHODS
-        public void UpdateEnergy(int valueToUpdate)
+		private void Update()
+		{
+			DecreaseEnergyOverTime();
+		}
+
+		#endregion
+
+		#region PUBLIC_METHODS
+		public void UpdateEnergy(int valueToUpdate)
         {
 			cantEnergy += valueToUpdate > maxEnergy ? maxEnergy : valueToUpdate;
 			StartCoroutine(LerpBar(GetFillAmmount()));
@@ -58,6 +69,19 @@ namespace ProyectG.Gameplay.UI{
         {
 			return (float)cantEnergy / (float)maxEnergy;
         }
+
+		public void DecreaseEnergyOverTime()
+		{
+			if (timer < energyDecreaseInterval)
+				timer += Time.deltaTime;
+			else
+			{
+				cantEnergy -= decreceEnergy;
+				timer = 0.0f;
+				UpdateEnergy(cantEnergy);
+			}
+		}
+
 		#endregion
 
 		#region PUBLIC_CORROUTINES
