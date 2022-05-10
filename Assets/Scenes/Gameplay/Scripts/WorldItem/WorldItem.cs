@@ -29,12 +29,13 @@ namespace ProyectG.Gameplay.Objects
         #region UNITY_CALLS
         protected void Start()
         {
-            spriteAttach = GetComponent<SpriteRenderer>();
             posLerper = new Vector2Lerper(fallSpeed, AbstractLerper<Vector2>.SMOOTH_TYPE.STEP_SMOOTHER);
             sizeLerper = new Vector2Lerper(fallSpeed, Vector2Lerper.SMOOTH_TYPE.EXPONENTIAL);
 
             worldItemTaked = false;
             itemAddedToInventory = false;
+
+            SetItemData();
 
             sizeLerper.SetValues(Vector2.zero, Vector2.one, true);
         }
@@ -45,7 +46,7 @@ namespace ProyectG.Gameplay.Objects
 
         protected void OnTriggerEnter2D(Collider2D collision)
         {
-            if(collision.CompareTag("Player"))
+            if(collision.CompareTag("Player") && !worldItemTaked)
             {
                 posLerper.SetValues(transform.position, collision.transform.position, true);
                 sizeLerper.SetValues(Vector2.one, Vector2.zero, true);

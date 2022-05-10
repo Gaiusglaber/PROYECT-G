@@ -20,7 +20,7 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private InventoryController inventory = null;
 
         [Header("FOR TESTING")]
-        [SerializeField] private WorldItem testItem = null;
+        [SerializeField] private List<WorldItem> testItems = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -34,7 +34,13 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.Init();
 
-            testItem.SetOnItemTaked(inventory.GenerateItem);
+            for (int i = 0; i < testItems.Count; i++)
+            {
+                if(testItems[i] != null)
+                {
+                    testItems[i].SetOnItemTaked(inventory.GenerateItem);
+                }
+            }
         }
 
         private void Update()
