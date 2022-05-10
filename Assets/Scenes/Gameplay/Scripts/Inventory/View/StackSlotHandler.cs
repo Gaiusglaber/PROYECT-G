@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 using ProyectG.Gameplay.Interfaces;
 
-using Pathfinders.Toolbox.Lerpers;
+using ProyectG.Toolbox.Lerpers;
 
 using TMPro;
 

@@ -4,8 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
 using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
+using ProyectG.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.Objects.Inventory.Controller
 {
@@ -19,14 +23,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [Header("REFERENCES")]
         [SerializeField] private Transform viewParent = default;
         [SerializeField] private InventoryView inventoryView = null;
+        [SerializeField] private Volume volume = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
         #endregion
 
         #region PRIVATE_FIELDS
         private InventoryModel inventoryModel = null;
-
+        private DepthOfField dof = null;
         private bool stackTake = false;
+
+        private float initialdof = 0;
         #endregion
 
         public InventoryModel Model => inventoryModel;
@@ -34,18 +41,23 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         #region PUBLIC_METHODS
         public void Init()
         {
+            volume.profile.TryGet(out dof);
+            initialdof = dof.focusDistance.value;
+
             InitilizeMVC();
 
             Vector2 initialPos = new Vector2(viewParent.position.x, viewParent.position.y);
 
+            //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
             inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots); //visual del inventario
-
+            
+            //Set actions
+            inventoryView.SetOnHandleInventory(BlendBackground);
             inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
-
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
-            //Testing
 
+            //Testing
             //GenerateItems(allItemsAviable[0].itemId, 5);
             for (int i = 0; i < allItemsAviable.Count; i++)
             {
@@ -141,9 +153,30 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryModel = new InventoryModel();
         }
 
-        private bool ItemsMatch(ItemModel item, string id)
+        private void BlendBackground(bool state)
         {
-            return item.itemId == id;
+            if(state)
+            {
+                StartCoroutine(LerpVolumeAttribute(dof, initialdof));
+            }
+            else
+            {
+                StartCoroutine(LerpVolumeAttribute(dof, 0));
+            }
+        }
+        #endregion
+
+        #region CORUTINES
+        private IEnumerator LerpVolumeAttribute(DepthOfField component, float destIntensity)
+        {
+            FloatLerper lerper = new FloatLerper(2, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
+            lerper.SetValues(component.focusDistance.value, destIntensity, true);
+            while (lerper.On)
+            {
+                lerper.Update();
+                component.focusDistance.value = lerper.CurrentValue;
+                yield return new WaitForEndOfFrame();
+            }
         }
         #endregion
     }

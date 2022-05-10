@@ -26,6 +26,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private int maxRowsInventory = 0;
         private int maxColsInventory = 0;
 
+        private Action<bool> onHandleInventory = null;
         private Action<Vector2Int,Vector2Int> onSomeItemMoved = null;
         #endregion
 
@@ -92,6 +93,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if (animator == null) return;
 
             IsOpen = !IsOpen;
+            onHandleInventory?.Invoke(!IsOpen);
             animator.SetBool("IsOpen", IsOpen);
         }
 
@@ -99,7 +101,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             return IsValidPosition(gridPos) ? slotsView[gridPos.x, gridPos.y] : null;
         }
-
 
         public void UpdateInventoryView(InventoryModel inventoryModel)
         {
@@ -112,6 +113,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     GetSlotFromGrid(gridPos).UpdateSlotViewWithItems(inventoryModel.GetSlot(gridPos).StackOfItems);
                 }
             }
+        }
+
+        public void SetOnHandleInventory(Action<bool> onHandleInventory)
+        {
+            this.onHandleInventory = onHandleInventory;
         }
         #endregion
 

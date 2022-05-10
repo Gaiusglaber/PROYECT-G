@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using ProyectG.Gameplay.Interfaces;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
-using Pathfinders.Toolbox.Lerpers;
+using ProyectG.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {

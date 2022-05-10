@@ -5,7 +5,7 @@ using UnityEngine;
 
 using DragonBones;
 
-namespace ProjectG.Player.Controller
+namespace ProyectG.Player.Controller
 {
     public struct RayRange
     {
@@ -104,13 +104,11 @@ namespace ProjectG.Player.Controller
         #endregion
 
         #region UNITY_CALLS
-        private IEnumerator Start()
+        public void Init()
         {
-            yield return new WaitForSeconds(timeUntilActivatePlayer);
-
             controllerEnable = true;
         }
-        private void Update()
+        public void UpdatePlayerController()
         {
             if (!controllerEnable)
                 return;
