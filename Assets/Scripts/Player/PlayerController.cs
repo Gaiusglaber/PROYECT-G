@@ -78,6 +78,10 @@ namespace ProyectG.Player.Controller
         private RayRange rightRay = default;
 
         private string lastAnimationExecuted = string.Empty;
+
+        private float initialAceleration = 0.0f;
+        private float initialDeAceleration = 0.0f;
+        private float initialMovementClamp = 0.0f;
         #endregion
 
         #region PROPERTIES
@@ -125,6 +129,10 @@ namespace ProyectG.Player.Controller
             CalculateHorizontalMove();
 
             MovePlayer();
+
+            initialAceleration = acceleration;
+            initialDeAceleration = deAcceleration;
+            initialMovementClamp= movementClamp;
         }
         #endregion
 
@@ -368,7 +376,12 @@ namespace ProyectG.Player.Controller
         #endregion
 
         #region PUBLIC_METHODS
-
+        public void ChangeSpeed(bool lowBatteryMode)
+        {
+            acceleration = lowBatteryMode ? 1 : initialAceleration;
+            deAcceleration = lowBatteryMode ? 1 : initialDeAceleration;
+            movementClamp = lowBatteryMode ? 1 : initialMovementClamp;
+        }
         #endregion
 
         #region CORUTINES

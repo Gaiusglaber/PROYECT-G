@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 152223988}
   - component: {fileID: 152223989}
   m_Layer: 5
-  m_Name: energy_bar
+  m_Name: energy_handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1238,6 +1238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b31172dfb8d6449ab9fe8c4b349286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lowEneryThreshhold: 1000
   energyTxt: {fileID: 1176769696}
   fillImage: {fileID: 27376962}
   cantEnergyImg: {fileID: 2097352470}
@@ -1249,6 +1250,12 @@ MonoBehaviour:
   maxEnergyColor: {r: 0.08220887, g: 1, b: 0, a: 1}
   energyDecreaseInterval: 2
   decreceEnergy: 100
+  factoryLights:
+  - {fileID: 337423914}
+  - {fileID: 1534127711}
+  - {fileID: 1330245686}
+  - {fileID: 1921564384}
+  playerController: {fileID: 0}
 --- !u!1 &176273865
 GameObject:
   m_ObjectHideFlags: 0
@@ -5073,6 +5080,7 @@ MonoBehaviour:
   initialPosition: {fileID: 675460288}
   playerPrefab: {fileID: 7470058559746799918, guid: 0604f96cd9c275c41a04d482e4d71e5f, type: 3}
   inventory: {fileID: 1317914051}
+  energyHandler: {fileID: 152223989}
   testItems:
   - {fileID: 1697765882}
   - {fileID: 389948338}

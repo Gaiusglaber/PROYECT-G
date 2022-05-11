@@ -6,6 +6,7 @@ using ProyectG.Player.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 
 using ProyectG.Gameplay.Objects;
+using ProyectG.Gameplay.UI;
 
 namespace ProjectG.Gameplay.Managers
 {
@@ -18,6 +19,7 @@ namespace ProjectG.Gameplay.Managers
         [Header("Main References")]
         [SerializeField] private PlayerController playerPrefab = null;
         [SerializeField] private InventoryController inventory = null;
+        [SerializeField] private EnergyHandler energyHandler = null;
 
         [Header("FOR TESTING")]
         [SerializeField] private List<WorldItem> testItems = null;
@@ -28,7 +30,7 @@ namespace ProjectG.Gameplay.Managers
         #endregion
 
         #region UNITY_CALLS
-        private void Start()
+        private void Awake()
         {
             InitializePlayer();
 
@@ -70,6 +72,8 @@ namespace ProjectG.Gameplay.Managers
             {
                 player.Init();
             }
+
+            energyHandler.playerController = player;
         }
 
         private void PlayerUpdate()
