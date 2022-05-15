@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using ProjectG.Player.Controller;
+using ProyectG.Player.Controller;
 
-namespace ProjectG.Player.Animation
+namespace ProyectG.Player.Animation
 {
     public class PlayerAnim : MonoBehaviour
     {
