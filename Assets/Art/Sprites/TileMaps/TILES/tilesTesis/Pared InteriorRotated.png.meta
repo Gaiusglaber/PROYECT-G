@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: cd666d9dba5ec244c9e1122be9137e15
+guid: e3a19d0c3e441874186032f09700f327
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 750509129360601982
-    second: Suelo Interior_0
+      213: 8604600192233746422
+    second: Pared InteriorRotated_0
   - first:
-      213: -1122549186131695725
-    second: Suelo Interior_1
-  - first:
-      213: 4189353161230004538
-    second: Suelo Interior_2
+      213: -4114470676603545061
+    second: Pared InteriorRotated_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -55,7 +52,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 170
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Suelo Interior_0
+      name: Pared InteriorRotated_0
       rect:
         serializedVersion: 2
-        x: 548
-        y: 0
-        width: 747
-        height: 329
+        x: 935
+        y: 322
+        width: 515
+        height: 669
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e73f938a3185a6a00800000000000000
-      internalID: 750509129360601982
+      spriteID: 6ffa954294ea96770800000000000000
+      internalID: 8604600192233746422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Suelo Interior_1
+      name: Pared InteriorRotated_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 548
-        height: 213
+        x: 471
+        y: 322
+        width: 515
+        height: 755
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,29 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39767b57677eb60f0800000000000000
-      internalID: -1122549186131695725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Suelo Interior_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 62
-        width: 549
-        height: 271
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3136c50182932a30800000000000000
-      internalID: 4189353161230004538
+      spriteID: b1ad84218b676e6c0800000000000000
+      internalID: -4114470676603545061
       vertices: []
       indices: 
       edges: []
