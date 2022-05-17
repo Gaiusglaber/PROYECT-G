@@ -192,6 +192,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                 }
             }
         }
+
+        public Func<string,ItemModel> GetItemModelFromId()
+        {
+            return getItemModelFromId;
+        }
+
         #endregion
 
         #region PRIVATE_METHODS
