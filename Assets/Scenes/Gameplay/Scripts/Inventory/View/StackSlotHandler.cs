@@ -10,6 +10,9 @@ using ProyectG.Toolbox.Lerpers;
 
 using TMPro;
 
+using ProyectG.Gameplay.Objects.Inventory.View;
+using ProyectG.Gameplay.Objects.Inventory.Data;
+
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
     public class StackSlotHandler : MonoBehaviour, IDraggable, ISwitchable
@@ -204,7 +207,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent)
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent, params ItemType[] allowedTypes)
         {
             if (parent == null)
             {

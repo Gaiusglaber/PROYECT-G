@@ -4,6 +4,12 @@ using UnityEngine;
 namespace ProyectG.Gameplay.Objects.Inventory.Data
 {
     [Serializable]
+    public enum ItemType
+    {
+        fuel,
+        common
+    }
+    [Serializable]
     [CreateAssetMenu(fileName = "ItemModel", menuName = "ScriptableObjects/Data/Items", order = 0)]
     public class ItemModel : ScriptableObject
     {
@@ -15,7 +21,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         public string itemDescription = string.Empty;
         public int itemValue = 0;
 
-        public bool isFuel;
+        public ItemType itemType;
 
         #endregion
     }

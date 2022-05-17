@@ -26,6 +26,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [SerializeField] private Volume volume = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
+        public bool StackTake { get { return stackTake; } }
         #endregion
 
         #region PRIVATE_FIELDS

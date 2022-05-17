@@ -46,6 +46,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private Vector2Int slotGridPosition = default;
 
         private string itemId;
+
+        private ItemType itemViewType;
+
         #endregion
 
         #region PROPERTIES
@@ -73,6 +76,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 itemId = itemData.itemId;
                 itemImage.sprite = itemData.itemSprite;
+                itemViewType = itemData.itemType;
             }
             else
             {
@@ -196,8 +200,31 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             prepareToAttachOnSlot = true;
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent)
+        private bool CheckItemType(ItemType[] allowedTypes)
         {
+            bool check = false;
+            Debug.Log("allowedTypes lenght: " + allowedTypes.Length);
+            if (allowedTypes.Length < 1)
+            {
+                return true;
+            }
+            for(int i = 0; i < allowedTypes.Length; i++)
+            {
+                if (itemViewType == allowedTypes[i])
+                {
+                    check = true;
+                    break;
+                }
+            }
+            return check;
+        }
+
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, params ItemType[] allowedTypes)
+        {
+            Debug.Log("entro!");
+            if (!CheckItemType(allowedTypes))
+                return false;
+
             if (!isDragging)
             {
                 (Vector2, Vector2Int, Transform) lastSlotPosition = slotPositionAttached;

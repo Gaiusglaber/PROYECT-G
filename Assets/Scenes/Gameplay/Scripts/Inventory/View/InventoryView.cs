@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
@@ -16,6 +17,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private Canvas mainCanvas = null;
         [SerializeField] private GameObject prefabItemView = null;
         [SerializeField] private TMP_Text stackModeState = null;
+
+        [SerializeField]private List<ItemType> allowedItems = null;
+
         #endregion
 
         #region PRIVATE_FIELDS
@@ -54,7 +58,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
-                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos);
+                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos, false, allowedItems.ToArray());
                     newSlotInv.SetOnSomeItemMoved(onSomeItemMoved);
 
                     model.SetSlotPosition(gridPos, finalWorldPosition);
