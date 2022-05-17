@@ -27,12 +27,12 @@ namespace ProyectG.Gameplay.Controllers
 
             targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
 
-            if(target.Velocity.x != 0 && target.Velocity.x > 1f)
+            if(!target.CustomAnimator._armature.flipX)
             {
                 targetPosition = new Vector3(targetPosition.x + offsetCamera, targetPosition.y, targetPosition.z);
             }
 
-            if (target.Velocity.x != 0 && target.Velocity.x < 1f)
+            if(target.CustomAnimator._armature.flipX)
             {
                 targetPosition = new Vector3(targetPosition.x - offsetCamera, targetPosition.y, targetPosition.z);
             }
