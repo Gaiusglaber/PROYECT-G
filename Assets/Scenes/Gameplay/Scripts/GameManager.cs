@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using ProyectG.Player.Controller;
+using ProyectG.Gameplay.Controllers;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 
 using ProyectG.Gameplay.Objects;
@@ -20,6 +21,7 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private PlayerController playerPrefab = null;
         [SerializeField] private InventoryController inventory = null;
         [SerializeField] private EnergyHandler energyHandler = null;
+        [SerializeField] private CameraController cameraHandler = null;
 
         [Header("FOR TESTING")]
         [SerializeField] private List<WorldItem> testItems = null;
@@ -35,6 +37,7 @@ namespace ProjectG.Gameplay.Managers
             InitializePlayer();
 
             inventory.Init();
+            cameraHandler.Init(player);
 
             for (int i = 0; i < testItems.Count; i++)
             {
