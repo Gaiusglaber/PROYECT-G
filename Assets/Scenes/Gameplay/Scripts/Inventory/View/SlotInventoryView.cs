@@ -217,7 +217,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 if (amountToRemove < 0)
                 {
-                    CreateAndAddItemsFromData(itemsOnLogicSlot);
+                    CreateAndAddItemsFromData(itemsOnLogicSlot[0], Mathf.Abs(amountToRemove));
                 }
                 else
                 {
@@ -236,12 +236,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         /// </summary>
         /// <param name="itemsOnSlotLogic"></param>
         /// 
-        private void CreateAndAddItemsFromData(List<ItemModel> itemsOnSlotLogic)
+        private void CreateAndAddItemsFromData(ItemModel itemsTypeOnSlotLogic, int difference)
         {
-            for (int i = 0; i < itemsOnSlotLogic.Count; i++)
+            for (int i = 0; i < difference; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, this, itemsOnSlotLogic[i], callUpdateSlots);
+                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots);
 
                 if (!objectsAttach.Contains(newItem))
                 {

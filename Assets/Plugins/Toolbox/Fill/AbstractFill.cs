@@ -1,8 +1,8 @@
 using UnityEngine;
 
-using Pathfinders.Toolbox.Lerpers;
+using ProyectG.Toolbox.Lerpers;
 
-namespace Pathfinders.Toolbox.Fill
+namespace ProyectG.Toolbox.Fill
 {
     public abstract class AbstractFill : MonoBehaviour
     {

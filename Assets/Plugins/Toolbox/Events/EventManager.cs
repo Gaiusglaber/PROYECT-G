@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Pathfinders.Toolbox.Singletons;
+using ProyectG.Toolbox.Singletons;
 
-namespace Pathfinders.Toolbox.Events
+namespace ProyectG.Toolbox.Events
 {
     public class EventManager : GenericSingleton<EventManager>
     {

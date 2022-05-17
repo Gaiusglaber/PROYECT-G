@@ -153,8 +153,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         private void AtInventoryChange()
         {
             onInventoryChange?.Invoke(this);
-
-
         }
 
         private ItemModel GetItemModelFromID(string idModelItem)

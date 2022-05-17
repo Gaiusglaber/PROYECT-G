@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using DragonBones;
+
 namespace ProyectG.Player.Controller
 {
     public struct RayRange
@@ -47,6 +49,8 @@ namespace ProyectG.Player.Controller
         [SerializeField] private int detectorCount = 3;
         [SerializeField] private float rayLenght = 0.1f;
         [SerializeField, Range(0.1f, 0.3f)] private float rayBuffer = 0.1f;
+        [Header("---ANIMATIONS---")]
+        [SerializeField] private UnityArmatureComponent customAnimator = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -72,6 +76,12 @@ namespace ProyectG.Player.Controller
         private RayRange downRay = default;
         private RayRange leftRay = default;
         private RayRange rightRay = default;
+
+        private string lastAnimationExecuted = string.Empty;
+
+        private float initialAceleration = 0.0f;
+        private float initialDeAceleration = 0.0f;
+        private float initialMovementClamp = 0.0f;
         #endregion
 
         #region PROPERTIES
@@ -94,6 +104,35 @@ namespace ProyectG.Player.Controller
             {
                 return (onGround && lastJumpPressed + jumpBuffer > Time.time);
             }
+        }
+        #endregion
+
+        #region UNITY_CALLS
+        public void Init()
+        {
+            controllerEnable = true;
+        }
+        public void UpdatePlayerController()
+        {
+            if (!controllerEnable)
+                return;
+
+            Velocity = (transform.position - lastPosition) / Time.deltaTime;
+            lastPosition = transform.position;
+
+            CheckCollisions();
+
+            CalculateApexJump();
+            CalculteGravity();
+            CalculateJump();
+
+            CalculateHorizontalMove();
+
+            MovePlayer();
+
+            initialAceleration = acceleration;
+            initialDeAceleration = deAcceleration;
+            initialMovementClamp= movementClamp;
         }
         #endregion
 
@@ -153,16 +192,33 @@ namespace ProyectG.Player.Controller
 
                 float apexBonus = Mathf.Sign(Input.GetAxisRaw("Horizontal")) * this.apexBonus * apexPoint;
                 horizontalSpeed += apexBonus * Time.deltaTime;
+                
+                if (onGround)
+                {
+                    SetAnimation("movilidad");
+                }
+                else
+                {
+                    SetAnimation("Salto", 1);
+                }
             }
             else
             {
                 horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, (deAcceleration / 6f) * Time.deltaTime);
+                
+                if(!onGround)
+                {
+                    SetAnimation("Salto", 1);
+                }
+                else
+                {
+                    SetAnimation("idle");
+                }
             }
 
             if (horizontalSpeed > 0 && colRight || horizontalSpeed < 0 && colLeft)
             {
                 horizontalSpeed = 0;
-                Debug.Log("HOR 0");
             }
         }
         private void CalculteGravity()
@@ -213,7 +269,7 @@ namespace ProyectG.Player.Controller
         {
             if (Input.GetButtonDown("Jump"))
             {
-                lastJumpPressed = Time.time;
+                lastJumpPressed = Time.time;                
             }
 
             if (Input.GetButtonDown("Jump") && CanUseCoyote || BufferedJump)
@@ -249,6 +305,8 @@ namespace ProyectG.Player.Controller
             RawMovement = new Vector3(horizontalSpeed, verticalSpeed);
             Vector3 movement = RawMovement * Time.deltaTime;
             Vector3 furthestPoint = position + movement;
+
+            SetDirectionArmature(horizontalSpeed);
 
             //Chequeo mas adelante si hay alguna cosa a que colisionar
             Collider2D hit = Physics2D.OverlapBox(furthestPoint, characterBounds.size, 0, groundLayer);
@@ -288,36 +346,41 @@ namespace ProyectG.Player.Controller
         }
         #endregion
 
-        #region PUBLIC_METHODS
-        public void Init()
+        #region ANIMATION
+        private void SetAnimation(string idAnimation, int playTimes = -1)
         {
-            IEnumerator WaitSecondsForActivate()
+            if(!customAnimator.animation.isPlaying)
             {
-                yield return new WaitForSeconds(timeUntilActivatePlayer);
-
-                controllerEnable = true;
+                customAnimator.animation.Play(idAnimation, playTimes);
+                lastAnimationExecuted = idAnimation;
             }
-
-            StartCoroutine(WaitSecondsForActivate());
+            else
+            {
+                if(lastAnimationExecuted != idAnimation)
+                {
+                    customAnimator.animation.Stop();
+                }
+            }
         }
-
-        public void UpdatePlayerController()
+        private void SetDirectionArmature(float horizontalSpeed)
         {
-            if (!controllerEnable)
-                return;
+            if(horizontalSpeed < 0)
+            {
+                customAnimator._armature.flipX = true;
+            }
+            else
+            {
+                customAnimator._armature.flipX = false;
+            }
+        }
+        #endregion
 
-            Velocity = (transform.position - lastPosition) / Time.deltaTime;
-            lastPosition = transform.position;
-
-            CheckCollisions();
-
-            CalculateApexJump();
-            CalculteGravity();
-            CalculateJump();
-
-            CalculateHorizontalMove();
-
-            MovePlayer();
+        #region PUBLIC_METHODS
+        public void ChangeSpeed(bool lowBatteryMode)
+        {
+            acceleration = lowBatteryMode ? 1 : initialAceleration;
+            deAcceleration = lowBatteryMode ? 1 : initialDeAceleration;
+            movementClamp = lowBatteryMode ? 1 : initialMovementClamp;
         }
         #endregion
 

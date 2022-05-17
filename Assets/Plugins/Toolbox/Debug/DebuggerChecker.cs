@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using Pathfinders.Toolbox.Utils.SceneUtils;
+using ProyectG.Toolbox.Utils.SceneUtils;
 
-namespace Pathfinders.Toolbox.Debugger
+namespace ProyectG.Toolbox.Debugger
 {
     public class DebuggerChecker : MonoBehaviour
     {

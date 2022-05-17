@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 using System.Collections.Generic;
 
-namespace Pathfinders.Toolbox.Utils.UI
+namespace ProyectG.Toolbox.Utils.UI
 {
     [AddComponentMenu("UI/Effects/DropShadow", 14)]
     public class DropShadow : BaseMeshEffect

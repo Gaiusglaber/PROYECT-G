@@ -477,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedFollow: 0.4
   stackAmount: {fileID: 7983675748447192957}
+  useLerpAnimations: 0
 --- !u!1 &3800006680228761029
 GameObject:
   m_ObjectHideFlags: 0

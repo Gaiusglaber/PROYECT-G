@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Pathfinders.Toolbox.Lerpers
+namespace ProyectG.Toolbox.Lerpers
 {
     public class LerpersTest : MonoBehaviour
     {

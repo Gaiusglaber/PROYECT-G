@@ -5,6 +5,9 @@ using UnityEngine;
 using ProyectG.Player.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 
+using ProyectG.Gameplay.Objects;
+using ProyectG.Gameplay.UI;
+
 namespace ProjectG.Gameplay.Managers
 {
     public class GameManager : MonoBehaviour
@@ -16,6 +19,10 @@ namespace ProjectG.Gameplay.Managers
         [Header("Main References")]
         [SerializeField] private PlayerController playerPrefab = null;
         [SerializeField] private InventoryController inventory = null;
+        [SerializeField] private EnergyHandler energyHandler = null;
+
+        [Header("FOR TESTING")]
+        [SerializeField] private List<WorldItem> testItems = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -23,11 +30,19 @@ namespace ProjectG.Gameplay.Managers
         #endregion
 
         #region UNITY_CALLS
-        private void Start()
+        private void Awake()
         {
             InitializePlayer();
 
             inventory.Init();
+
+            for (int i = 0; i < testItems.Count; i++)
+            {
+                if(testItems[i] != null)
+                {
+                    testItems[i].SetOnItemTaked(inventory.GenerateItem);
+                }
+            }
         }
 
         private void Update()
@@ -57,6 +72,8 @@ namespace ProjectG.Gameplay.Managers
             {
                 player.Init();
             }
+
+            energyHandler.playerController = player;
         }
 
         private void PlayerUpdate()

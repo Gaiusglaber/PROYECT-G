@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
-  m_Name: TestItemModel
+  m_Script: {fileID: 11500000, guid: 93d48d41d706e2a409b6d1ffaf6e0c54, type: 3}
+  m_Name: WoodWorld
   m_EditorClassIdentifier: 
-  itemId: TestItem
-  itemSprite: {fileID: 21300000, guid: 6fcf0d772ebbbfa45b12df577bf09392, type: 3}
-  itemDescription: Este es un item de testeo xd
-  itemValue: 0
+  id: wood
+  name: Wood
+  sprite: {fileID: 7440981132975211316, guid: af0d6783f27796940ab3bbc4cf40f161, type: 3}
+  itemModel: {fileID: 11400000, guid: 2e06a3f8f801a7f478dee9818831a124, type: 2}
