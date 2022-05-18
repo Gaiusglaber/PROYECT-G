@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Script: {fileID: 11500000, guid: 062e037dd4b7efe429f5216a3d7e06a7, type: 3}
   m_Name: CoalResult
   m_EditorClassIdentifier: 
   itemId: Coal
   itemSprite: {fileID: 21300000, guid: 07ab3638ce12de144a145bacfbab72e4, type: 3}
   itemDescription: Carbon como resultado de la quema de madera
   itemValue: 1
-  isFuel: 1
+  itemType: 0
+  produced: 0
+  notProduced: 0
+  itemResults: []

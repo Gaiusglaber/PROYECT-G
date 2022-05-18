@@ -15,4 +15,4 @@ MonoBehaviour:
   id: wood
   name: Wood
   sprite: {fileID: 7440981132975211316, guid: af0d6783f27796940ab3bbc4cf40f161, type: 3}
-  itemModel: {fileID: 11400000, guid: 2e06a3f8f801a7f478dee9818831a124, type: 2}
+  itemModel: {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
