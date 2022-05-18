@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using ProyectG.Gameplay.Objects.Inventory.Data;
+using ProyectG.Gameplay.Objects.Inventory.View;
 
 public class Furance : MonoBehaviour
 {
@@ -11,13 +13,37 @@ public class Furance : MonoBehaviour
     private List<ItemModel> furanceInventory = new List<ItemModel>();
 
     private float timerBurn;
+    private bool isProcessing;
+
+    private Action OnItemProcessed = null;
+
     void Start()
     {
-        
+        uiFurance.IsFurnanceActive = IsProcessing;
+        uiFurance.OnProcessMaterial = SetProcess;
+        isProcessing = false;
+        timerBurn = 0.0f;
     }
 
     void Update()
     {
+        if (isProcessing)
+        {
+            if (timerBurn <= maxTimeToBurn)
+            {
+                timerBurn += Time.deltaTime;
+                Debug.Log("timer: " + timerBurn.ToString("F0"));
+                //llenar la barra indicadora de quema de combustible
+            }
+            else
+            {
+                OnItemProcessed?.Invoke();
+                timerBurn = 0.0f;
+                isProcessing = false;
+                
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.F))
             uiFurance.ShowPanel(true);
     }
@@ -30,17 +56,14 @@ public class Furance : MonoBehaviour
         }
     }
 
-    public void CheckInputSlot()
+    private bool IsProcessing()
     {
-        //if (uiFurance.inputSlot)
+        return isProcessing;
     }
 
-    public void BurnFuel()
+    private void SetProcess(ItemView item, Action onProcessEnd)
     {
-        if (timerBurn <= maxTimeToBurn)
-        {
-            timerBurn += Time.deltaTime;
-            //llenar la barra indicadora de quema de combustible
-        }
+        isProcessing = true;
+        OnItemProcessed = onProcessEnd;
     }
 }
