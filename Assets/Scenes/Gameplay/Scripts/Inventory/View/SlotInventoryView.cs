@@ -40,9 +40,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool onStackTakeMode = false;
         private bool switchedStacks = false;
 
+        private bool stackUpdated = false;
+
         private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
 
         private Vector2Int gridPosition = default;
+
+        private List<ItemType> allowedItems = new List<ItemType>();
         #endregion
 
         #region UNITY_CALLS
@@ -55,6 +59,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public Vector2Int GridPosition { get { return gridPosition; } }
 
         public List<ItemView> StackOfItemsView { get { return objectsAttach; } }
+
+        public bool StackUpdated { get { return stackUpdated; } }
 
         public UnityAction OnInteract
         {
@@ -104,7 +110,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(GameObject prefabItemView, Canvas mainCanvas, Vector2Int gridPos, bool debugTxtGrid = false)
+        public void Init(GameObject prefabItemView, Canvas mainCanvas, Vector2Int gridPos, bool debugTxtGrid = false, params ItemType[] allowedItems)
         {
             this.mainCanvas = mainCanvas;
             this.prefabItemView = prefabItemView;
@@ -120,6 +126,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             debugGridPos.text = gridPosition.ToString();
             debugGridPos.gameObject.SetActive(debugTxtGrid);
+
+            this.allowedItems.AddRange(allowedItems);
         }
         public void SetOnSomeItemMoved(Action<Vector2Int, Vector2Int> onSomeItemMoved)
         {
@@ -195,6 +203,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             OnInteract?.Invoke();
         }
+
+        public void UpdateTextOutStack()
+        {
+            amountOutStack.text = objectsAttach.Count.ToString();
+        }
         #endregion
 
         #region GIZMOS
@@ -236,7 +249,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         /// </summary>
         /// <param name="itemsOnSlotLogic"></param>
         /// 
-        private void CreateAndAddItemsFromData(ItemModel itemsTypeOnSlotLogic, int difference)
+        public void CreateAndAddItemsFromData(ItemModel itemsTypeOnSlotLogic, int difference)
         {
             for (int i = 0; i < difference; i++)
             {
@@ -277,6 +290,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             if(objectsAttach.Count == actualItemsInsideSlot.Length)   //Sin contar el mismo slot que tiene su collider
             {
+                stackUpdated = true;
                 return true;
             }
             else
@@ -284,7 +298,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 int amountToRemove = objectsAttach.Count - actualItemsInsideSlot.Length;
 
                 if (amountToRemove < 0)
+                {
+                    stackUpdated = false;
                     return false;
+                }
 
                 for (int i = 0; i < amountToRemove; i++)
                 {
@@ -293,6 +310,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 amountOutStack.text = objectsAttach.Count.ToString();
 
+                stackUpdated = false;
                 return false;
             }
         }
@@ -348,20 +366,20 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     if(newItem.ItemType == objectsAttach[0].ItemType)
                     {
-                        newItem.AttachToSlot(SlotPosition, GridPosition,transform);
+                        newItem.AttachToSlot(SlotPosition, GridPosition,transform, allowedItems.ToArray());
                     }
                     else
                     {
                         if(NextSlotFromThis != null)
                         {
-                            if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition , NextSlotFromThis.transform))
+                            if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition , NextSlotFromThis.transform, allowedItems.ToArray()))
                             {
                                 return;
                             }
                         }
                         else
                         {
-                            newItem.AttachToSlot(newItem.SlotPositionAttached.Item1, newItem.SlotPositionAttached.Item2, newItem.SlotPositionAttached.Item3);
+                            newItem.AttachToSlot(newItem.SlotPositionAttached.Item1, newItem.SlotPositionAttached.Item2, newItem.SlotPositionAttached.Item3, allowedItems.ToArray());
                         }
                     }
                 }
@@ -370,7 +388,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (collision.TryGetComponent(out ItemView item))
                 {
-                    item.AttachToSlot(SlotPosition, GridPosition ,transform);
+                    item.AttachToSlot(SlotPosition, GridPosition ,transform, allowedItems.ToArray());
                 }                
             }
         }

@@ -16,3 +16,4 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 51b32944510c8a644b033a0f2034baa0, type: 3}
   itemDescription: Este es un item de testeo xd
   itemValue: 0
+  itemType: 1

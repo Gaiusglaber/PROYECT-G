@@ -9,10 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
-  m_Name: WoodModelItem
+  m_Script: {fileID: 11500000, guid: 062e037dd4b7efe429f5216a3d7e06a7, type: 3}
+  m_Name: WoodFuel
   m_EditorClassIdentifier: 
   itemId: Wood
   itemSprite: {fileID: 7440981132975211316, guid: af0d6783f27796940ab3bbc4cf40f161, type: 3}
-  itemDescription: 'Madera: Sirve para quemarla y generar combustible.'
-  itemValue: 50
+  itemDescription: Madera que funciona como combustible
+  itemValue: 1
+  isFuel: 0
+  produced: 0
+  notProduced: 0
+  itemResults:
+  - {fileID: 11400000, guid: ba05364f576bb554d9251c09c38bba2e, type: 2}

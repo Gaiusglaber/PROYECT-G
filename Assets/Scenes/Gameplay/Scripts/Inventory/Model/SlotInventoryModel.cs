@@ -183,8 +183,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     {
                         stackOfItemsInSlot.AddRange(itemToAttach);
 
-                        Debug.Log("cantidad =" + stackOfItemsInSlot.Count);
-
                         OnItemAttached?.Invoke();
                     }
                     else
@@ -194,6 +192,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                 }
             }
         }
+
+        public Func<string,ItemModel> GetItemModelFromId()
+        {
+            return getItemModelFromId;
+        }
+
         #endregion
 
         #region PRIVATE_METHODS
