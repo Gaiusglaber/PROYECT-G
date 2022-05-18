@@ -16,6 +16,7 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 07ab3638ce12de144a145bacfbab72e4, type: 3}
   itemDescription: Carbon como resultado de la quema de madera
   itemValue: 1
+  costByProcess: 2
   itemType: 0
   produced: 0
   notProduced: 0

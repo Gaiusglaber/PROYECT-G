@@ -1631,8 +1631,8 @@ MonoBehaviour:
   initialEnergy: 5000
   energyColor: {r: 0.88726926, g: 1, b: 0, a: 1}
   maxEnergyColor: {r: 0.08220887, g: 1, b: 0, a: 1}
-  energyDecreaseInterval: 2
-  decreceEnergy: 100
+  energyDecreaseInterval: 8
+  decreceEnergy: 5
   factoryLights:
   - {fileID: 337423914}
   - {fileID: 1534127711}
@@ -26323,6 +26323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTimeToBurn: 10
   uiFurance: {fileID: 138062184}
+  energyHandler: {fileID: 152223989}
   feedbackFurance: {fileID: 808177907}
 --- !u!50 &1754119052
 Rigidbody2D:

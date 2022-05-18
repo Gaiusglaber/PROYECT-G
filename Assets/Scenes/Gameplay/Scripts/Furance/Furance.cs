@@ -1,14 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+
 using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
+using ProyectG.Gameplay.UI;
 
 public class Furance : MonoBehaviour
 {
     [SerializeField] private float maxTimeToBurn;
     [SerializeField] private UIFurance uiFurance;
+    [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] private GameObject feedbackFurance = null;
 
     private List<ItemModel> furanceInventory = new List<ItemModel>();
@@ -20,6 +23,7 @@ public class Furance : MonoBehaviour
 
     private Action OnItemProcessed = null;
 
+    private ItemModel itemPorcessed = null;
     private ItemView itemProcessing = null;
 
     void Start()
@@ -47,6 +51,9 @@ public class Furance : MonoBehaviour
             if (timerBurn < maxTimeToBurn)
             {
                 timerBurn += Time.deltaTime;
+
+                energyHandler.ConsumeEnergyByProcess();
+
                 uiFurance.UpdateProgressFill(timerBurn);
             }
             else
@@ -110,6 +117,10 @@ public class Furance : MonoBehaviour
         isProcessing = true;
 
         itemProcessing = item;
+        itemPorcessed = uiFurance.InverntoryController.GetItemModelFromId(itemProcessing.ItemType);
+
+        energyHandler.SetCostOfProcessDecrement(itemPorcessed.costByProcess, 2f);
+
         Debug.Log("Processing " + isProcessing);
     }
 }

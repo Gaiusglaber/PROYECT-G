@@ -33,6 +33,7 @@ public class UIFurance : MonoBehaviour
     #endregion
 
     #region PROPERTIES
+    public InventoryController InverntoryController { get { return inventoryController; } }
     public Func<bool> IsFurnanceActive { set { isFurnanceActive = value; } get { return isFurnanceActive; } }
     #endregion
 

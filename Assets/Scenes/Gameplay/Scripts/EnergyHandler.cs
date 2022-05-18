@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 using ProyectG.Toolbox.Lerpers;
 
-namespace ProyectG.Gameplay.UI{
+namespace ProyectG.Gameplay.UI
+{
 
 	public class EnergyHandler : MonoBehaviour
 	{
@@ -33,6 +34,8 @@ namespace ProyectG.Gameplay.UI{
 
 		#region PRIVATE_FIELDS
 		[NonSerialized] public int cantEnergy = 0;
+		private float processDecreaseInterval = 0;
+		private int processDecreaseCost = 0;
 		private FloatLerper fillLerper = null;
 		private FloatLerper txtLerper = null;
 		private bool ToggleLowEnergy = false;
@@ -96,6 +99,24 @@ namespace ProyectG.Gameplay.UI{
 				timer = 0.0f;
 				UpdateEnergy(cantEnergy);
 			}
+		}
+
+		public void ConsumeEnergyByProcess()
+        {
+			if (timer < processDecreaseInterval)
+				timer += Time.deltaTime;
+			else
+			{
+				cantEnergy -= processDecreaseCost;
+				timer = 0.0f;
+				UpdateEnergy(cantEnergy);
+			}
+		}
+
+		public void SetCostOfProcessDecrement(int decreaseCost, float timePerDecrease)
+        {
+			processDecreaseCost = decreaseCost;
+			processDecreaseInterval = timePerDecrease;
 		}
 		#endregion
 
