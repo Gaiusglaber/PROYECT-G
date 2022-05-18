@@ -203,7 +203,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool CheckItemType(ItemType[] allowedTypes)
         {
             bool check = false;
-            Debug.Log("allowedTypes lenght: " + allowedTypes.Length);
+
             if (allowedTypes.Length < 1)
             {
                 return true;
@@ -221,7 +221,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, params ItemType[] allowedTypes)
         {
-            Debug.Log("entro!");
             if (!CheckItemType(allowedTypes))
                 return false;
 

@@ -40,6 +40,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool onStackTakeMode = false;
         private bool switchedStacks = false;
 
+        private bool stackUpdated = false;
+
         private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
 
         private Vector2Int gridPosition = default;
@@ -57,6 +59,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public Vector2Int GridPosition { get { return gridPosition; } }
 
         public List<ItemView> StackOfItemsView { get { return objectsAttach; } }
+
+        public bool StackUpdated { get { return stackUpdated; } }
 
         public UnityAction OnInteract
         {
@@ -199,6 +203,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             OnInteract?.Invoke();
         }
+
+        public void UpdateTextOutStack()
+        {
+            amountOutStack.text = objectsAttach.Count.ToString();
+        }
         #endregion
 
         #region GIZMOS
@@ -240,7 +249,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         /// </summary>
         /// <param name="itemsOnSlotLogic"></param>
         /// 
-        private void CreateAndAddItemsFromData(ItemModel itemsTypeOnSlotLogic, int difference)
+        public void CreateAndAddItemsFromData(ItemModel itemsTypeOnSlotLogic, int difference)
         {
             for (int i = 0; i < difference; i++)
             {
@@ -281,6 +290,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             if(objectsAttach.Count == actualItemsInsideSlot.Length)   //Sin contar el mismo slot que tiene su collider
             {
+                stackUpdated = true;
                 return true;
             }
             else
@@ -288,7 +298,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 int amountToRemove = objectsAttach.Count - actualItemsInsideSlot.Length;
 
                 if (amountToRemove < 0)
+                {
+                    stackUpdated = false;
                     return false;
+                }
 
                 for (int i = 0; i < amountToRemove; i++)
                 {
@@ -297,6 +310,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 amountOutStack.text = objectsAttach.Count.ToString();
 
+                stackUpdated = false;
                 return false;
             }
         }

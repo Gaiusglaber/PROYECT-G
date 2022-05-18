@@ -117,16 +117,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         {
             inventoryModel.DeattachItemsFromSlot(gridPosition, amount, allItems);
         }
-        #endregion
 
-        #region PRIVATE_METHODS
-        private ItemModel GetItemModelFromId(string idItem)
+        public ItemModel GetItemModelFromId(string idItem)
         {
             ItemModel resultItem = null;
 
             for (int i = 0; i < allItemsAviable.Count; i++)
             {
-                if(allItemsAviable[i].itemId == idItem)
+                if (allItemsAviable[i].itemId == idItem)
                 {
                     resultItem = allItemsAviable[i];
                     break;
@@ -138,7 +136,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             return resultItem;
         }
+        #endregion
 
+        #region PRIVATE_METHODS
         private void InitilizeMVC()
         {
             inventoryModel = new InventoryModel();

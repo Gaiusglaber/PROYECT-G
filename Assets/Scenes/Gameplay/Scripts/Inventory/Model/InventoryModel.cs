@@ -114,7 +114,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             if (originalSlot == newSlot)
                 return;
 
-            Debug.Log("SWITCHED ITEM FROM {" + originalSlot + "} TO {" + newSlot + "}");
+            //Debug.Log("SWITCHED ITEM FROM {" + originalSlot + "} TO {" + newSlot + "}");
 
             ItemModel copyOfItem = new ItemModel();
 
@@ -133,7 +133,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                 {
                     Vector2Int gridSlot = new Vector2Int(x, y);
 
-                    Debug.Log("SLOT {" + gridSlot + "} has " + GetSlot(gridSlot).StackOfItems.Count + " items");
+                    //Debug.Log("SLOT {" + gridSlot + "} has " + GetSlot(gridSlot).StackOfItems.Count + " items");
                 }
             }
         }

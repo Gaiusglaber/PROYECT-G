@@ -18,8 +18,10 @@ public class UIFurance : MonoBehaviour
     private Func<bool> isFurnanceActive = null;
 
     public Func<bool> IsFurnanceActive { set { isFurnanceActive = value; } get { return isFurnanceActive; } }
-    public Action<ItemView, Action> OnProcessMaterial;
+    public Action<ItemView> OnProcessMaterial;
+    public Action onCancelProcess = null;
 
+    #region UNITY_CALLS
     void Start()
     {
         inputSlot.Init(prefabItemView, mainCanvas, default, false, ItemType.fuel);
@@ -31,23 +33,54 @@ public class UIFurance : MonoBehaviour
         inputSlot.UpdateViewSlot(inventoryController.StackTake);
         outputSlot.UpdateViewSlot(inventoryController.StackTake);
 
-        if (!isFurnanceActive.Invoke())
+        if (!IsFurnanceActive.Invoke())
         {
+            Debug.Log("Input slot stackList: " + inputSlot.StackOfItemsView.Count);
+
             if (inputSlot.StackOfItemsView.Count > 0)
             {
-                Debug.Log("entro!");
-                ItemView itemView = inputSlot.StackOfItemsView[inputSlot.StackOfItemsView.Count - 1];
-                OnProcessMaterial?.Invoke(itemView, ()=> {
-                    Destroy(inputSlot.StackOfItemsView[inputSlot.StackOfItemsView.Count - 1].gameObject);
-                    inputSlot.StackOfItemsView.RemoveAt(inputSlot.StackOfItemsView.Count - 1);
-                });
+                ItemView itemView = inputSlot.StackOfItemsView[0];
+                OnProcessMaterial?.Invoke(itemView);
             }
         }
-        Debug.Log("cantidad del input slot: " + inputSlot.AmountOutStack);
+        else
+        {
+            if (!inputSlot.StackUpdated)
+            {
+                onCancelProcess?.Invoke();
+                Debug.Log("Proceso cancelado");
+            }
+        }
+    }
+    #endregion
+
+    #region PUBLIC_METHODS
+    public void GenerateProcessedItem(ItemView itemFrom)
+    {
+        FuelItem itemToCreate = inventoryController.GetItemModelFromId(itemFrom.ItemType) as FuelItem;
+
+        ItemModel finalItem = itemToCreate.itemResults[0];
+
+        outputSlot.CreateAndAddItemsFromData(finalItem, 1);
     }
 
     public void ShowPanel(bool active)
     {
         gameObject.SetActive(active);
     }
+
+    public void OnEndProcess()
+    {
+        if (inputSlot.StackOfItemsView.Count < 1)
+            return;
+
+        Destroy(inputSlot.StackOfItemsView[0].gameObject);
+        inputSlot.StackOfItemsView.RemoveAt(0);
+        inputSlot.UpdateTextOutStack();
+    }
+    #endregion
+
+    #region PRIVATE_METHODS
+
+    #endregion
 }

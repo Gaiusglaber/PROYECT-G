@@ -17,10 +17,15 @@ public class Furance : MonoBehaviour
 
     private Action OnItemProcessed = null;
 
+    private ItemView itemProcessing = null;
+
     void Start()
     {
         uiFurance.IsFurnanceActive = IsProcessing;
         uiFurance.OnProcessMaterial = SetProcess;
+        uiFurance.onCancelProcess = ResetProcessing;
+        OnItemProcessed = uiFurance.OnEndProcess;
+
         isProcessing = false;
         timerBurn = 0.0f;
     }
@@ -29,18 +34,20 @@ public class Furance : MonoBehaviour
     {
         if (isProcessing)
         {
-            if (timerBurn <= maxTimeToBurn)
+            if (timerBurn < maxTimeToBurn)
             {
                 timerBurn += Time.deltaTime;
                 Debug.Log("timer: " + timerBurn.ToString("F0"));
-                //llenar la barra indicadora de quema de combustible
             }
             else
             {
-                OnItemProcessed?.Invoke();
-                timerBurn = 0.0f;
+                timerBurn = 0;
                 isProcessing = false;
-                
+
+                uiFurance.GenerateProcessedItem(itemProcessing);
+                itemProcessing = null;
+
+                OnItemProcessed?.Invoke();
             }
         }
 
@@ -56,14 +63,22 @@ public class Furance : MonoBehaviour
         }
     }
 
+    private void ResetProcessing()
+    {
+        timerBurn = 0f;
+        isProcessing = false;
+    }
+
     private bool IsProcessing()
     {
         return isProcessing;
     }
 
-    private void SetProcess(ItemView item, Action onProcessEnd)
+    private void SetProcess(ItemView item)
     {
         isProcessing = true;
-        OnItemProcessed = onProcessEnd;
+
+        itemProcessing = item;
+        Debug.Log("Processing " + isProcessing);
     }
 }
