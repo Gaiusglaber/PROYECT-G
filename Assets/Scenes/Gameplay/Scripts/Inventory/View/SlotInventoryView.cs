@@ -33,6 +33,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private GameObject prefabItemView = null;
 
         private List<ItemView> objectsAttach = new List<ItemView>();
+        private List<ItemView> auxObjectsAttach = new List<ItemView>();
 
         private Canvas mainCanvas = null;
 
@@ -59,6 +60,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public Vector2Int GridPosition { get { return gridPosition; } }
 
         public List<ItemView> StackOfItemsView { get { return objectsAttach; } }
+
+        public List<ItemView> AuxStackOfItems { get { return auxObjectsAttach; } set { auxObjectsAttach = value; } }
 
         public bool StackUpdated { get { return stackUpdated; } }
 
@@ -138,7 +141,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, colliderSprite.size, 0, transform.forward, 1, checkOnly);
 
-            if(!IsStackUpdated(hits))
+            if (!IsStackUpdated(hits))
             {
                 foreach (RaycastHit2D hit in hits)
                 {
