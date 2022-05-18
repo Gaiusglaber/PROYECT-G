@@ -1,31 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
+using ProyectG.Toolbox.Lerpers;
+
 public class UIFurance : MonoBehaviour
 {
-    public SlotInventoryView inputSlot;
-    public SlotInventoryView outputSlot;
-    public InventoryController inventoryController;
+    #region EXPOSED_FIELDS
+    [SerializeField] private SlotInventoryView inputSlot;
+    [SerializeField] private SlotInventoryView outputSlot;
+    [SerializeField] private InventoryController inventoryController;
     [SerializeField] private GameObject prefabItemView = null;
     [SerializeField] private Canvas mainCanvas = null;
+    [SerializeField] private Image progressFillProcess = null;
+    #endregion
 
+    #region PRIVATE_FIELDS
     private Func<bool> isFurnanceActive = null;
 
-    public Func<bool> IsFurnanceActive { set { isFurnanceActive = value; } get { return isFurnanceActive; } }
+    private float durationProcess = 0f;
+    #endregion
+
+    #region ACTIONS
     public Action<ItemView> OnProcessMaterial;
     public Action onCancelProcess = null;
+    #endregion
+
+    #region PROPERTIES
+    public Func<bool> IsFurnanceActive { set { isFurnanceActive = value; } get { return isFurnanceActive; } }
+    #endregion
 
     #region UNITY_CALLS
     void Start()
     {
         inputSlot.Init(prefabItemView, mainCanvas, default, false, ItemType.fuel);
         outputSlot.Init(prefabItemView, mainCanvas, default, false, ItemType.fuel);
+
+        onCancelProcess += StopFill;
     }
 
     void Update()
@@ -55,6 +72,11 @@ public class UIFurance : MonoBehaviour
     #endregion
 
     #region PUBLIC_METHODS
+    public void SetDurationProcess(float timeToBurn)
+    {
+        durationProcess = timeToBurn;
+    }
+
     public void GenerateProcessedItem(ItemView itemFrom)
     {
         FuelItem itemToCreate = inventoryController.GetItemModelFromId(itemFrom.ItemType) as FuelItem;
@@ -67,6 +89,7 @@ public class UIFurance : MonoBehaviour
     public void ShowPanel(bool active)
     {
         gameObject.SetActive(active);
+        inventoryController.ToggleInventory();
     }
 
     public void OnEndProcess()
@@ -74,13 +97,26 @@ public class UIFurance : MonoBehaviour
         if (inputSlot.StackOfItemsView.Count < 1)
             return;
 
+        progressFillProcess.fillAmount = 0;
+
         Destroy(inputSlot.StackOfItemsView[0].gameObject);
         inputSlot.StackOfItemsView.RemoveAt(0);
         inputSlot.UpdateTextOutStack();
     }
+
+    public void UpdateProgressFill(float actualTime)
+    {
+        float fillValue = (actualTime * 100f) / durationProcess;
+        fillValue = fillValue / 100f;
+
+        progressFillProcess.fillAmount = Mathf.MoveTowards(progressFillProcess.fillAmount, fillValue, Time.deltaTime);
+    }
     #endregion
 
     #region PRIVATE_METHODS
-
+    private void StopFill()
+    {
+        progressFillProcess.fillAmount = 0;
+    }
     #endregion
 }
