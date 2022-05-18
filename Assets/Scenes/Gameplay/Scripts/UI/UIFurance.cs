@@ -86,9 +86,9 @@ public class UIFurance : MonoBehaviour
         outputSlot.CreateAndAddItemsFromData(finalItem, 1);
     }
 
-    public void ShowPanel(bool active)
+    public void TogglePanel()
     {
-        gameObject.SetActive(active);
+        gameObject.SetActive(!gameObject.activeSelf);
         inventoryController.ToggleInventory();
     }
 
