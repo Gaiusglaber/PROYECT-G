@@ -78,13 +78,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryView.UpdateSlots(stackTake);
         }
 
+        public void ToggleInventory()
+        {
+            inventoryView.ToggleInventory();
+        }
+
         public void CheckState()
         {
             if (inventoryView == null) return;
 
             if (Input.GetKeyDown(KeyCode.I))
             {
-                inventoryView.OpenInventory();
+                inventoryView.ToggleInventory();
             }
 
             if (!inventoryView.IsOpen)

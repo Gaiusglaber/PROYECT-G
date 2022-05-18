@@ -23,11 +23,13 @@ public class Furance : MonoBehaviour
     {
         uiFurance.IsFurnanceActive = IsProcessing;
         uiFurance.OnProcessMaterial = SetProcess;
-        uiFurance.onCancelProcess = ResetProcessing;
+        uiFurance.onCancelProcess += ResetProcessing;
         OnItemProcessed = uiFurance.OnEndProcess;
 
         isProcessing = false;
         timerBurn = 0.0f;
+
+        uiFurance.SetDurationProcess(maxTimeToBurn);
     }
 
     void Update()
@@ -37,7 +39,7 @@ public class Furance : MonoBehaviour
             if (timerBurn < maxTimeToBurn)
             {
                 timerBurn += Time.deltaTime;
-                Debug.Log("timer: " + timerBurn.ToString("F0"));
+                uiFurance.UpdateProgressFill(timerBurn);
             }
             else
             {

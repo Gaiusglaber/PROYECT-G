@@ -92,7 +92,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
-        public void OpenInventory()
+        public void ToggleInventory()
         {
             if (animator == null) return;
 
