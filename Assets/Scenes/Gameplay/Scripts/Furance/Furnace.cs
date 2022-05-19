@@ -9,7 +9,6 @@ using ProyectG.Gameplay.UI;
 
 public class Furnace : MonoBehaviour
 {
-    [SerializeField] private float maxTimeProcess;
     [SerializeField] private UIFurnace uiFurnace;
     [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] private GameObject feedbackFurance = null;
@@ -19,6 +18,7 @@ public class Furnace : MonoBehaviour
     private float timeToBurnOutFuel = 0;
 
     private float timerProcess;
+    private float timeToProcessObject = 0;
     private bool burningFuel = false;
     private bool isProcessing;
 
@@ -43,9 +43,7 @@ public class Furnace : MonoBehaviour
         OnFuelBurned = uiFurnace.OnEndBurnOfFuel;
 
         isProcessing = false;
-        timerProcess = 0.0f;
-
-        uiFurnace.SetDurationProcess(maxTimeProcess);
+        timerProcess = 0.0f;        
     }
 
     void Update()
@@ -55,14 +53,9 @@ public class Furnace : MonoBehaviour
             uiFurnace.TogglePanel();
         }
 
-        if (!burningFuel)
-            return;
-
-        BurnFuel();
-
         if (isProcessing)
         {
-            if (timerProcess < maxTimeProcess)
+            if (timerProcess < timeToProcessObject)
             {
                 timerProcess += Time.deltaTime;
 
@@ -81,6 +74,11 @@ public class Furnace : MonoBehaviour
                 OnItemProcessed?.Invoke();
             }
         }
+
+        if (!burningFuel)
+            return;
+
+        BurnFuel();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -167,6 +165,9 @@ public class Furnace : MonoBehaviour
         itemProcessing = item;
         itemPorcessed = uiFurnace.InverntoryController.GetItemModelFromId(itemProcessing.ItemType);
 
-        energyHandler.SetCostOfProcessDecrement(itemPorcessed.costByProcess, 5f);
+        timeToProcessObject = itemPorcessed.timeToComplete;
+        uiFurnace.SetDurationProcess(timeToProcessObject);
+
+        energyHandler.SetCostOfProcessDecrement(itemPorcessed.energyCost, itemPorcessed.costInterval);
     }
 }

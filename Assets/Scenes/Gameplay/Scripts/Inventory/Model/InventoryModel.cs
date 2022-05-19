@@ -182,23 +182,28 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         /// <summary>
         /// This is the update of the model when you switch in stack mode
         /// </summary>
-        /// <param name="originalSlot"></param>
-        /// <param name="newSlot"></param>
-        public void SiwtchStackOfItemsOnSlots(Vector2Int originalSlot, Vector2Int newSlot)
+        /// <param name="fromSlot"></param>
+        /// <param name="toSlot"></param>
+        public void SiwtchStackOfItemsOnSlots(Vector2Int fromSlot, Vector2Int toSlot)
         {
-            if (originalSlot == newSlot)
+            if (fromSlot == toSlot)
             {
                 Debug.Log("Mismo slot");
                 return;
             }
 
-            Debug.Log("SWITCHED STACK OF ITEMS FROM {" + originalSlot + "} TO {" + newSlot + "}");
+            Debug.Log("SWITCHED STACK OF ITEMS FROM {" + fromSlot + "} TO {" + toSlot + "}");
 
-            List<ItemModel> allOriginalItems = new List<ItemModel>();
-            allOriginalItems.AddRange(GetSlot(originalSlot).StackOfItems);
+            List<ItemModel> allFromItems = new List<ItemModel>();
+            List<ItemModel> allToItems = new List<ItemModel>();
+            allFromItems.AddRange(GetSlot(fromSlot).StackOfItems);
+            allToItems.AddRange(GetSlot(toSlot).StackOfItems);
 
-            GetSlot(newSlot).PlaceItems(allOriginalItems, false);
-            GetSlot(originalSlot).RemoveItems(0, true, false);
+            GetSlot(toSlot).RemoveItems(0, true, false);
+            GetSlot(toSlot).PlaceItems(allFromItems, false);
+
+            GetSlot(fromSlot).RemoveItems(0, true, false);
+            GetSlot(fromSlot).PlaceItems(allToItems, false);
 
             //Testing
             for (int x = 0; x < GridRows; x++)

@@ -61,10 +61,9 @@ public class UIFurnace : MonoBehaviour
         outputSlot.UpdateViewSlot(inventoryController.StackTake);
         fuelSlot.UpdateViewSlot(InverntoryController.StackTake);
 
-        if (!ProcessFuel())
-            return;
-
         ProcessMaterials();
+
+        ProcessFuel();
     }
     #endregion
 

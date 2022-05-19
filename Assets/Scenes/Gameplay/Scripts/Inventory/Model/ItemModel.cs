@@ -22,8 +22,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         [TextArea(1,8)]
         public string itemDescription = string.Empty;
         public int itemValue = 0;
-        public int costByProcess = 0;
-        public float timePerCost = 0;
+        public int energyCost = 0;
+        public float timeToComplete = 0;
+        public float costInterval = 0;
 
         public ItemType itemType;
 
