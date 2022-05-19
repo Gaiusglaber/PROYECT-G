@@ -7,14 +7,12 @@ using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.UI;
 
-public class Furance : MonoBehaviour
+public class Furnace : MonoBehaviour
 {
     [SerializeField] private float maxTimeToBurn;
-    [SerializeField] private UIFurance uiFurance;
+    [SerializeField] private UIFurnace uiFurnace;
     [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] private GameObject feedbackFurance = null;
-
-    private List<ItemModel> furanceInventory = new List<ItemModel>();
 
     private float timerBurn;
     private bool isProcessing;
@@ -28,22 +26,22 @@ public class Furance : MonoBehaviour
 
     void Start()
     {
-        uiFurance.IsFurnanceActive = IsProcessing;
-        uiFurance.OnProcessMaterial = SetProcess;
-        uiFurance.onCancelProcess += ResetProcessing;
-        OnItemProcessed = uiFurance.OnEndProcess;
+        uiFurnace.IsFurnaceActive = IsProcessing;
+        uiFurnace.OnProcessMaterial = SetProcess;
+        uiFurnace.onCancelProcess += ResetProcessing;
+        OnItemProcessed = uiFurnace.OnEndProcess;
 
         isProcessing = false;
         timerBurn = 0.0f;
 
-        uiFurance.SetDurationProcess(maxTimeToBurn);
+        uiFurnace.SetDurationProcess(maxTimeToBurn);
     }
 
     void Update()
     {
-        if (playerIsNear && Input.GetKeyDown(KeyCode.F))
+        if (playerIsNear && Input.GetKeyDown(KeyCode.E))
         {
-            uiFurance.TogglePanel();
+            uiFurnace.TogglePanel();
         }
 
         if (isProcessing)
@@ -54,14 +52,14 @@ public class Furance : MonoBehaviour
 
                 energyHandler.ConsumeEnergyByProcess();
 
-                uiFurance.UpdateProgressFill(timerBurn);
+                uiFurnace.UpdateProgressFill(timerBurn);
             }
             else
             {
                 timerBurn = 0;
                 isProcessing = false;
 
-                uiFurance.GenerateProcessedItem(itemProcessing);
+                uiFurnace.GenerateProcessedItem(itemProcessing);
                 itemProcessing = null;
 
                 OnItemProcessed?.Invoke();
@@ -117,7 +115,7 @@ public class Furance : MonoBehaviour
         isProcessing = true;
 
         itemProcessing = item;
-        itemPorcessed = uiFurance.InverntoryController.GetItemModelFromId(itemProcessing.ItemType);
+        itemPorcessed = uiFurnace.InverntoryController.GetItemModelFromId(itemProcessing.ItemType);
 
         energyHandler.SetCostOfProcessDecrement(itemPorcessed.costByProcess, 2f);
 

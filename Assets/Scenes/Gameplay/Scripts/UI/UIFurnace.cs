@@ -10,7 +10,7 @@ using ProyectG.Gameplay.Objects.Inventory.Data;
 
 using ProyectG.Toolbox.Lerpers;
 
-public class UIFurance : MonoBehaviour
+public class UIFurnace : MonoBehaviour
 {
     #region EXPOSED_FIELDS
     [SerializeField] private SlotInventoryView inputSlot;
@@ -25,7 +25,7 @@ public class UIFurance : MonoBehaviour
     #endregion
 
     #region PRIVATE_FIELDS
-    private Func<bool> isFurnanceActive = null;
+    private Func<bool> isFurnaceActive = null;
 
     private float durationProcess = 0f;
 
@@ -39,7 +39,7 @@ public class UIFurance : MonoBehaviour
 
     #region PROPERTIES
     public InventoryController InverntoryController { get { return inventoryController; } }
-    public Func<bool> IsFurnanceActive { set { isFurnanceActive = value; } get { return isFurnanceActive; } }
+    public Func<bool> IsFurnaceActive { set { isFurnaceActive = value; } get { return isFurnaceActive; } }
     #endregion
 
     #region UNITY_CALLS
@@ -57,7 +57,7 @@ public class UIFurance : MonoBehaviour
         inputSlot.UpdateViewSlot(inventoryController.StackTake);
         outputSlot.UpdateViewSlot(inventoryController.StackTake);
 
-        if (!IsFurnanceActive.Invoke())
+        if (!IsFurnaceActive.Invoke())
         {
             if(panelFurance.activeSelf)
             {                
