@@ -32,6 +32,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private Action<bool> onHandleInventory = null;
         private Action<Vector2Int,Vector2Int> onSomeItemMoved = null;
+        private Action<Vector2Int,Vector2Int> onSomeStackMoved = null;
         #endregion
 
         #region PROPERTIES
@@ -39,7 +40,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved)
+        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved)
         {
             parentView = parentTarget;
             maxRowsInventory = model.GridRows;
@@ -48,6 +49,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             InitializeSlotsView(maxRowsInventory, maxColsInventory);
 
             this.onSomeItemMoved = onSomeItemMoved;
+            this.onSomeStackMoved = onSomeStackMoved;
 
             for (int x = 0; x < maxRowsInventory; x++)
             {
@@ -59,7 +61,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
                     newSlotInv.Init(prefabItemView, mainCanvas, gridPos, false, allowedItems.ToArray());
-                    newSlotInv.SetOnSomeItemMoved(onSomeItemMoved);
+                    newSlotInv.SetOnSomeItemMoved(this.onSomeItemMoved);
+                    newSlotInv.SetOnSomeStackMoved(this.onSomeStackMoved);
 
                     model.SetSlotPosition(gridPos, finalWorldPosition);
                     Vector2 nextSlotPosition = finalWorldPosition + model.GetSlot(gridPos).NextSlotPosition;

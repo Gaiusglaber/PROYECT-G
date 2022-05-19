@@ -28,6 +28,8 @@ public class UIFurance : MonoBehaviour
     private Func<bool> isFurnanceActive = null;
 
     private float durationProcess = 0f;
+
+    private Vector2Int invalidPosition = new Vector2Int(-1, -1);
     #endregion
 
     #region ACTIONS
@@ -43,9 +45,9 @@ public class UIFurance : MonoBehaviour
     #region UNITY_CALLS
     void Start()
     {
-        inputSlot.Init(prefabItemView, mainCanvas, default, false);
-        outputSlot.Init(prefabItemView, mainCanvas, default, false);
-        fuelSlot.Init(prefabItemView, mainCanvas, default, false, ItemType.fuel);
+        inputSlot.Init(prefabItemView, mainCanvas, invalidPosition, false);
+        outputSlot.Init(prefabItemView, mainCanvas, invalidPosition, false);
+        fuelSlot.Init(prefabItemView, mainCanvas, invalidPosition, false, ItemType.fuel);
 
         onCancelProcess += StopFill;
     }
@@ -57,8 +59,6 @@ public class UIFurance : MonoBehaviour
 
         if (!IsFurnanceActive.Invoke())
         {
-            Debug.Log("Input slot stackList: " + inputSlot.StackOfItemsView.Count);
-
             if(panelFurance.activeSelf)
             {                
                 if (inputSlot.StackOfItemsView.Count > 0)

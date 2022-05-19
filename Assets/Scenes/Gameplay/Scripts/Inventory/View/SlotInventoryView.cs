@@ -44,6 +44,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool stackUpdated = false;
 
         private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
+        private Action<Vector2Int,Vector2Int> callUpdateStacks = null;
 
         private Vector2Int gridPosition = default;
 
@@ -121,10 +122,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             nextSlotFromThis = null;
             amountOutStack.text = string.Empty;
 
-            stackHandler.Init(mainCanvas, this);
-
-            stackHandler.enabled = false;
-
             gridPosition = gridPos;
 
             debugGridPos.text = gridPosition.ToString();
@@ -132,11 +129,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             this.allowedItems.AddRange(allowedItems);
         }
+
         public void SetOnSomeItemMoved(Action<Vector2Int, Vector2Int> onSomeItemMoved)
         {
-              callUpdateSlots = onSomeItemMoved;
+            callUpdateSlots = onSomeItemMoved;
         }
 
+        public void SetOnSomeStackMoved(Action<Vector2Int, Vector2Int> onSomeStackMoved)
+        {
+            callUpdateStacks = onSomeStackMoved;
+
+            stackHandler.Init(mainCanvas, this, callUpdateStacks);
+            stackHandler.enabled = false;
+        }
         public void UpdateViewSlot(bool onStackTake)
         {
             RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, colliderSprite.size, 0, transform.forward, 1, checkOnly);
@@ -153,6 +158,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             onStackTakeMode = onStackTake;
+
+            if (!gameObject.activeInHierarchy)
+                return;
 
             if (onStackTake)
             {
@@ -272,10 +280,15 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             for (int i = 0; i < diference; i++)
             {
-                if(objectsAttach[i] != null)
+                if (objectsAttach.Count < 1)
                 {
-                    Destroy(objectsAttach[i].gameObject);
-                    objectsAttach.Remove(objectsAttach[i]);
+                    break;
+                }
+
+                if (objectsAttach[0] != null)
+                {
+                    Destroy(objectsAttach[0].gameObject);
+                    objectsAttach.Remove(objectsAttach[0]);
                 }
             }
 
@@ -355,7 +368,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         SlotInventoryView stackIncomingSlot = stack.ActualSlot;
 
                         stackHandler.SwipeStackSlots(stackIncomingSlot);
-                        stack.SwipeStackSlots(this);
+
+                        stack.SwipeStackSlots(this, (slotAux)=> {
+                            callUpdateStacks?.Invoke(stackIncomingSlot.GridPosition, gridPosition);
+                        });
                     }
                 }
 

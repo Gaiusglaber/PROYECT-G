@@ -23,13 +23,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         private Action<InventoryModel> onInventoryChange = null;
 
         private Func<string, ItemModel> onGetItemModelFormDatabase = null;
+
+        private Vector2Int invalidPosition = new Vector2Int(-1,-1);  
         #endregion
 
         #region PROPERTIES
         public float OffsetSlots => offsetSlots;
         public int GridRows => maxRowsInventory;
         public int GridCols => maxColsInventory;
-
         public SlotInventoryModel[,] GridSlots { get { return gridSlots; } }
         #endregion
 
@@ -91,7 +92,34 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         //USE THIS TO ATTACH AN ITEM/ITEMS TO THE INVENTORY
         public void AttachItemsToSlot(List<ItemModel> stackOfItems, Vector2Int gridPosition = default)
         {
-            GetSlot(gridPosition).PlaceItems(stackOfItems);
+            if(gridPosition != default)
+            {
+                Debug.Log("Custom Grid Position");
+                GetSlot(gridPosition).PlaceItems(stackOfItems);
+                return;
+            }
+
+            Vector2Int slotWithThisItem = FindSlotWithItem(stackOfItems[0].itemId);
+
+            if(slotWithThisItem != invalidPosition)
+            {
+                Debug.Log("Grid Position with this type of item");
+
+                GetSlot(slotWithThisItem).PlaceItems(stackOfItems);
+                return;
+            }
+
+            Vector2Int emptySlot = FindEmptySlot();
+
+            if(emptySlot != invalidPosition)
+            {
+                Debug.Log("Empty Grid Position");
+
+                GetSlot(emptySlot).PlaceItems(stackOfItems);
+                return;
+            }
+
+            Debug.LogWarning("No hay mas espacio en el inventario!");
         }
 
         public void DeattachItemsFromSlot(Vector2Int gridPosition, int amount = 0, bool allItems = true)
@@ -109,22 +137,35 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         /// <param name="newSlot"></param>
         public void SiwtchItemsOnSlots(Vector2Int originalSlot, Vector2Int newSlot)
         {
-            Debug.ClearDeveloperConsole();
-
             if (originalSlot == newSlot)
+            {
+                Debug.Log("Mismo slot");
                 return;
+            }
 
             //Debug.Log("SWITCHED ITEM FROM {" + originalSlot + "} TO {" + newSlot + "}");
 
-            ItemModel copyOfItem = new ItemModel();
-
-            if(GetSlot(originalSlot).StackOfItems.Count > 0)
+            if(GetSlot(originalSlot) != null)
             {
-                CopyItemModel(ref copyOfItem, GetSlot(originalSlot).StackOfItems[0]);
+                if(GetSlot(originalSlot).StackOfItems.Count > 0)
+                {
+                    if(GetSlot(newSlot) != null)
+                    {
+                        GetSlot(newSlot).PlaceOneItem(GetSlot(originalSlot).StackOfItems[0]);
+                        GetSlot(originalSlot).RemoveItems(1, false, false);
+                    }
+                    else
+                    {
+                        GetSlot(originalSlot).RemoveItems(1, false, false);
+                    }
+                }
             }
+            /*else
+            {
+                ItemModel itemFromOutInventory = new ItemModel();
 
-            GetSlot(originalSlot).RemoveItems(1, false, false);
-            GetSlot(newSlot).PlaceOneItem(copyOfItem);
+                GetSlot(newSlot).PlaceOneItem();
+            }*/
 
             //Testing
             for (int x = 0; x < GridRows; x++)
@@ -133,7 +174,40 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                 {
                     Vector2Int gridSlot = new Vector2Int(x, y);
 
-                    //Debug.Log("SLOT {" + gridSlot + "} has " + GetSlot(gridSlot).StackOfItems.Count + " items");
+                    Debug.Log("SLOT {" + gridSlot + "} has " + GetSlot(gridSlot).StackOfItems.Count + " items");
+                }
+            }
+        }
+
+        /// <summary>
+        /// This is the update of the model when you switch in stack mode
+        /// </summary>
+        /// <param name="originalSlot"></param>
+        /// <param name="newSlot"></param>
+        public void SiwtchStackOfItemsOnSlots(Vector2Int originalSlot, Vector2Int newSlot)
+        {
+            if (originalSlot == newSlot)
+            {
+                Debug.Log("Mismo slot");
+                return;
+            }
+
+            Debug.Log("SWITCHED STACK OF ITEMS FROM {" + originalSlot + "} TO {" + newSlot + "}");
+
+            List<ItemModel> allOriginalItems = new List<ItemModel>();
+            allOriginalItems.AddRange(GetSlot(originalSlot).StackOfItems);
+
+            GetSlot(newSlot).PlaceItems(allOriginalItems, false);
+            GetSlot(originalSlot).RemoveItems(0, true, false);
+
+            //Testing
+            for (int x = 0; x < GridRows; x++)
+            {
+                for (int y = 0; y < GridCols; y++)
+                {
+                    Vector2Int gridSlot = new Vector2Int(x, y);
+
+                    Debug.Log("SLOT {" + gridSlot + "} has " + GetSlot(gridSlot).StackOfItems.Count + " items");
                 }
             }
         }
@@ -188,6 +262,57 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     }
                 }
             }
+        }
+
+        private Vector2Int FindSlotWithItem(string idItem)
+        {
+            Vector2Int findedSlot = invalidPosition;
+
+            for (int x = 0; x < maxRowsInventory; x++)
+            {
+                for (int y = 0; y < maxColsInventory; y++)
+                {
+                    Vector2Int gridPosition = new Vector2Int(x, y);
+
+                    if(GetSlot(gridPosition).StackOfItems.Count > 0)
+                    {
+                        string comparationId = GetSlot(gridPosition).StackOfItems[0].itemId;
+
+                        if(comparationId == idItem)
+                        {
+                            findedSlot = gridPosition;
+                            return findedSlot;
+                        }
+                        else
+                            continue;
+                    }
+                    else
+                        continue;
+                }
+            }
+
+            return findedSlot;
+        }
+
+        private Vector2Int FindEmptySlot()
+        {
+            Vector2Int findedSlot = invalidPosition;
+
+            for (int x = 0; x < maxRowsInventory; x++)
+            {
+                for (int y = 0; y < maxColsInventory; y++)
+                {
+                    Vector2Int gridPosition = new Vector2Int(x, y);
+
+                    if(GetSlot(gridPosition).IsEmpty)
+                    {
+                        findedSlot = gridPosition;
+                        return findedSlot;
+                    }
+                }
+            }
+
+            return findedSlot;
         }
 
         private bool IsValidPosition(Vector2Int pos)

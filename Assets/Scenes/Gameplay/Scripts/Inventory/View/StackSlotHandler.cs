@@ -40,6 +40,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private (Vector2,Vector2Int,Transform) slotPositionAttached = default;
         private (Vector2,Vector2Int,Transform) lastslotPositionAttached = default;
 
+        private Action<Vector2Int, Vector2Int> onEndedChangeOfSlot = null;
+
         private SlotInventoryView actualSlot = null;
 
         float timeToGoBackSlot = 0.5f;
@@ -81,8 +83,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached)
+        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached, Action<Vector2Int,Vector2Int> onStackMoved)
         {
+            onEndedChangeOfSlot = onStackMoved;
+
             positionLerper = new Vector3Lerper(speedFollow, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
 
             canvas = mainCanvas;
@@ -207,6 +211,21 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
+        private void UpdateItemsInsideSatckAfterMove()
+        {
+            List<ItemView> itemsCopy = new List<ItemView>();
+
+            itemsCopy.AddRange(stackedItems);
+
+            for (int i = 0; i < itemsCopy.Count; i++)
+            {
+                if(itemsCopy[i] != null)
+                {
+                    itemsCopy[i].UpdateItemSlot(SlotPositionAttached);
+                }
+            }
+        }
+
         public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent, params ItemType[] allowedTypes)
         {
             if (parent == null)
@@ -231,6 +250,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     StartCoroutine(AttachToPosition(positionSlot, () =>
                     {
+                        onEndedChangeOfSlot?.Invoke(lastslotPositionAttached.Item2, slotPositionAttached.Item2);
+
                         transform.SetParent(parent);
                         myCollider.enabled = true;
                         onRestoreDrag = false;
@@ -238,6 +259,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
                 else
                 {
+                    onEndedChangeOfSlot?.Invoke(lastslotPositionAttached.Item2, slotPositionAttached.Item2);
+
                     transform.position = positionSlot;
                     transform.SetParent(parent);
                     myCollider.enabled = true;
@@ -276,17 +299,23 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                         onSwipingStack = false;
 
+                        UpdateItemsInsideSatckAfterMove();
+
                         callback?.Invoke(auxSlot);
                     }));
                 }
                 else
                 {
                     actualSlot.StackHandler = this;
+
                     transform.position = newSlot.SlotPosition;
                     transform.SetParent(newSlot.transform);
                     myCollider.enabled = true;
                     onRestoreDrag = false;
                     onSwipingStack = false;
+
+                    UpdateItemsInsideSatckAfterMove();
+
                     callback?.Invoke(auxSlot);
                 }
 

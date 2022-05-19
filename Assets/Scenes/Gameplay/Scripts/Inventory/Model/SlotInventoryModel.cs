@@ -109,7 +109,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             {
                 if(stackOfItemsInSlot.Count > amount)
                 {
-                    stackOfItemsInSlot.RemoveRange(0, amount);
+                    for (int i = 0; i < amount; i++)
+                    {
+                        if(stackOfItemsInSlot.Count > 0)
+                        {
+                            stackOfItemsInSlot.RemoveAt(0);
+                        }
+                    }
                 }
                 else
                 {
@@ -145,7 +151,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     if (AreItemsEquals(itemToAttach.itemId, stackOfItemsInSlot[0].itemId))
                     {
                         stackOfItemsInSlot.Add(itemToAttach);
-                        stackOfItemsInSlot = stackOfItemsInSlot.Distinct().ToList();
                     }
                     else
                     {
@@ -158,7 +163,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             }
         }
 
-        public void PlaceItems(List<ItemModel> itemToAttach)
+        public void PlaceItems(List<ItemModel> itemToAttach, bool updateView = true)
         {
             if (itemToAttach == null || itemToAttach.Count < 1) return;
 
@@ -173,7 +178,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
                 isEmpty = false;
 
-                OnItemAttached?.Invoke();
+                if(updateView)
+                {
+                    OnItemAttached?.Invoke();
+                }
             }
             else
             {
@@ -183,7 +191,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     {
                         stackOfItemsInSlot.AddRange(itemToAttach);
 
-                        OnItemAttached?.Invoke();
+                        if (updateView)
+                        {
+                            OnItemAttached?.Invoke();
+                        }
                     }
                     else
                     {

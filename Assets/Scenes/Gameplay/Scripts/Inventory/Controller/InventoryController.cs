@@ -51,7 +51,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
-            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots); //visual del inventario
+            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
             
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);

@@ -51,7 +51,6 @@ namespace ProyectG.Gameplay.Objects
                 posLerper.SetValues(transform.position, collision.transform.position, true);
                 sizeLerper.SetValues(Vector2.one, Vector2.zero, true);
                 worldItemTaked = true;
-                Debug.Log("EL PLAYER ESTA ARRIBAAAAA OWO");
             }
         }
         #endregion
