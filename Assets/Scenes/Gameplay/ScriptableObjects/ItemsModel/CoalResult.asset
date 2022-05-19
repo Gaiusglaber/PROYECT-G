@@ -17,7 +17,9 @@ MonoBehaviour:
   itemDescription: Carbon como resultado de la quema de madera
   itemValue: 1
   costByProcess: 2
+  timePerCost: 2
   itemType: 0
-  produced: 0
-  notProduced: 0
   itemResults: []
+  timeToBurnOut: 25
+  energyPerTime: 2
+  energyGenerated: 8

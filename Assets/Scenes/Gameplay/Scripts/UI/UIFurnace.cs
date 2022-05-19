@@ -25,7 +25,8 @@ public class UIFurnace : MonoBehaviour
     #endregion
 
     #region PRIVATE_FIELDS
-    private Func<bool> isFurnaceActive = null;
+    private Func<bool> isFurnaceProcessing = null;
+    private Func<bool> isFurnaceBurningFuel = null;
 
     private float durationProcess = 0f;
 
@@ -34,12 +35,14 @@ public class UIFurnace : MonoBehaviour
 
     #region ACTIONS
     public Action<ItemView> OnProcessMaterial;
+    public Action<FuelItem> OnProcessFuel;
     public Action onCancelProcess = null;
     #endregion
 
     #region PROPERTIES
     public InventoryController InverntoryController { get { return inventoryController; } }
-    public Func<bool> IsFurnaceActive { set { isFurnaceActive = value; } get { return isFurnaceActive; } }
+    public Func<bool> IsFurnaceProcessing { set { isFurnaceProcessing = value; } get { return isFurnaceProcessing; } }
+    public Func<bool> IsFurnaceBurning { set { isFurnaceBurningFuel = value; } get { return isFurnaceBurningFuel; } }
     #endregion
 
     #region UNITY_CALLS
@@ -56,37 +59,12 @@ public class UIFurnace : MonoBehaviour
     {
         inputSlot.UpdateViewSlot(inventoryController.StackTake);
         outputSlot.UpdateViewSlot(inventoryController.StackTake);
+        fuelSlot.UpdateViewSlot(InverntoryController.StackTake);
 
-        if (!IsFurnaceActive.Invoke())
-        {
-            if(panelFurance.activeSelf)
-            {                
-                if (inputSlot.StackOfItemsView.Count > 0)
-                {
-                    ItemView itemView = inputSlot.StackOfItemsView[0];
-                    OnProcessMaterial?.Invoke(itemView);
-                }
-            }
-            else
-            {
-                if (inputSlot.AuxStackOfItems.Count > 0)
-                {
-                    ItemView itemView = inputSlot.AuxStackOfItems[0];
-                    OnProcessMaterial?.Invoke(itemView);
-                }
-            }
-        }
-        else
-        {
-            if (!panelFurance.activeSelf)
-                return;
+        if (!ProcessFuel())
+            return;
 
-            if (!inputSlot.StackUpdated)
-            {
-                onCancelProcess?.Invoke();
-                Debug.Log("Proceso cancelado");
-            }
-        }
+        ProcessMaterials();
     }
     #endregion
 
@@ -98,16 +76,14 @@ public class UIFurnace : MonoBehaviour
 
     public void GenerateProcessedItem(ItemView itemFrom)
     {
-        FuelItem itemToCreate = inventoryController.GetItemModelFromId(itemFrom.ItemType) as FuelItem;
-
-        ItemModel finalItem = itemToCreate.itemResults[0];
-
+        ItemModel finalItem = inventoryController.GetItemModelFromId(itemFrom.ItemType).itemResults[0];
         outputSlot.CreateAndAddItemsFromData(finalItem, 1);
     }
 
     public void TogglePanel()
     {
         FillAuxiliarList(inputSlot.StackOfItemsView);
+        FillAuxiliarListFuel(fuelSlot.StackOfItemsView);
 
         panelFurance.SetActive(!panelFurance.activeSelf);
         inventoryController.ToggleInventory();
@@ -137,6 +113,30 @@ public class UIFurnace : MonoBehaviour
         inputSlot.UpdateTextOutStack();
     }
 
+    public void OnEndBurnOfFuel()
+    {
+        progressFuelConsumption.fillAmount = 1;
+
+        if (panelFurance.activeSelf)
+        {
+            if (fuelSlot.StackOfItemsView.Count < 1)
+                return;
+
+            Destroy(fuelSlot.StackOfItemsView[0].gameObject);
+            fuelSlot.StackOfItemsView.RemoveAt(0);
+        }
+        else
+        {
+            if (fuelSlot.AuxStackOfItems.Count < 1)
+                return;
+
+            Destroy(fuelSlot.AuxStackOfItems[0].gameObject);
+            fuelSlot.AuxStackOfItems.RemoveAt(0);
+        }
+
+        fuelSlot.UpdateTextOutStack();
+    }
+
     public void UpdateProgressFill(float actualTime)
     {
         float fillValue = (actualTime * 100f) / durationProcess;
@@ -144,9 +144,90 @@ public class UIFurnace : MonoBehaviour
 
         progressFillProcess.fillAmount = Mathf.MoveTowards(progressFillProcess.fillAmount, fillValue, Time.deltaTime);
     }
+
+    public void UpdateFillFuel(float actualTime, float maxLifeTimeFuel)
+    {
+        float fillValue = (actualTime * 100f) / maxLifeTimeFuel;
+        fillValue = fillValue / 100f;
+
+        progressFuelConsumption.fillAmount = Mathf.MoveTowards(progressFuelConsumption.fillAmount, fillValue, Time.deltaTime);
+    }
     #endregion
 
     #region PRIVATE_METHODS
+    private void ProcessMaterials()
+    {
+        if (!IsFurnaceProcessing.Invoke())
+        {
+            if (panelFurance.activeSelf)
+            {
+                if (inputSlot.StackOfItemsView.Count > 0)
+                {
+                    ItemView itemView = inputSlot.StackOfItemsView[0];
+
+                    OnProcessMaterial?.Invoke(itemView);
+                }
+            }
+            else
+            {
+                if (inputSlot.AuxStackOfItems.Count > 0)
+                {
+                    ItemView itemView = inputSlot.AuxStackOfItems[0];
+
+                    OnProcessMaterial?.Invoke(itemView);
+                }
+            }
+        }
+        else
+        {
+            if (!panelFurance.activeSelf)
+                return;
+
+            if (!inputSlot.StackUpdated)
+            {
+                onCancelProcess?.Invoke();
+                Debug.Log("Proceso cancelado");
+            }
+        }
+    }
+
+    private bool ProcessFuel()
+    {
+        if(!IsFurnaceBurning.Invoke())
+        {
+            if (panelFurance.activeSelf)
+            {
+                if (fuelSlot.StackOfItemsView.Count > 0)
+                {
+                    ItemView itemView = fuelSlot.StackOfItemsView[0];
+                    FuelItem fuelBurning = inventoryController.GetItemModelFromId(itemView.ItemType) as FuelItem;
+
+                    OnProcessFuel?.Invoke(fuelBurning);
+
+                    return true;
+                }
+            }
+            else
+            {
+                if (fuelSlot.AuxStackOfItems.Count > 0)
+                {
+                    ItemView itemView = fuelSlot.AuxStackOfItems[0];
+                    FuelItem fuelBurning = inventoryController.GetItemModelFromId(itemView.ItemType) as FuelItem;
+
+                    OnProcessFuel?.Invoke(fuelBurning);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     private void FillAuxiliarList(List<ItemView> listOfItems)
     {
         if (listOfItems.Count < 1)
@@ -157,6 +238,20 @@ public class UIFurnace : MonoBehaviour
             if(!inputSlot.AuxStackOfItems.Contains(listOfItems[i]))
             {
                 inputSlot.AuxStackOfItems.Add(listOfItems[i]);
+            }
+        }
+    }
+
+    private void FillAuxiliarListFuel(List<ItemView> listOfItems)
+    {
+        if (listOfItems.Count < 1)
+            return;
+
+        for (int i = 0; i < listOfItems.Count; i++)
+        {
+            if (!fuelSlot.AuxStackOfItems.Contains(listOfItems[i]))
+            {
+                fuelSlot.AuxStackOfItems.Add(listOfItems[i]);
             }
         }
     }

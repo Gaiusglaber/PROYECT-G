@@ -46,6 +46,10 @@ namespace ProjectG.Gameplay.Managers
                     testItems[i].SetOnItemTaked(inventory.GenerateItem);
                 }
             }
+
+            inventory.GenerateItem("TestItem1");
+            inventory.GenerateItem("TestItem1");
+            inventory.GenerateItem("TestItem1");
         }
 
         private void Update()

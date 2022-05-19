@@ -9,32 +9,43 @@ using ProyectG.Gameplay.UI;
 
 public class Furnace : MonoBehaviour
 {
-    [SerializeField] private float maxTimeToBurn;
+    [SerializeField] private float maxTimeProcess;
     [SerializeField] private UIFurnace uiFurnace;
     [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] private GameObject feedbackFurance = null;
 
-    private float timerBurn;
+    private int energyGenerated = 0;
+    private float timerFuel = 0;
+    private float timeToBurnOutFuel = 0;
+
+    private float timerProcess;
+    private bool burningFuel = false;
     private bool isProcessing;
 
     private bool playerIsNear = false;
 
     private Action OnItemProcessed = null;
+    private Action OnFuelBurned = null;
 
     private ItemModel itemPorcessed = null;
     private ItemView itemProcessing = null;
 
     void Start()
     {
-        uiFurnace.IsFurnaceActive = IsProcessing;
+        uiFurnace.IsFurnaceProcessing = IsProcessing;
+        uiFurnace.IsFurnaceBurning = IsBurningFuel;
+
         uiFurnace.OnProcessMaterial = SetProcess;
+        uiFurnace.OnProcessFuel = SetBurnFuel;
+
         uiFurnace.onCancelProcess += ResetProcessing;
         OnItemProcessed = uiFurnace.OnEndProcess;
+        OnFuelBurned = uiFurnace.OnEndBurnOfFuel;
 
         isProcessing = false;
-        timerBurn = 0.0f;
+        timerProcess = 0.0f;
 
-        uiFurnace.SetDurationProcess(maxTimeToBurn);
+        uiFurnace.SetDurationProcess(maxTimeProcess);
     }
 
     void Update()
@@ -44,19 +55,24 @@ public class Furnace : MonoBehaviour
             uiFurnace.TogglePanel();
         }
 
+        if (!burningFuel)
+            return;
+
+        BurnFuel();
+
         if (isProcessing)
         {
-            if (timerBurn < maxTimeToBurn)
+            if (timerProcess < maxTimeProcess)
             {
-                timerBurn += Time.deltaTime;
+                timerProcess += Time.deltaTime;
 
                 energyHandler.ConsumeEnergyByProcess();
 
-                uiFurnace.UpdateProgressFill(timerBurn);
+                uiFurnace.UpdateProgressFill(timerProcess);
             }
             else
             {
-                timerBurn = 0;
+                timerProcess = 0;
                 isProcessing = false;
 
                 uiFurnace.GenerateProcessedItem(itemProcessing);
@@ -99,15 +115,49 @@ public class Furnace : MonoBehaviour
         }
     }
 
+    private void BurnFuel()
+    {
+        if(timerFuel > 0)
+        {
+            timerFuel -= Time.deltaTime;
+
+            energyHandler.IncreaseEnergyByFuel();
+
+            uiFurnace.UpdateFillFuel(timerFuel, timeToBurnOutFuel);
+        }
+        else
+        {
+            burningFuel = false;
+
+            OnFuelBurned?.Invoke();
+        }
+    }
+
     private void ResetProcessing()
     {
-        timerBurn = 0f;
+        timerProcess = 0f;
         isProcessing = false;
     }
 
     private bool IsProcessing()
     {
         return isProcessing;
+    }
+
+    private bool IsBurningFuel()
+    {
+        return burningFuel;
+    }
+
+    private void SetBurnFuel(FuelItem fuelModel)
+    {
+        burningFuel = true;
+
+        timeToBurnOutFuel = fuelModel.timeToBurnOut;
+        energyGenerated = fuelModel.energyGenerated;
+        timerFuel = timeToBurnOutFuel;
+
+        energyHandler.SetValueOfFuelIncrement(energyGenerated, fuelModel.energyPerTime);
     }
 
     private void SetProcess(ItemView item)
@@ -117,8 +167,6 @@ public class Furnace : MonoBehaviour
         itemProcessing = item;
         itemPorcessed = uiFurnace.InverntoryController.GetItemModelFromId(itemProcessing.ItemType);
 
-        energyHandler.SetCostOfProcessDecrement(itemPorcessed.costByProcess, 2f);
-
-        Debug.Log("Processing " + isProcessing);
+        energyHandler.SetCostOfProcessDecrement(itemPorcessed.costByProcess, 5f);
     }
 }

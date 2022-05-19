@@ -29,13 +29,18 @@ namespace ProyectG.Gameplay.UI
 		[SerializeField] public Player.Controller.PlayerController playerController = null;
 
 		private float timer = 0;
+		private float timerFuel = 0;
 
 		#endregion
 
 		#region PRIVATE_FIELDS
 		[NonSerialized] public int cantEnergy = 0;
+
 		private float processDecreaseInterval = 0;
+		private float fuelBurnIncreaseInterval = 0;
 		private int processDecreaseCost = 0;
+		private int fuelBurnIncreaseValue = 0;
+
 		private FloatLerper fillLerper = null;
 		private FloatLerper txtLerper = null;
 		private bool ToggleLowEnergy = false;
@@ -113,10 +118,30 @@ namespace ProyectG.Gameplay.UI
 			}
 		}
 
+		public void IncreaseEnergyByFuel()
+        {
+			if(timerFuel < fuelBurnIncreaseInterval)
+            {
+				timerFuel += Time.deltaTime;
+            }
+            else
+            {
+				cantEnergy += fuelBurnIncreaseValue;
+				timerFuel = 0f;
+				UpdateEnergy(cantEnergy);
+            }
+        }
+
 		public void SetCostOfProcessDecrement(int decreaseCost, float timePerDecrease)
         {
 			processDecreaseCost = decreaseCost;
 			processDecreaseInterval = timePerDecrease;
+		}
+
+		public void SetValueOfFuelIncrement(int increaseValue, float timePerIncrease)
+        {
+			fuelBurnIncreaseValue = increaseValue;
+			fuelBurnIncreaseInterval = timePerIncrease;
 		}
 		#endregion
 
