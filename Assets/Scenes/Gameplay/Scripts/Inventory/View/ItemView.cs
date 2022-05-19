@@ -242,7 +242,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         if(itemInitialized)
                         {
-                            onEndedChangeOfSlot?.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                            onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
                         }
 
                         transform.SetParent(parent);
@@ -256,7 +256,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                     if (itemInitialized)
                     {
-                        onEndedChangeOfSlot?.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                        onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
                     }
 
                     transform.SetParent(parent);
@@ -268,6 +268,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             return false;
+        }
+
+        public void UpdateItemSlot((Vector2, Vector2Int, Transform) newSlotData)
+        {
+            slotPositionAttached = newSlotData;
         }
 
         public void SwitchStateItem(bool state)

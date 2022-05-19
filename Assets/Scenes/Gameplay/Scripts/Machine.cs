@@ -20,10 +20,10 @@ namespace ProyectG.Gameplay.Objects{
         #region UNITY_CALLS
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            /*if (Input.GetKeyDown(KeyCode.E))
             {
                 OnInteract?.Invoke();
-            }
+            }*/
         }
         #endregion
 

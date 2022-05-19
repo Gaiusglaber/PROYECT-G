@@ -16736,6 +16736,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 7470058559746799918, guid: 0604f96cd9c275c41a04d482e4d71e5f, type: 3}
   inventory: {fileID: 968185359}
   energyHandler: {fileID: 857737609}
+  cameraHandler: {fileID: 2139589938}
   testItems: []
 --- !u!1 &2117009850
 GameObject:
@@ -17033,6 +17034,7 @@ GameObject:
   - component: {fileID: 2139589935}
   - component: {fileID: 2139589934}
   - component: {fileID: 2139589937}
+  - component: {fileID: 2139589938}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -17138,6 +17140,22 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &2139589938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139589933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d891e4705176ebe429130a8626c6fe9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  followSpeed: 4
+  offsetCamera: 1
+  initialized: 0
 --- !u!4 &60239827482181153
 Transform:
   m_ObjectHideFlags: 0

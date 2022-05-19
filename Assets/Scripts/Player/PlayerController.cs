@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,13 @@ using DragonBones;
 
 namespace ProyectG.Player.Controller
 {
+    [Serializable]
+    public enum LastDirection
+    {
+        Right,
+        Left
+    }
+
     public struct RayRange
     {
         public readonly Vector2 Start;
@@ -82,6 +90,8 @@ namespace ProyectG.Player.Controller
         private float initialAceleration = 0.0f;
         private float initialDeAceleration = 0.0f;
         private float initialMovementClamp = 0.0f;
+
+        private LastDirection lastDirection = default;
         #endregion
 
         #region PROPERTIES
@@ -105,6 +115,8 @@ namespace ProyectG.Player.Controller
                 return (onGround && lastJumpPressed + jumpBuffer > Time.time);
             }
         }
+
+        public UnityArmatureComponent CustomAnimator { get { return customAnimator; } }
         #endregion
 
         #region UNITY_CALLS
@@ -200,6 +212,15 @@ namespace ProyectG.Player.Controller
                 else
                 {
                     SetAnimation("Salto", 1);
+                }
+
+                if(horizontalSpeed > 0)
+                {
+                    lastDirection = LastDirection.Right;
+                }
+                else
+                {
+                    lastDirection = LastDirection.Left;
                 }
             }
             else
@@ -301,12 +322,12 @@ namespace ProyectG.Player.Controller
         }
         private void MovePlayer()
         {
+            SetDirectionArmature();
+
             Vector3 position = transform.position + characterBounds.center;
             RawMovement = new Vector3(horizontalSpeed, verticalSpeed);
             Vector3 movement = RawMovement * Time.deltaTime;
             Vector3 furthestPoint = position + movement;
-
-            SetDirectionArmature(horizontalSpeed);
 
             //Chequeo mas adelante si hay alguna cosa a que colisionar
             Collider2D hit = Physics2D.OverlapBox(furthestPoint, characterBounds.size, 0, groundLayer);
@@ -362,16 +383,9 @@ namespace ProyectG.Player.Controller
                 }
             }
         }
-        private void SetDirectionArmature(float horizontalSpeed)
+        private void SetDirectionArmature()
         {
-            if(horizontalSpeed < 0)
-            {
-                customAnimator._armature.flipX = true;
-            }
-            else
-            {
-                customAnimator._armature.flipX = false;
-            }
+            customAnimator._armature.flipX = lastDirection == LastDirection.Left ? true : false;
         }
         #endregion
 

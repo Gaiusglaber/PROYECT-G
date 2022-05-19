@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: PJ_Data
   m_EditorClassIdentifier: 
   dataName: PJ
-  dragonBonesJSON: {fileID: 4900000, guid: 6270dd00ca4258349a1d0d20dfb9f5c6, type: 3}
+  dragonBonesJSON: {fileID: 4900000, guid: 6fd82dfb3bf108442a2809ad2a78385a, type: 3}
   textureAtlas:
   - textureAtlasJSON: {fileID: 4900000, guid: 4b81f58cc0960724a92b59a44a4d0c09, type: 3}
     texture: {fileID: 2800000, guid: 74aacc937ddf812418da015783facf45, type: 3}
+    material: {fileID: 2100000, guid: 1fdb70d7dbab94044908e9e790f724c1, type: 2}
+    uiMaterial: {fileID: 0}
+  - textureAtlasJSON: {fileID: 4900000, guid: 8eedf9eeb337f174d95ddbc89e5474a4, type: 3}
+    texture: {fileID: 2800000, guid: 57ca912c10333b64088b2d86b562004f, type: 3}
     material: {fileID: 2100000, guid: 1fdb70d7dbab94044908e9e790f724c1, type: 2}
     uiMaterial: {fileID: 0}
