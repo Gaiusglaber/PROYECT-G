@@ -18,7 +18,7 @@ MonoBehaviour:
   itemValue: 1
   energyCost: 5
   timeToComplete: 7
-  costInterval: 2
+  costInterval: 1
   itemType: 2
   itemResults:
   - {fileID: 11400000, guid: c0362058b53fb104187dde5a911051fd, type: 2}
