@@ -35,22 +35,16 @@ public class TreeFSM : MonoBehaviour, IHittable
         state = TreeState.first;
     }
 
-    private void OnDisable()
-    {
-        //cropSlot.ActivatedSlot -= SetCycle;
-    }
-
     void Update()
     {
         if (amountLogs <= 0)
         {
             SetCycle(true);
             NextStage(TreeState.first);
+            timerTreeFSM = 0f;
+            amountLogs = 4;
         }
         StartCylce();
-        Debug.Log("timer: " + timerTreeFSM.ToString("F0"));
-        Debug.Log("estado del bool isStarted: " + isStarted);
-        Debug.Log("amount crops: " + amountLogs);
     }
 
     private void SetCycle(bool state)
@@ -95,9 +89,8 @@ public class TreeFSM : MonoBehaviour, IHittable
 
         if(amountLogs <= 0)
         {
-            Debug.Log("Comienza nuevo ciclo!");
             SetCycle(true);
-            timerTreeFSM = 0.0f;
+            timerTreeFSM = 0f;
             NextStage(TreeState.first);
             amountLogs = 4;
         }

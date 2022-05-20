@@ -12,7 +12,6 @@ public class CropFSM : MonoBehaviour, IHittable
     [SerializeField] private float timeThirdStage;
     [SerializeField] private WorldItem cropPrefab;
     [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
-    //[SerializeField] private CropSlot cropSlot;
 
     private InventoryController InventoryController;
     private SpriteRenderer spriteRenderer;
@@ -30,19 +29,10 @@ public class CropFSM : MonoBehaviour, IHittable
     {
         timerCropFSM = 0.0f;
         InventoryController = FindObjectOfType<InventoryController>();
-        //hacer esto mismo, que instancie un prefab de item world en la posicion del cultivo
-        WorldItem worldItem = Instantiate(cropPrefab);
-        worldItem.SetOnItemTaked(InventoryController.GenerateItem);
         SetCycle(true);
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         amountCrops = 1;
         state = CropState.first;
-        //cropSlot.ActivatedSlot += SetCycle;
-    }
-
-    private void OnDisable()
-    {
-        //cropSlot.ActivatedSlot -= SetCycle;
     }
 
     void Update()
@@ -50,12 +40,11 @@ public class CropFSM : MonoBehaviour, IHittable
         if (amountCrops <= 0)
         {
             SetCycle(true);
+            timerCropFSM = 0.0f;
+            amountCrops = 1;
             NextStage(CropState.first);
         }
         StartCylce();
-        Debug.Log("timer: " + timerCropFSM.ToString("F0"));
-        Debug.Log("estado del bool isStarted: " + isStarted);
-        Debug.Log("amount crops: " + amountCrops);
     }
 
     private void SetCycle(bool state)
@@ -96,7 +85,6 @@ public class CropFSM : MonoBehaviour, IHittable
     {
         state = stage;
         spriteRenderer.sprite = spriteCycle[(int)stage];
-        //amountCrops++;
     }
 
     public void OnHit()
@@ -105,7 +93,6 @@ public class CropFSM : MonoBehaviour, IHittable
             return;
         if(amountCrops <= 0)
         {
-            Debug.Log("Comienza nuevo ciclo!");
             SetCycle(true);
             timerCropFSM = 0.0f;
             amountCrops = 1;
@@ -117,18 +104,5 @@ public class CropFSM : MonoBehaviour, IHittable
             WorldItem crop = Instantiate(cropPrefab, transform.position, Quaternion.identity);
             crop.SetOnItemTaked(InventoryController.GenerateItem);
         }
-        //if (amountCrops > 0)
-        //{
-        //   
-        //}
-        //else
-        //{
-        //    Debug.Log("Comienza nuevo ciclo!");
-        //    SetCycle(true);
-        //    corpInteraction.enabled = false;
-        //    timerCropFSM = 0.0f;
-        //    NextStage(0);
-        //    return;
-        //}
     }
 }
