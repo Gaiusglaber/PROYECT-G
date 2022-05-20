@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using ProyectG.Player.Attack;
 using DragonBones;
 
 namespace ProyectG.Player.Controller
@@ -36,6 +37,8 @@ namespace ProyectG.Player.Controller
         [SerializeField] private bool controllerEnable = false;
         [SerializeField] private float timeUntilActivatePlayer = 0;
         [SerializeField] private LayerMask groundLayer = default;
+        [Header("---ATTACK---")]
+        [SerializeField] private PlayerAttack playerAttack = null;
         [Header("---MOVEMENT---")]
         [SerializeField] private float acceleration = 0;
         [SerializeField] private float deAcceleration = 0;
@@ -204,14 +207,17 @@ namespace ProyectG.Player.Controller
 
                 float apexBonus = Mathf.Sign(Input.GetAxisRaw("Horizontal")) * this.apexBonus * apexPoint;
                 horizontalSpeed += apexBonus * Time.deltaTime;
-                
-                if (onGround)
+
+                if (!playerAttack.PlayerHasDoAttack)
                 {
-                    SetAnimation("movilidad");
-                }
-                else
-                {
-                    SetAnimation("Salto", 1);
+                    if (onGround)
+                    {
+                        SetAnimation("movilidad");
+                    }
+                    else
+                    {
+                        SetAnimation("Salto", 1);
+                    }
                 }
 
                 if(horizontalSpeed > 0)
@@ -227,13 +233,16 @@ namespace ProyectG.Player.Controller
             {
                 horizontalSpeed = Mathf.MoveTowards(horizontalSpeed, 0, (deAcceleration / 6f) * Time.deltaTime);
                 
-                if(!onGround)
+                if(!playerAttack.PlayerHasDoAttack)
                 {
-                    SetAnimation("Salto", 1);
-                }
-                else
-                {
-                    SetAnimation("idle");
+                    if(!onGround)
+                    {
+                        SetAnimation("Salto", 1);
+                    }
+                    else
+                    {
+                        SetAnimation("idle");
+                    }
                 }
             }
 

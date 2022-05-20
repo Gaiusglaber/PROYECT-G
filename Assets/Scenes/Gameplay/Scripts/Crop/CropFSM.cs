@@ -108,6 +108,7 @@ public class CropFSM : MonoBehaviour, IHittable
             Debug.Log("Comienza nuevo ciclo!");
             SetCycle(true);
             timerCropFSM = 0.0f;
+            amountCrops = 1;
             NextStage(CropState.first);
             
         }else

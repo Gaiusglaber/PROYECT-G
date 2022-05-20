@@ -3,15 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProyectG.Gameplay.Interfaces;
 
+using DragonBones;
+
 namespace ProyectG.Player.Attack
 {
     public class PlayerAttack : MonoBehaviour
     {
         [SerializeField] private float range;
+        [Header("---ANIMATIONS---")]
+        [SerializeField] private UnityArmatureComponent customAnimator = null;
+
+        private string lastAnimationExecuted = string.Empty;
+
+        private bool playerHasDoAttack = false;
+        private float timeToResetAttack = 0.75f;
+        private float timer = 0f;
+
+        public bool PlayerHasDoAttack { get { return playerHasDoAttack; } }
+
         void Update()
         {
+            if(playerHasDoAttack)
+            {
+                if(timer < timeToResetAttack)
+                {
+                    timer += Time.deltaTime;
+                }
+                else
+                {
+                    timer = 0;
+                    playerHasDoAttack = false;
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                playerHasDoAttack = true;
+
+                SetAnimation("ataque");
+
                 Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range);
                 foreach (Collider2D hit in hits)
                 {
@@ -21,6 +51,24 @@ namespace ProyectG.Player.Attack
                     }
                 }
             }
+        }
+        private void SetAnimation(string idAnimation, int playTimes = 1)
+        {
+            
+            customAnimator.animation.Play(idAnimation, playTimes);
+
+            /*if (!customAnimator.animation.isPlaying)
+            {
+                customAnimator.animation.Play(idAnimation, playTimes);
+                lastAnimationExecuted = idAnimation;
+            }
+            else
+            {
+                if (lastAnimationExecuted != idAnimation)
+                {
+                    customAnimator.animation.Stop();
+                }
+            }*/
         }
 
         private void OnDrawGizmos()
