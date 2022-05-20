@@ -142,8 +142,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackHandler.Init(mainCanvas, this, callUpdateStacks);
             stackHandler.enabled = false;
         }
+
+        public void SetSlotGridPosition(Vector2Int gridPosition)
+        {
+            this.gridPosition = gridPosition;
+
+            debugGridPos.text = gridPosition.ToString();
+        }
+
         public void UpdateViewSlot(bool onStackTake)
         {
+            if (!gameObject.activeInHierarchy)
+                return;
+
             RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, colliderSprite.size, 0, transform.forward, 1, checkOnly);
 
             if (!IsStackUpdated(hits))
@@ -158,9 +169,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             onStackTakeMode = onStackTake;
-
-            if (!gameObject.activeInHierarchy)
-                return;
 
             if (onStackTake)
             {

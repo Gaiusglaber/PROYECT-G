@@ -107,19 +107,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             }
             else
             {
-                if(stackOfItemsInSlot.Count > amount)
+                for (int i = 0; i < amount; i++)
                 {
-                    for (int i = 0; i < amount; i++)
-                    {
-                        if(stackOfItemsInSlot.Count > 0)
-                        {
-                            stackOfItemsInSlot.RemoveAt(0);
-                        }
-                    }
-                }
-                else
-                {
-                    stackOfItemsInSlot.Clear();
+                    if (stackOfItemsInSlot.Count < 1)
+                        break;
+
+                    stackOfItemsInSlot.RemoveAt(0);
                 }
             }
 
@@ -198,7 +191,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     }
                     else
                     {
-                        NextGridSlot.PlaceItems(itemToAttach);
+                        if(NextGridSlot != null)
+                        {
+                            NextGridSlot.PlaceItems(itemToAttach);
+                        }
                     }
                 }
             }

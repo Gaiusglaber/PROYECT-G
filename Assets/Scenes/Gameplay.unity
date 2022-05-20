@@ -1605,7 +1605,7 @@ MonoBehaviour:
   fuelSlot: {fileID: 2079433182}
   inventoryController: {fileID: 1317914051}
   prefabItemView: {fileID: 3507272483325874770, guid: d4c2cf2d8abc68849be5b15f8ab3e8a0, type: 3}
-  panelFurance: {fileID: 1056122023}
+  panelFurnace: {fileID: 1056122023}
   mainCanvas: {fileID: 717702597}
   progressFillProcess: {fileID: 119144477}
   progressFuelConsumption: {fileID: 199282601}
@@ -22020,9 +22020,10 @@ MonoBehaviour:
   volume: {fileID: 176273866}
   allItemsAviable:
   - {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
+  - {fileID: 11400000, guid: ba05364f576bb554d9251c09c38bba2e, type: 2}
   - {fileID: 11400000, guid: c0362058b53fb104187dde5a911051fd, type: 2}
   - {fileID: 11400000, guid: f9390955b09ad6f409eb62b38fab7cc6, type: 2}
-  - {fileID: 11400000, guid: ba05364f576bb554d9251c09c38bba2e, type: 2}
+  - {fileID: 11400000, guid: aac68be38c41e564ea3cacf920c90672, type: 2}
 --- !u!4 &1317914052
 Transform:
   m_ObjectHideFlags: 0
@@ -27953,7 +27954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a12072743f1178c40ab9c9bb29468b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTimeProcess: 2
   uiFurnace: {fileID: 138062184}
   energyHandler: {fileID: 152223989}
   feedbackFurance: {fileID: 808177907}

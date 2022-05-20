@@ -16,8 +16,9 @@ MonoBehaviour:
   itemSprite: {fileID: 7440981132975211316, guid: af0d6783f27796940ab3bbc4cf40f161, type: 3}
   itemDescription: Madera que funciona como combustible y para generar carbon
   itemValue: 1
-  costByProcess: 2
-  timePerCost: 2
+  energyCost: 2
+  timeToComplete: 15
+  costInterval: 5
   itemType: 0
   itemResults:
   - {fileID: 11400000, guid: ba05364f576bb554d9251c09c38bba2e, type: 2}

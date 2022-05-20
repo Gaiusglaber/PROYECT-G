@@ -26,6 +26,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private Transform parentView = null;
 
         private SlotInventoryView[,] slotsView = null;
+        private List<SlotInventoryView> extraSlots = new List<SlotInventoryView>();
 
         private int maxRowsInventory = 0;
         private int maxColsInventory = 0;
@@ -60,7 +61,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         (parentView.position.y + (model.GridRows * 0.5f))) + model.GetSlot(gridPos).SlotPosition;
 
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
-                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos, true, allowedItems.ToArray());
+                    newSlotInv.Init(prefabItemView, mainCanvas, gridPos, false, allowedItems.ToArray());
                     newSlotInv.SetOnSomeItemMoved(this.onSomeItemMoved);
                     newSlotInv.SetOnSomeStackMoved(this.onSomeStackMoved);
 
@@ -106,7 +107,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public SlotInventoryView GetSlotFromGrid(Vector2Int gridPos)
         {
-            return IsValidPosition(gridPos) ? slotsView[gridPos.x, gridPos.y] : null;
+            if(IsValidPosition(gridPos))
+            {
+                return slotsView[gridPos.x, gridPos.y];
+            }
+
+            if(IsValidPositionInExtraSlots(gridPos, out SlotInventoryView thatSlot))
+            {
+                return thatSlot;
+            }
+
+            return null;
         }
 
         public void UpdateInventoryView(InventoryModel inventoryModel)
@@ -120,6 +131,37 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     GetSlotFromGrid(gridPos).UpdateSlotViewWithItems(inventoryModel.GetSlot(gridPos).StackOfItems);
                 }
             }
+
+            for (int i = 0; i < inventoryModel.ExtraGridSlots.Count; i++)
+            {
+                GetSlotFromGrid(inventoryModel.ExtraGridSlots[i].GridPosition)
+                    .UpdateSlotViewWithItems(inventoryModel.ExtraGridSlots[i].StackOfItems);
+            }
+        }
+
+        public void SetExtraViewSlots(List<SlotInventoryView> extendedSlots)
+        {
+            for (int i = 0; i < extendedSlots.Count; i++)
+            { 
+                if(!extraSlots.Contains(extendedSlots[i]))
+                {
+                    extraSlots.Add(extendedSlots[i]);
+                }
+            }
+
+            for (int i = 0; i < extraSlots.Count; i++)
+            {
+                if(extraSlots[i] != null)
+                {
+                    extraSlots[i].SetOnSomeItemMoved(onSomeItemMoved);
+                    extraSlots[i].SetOnSomeStackMoved(onSomeStackMoved);
+                }
+            }
+        }
+
+        public void ClearExtraSlots()
+        {
+            extraSlots.Clear();
         }
 
         public void SetOnHandleInventory(Action<bool> onHandleInventory)
@@ -138,6 +180,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             return (pos.x < maxRowsInventory && pos.x >= 0 &&
                 pos.y < maxColsInventory && pos.y >= 0) ? true : false;
+        }
+
+        private bool IsValidPositionInExtraSlots(Vector2Int pos, out SlotInventoryView thatSlot)
+        {
+            thatSlot = null;
+
+            for (int i = 0; i < extraSlots.Count; i++)
+            {
+                thatSlot = extraSlots.Find(slot => slot.GridPosition == pos);
+            }
+
+            return thatSlot != null ? true : false;
         }
 
         private void CheckNextSlotsFromSlots(InventoryModel model)

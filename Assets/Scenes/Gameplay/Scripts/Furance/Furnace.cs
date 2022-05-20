@@ -28,7 +28,6 @@ public class Furnace : MonoBehaviour
     private Action OnFuelBurned = null;
 
     private ItemModel itemPorcessed = null;
-    private ItemView itemProcessing = null;
 
     void Start()
     {
@@ -62,16 +61,20 @@ public class Furnace : MonoBehaviour
                 energyHandler.ConsumeEnergyByProcess();
 
                 uiFurnace.UpdateProgressFill(timerProcess);
+
+                Debug.Log("Item processing");
             }
             else
             {
                 timerProcess = 0;
                 isProcessing = false;
 
-                uiFurnace.GenerateProcessedItem(itemProcessing);
-                itemProcessing = null;
+                uiFurnace.GenerateProcessedItem(itemPorcessed);
+                itemPorcessed = null;
 
                 OnItemProcessed?.Invoke();
+
+                Debug.Log("Item processed successfully");
             }
         }
 
@@ -149,6 +152,9 @@ public class Furnace : MonoBehaviour
 
     private void SetBurnFuel(FuelItem fuelModel)
     {
+        if (fuelModel == null)
+            return;
+
         burningFuel = true;
 
         timeToBurnOutFuel = fuelModel.timeToBurnOut;
@@ -158,12 +164,11 @@ public class Furnace : MonoBehaviour
         energyHandler.SetValueOfFuelIncrement(energyGenerated, fuelModel.energyPerTime);
     }
 
-    private void SetProcess(ItemView item)
+    private void SetProcess(ItemModel item)
     {
         isProcessing = true;
 
-        itemProcessing = item;
-        itemPorcessed = uiFurnace.InverntoryController.GetItemModelFromId(itemProcessing.ItemType);
+        itemPorcessed = item;
 
         timeToProcessObject = itemPorcessed.timeToComplete;
         uiFurnace.SetDurationProcess(timeToProcessObject);

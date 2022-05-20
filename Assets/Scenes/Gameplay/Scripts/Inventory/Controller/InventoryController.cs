@@ -26,7 +26,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [SerializeField] private Volume volume = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
-        public bool StackTake { get { return stackTake; } }
         #endregion
 
         #region PRIVATE_FIELDS
@@ -37,7 +36,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         private float initialdof = 0;
         #endregion
 
+        #region PROPERTIES
+        public bool StackTake { get { return stackTake; } }
         public InventoryModel Model => inventoryModel;
+        #endregion
 
         #region PUBLIC_METHODS
         public void Init()
@@ -59,9 +61,32 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
         }
 
+        public List<SlotInventoryModel> GetExtraSlotsFromInventory()
+        {
+            return inventoryModel.ExtraGridSlots;
+        }
+
+        public void ExtendInventoryWithExtraSlots(int fromX, int toX, int fromY, int toY, List<SlotInventoryView> extraSlotsView)
+        {
+            inventoryModel.SetExtraSlots(fromX, toX, fromY, toY);
+
+            inventoryView.SetExtraViewSlots(extraSlotsView);
+        }
+
+        public void ClearExtraSlotsInventory()
+        {
+            inventoryModel.ClearExtraSlots();
+            inventoryView.ClearExtraSlots();
+        }
+
         public void GenerateItem(string idItem)
         {
             GenerateItems(idItem, 1);
+        }
+
+        public void GenerateItem(string idItem, Vector2Int slotPosition)
+        {
+            GenerateItems(idItem, 1, slotPosition);
         }
 
         public void OnDeleteItem()
@@ -130,6 +155,25 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             for (int i = 0; i < allItemsAviable.Count; i++)
             {
                 if (allItemsAviable[i].itemId == idItem)
+                {
+                    resultItem = allItemsAviable[i];
+                    break;
+                }
+            }
+
+            if (resultItem == null)
+                Debug.LogWarning("That item id is not in the database of items aviables.");
+
+            return resultItem;
+        }
+
+        public ItemModel GetItemModelFromView(ItemView viewItem)
+        {
+            ItemModel resultItem = null;
+
+            for (int i = 0; i < allItemsAviable.Count; i++)
+            {
+                if (allItemsAviable[i].itemId == viewItem.ItemType)
                 {
                     resultItem = allItemsAviable[i];
                     break;

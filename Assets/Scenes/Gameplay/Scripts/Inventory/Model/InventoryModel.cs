@@ -9,16 +9,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 {
     public class InventoryModel
     {
-        #region EXPOSED_FIELDS
-
-        #endregion
-
         #region PRIVATE_FIELDS
         private int maxRowsInventory = 0;
         private int maxColsInventory = 0;
         private float offsetSlots = 1.5f;
 
+        private Vector2 slotSize = default;
+
         private SlotInventoryModel[,] gridSlots = null;
+
+        private List<SlotInventoryModel> extraSlots = new List<SlotInventoryModel>();
 
         private Action<InventoryModel> onInventoryChange = null;
 
@@ -32,6 +32,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         public int GridRows => maxRowsInventory;
         public int GridCols => maxColsInventory;
         public SlotInventoryModel[,] GridSlots { get { return gridSlots; } }
+        public List<SlotInventoryModel> ExtraGridSlots { get { return extraSlots; } }
         #endregion
 
         #region PUBLIC_METHODS
@@ -41,6 +42,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         {
             maxRowsInventory = tamGridSlots.x;
             maxColsInventory = tamGridSlots.y;
+
+            this.slotSize = slotSize;
 
             gridSlots = new SlotInventoryModel[tamGridSlots.x, tamGridSlots.y];
 
@@ -59,6 +62,44 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             }
 
             CheckNextSlotsFromSlots();
+        }
+
+        /// <summary>
+        /// This function lets you create virtual positions for the inventory. This positions will no be comunicated with de 
+        /// gridSlots[,] matrix. Whatever you will be capable of move things to those slots because they are working like extra
+        /// virtual spaces.
+        /// 
+        /// To define this correctly, lets say you need 3 more slots to interact when open an UI. So you define large values
+        /// in the dimension. Lets say for example: i need 3 slots -> fromX 80 toX 80 fromY 80 toY 83. There you will be creating 3 extra 
+        /// slots that will be like 1-gridSlots[80,80] | 2-[80,81] | 3-[80,82]. But those extra slots will not be part of the actually matrix. 
+        /// </summary>
+        /// <param name="fromX"></param>
+        /// <param name="toX"></param>
+        /// <param name="fromY"></param>
+        /// <param name="toY"></param>
+        public void SetExtraSlots(int fromX, int toX, int fromY, int toY)
+        {
+            for (int x = fromX; x < toX; x++)
+            {
+                for (int y = fromY; y < toY; y++)
+                {
+                    SlotInventoryModel newSlot = new SlotInventoryModel();
+                    Vector2Int newVirtualPosition = new Vector2Int(x,y);
+
+                    newSlot.SetupSlot(newVirtualPosition, default, default, AtInventoryChange);
+                    newSlot.SetOnGetModelItem(GetItemModelFromID);
+
+                    if(!extraSlots.Contains(newSlot))
+                    {
+                        extraSlots.Add(newSlot);
+                    }
+                }
+            }
+        }
+
+        public void ClearExtraSlots()
+        {
+            extraSlots.Clear();
         }
 
         public void SetOnSomeItemAdded(Action<InventoryModel> onItemAttach = null)
@@ -80,8 +121,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         #region GETERS
         public SlotInventoryModel GetSlot(Vector2Int gridPosition)
         {
-            return IsValidPosition(gridPosition) ? gridSlots[gridPosition.x, gridPosition.y] : null;
+            if(IsValidPosition(gridPosition))
+            {
+                return gridSlots[gridPosition.x, gridPosition.y];
+            }
+
+            if(IsValidPositionInExtraSlots(gridPosition, out SlotInventoryModel thatSlot))
+            {
+                return thatSlot;
+            }
+
+            return null;
         }
+
         public List<ItemModel> GetItemsOnSlot(Vector2Int gridPosition)
         {
             return GetSlot(gridPosition).StackOfItems;
@@ -160,12 +212,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     }
                 }
             }
-            /*else
-            {
-                ItemModel itemFromOutInventory = new ItemModel();
-
-                GetSlot(newSlot).PlaceOneItem();
-            }*/
 
             //Testing
             for (int x = 0; x < GridRows; x++)
@@ -324,6 +370,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         {
             return (pos.x < maxRowsInventory && pos.x >= 0 && 
                 pos.y < maxColsInventory && pos.y >= 0) ? true : false;
+        }
+
+        private bool IsValidPositionInExtraSlots(Vector2Int pos, out SlotInventoryModel thatSlot)
+        {
+            thatSlot = null;
+
+            for (int i = 0; i < extraSlots.Count; i++)
+            {
+                thatSlot = extraSlots.Find(slot => slot.GridPosition == pos);
+            }
+
+            return thatSlot != null ? true : false;
         }
         #endregion
     }
