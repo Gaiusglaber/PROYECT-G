@@ -42,6 +42,7 @@ namespace ProyectG.Gameplay.UI
 		#endregion
 
 		#region PROPERTIES
+		static public Action<bool> Withoutenergy;
 		#endregion
 
 		#region ACTIONS
@@ -64,6 +65,10 @@ namespace ProyectG.Gameplay.UI
 		private void Update()
 		{
 			DecreaseEnergyOverTime();
+			if(cantEnergy <= 0)
+			{
+				Withoutenergy?.Invoke(true);
+			}
 		}
 
 		#endregion

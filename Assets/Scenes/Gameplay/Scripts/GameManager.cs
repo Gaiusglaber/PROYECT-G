@@ -48,11 +48,23 @@ namespace ProjectG.Gameplay.Managers
             }
         }
 
+        private void Start()
+        {
+            Time.timeScale = 1;
+            EnergyHandler.Withoutenergy += StopGame;
+        }
+
         private void Update()
         {
             PlayerUpdate();
             InventoryUpdate();
         }
+
+        private void OnDisable()
+        {
+            EnergyHandler.Withoutenergy -= StopGame;
+        }
+
         #endregion
 
         #region PUBLIC_METHODS
@@ -94,6 +106,13 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.UpdateInventory();
         }
+
+        private void StopGame(bool stop)
+        {
+            if(stop)
+                Time.timeScale = 0;
+        }
+
         #endregion
     }
 }
