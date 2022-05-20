@@ -87,10 +87,17 @@ namespace ProjectG.Gameplay.Managers
                 player = Instantiate(playerPrefab);
             }
 
-            if (player != null)
+            IEnumerator ActivatePlayerAfterTime()
             {
-                player.Init();
+                yield return new WaitForSeconds(1f);
+                
+                if (player != null)
+                {
+                    player.Init();
+                }
             }
+
+            StartCoroutine(ActivatePlayerAfterTime());
 
             energyHandler.playerController = player;
         }

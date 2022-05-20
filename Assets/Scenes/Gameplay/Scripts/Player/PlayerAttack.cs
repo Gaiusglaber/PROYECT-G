@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using ProyectG.Gameplay.Interfaces;
 
+using ProyectG.Player.Controller;
+
 using DragonBones;
 
 namespace ProyectG.Player.Attack
@@ -10,6 +12,7 @@ namespace ProyectG.Player.Attack
     public class PlayerAttack : MonoBehaviour
     {
         [SerializeField] private float range;
+        [SerializeField] private PlayerController playerController = null;
         [Header("---ANIMATIONS---")]
         [SerializeField] private UnityArmatureComponent customAnimator = null;
 
@@ -23,6 +26,9 @@ namespace ProyectG.Player.Attack
 
         void Update()
         {
+            if (!playerController.IsControllerEnable)
+                return;
+
             if(playerHasDoAttack)
             {
                 if(timer < timeToResetAttack)

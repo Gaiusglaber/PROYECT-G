@@ -142,6 +142,9 @@ public class UIFurnace : MonoBehaviour
 
             if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0)
             {
+                if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemResults.Count < 1)
+                    return;
+                
                 Debug.Log("Item send to procees");
 
                 ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];

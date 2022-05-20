@@ -119,6 +119,8 @@ namespace ProyectG.Player.Controller
             }
         }
 
+        public bool IsControllerEnable { get { return controllerEnable; } }
+
         public UnityArmatureComponent CustomAnimator { get { return customAnimator; } }
         #endregion
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestItemModel 3
   m_EditorClassIdentifier: 
   itemId: TestItem2
-  itemSprite: {fileID: 21300000, guid: 771d3340caf4ec44798119f46c721e15, type: 3}
+  itemSprite: {fileID: 21300000, guid: 513525b75f94fcf4a8bf37af564fe590, type: 3}
   itemDescription: Este es un item de testeo que proviene del segundo al inicial
     xd
   itemValue: 100
