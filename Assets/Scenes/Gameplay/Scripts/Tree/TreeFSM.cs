@@ -31,7 +31,7 @@ public class TreeFSM : MonoBehaviour, IHittable
 
         SetCycle(true);
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        amountLogs = 4;
+        amountLogs = 1;
         state = TreeState.first;
     }
 
@@ -42,7 +42,7 @@ public class TreeFSM : MonoBehaviour, IHittable
             SetCycle(true);
             NextStage(TreeState.first);
             timerTreeFSM = 0f;
-            amountLogs = 4;
+            amountLogs = 1;
         }
         StartCylce();
     }
@@ -92,7 +92,7 @@ public class TreeFSM : MonoBehaviour, IHittable
             SetCycle(true);
             timerTreeFSM = 0f;
             NextStage(TreeState.first);
-            amountLogs = 4;
+            amountLogs = 1;
         }
         else
         {

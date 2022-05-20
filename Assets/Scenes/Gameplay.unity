@@ -1346,7 +1346,7 @@ MonoBehaviour:
   cantEnergyImg: {fileID: 2097352470}
   maxEnergyImg: {fileID: 1542134147}
   lerperSpeed: 2
-  maxEnergy: 1000
+  maxEnergy: 2000
   initialEnergy: 1000
   energyColor: {r: 0.88726926, g: 1, b: 0, a: 1}
   maxEnergyColor: {r: 0.08220887, g: 1, b: 0, a: 1}
@@ -39228,6 +39228,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1038452980}
     m_Modifications:
+    - target: {fileID: 2366509445798754569, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
+      propertyPath: timeSecondStage
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092280, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_Name
       value: TreeFSM
