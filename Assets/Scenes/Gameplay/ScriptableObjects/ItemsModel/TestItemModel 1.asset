@@ -20,5 +20,4 @@ MonoBehaviour:
   timeToComplete: 15
   costInterval: 2
   itemType: 1
-  itemResults:
-  - {fileID: 11400000, guid: f9390955b09ad6f409eb62b38fab7cc6, type: 2}
+  itemResults: []
