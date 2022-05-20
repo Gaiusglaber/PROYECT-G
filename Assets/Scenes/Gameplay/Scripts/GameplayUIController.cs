@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using ProyectG.Toolbox.Lerpers;
 using ProyectG.Gameplay.Objects;
+using UnityEngine.SceneManagement;
 
 namespace ProyectG.Gameplay.UI
 {
@@ -18,6 +19,7 @@ namespace ProyectG.Gameplay.UI
         [SerializeField] private Vector2 posToLerpPanel = Vector2.zero;
         [SerializeField] private GameObject panel = null;
         [SerializeField] private Volume volume = null;
+        [SerializeField] private GameObject gameOverPanel;
 
         [Header("TEMPORAL")]
         [SerializeField] private GameObject panelControlls = null;
@@ -45,7 +47,14 @@ namespace ProyectG.Gameplay.UI
             onOpenControlls.onClick.AddListener(ShowControlls);
             onCloseControlls.onClick.AddListener(HideControlls);
             onCloseControlls.gameObject.SetActive(false);
+            EnergyHandler.Withoutenergy += ShowGameOverPanel;
         }
+
+        private void OnDisable()
+        {
+            EnergyHandler.Withoutenergy -= ShowGameOverPanel;
+        }
+
         #endregion
         #region PUBLIC_METHODS
         public void ShowPanel()
@@ -62,6 +71,12 @@ namespace ProyectG.Gameplay.UI
                 StartCoroutine(LerpVolumeAttribute(dof, initialdof));
             }
         }
+
+        public void OnClickRetry(string scene)
+        {
+            SceneManager.LoadScene(scene);
+        }
+
         #endregion
         #region PRIVATE_METHODS
         private void ShowControlls()
@@ -71,6 +86,11 @@ namespace ProyectG.Gameplay.UI
         private void HideControlls()
         {
             StartCoroutine(LerpPanel(panelControlls, panelCloseDestination));
+        }
+
+        private void ShowGameOverPanel(bool state)
+        {
+            gameOverPanel.SetActive(state);
         }
         #endregion
         #region PUBLIC_CORROUTINES
