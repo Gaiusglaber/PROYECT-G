@@ -14,12 +14,6 @@ namespace ProyectG.Gameplay.UI
         [SerializeField] private Machine machine = null;
         [Space(10)]
         [Header("UI Data")]
-        [SerializeField] private TMPro.TMP_Text jewel0value = null;
-        [SerializeField] private TMPro.TMP_Text jewel1value = null;
-        [SerializeField] private TMPro.TMP_Text jewel2value = null;
-        [SerializeField] private TMPro.TMP_Text jewel3value = null;
-        [SerializeField] private TMPro.TMP_Text jewel4value = null;
-        [SerializeField] private TMPro.TMP_Text coinvalue = null;
         [SerializeField] private float panelLerperSpeed = 0;
         [SerializeField] private Vector2 posToLerpPanel = Vector2.zero;
         [SerializeField] private GameObject panel = null;
