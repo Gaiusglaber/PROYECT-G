@@ -96,7 +96,7 @@ public class CropFSM : MonoBehaviour, IHittable
     {
         state = stage;
         spriteRenderer.sprite = spriteCycle[(int)stage];
-        amountCrops++;
+        //amountCrops++;
     }
 
     public void OnHit()
