@@ -7,7 +7,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
     public enum ItemType
     {
         fuel,
-        common
+        common,
+        crop
     }
     [Serializable]
     [CreateAssetMenu(fileName = "ItemModel", menuName = "ScriptableObjects/Data/Items", order = 0)]
