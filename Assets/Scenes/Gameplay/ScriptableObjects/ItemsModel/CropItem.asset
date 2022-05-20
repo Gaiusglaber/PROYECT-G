@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Item para cultivo
   itemValue: 1
   energyCost: 5
-  timeToComplete: 30
+  timeToComplete: 7
   costInterval: 2
   itemType: 2
   itemResults:

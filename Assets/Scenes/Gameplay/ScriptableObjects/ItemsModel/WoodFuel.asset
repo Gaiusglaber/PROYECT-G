@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Madera que funciona como combustible y para generar carbon
   itemValue: 1
   energyCost: 2
-  timeToComplete: 15
+  timeToComplete: 10
   costInterval: 5
   itemType: 0
   itemResults: []

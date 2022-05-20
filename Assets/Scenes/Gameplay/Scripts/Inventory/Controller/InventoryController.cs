@@ -112,7 +112,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         {
             if (inventoryView == null) return;
 
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryView.ToggleInventory();
             }
