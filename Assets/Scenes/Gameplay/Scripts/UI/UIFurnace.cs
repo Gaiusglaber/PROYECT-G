@@ -167,7 +167,7 @@ public class UIFurnace : MonoBehaviour
                 OnProcessFuel?.Invoke(fuelBurning);
 
                 return true;
-            }
+            }            
         }
 
         return false;
