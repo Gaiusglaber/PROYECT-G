@@ -22,6 +22,7 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private InventoryController inventory = null;
         [SerializeField] private EnergyHandler energyHandler = null;
         [SerializeField] private CameraController cameraHandler = null;
+        [SerializeField] private MouseController mouseController = null;
 
         [Header("FOR TESTING")]
         [SerializeField] private List<WorldItem> testItems = null;
@@ -38,6 +39,7 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.Init();
             cameraHandler.Init(player);
+            mouseController.Init();
 
             for (int i = 0; i < testItems.Count; i++)
             {
@@ -60,7 +62,6 @@ namespace ProjectG.Gameplay.Managers
 
         private void Update()
         {
-            PlayerUpdate();
             InventoryUpdate();
         }
 
@@ -100,13 +101,6 @@ namespace ProjectG.Gameplay.Managers
             StartCoroutine(ActivatePlayerAfterTime());
 
             energyHandler.playerController = player;
-        }
-
-        private void PlayerUpdate()
-        {
-            if (player == null) return;
-
-            player.UpdatePlayerController();
         }
 
         private void InventoryUpdate()

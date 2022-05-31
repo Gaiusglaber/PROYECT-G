@@ -51,9 +51,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private List<ItemType> allowedItems = new List<ItemType>();
         #endregion
 
-        #region UNITY_CALLS
-        #endregion
-
         #region PROPERTIES
         public string AmountOutStack { get { return amountOutStack.text; } set { amountOutStack.text = value; } }
         public StackSlotHandler StackHandler { get { return stackHandler; } set { stackHandler = value; } }

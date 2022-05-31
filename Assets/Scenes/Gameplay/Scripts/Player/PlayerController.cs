@@ -129,7 +129,8 @@ namespace ProyectG.Player.Controller
         {
             controllerEnable = true;
         }
-        public void UpdatePlayerController()
+
+        public void Update()
         {
             if (!controllerEnable)
                 return;
@@ -340,15 +341,17 @@ namespace ProyectG.Player.Controller
             Vector3 movement = RawMovement * Time.deltaTime;
             Vector3 furthestPoint = position + movement;
 
+            transform.position += movement;
+
             //Chequeo mas adelante si hay alguna cosa a que colisionar
-            Collider2D hit = Physics2D.OverlapBox(furthestPoint, characterBounds.size, 0, groundLayer);
+            /*Collider2D hit = Physics2D.OverlapBox(furthestPoint, characterBounds.size, 0, groundLayer);
             if (hit == null)
             {
                 transform.position += movement;
                 return;
-            }
+            }*/
 
-            Vector2 posToMove = transform.position;
+            /*Vector2 posToMove = transform.position;
 
             //Ta feo pero esto hace que si chocas en la esquina de algun lado se suba auto al lugar del hit en esa direccion.
             for (int i = 1; i < freeColliderInteractions; i++)
@@ -374,7 +377,7 @@ namespace ProyectG.Player.Controller
                 }
 
                 posToMove = posToTry;
-            }
+            }*/
         }
         #endregion
 
