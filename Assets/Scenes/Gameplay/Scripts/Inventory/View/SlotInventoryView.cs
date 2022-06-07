@@ -215,8 +215,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             Debug.Log("Swipe de stacks");
 
+            bool areStackItemsTheSame = false;
+
             SlotInventoryView theSlotOfTheIncomingStack = stackIncoming.ActualSlot;
             StackSlotHandler auxStack = stackHandler;
+
+            if(stackHandler.Stack.Count > 0 && stackIncoming.Stack.Count > 0)
+            {
+                if(stackHandler.Stack[0].ItemType == stackIncoming.Stack[0].ItemType)
+                {
+                    areStackItemsTheSame = true;
+                }
+            }
 
             stackHandler = null;
 
@@ -229,7 +239,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackHandler = stackIncoming;
             theSlotOfTheIncomingStack.stackHandler = auxStack;
 
-            callUpdateStacks?.Invoke(GridPosition, gridPosition);
+            if(areStackItemsTheSame)
+            {
+                stackHandler.AddItemsOnStack(theSlotOfTheIncomingStack.stackHandler.Stack);
+                theSlotOfTheIncomingStack.stackHandler.ClearStackOfItems();
+            }
+
+            callUpdateStacks?.Invoke(theSlotOfTheIncomingStack.GridPosition, gridPosition);
         }
 
         public void AddItemToSlot(ItemView itemToAttach)

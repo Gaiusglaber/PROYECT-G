@@ -56,6 +56,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PROPERTIES
         public bool Dragged => isDragging;
         public int SizeStack => stackedItems.Count;
+        public List<ItemView> Stack { get { return stackedItems; } }
         public SlotInventoryView ActualSlot { get { return actualSlot; } set { actualSlot = value; } }
         public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
         public (Vector2, Vector2Int, Transform) LastslotPositionAttached { get { return lastslotPositionAttached; } }
@@ -132,6 +133,25 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             draggingPlane = null;
 
             CheckOverSlot();
+        }
+
+        public void AddItemsOnStack(List<ItemView> listOfItems)
+        {
+            for (int i = 0; i < listOfItems.Count; i++)
+            {
+                stackedItems.Add(listOfItems[i]);
+
+                listOfItems[i].transform.SetParent(transform);
+                listOfItems[i].transform.position = transform.position;
+            }
+            
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
+        }
+
+        public void ClearStackOfItems()
+        {
+            stackedItems.Clear();
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
         }
 
         public void StackItemsInside(List<ItemView> listOfItems)
