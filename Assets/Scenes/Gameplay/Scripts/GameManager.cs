@@ -109,7 +109,7 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.CheckState();
 
-            inventory.UpdateInventory();
+            //inventory.UpdateInventory();
         }
 
         private void StopGame(bool stop)

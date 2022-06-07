@@ -54,7 +54,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
             inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
-            
+
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);
             inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
@@ -95,14 +95,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             RemoveItems(pos, 1);
         }
 
-        public void UpdateInventory()
-        {
-            if (inventoryView == null)
-                return;
-
-            inventoryView.UpdateSlots(stackTake);
-        }
-
         public void ToggleInventory()
         {
             inventoryView.ToggleInventory();
@@ -120,13 +112,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             if (!inventoryView.IsOpen)
                 return;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                stackTake = true;
-            }
-            else
-            {
-                stackTake = false;
+                stackTake = !stackTake;
+
+                inventoryView.OnChangeInteractionType(stackTake);
             }
         }
 

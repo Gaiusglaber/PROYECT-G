@@ -31,6 +31,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private int maxRowsInventory = 0;
         private int maxColsInventory = 0;
 
+        private Action<bool> onInteractionChange = null;
         private Action<bool> onHandleInventory = null;
         private Action<Vector2Int,Vector2Int> onSomeItemMoved = null;
         private Action<Vector2Int,Vector2Int> onSomeStackMoved = null;
@@ -64,6 +65,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     newSlotInv.Init(prefabItemView, mainCanvas, gridPos, false, allowedItems.ToArray());
                     newSlotInv.SetOnSomeItemMoved(this.onSomeItemMoved);
                     newSlotInv.SetOnSomeStackMoved(this.onSomeStackMoved);
+                    onInteractionChange += newSlotInv.SetOnInteractionInventoryChange;
 
                     model.SetSlotPosition(gridPos, finalWorldPosition);
                     Vector2 nextSlotPosition = finalWorldPosition + model.GetSlot(gridPos).NextSlotPosition;
@@ -78,12 +80,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             IsOpen = false;
         }
 
-        public void UpdateSlots(bool stackTake)
+        public void OnChangeInteractionType(bool onStackTake)
         {
-            SetStateTxtStackInfo(stackTake);
-            
-            if (!IsOpen)
-                return;
+            SetStateTxtStackInfo(onStackTake);
 
             for (int x = 0; x < maxRowsInventory; x++)
             {
@@ -91,7 +90,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     Vector2Int gridPos = new Vector2Int(x, y);
 
-                    GetSlotFromGrid(gridPos).UpdateViewSlot(stackTake);
+                    GetSlotFromGrid(gridPos).SetOnInteractionInventoryChange(onStackTake);
                 }
             }
         }
@@ -167,6 +166,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public void SetOnHandleInventory(Action<bool> onHandleInventory)
         {
             this.onHandleInventory = onHandleInventory;
+        }
+
+        public void SetOnInventoryInteractionChanged(Action<bool> interactionChange)
+        {
+            onInteractionChange = interactionChange;
         }
         #endregion
 
