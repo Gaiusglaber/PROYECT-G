@@ -59,22 +59,8 @@ namespace ProyectG.Player.Attack
             }
         }
         private void SetAnimation(string idAnimation, int playTimes = 1)
-        {
-            
+        { 
             customAnimator.animation.Play(idAnimation, playTimes);
-
-            /*if (!customAnimator.animation.isPlaying)
-            {
-                customAnimator.animation.Play(idAnimation, playTimes);
-                lastAnimationExecuted = idAnimation;
-            }
-            else
-            {
-                if (lastAnimationExecuted != idAnimation)
-                {
-                    customAnimator.animation.Stop();
-                }
-            }*/
         }
 
         private void OnDrawGizmos()

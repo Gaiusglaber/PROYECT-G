@@ -6,7 +6,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-using ProyectG.Gameplay.Interfaces;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
 using TMPro;
@@ -38,8 +37,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private Canvas mainCanvas = null;
 
         private bool attachedStackDone = false;
-        private bool onStackTakeMode = false;
-        private bool switchedStacks = false;
 
         private bool stackUpdated = false;
 
@@ -53,6 +50,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         #region PROPERTIES
         public string AmountOutStack { get { return amountOutStack.text; } set { amountOutStack.text = value; } }
+        
         public StackSlotHandler StackHandler { get { return stackHandler; } set { stackHandler = value; } }
 
         public Vector2Int GridPosition { get { return gridPosition; } }
@@ -74,6 +72,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 atInteract = value;
             }
         }
+        
         public Vector2 SlotPosition
         {
             get
@@ -168,8 +167,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (attachedStackDone)
                 {
-                    switchedStacks = false;
-
                     if (!stackHandler.Dragged)
                     {
                         if (stackHandler.HasEndedRestoreDrag())
@@ -483,64 +480,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 amountOutStack.text = string.Empty;
             }
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            //Stack handle
-            /*if (onStackTakeMode)
-            {
-                if (collision.TryGetComponent(out StackSlotHandler stack))
-                {
-                    if (!stack.Dragged && stack != stackHandler && !switchedStacks)
-                    {
-                        switchedStacks = true;
-
-                        SlotInventoryView stackIncomingSlot = stack.ActualSlot;
-
-                        stackHandler.SwipeStackSlots(stackIncomingSlot);
-
-                        stack.SwipeStackSlots(this, (slotAux)=> {
-                            callUpdateStacks?.Invoke(stackIncomingSlot.GridPosition, gridPosition);
-                        });
-                    }
-                }
-
-                return;
-            }*/
-
-            /*if (objectsAttach.Count > 0)
-            {
-                //ItemHandle
-                if (collision.TryGetComponent(out ItemView newItem))
-                {
-                    if(newItem.ItemType == objectsAttach[0].ItemType)
-                    {
-                        newItem.AttachToSlot(SlotPosition, GridPosition,transform, allowedItems.ToArray());
-                    }
-                    else
-                    {
-                        if(NextSlotFromThis != null)
-                        {
-                            if(newItem.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition , NextSlotFromThis.transform, allowedItems.ToArray()))
-                            {
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            newItem.AttachToSlot(newItem.SlotPositionAttached.Item1, newItem.SlotPositionAttached.Item2, newItem.SlotPositionAttached.Item3, allowedItems.ToArray());
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (collision.TryGetComponent(out ItemView item))
-                {
-                    item.AttachToSlot(SlotPosition, GridPosition ,transform, allowedItems.ToArray());
-                }                
-            }*/
         }
         #endregion
 
