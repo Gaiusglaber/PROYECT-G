@@ -105,9 +105,12 @@ namespace ProyectG.Gameplay.UI
 				timer += Time.deltaTime;
 			else
 			{
-				cantEnergy -= decreceEnergy;
-				timer = 0.0f;
-				UpdateEnergy(cantEnergy);
+				if(cantEnergy > 0)
+				{
+					cantEnergy -= decreceEnergy;
+					timer = 0.0f;
+					UpdateEnergy(cantEnergy);
+				}
 			}
 		}
 
@@ -117,9 +120,12 @@ namespace ProyectG.Gameplay.UI
 				timer += Time.deltaTime;
 			else
 			{
-				cantEnergy -= processDecreaseCost;
-				timer = 0.0f;
-				UpdateEnergy(cantEnergy);
+				if(cantEnergy > 0)
+				{
+					cantEnergy -= processDecreaseCost;
+					timer = 0.0f;
+					UpdateEnergy(cantEnergy);
+				}
 			}
 		}
 
@@ -131,9 +137,17 @@ namespace ProyectG.Gameplay.UI
             }
             else
             {
-				cantEnergy += fuelBurnIncreaseValue;
-				timerFuel = 0f;
-				UpdateEnergy(cantEnergy);
+				if(cantEnergy <= maxEnergy)
+				{
+					cantEnergy += fuelBurnIncreaseValue;
+					timerFuel = 0f;
+					UpdateEnergy(cantEnergy);
+					if (cantEnergy > maxEnergy)
+					{
+						cantEnergy = maxEnergy;
+						UpdateEnergy(cantEnergy);
+					}
+				}
             }
         }
 

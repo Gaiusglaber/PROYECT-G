@@ -23,4 +23,4 @@ MonoBehaviour:
   itemResults: []
   timeToBurnOut: 10
   energyPerTime: 1
-  energyGenerated: 2
+  energyGenerated: 10

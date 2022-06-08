@@ -1340,14 +1340,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b31172dfb8d6449ab9fe8c4b349286, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lowEneryThreshhold: 100
+  lowEneryThreshhold: 5
   energyTxt: {fileID: 1176769696}
   fillImage: {fileID: 27376962}
   cantEnergyImg: {fileID: 2097352470}
   maxEnergyImg: {fileID: 1542134147}
   lerperSpeed: 2
-  maxEnergy: 2000
-  initialEnergy: 1000
+  maxEnergy: 100
+  initialEnergy: 100
   energyColor: {r: 0.88726926, g: 1, b: 0, a: 1}
   maxEnergyColor: {r: 0.08220887, g: 1, b: 0, a: 1}
   energyDecreaseInterval: 3
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   - {fileID: 1534127711}
   - {fileID: 1330245686}
   - {fileID: 1921564384}
-  playerController: {fileID: 0}
+  playerController: {fileID: 7470058559746799918, guid: 0604f96cd9c275c41a04d482e4d71e5f, type: 3}
 --- !u!1001 &165503146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10405,6 +10405,7 @@ MonoBehaviour:
   inventory: {fileID: 1317914051}
   energyHandler: {fileID: 152223989}
   cameraHandler: {fileID: 2139589938}
+  mouseController: {fileID: 0}
   testItems:
   - {fileID: 1697765882}
   - {fileID: 414345362}
