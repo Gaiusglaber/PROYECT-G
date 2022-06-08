@@ -222,7 +222,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         #region CORUTINES
         private IEnumerator LerpVolumeAttribute(DepthOfField component, float destIntensity)
         {
-            FloatLerper lerper = new FloatLerper(2, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
+            FloatLerper lerper = new FloatLerper(.5f, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
             lerper.SetValues(component.focusDistance.value, destIntensity, true);
             while (lerper.On)
             {
