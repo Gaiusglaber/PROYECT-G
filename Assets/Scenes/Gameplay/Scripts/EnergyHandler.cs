@@ -16,8 +16,6 @@ namespace ProyectG.Gameplay.UI
 		[SerializeField] private int lowEneryThreshhold = 0;
 		[SerializeField] private TMPro.TMP_Text energyTxt = null;
 		[SerializeField] private Image fillImage = null;
-		[SerializeField] private Image cantEnergyImg = null;
-		[SerializeField] private Image maxEnergyImg = null;
 		[SerializeField] private float lerperSpeed = 0;
 		[SerializeField] private int maxEnergy = 0;
 		[SerializeField] private int initialEnergy = 0;
@@ -58,8 +56,6 @@ namespace ProyectG.Gameplay.UI
 		private void Start()
         {
 			cantEnergy = initialEnergy;
-			cantEnergyImg.color = energyColor;
-			maxEnergyImg.color = maxEnergyColor;
 			fillLerper = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
 			txtLerper = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
 			StartCoroutine(LerpBar(GetFillAmmount()));

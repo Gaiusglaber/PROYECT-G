@@ -177,6 +177,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             return allReturnedItems;
         }
+
+        public void UpdateStackAmount()
+        {
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
+        }
         #endregion
 
         #region PRIVATE_METHODS

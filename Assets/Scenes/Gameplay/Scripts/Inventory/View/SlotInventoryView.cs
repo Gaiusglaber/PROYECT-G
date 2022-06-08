@@ -303,21 +303,44 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PRIVATE_METHODS
         private void UpdateViewWithModelInfo(List<ItemModel> itemsOnLogicSlot)
         {
-            if(objectsAttach.Count == itemsOnLogicSlot.Count)
+            if(!stackHandler.enabled)
             {
-                return;
-            }
-            else
-            {
-                int amountToRemove = objectsAttach.Count - itemsOnLogicSlot.Count;
-
-                if (amountToRemove < 0)
+                if(objectsAttach.Count == itemsOnLogicSlot.Count)
                 {
-                    CreateAndAddItemsFromData(itemsOnLogicSlot[0], Mathf.Abs(amountToRemove));
+                    return;
                 }
                 else
                 {
-                    RemoveItemsFromDataUpdate(amountToRemove);
+                    int amountToRemove = objectsAttach.Count - itemsOnLogicSlot.Count;
+
+                    if (amountToRemove < 0)
+                    {
+                        CreateAndAddItemsFromDataOnSlot(itemsOnLogicSlot[0], Mathf.Abs(amountToRemove));
+                    }
+                    else
+                    {
+                        RemoveItemsFromDataUpdateOnSlot(amountToRemove);
+                    }
+                }
+            }
+            else
+            {
+                if(stackHandler.Stack.Count == itemsOnLogicSlot.Count)
+                {
+                    return;
+                }
+                else
+                {
+                    int amountToRemove = stackHandler.Stack.Count - itemsOnLogicSlot.Count;
+
+                    if (amountToRemove < 0)
+                    {
+                        CreateAndAddItemsFromDataOnStack(itemsOnLogicSlot[0], Mathf.Abs(amountToRemove));
+                    }
+                    else
+                    {
+                        RemoveItemsFromDataUpdateOnStack(amountToRemove);
+                    }
                 }
             }
         }
@@ -332,7 +355,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         /// </summary>
         /// <param name="itemsOnSlotLogic"></param>
         /// 
-        public void CreateAndAddItemsFromData(ItemModel itemsTypeOnSlotLogic, int difference)
+        public void CreateAndAddItemsFromDataOnSlot(ItemModel itemsTypeOnSlotLogic, int difference)
         {
             for (int i = 0; i < difference; i++)
             {
@@ -347,8 +370,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             amountOutStack.text = objectsAttach.Count.ToString();
         }
-
-        private void RemoveItemsFromDataUpdate(int diference)
+        private void RemoveItemsFromDataUpdateOnSlot(int diference)
         {
             for (int i = 0; i < diference; i++)
             {
@@ -365,6 +387,43 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             amountOutStack.text = objectsAttach.Count.ToString();
+        }
+
+        public void CreateAndAddItemsFromDataOnStack(ItemModel itemsTypeOnSlotLogic, int difference)
+        {
+            List<ItemView> allItemsToAdd = new List<ItemView>();
+
+            for (int i = 0; i < difference; i++)
+            {
+                ItemView newItem = Instantiate(prefabItemView, stackHandler.ActualSlot.SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
+                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots);
+
+                if (!allItemsToAdd.Contains(newItem))
+                {
+                    allItemsToAdd.Add(newItem);
+                }
+            }
+            
+            stackHandler.AddItemsOnStack(allItemsToAdd);
+        }
+
+        private void RemoveItemsFromDataUpdateOnStack(int diference)
+        {
+            for (int i = 0; i < diference; i++)
+            {
+                if (stackHandler.Stack.Count < 1)
+                {
+                    break;
+                }
+
+                if (stackHandler.Stack[0] != null)
+                {
+                    Destroy(stackHandler.Stack[0].gameObject);
+                    stackHandler.Stack.Remove(stackHandler.Stack[0]);
+
+                    stackHandler.UpdateStackAmount();
+                }
+            }
         }
         #endregion
 
