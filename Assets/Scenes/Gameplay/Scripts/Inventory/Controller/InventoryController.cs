@@ -59,6 +59,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryView.SetOnHandleInventory(BlendBackground);
             inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
+
+            if (!inventoryView.IsOpen)
+            {
+                stackTake = false;
+
+                inventoryView.OnChangeInteractionType(stackTake);
+            }
         }
 
         public List<SlotInventoryModel> GetExtraSlotsFromInventory()
@@ -98,6 +105,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         public void ToggleInventory()
         {
             inventoryView.ToggleInventory();
+
+            if(!inventoryView.IsOpen)
+            {
+                DisableStackMode();
+            }
         }
 
         public void CheckState()
@@ -107,6 +119,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryView.ToggleInventory();
+
+                if(!inventoryView.IsOpen)
+                {
+                    DisableStackMode();
+                }
             }
 
             if (!inventoryView.IsOpen)
@@ -178,6 +195,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         #endregion
 
         #region PRIVATE_METHODS
+        private void DisableStackMode()
+        {
+            stackTake = false;
+            inventoryView.OnChangeInteractionType(stackTake);
+        }
+
         private void InitilizeMVC()
         {
             inventoryModel = new InventoryModel();
