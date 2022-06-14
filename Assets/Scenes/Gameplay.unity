@@ -1346,8 +1346,8 @@ MonoBehaviour:
   cantEnergyImg: {fileID: 2097352470}
   maxEnergyImg: {fileID: 1542134147}
   lerperSpeed: 2
-  maxEnergy: 100
-  initialEnergy: 100
+  maxEnergy: 1000
+  initialEnergy: 1000
   energyColor: {r: 0.88726926, g: 1, b: 0, a: 1}
   maxEnergyColor: {r: 0.08220887, g: 1, b: 0, a: 1}
   energyDecreaseInterval: 3
@@ -27846,7 +27846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

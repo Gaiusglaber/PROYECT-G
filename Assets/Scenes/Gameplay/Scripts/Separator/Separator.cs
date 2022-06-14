@@ -14,6 +14,7 @@ public class Separator : MonoBehaviour
     [SerializeField] private GameObject feedbackSeparator = null;
     private float timerProcess;
     private float timeToProcessObject = 0;
+    private float timeToProcessObject2 = 0;
 
     private bool isProcessing;
 
@@ -54,6 +55,8 @@ public class Separator : MonoBehaviour
 
                 energyHandler.ConsumeEnergyByProcess();
 
+                uiSeparator.UpdateProgressFill(timerProcess);
+
                 //llamar al metodo llamado UpdateProgressFill(timerProcess); en UISeparator
 
                 Debug.Log("Item processing");
@@ -62,6 +65,9 @@ public class Separator : MonoBehaviour
             {
                 timerProcess = 0;
                 isProcessing = false;
+
+                uiSeparator.GenerateProcessedItems(itemProcessed);
+                itemProcessed = null;
 
                 //llamar al metodo GenerateProcessedItem(itemProcessed); y ver como generamos dos en vez de uno
 

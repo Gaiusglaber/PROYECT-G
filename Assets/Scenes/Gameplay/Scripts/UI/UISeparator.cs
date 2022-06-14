@@ -43,7 +43,10 @@ public class UISeparator : MonoBehaviour
         thisUiSlotsView.Add(inputSlot);
         thisUiSlotsView.Add(outputSlot1);
         thisUiSlotsView.Add(outputSlot2);
+
         extraPositionsCreated = false;
+
+        onCancelProcess += StopFill;
     }
 
     void Update()
@@ -51,6 +54,8 @@ public class UISeparator : MonoBehaviour
         inputSlot.UpdateViewSlot(inventoryController.StackTake);
         outputSlot1.UpdateViewSlot(inventoryController.StackTake);
         outputSlot2.UpdateViewSlot(inventoryController.StackTake);
+
+        ProcessMaterials();
     }
 
     public void SetDurationProcess(float timeToSeparate)
@@ -58,12 +63,12 @@ public class UISeparator : MonoBehaviour
         durationProcess = timeToSeparate;
     }
 
-    public void GenerateProcessedItems(ItemModel itemFrom1, ItemModel itemFrom2)
+    public void GenerateProcessedItems(ItemModel itemFrom1)
     {
         ItemModel finalItem = itemFrom1.itemResults[0];
         inventoryController.GenerateItem(finalItem.itemId, outputSlot1.GridPosition);
 
-        ItemModel finalItem2 = itemFrom2.itemResults[0];
+        ItemModel finalItem2 = itemFrom1.itemResults[1];
         inventoryController.GenerateItem(finalItem2.itemId, outputSlot2.GridPosition);
     }
 
@@ -71,6 +76,8 @@ public class UISeparator : MonoBehaviour
     {
         panelSeparator.SetActive(!panelSeparator.activeSelf);
         inventoryController.ToggleInventory();
+
+        ThisIsAwfulButNeeded();
     }
 
     public void OnEndProcess()
@@ -106,6 +113,7 @@ public class UISeparator : MonoBehaviour
 
                 ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
 
+                //Mandarle dos items al action OnProcessMaterial sirve para el combinador.
                 OnProcessMaterial?.Invoke(firstItem);
 
             }
@@ -116,6 +124,51 @@ public class UISeparator : MonoBehaviour
     private void StopFill()
     {
         progressFillProcess.fillAmount = 0;
+    }
+
+    private void ThisIsAwfulButNeeded()
+    {
+        if (panelSeparator.activeSelf)
+        {
+            if (extraPositionsCreated)
+                return;
+
+            //Ojo esta parte! Esto es muy feo pero tuve que hacerlo asi porque no encontraba forma de resolverlo
+            //literalmente estoy "extendiendo" el inventario para poder interactuar con la UI. Eventualmente esto
+            //tendriamos que cambiarlo u encontrar algo mas optimo. Btw por ahora me sirve. :)
+            Debug.Log("Creado de posiciones extra del inventario");
+
+            inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+
+            inputSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
+            outputSlot1.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[1].GridPosition);
+            outputSlot2.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[2].GridPosition);
+
+            extraPositionsCreated = true;
+        }
+        else
+        {
+            if (inventoryController.Model.GetSlot(inputSlot.GridPosition) == null ||
+                inventoryController.Model.GetSlot(outputSlot1.GridPosition) == null ||
+                inventoryController.Model.GetSlot(outputSlot2.GridPosition) == null)
+                return;
+
+
+            if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0 ||
+                inventoryController.Model.GetSlot(outputSlot1.GridPosition).StackOfItems.Count > 0 ||
+                inventoryController.Model.GetSlot(outputSlot2.GridPosition).StackOfItems.Count > 0)
+                return;
+
+            Debug.Log("Limpiado de posiciones extra del inventario");
+
+            inventoryController.ClearExtraSlotsInventory();
+
+            inputSlot.SetSlotGridPosition(invalidPosition);
+            outputSlot1.SetSlotGridPosition(invalidPosition);
+            outputSlot2.SetSlotGridPosition(invalidPosition);
+
+            extraPositionsCreated = false;
+        }
     }
 
 }
