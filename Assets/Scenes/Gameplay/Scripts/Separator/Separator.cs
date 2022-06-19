@@ -19,13 +19,13 @@ public class Separator : MonoBehaviour
     private bool isProcessing;
 
     private bool playerIsNear;
+    private bool isEnabled;
 
     private ItemModel itemProcessed = null;
 
     //Cambiar nombre de eventos y todos los atributos con respecto a "processed" a "separated" para entender mejor el codigo
     private Action OnItemProcessed = null;
     //private Action OnFuelBurned = null;
-
 
     void Start()
     {
@@ -38,11 +38,13 @@ public class Separator : MonoBehaviour
 
         isProcessing = false;
         timerProcess = 0.0f;
+
+        isEnabled = false;
     }
 
     void Update()
     {
-        if(playerIsNear && Input.GetKeyDown(KeyCode.E))
+        if(playerIsNear && Input.GetKeyDown(KeyCode.E) && isEnabled)
         {
             uiSeparator.TogglePanel();
         }
@@ -78,6 +80,11 @@ public class Separator : MonoBehaviour
                 Debug.Log("Item processed successfully");
             }
         }
+    }
+
+    public void SetIsEnabled(bool enabled)
+    {
+        isEnabled = enabled;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

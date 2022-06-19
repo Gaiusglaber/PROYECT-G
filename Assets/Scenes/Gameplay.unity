@@ -389,7 +389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 307}
+  m_AnchoredPosition: {x: 14, y: 307}
   m_SizeDelta: {x: 276.6452, y: 115.0323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &70522731
@@ -1797,7 +1797,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.9056604, g: 0.56191754, b: 0.19223925, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.7075472, g: 0.3654365, b: 0, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -18315,6 +18315,7 @@ GameObject:
   - component: {fileID: 877444513}
   - component: {fileID: 877444514}
   - component: {fileID: 877444515}
+  - component: {fileID: 877444516}
   m_Layer: 0
   m_Name: upgrade table
   m_TagString: Untagged
@@ -18412,7 +18413,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!50 &877444515
 Rigidbody2D:
@@ -18435,6 +18436,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &877444516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877444511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237cb1597800aef408a31b23d22faf2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiUpgradeTable: {fileID: 1855081484}
+  feedbackUpgradeTable: {fileID: 310795931}
+  separator: {fileID: 533330617}
 --- !u!1 &879159665
 GameObject:
   m_ObjectHideFlags: 0
@@ -28583,7 +28599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1183145038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28619,7 +28635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -32752,7 +32768,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11.7, y: 129.8}
+  m_AnchoredPosition: {x: 1, y: 129.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1471647418
@@ -38636,7 +38652,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 477.4, y: 296}
+  m_AnchoredPosition: {x: 345.9, y: 296}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672618706
@@ -38661,7 +38677,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 0, b: 0, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.6698113, g: 0, b: 0.038523655, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -38682,7 +38698,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1672618707}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1855081484}
+        m_TargetAssemblyTypeName: UIUpgradeTable, Assembly-CSharp
+        m_MethodName: TogglePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1672618707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40505,13 +40533,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1855081483}
+  - component: {fileID: 1855081484}
   m_Layer: 5
   m_Name: UIUpgradeTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1855081483
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40532,6 +40561,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1855081484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855081482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ea05c13fb17144cab2c65094f9ad81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slot: {fileID: 2732355809135435321}
+  inventoryController: {fileID: 1317914051}
+  prefabItemView: {fileID: 3507272483325874770, guid: d4c2cf2d8abc68849be5b15f8ab3e8a0, type: 3}
+  panelUpgradeTable: {fileID: 1183145037}
+  mainCanvas: {fileID: 717702597}
+  progressFillProcess: {fileID: 1170353592}
 --- !u!1001 &1857994810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44153,8 +44200,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 26}
-  m_SizeDelta: {x: 1200, y: 800}
+  m_AnchoredPosition: {x: 6, y: 26}
+  m_SizeDelta: {x: 904.4468, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2129150058
 MonoBehaviour:
