@@ -16,7 +16,7 @@ public class Separator : MonoBehaviour
     private float timeToProcessObject = 0;
     private float timeToProcessObject2 = 0;
 
-    private bool isProcessing;
+    [SerializeField] private bool isProcessing;
 
     private bool playerIsNear;
     private bool isEnabled;
@@ -140,5 +140,10 @@ public class Separator : MonoBehaviour
         uiSeparator.SetDurationProcess(timeToProcessObject);
 
         energyHandler.SetCostOfProcessDecrement(itemProcessed.energyCost, itemProcessed.costInterval);
+    }
+
+    private void StartProcess()
+    {
+        isProcessing = true;
     }
 }

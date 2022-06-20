@@ -51,10 +51,17 @@ public class UIUpgradeTable : MonoBehaviour
             return;
         if(inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count >= 10)
         {
+            if (inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0].itemResults.Count < 1)
+                return;
+
             Debug.Log("Desbloquear separador");
 
             //Llamar al evento de desbloqueo del separador
             UnlockSeparator?.Invoke(true);
+
+            //Hago esto para evitar que la extension de slots se "pise" con la del separador
+            //Ya que si no lo hago, al abrir el separador comienza el proceso y gasta energia.
+            inventoryController.Model.GetSlot(slot.GridPosition).RemoveItems();
         }
     }
 
@@ -71,7 +78,7 @@ public class UIUpgradeTable : MonoBehaviour
             Debug.Log("Creado de posiciones extra del inventario");
 
             //inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
-            inventoryController.ExtendInventoryWithExtraSlots(90, 91, 90, 93, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            inventoryController.ExtendInventoryWithExtraSlots(90, 91, 92, 93, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
             slot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
 
