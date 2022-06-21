@@ -4306,6 +4306,7 @@ MonoBehaviour:
   uiSeparator: {fileID: 408333940}
   energyHandler: {fileID: 152223989}
   feedbackSeparator: {fileID: 1094363817}
+  isProcessing: 0
 --- !u!1 &549270392
 GameObject:
   m_ObjectHideFlags: 0
@@ -18449,6 +18450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiUpgradeTable: {fileID: 1855081484}
+  energyHandler: {fileID: 152223989}
   feedbackUpgradeTable: {fileID: 310795931}
   separator: {fileID: 533330617}
 --- !u!1 &879159665

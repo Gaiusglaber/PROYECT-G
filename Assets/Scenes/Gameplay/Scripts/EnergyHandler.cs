@@ -37,6 +37,7 @@ namespace ProyectG.Gameplay.UI
 		[NonSerialized] public int cantEnergy = 0;
 
 		private float processDecreaseInterval = 0;
+		private int decreaseOnUnlock = 200;
 		private float fuelBurnIncreaseInterval = 0;
 		private int processDecreaseCost = 0;
 		private int fuelBurnIncreaseValue = 0;
@@ -127,6 +128,26 @@ namespace ProyectG.Gameplay.UI
 					UpdateEnergy(cantEnergy);
 				}
 			}
+		}
+
+		public void ConsumeEnergyByUnlock()
+		{
+			if(cantEnergy > 0)
+			{
+				cantEnergy -= decreaseOnUnlock;
+				UpdateEnergy(cantEnergy);
+			}
+			//if (timer < processDecreaseInterval)
+			//	timer += Time.deltaTime;
+			//else
+			//{
+			//	if (cantEnergy > 0)
+			//	{
+			//		cantEnergy -= processDecreaseCost;
+			//		timer = 0.0f;
+			//		UpdateEnergy(cantEnergy);
+			//	}
+			//}
 		}
 
 		public void IncreaseEnergyByFuel()

@@ -7,10 +7,12 @@ using UnityEngine.UI;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
+using ProyectG.Gameplay.UI;
 
 public class UpgradeTable : MonoBehaviour
 {
-    [SerializeField] private UIUpgradeTable uiUpgradeTable;
+    [SerializeField] private UIUpgradeTable uiUpgradeTable = null;
+    [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] GameObject feedbackUpgradeTable;
     [SerializeField] private Separator separator;
 
@@ -37,6 +39,7 @@ public class UpgradeTable : MonoBehaviour
 
     private void EnableSeparator(bool state)
     {
+        energyHandler.ConsumeEnergyByUnlock();
         separator.SetIsEnabled(state);
         //Llamar evento para habilitar el separador
     }
