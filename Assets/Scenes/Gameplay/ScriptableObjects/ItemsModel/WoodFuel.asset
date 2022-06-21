@@ -20,7 +20,8 @@ MonoBehaviour:
   timeToComplete: 10
   costInterval: 5
   itemType: 0
-  itemResults: []
+  itemResults:
+  - {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
   timeToBurnOut: 10
   energyPerTime: 1
   energyGenerated: 2
