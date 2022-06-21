@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: CornSyrupItem
   m_EditorClassIdentifier: 
   itemId: corn_syrup
-  itemSprite: {fileID: 21300000, guid: 22b699692dedeee499c859ef106080d2, type: 3}
+  itemSprite: {fileID: 21300000, guid: bceaffb4ed79b1443aebf3742be93903, type: 3}
   itemDescription: Jarabe de maiz
   itemValue: 1
   energyCost: 2
   timeToComplete: 10
   costInterval: 1
-  itemType: 0
-  itemResults:
-  - {fileID: 11400000, guid: c0362058b53fb104187dde5a911051fd, type: 2}
+  itemType: 2
+  itemResults: []

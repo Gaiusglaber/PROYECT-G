@@ -21,4 +21,4 @@ MonoBehaviour:
   costInterval: 1
   itemType: 2
   itemResults:
-  - {fileID: 11400000, guid: c0362058b53fb104187dde5a911051fd, type: 2}
+  - {fileID: 11400000, guid: e8f46bef50efe2f46a71237211b03c44, type: 2}

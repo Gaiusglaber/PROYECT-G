@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d48d41d706e2a409b6d1ffaf6e0c54, type: 3}
+  m_Name: Savia
+  m_EditorClassIdentifier: 
+  id: savia
+  name: Savia
+  sprite: {fileID: 21300000, guid: 40f905baeb0e01542b3f16d274b7e850, type: 3}
+  itemModel: {fileID: 11400000, guid: 9c81abf5a08f35141bdc469026d356f2, type: 2}
