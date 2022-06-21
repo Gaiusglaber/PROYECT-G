@@ -15,8 +15,12 @@ public class UIUpgradeTable : MonoBehaviour
     [SerializeField] private GameObject panelUpgradeTable;
     [SerializeField] private Canvas mainCanvas = null;
     [SerializeField] private Image progressFillProcess = null;
+    [SerializeField] private GameObject progressProcess = null;
+    [SerializeField] private GameObject unlockSpearatorBtn;
+    [SerializeField] private GameObject isSeparatorUnlockedFeedBack;
 
     private bool extraPositionsCreated = false;
+    private bool unlockedSeparator = false;
 
     private List<SlotInventoryView> thisUiSlotsView = new List<SlotInventoryView>();
 
@@ -30,11 +34,14 @@ public class UIUpgradeTable : MonoBehaviour
         slot.Init(prefabItemView, mainCanvas, invalidPosition, false);
 
         thisUiSlotsView.Add(slot);
+
+        isSeparatorUnlockedFeedBack.gameObject.SetActive(false);
     }
 
     void Update()
     {
         CheckItemForUpgrade();
+        CheckIfUnlockedSeparator();
     }
 
     public void TogglePanel()
@@ -58,10 +65,22 @@ public class UIUpgradeTable : MonoBehaviour
 
             //Llamar al evento de desbloqueo del separador
             UnlockSeparator?.Invoke(true);
+            unlockedSeparator = true;
 
             //Hago esto para evitar que la extension de slots se "pise" con la del separador
             //Ya que si no lo hago, al abrir el separador comienza el proceso y gasta energia.
             inventoryController.Model.GetSlot(slot.GridPosition).RemoveItems();
+        }
+    }
+
+    public void CheckIfUnlockedSeparator()
+    {
+        if (unlockedSeparator)
+        {
+            slot.gameObject.SetActive(false);
+            progressProcess.gameObject.SetActive(false);
+            unlockSpearatorBtn.gameObject.SetActive(false);
+            isSeparatorUnlockedFeedBack.gameObject.SetActive(true);
         }
     }
 
