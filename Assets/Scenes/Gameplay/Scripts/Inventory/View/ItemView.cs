@@ -47,7 +47,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private string itemId;
 
-        private ItemType itemViewType;
+        public ItemType itemViewType;
 
         #endregion
 

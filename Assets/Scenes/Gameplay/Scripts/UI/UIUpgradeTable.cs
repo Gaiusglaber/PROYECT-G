@@ -56,7 +56,7 @@ public class UIUpgradeTable : MonoBehaviour
     {
         if (inventoryController.Model.GetSlot(slot.GridPosition) == null)
             return;
-        if(inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count >= 10)
+        if (inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count >= 10 && inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0].itemType == ItemType.crop) //&& slot.StackOfItemsView[0].itemViewType == ItemType.crop
         {
             if (inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0].itemResults.Count < 1)
                 return;
