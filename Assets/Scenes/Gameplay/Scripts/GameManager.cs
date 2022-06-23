@@ -39,7 +39,7 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.Init();
             cameraHandler.Init(player);
-            mouseController.Init();
+            //mouseController.Init();
 
             for (int i = 0; i < testItems.Count; i++)
             {
@@ -49,9 +49,18 @@ namespace ProjectG.Gameplay.Managers
                 }
             }
 
-            inventory.GenerateItem("TestItem1");
-            inventory.GenerateItem("TestItem1");
-            inventory.GenerateItem("TestItem1");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("crop");
         }
 
         private void Start()

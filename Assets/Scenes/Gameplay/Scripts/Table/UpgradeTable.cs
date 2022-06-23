@@ -39,9 +39,9 @@ public class UpgradeTable : MonoBehaviour
 
     private void EnableSeparator(bool state)
     {
+        //Llamar evento para habilitar el separador
         energyHandler.ConsumeEnergyByUnlock();
         separator.SetIsEnabled(state);
-        //Llamar evento para habilitar el separador
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
