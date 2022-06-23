@@ -76,6 +76,7 @@ public class Separator : MonoBehaviour
                 itemProcessed = null;
 
                 //Invocar al evento OnTemProcessed
+                OnItemProcessed?.Invoke();
 
                 Debug.Log("Item processed successfully");
             }

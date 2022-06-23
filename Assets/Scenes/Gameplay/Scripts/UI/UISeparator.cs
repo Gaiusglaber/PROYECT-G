@@ -65,10 +65,10 @@ public class UISeparator : MonoBehaviour
 
     public void GenerateProcessedItems(ItemModel itemFrom1)
     {
-        ItemModel finalItem = itemFrom1.itemResults[0];
+        ItemModel finalItem = itemFrom1.itemResults[1];
         inventoryController.GenerateItem(finalItem.itemId, outputSlot1.GridPosition);
 
-        ItemModel finalItem2 = itemFrom1.itemResults[1];
+        ItemModel finalItem2 = itemFrom1.itemResults[2];
         inventoryController.GenerateItem(finalItem2.itemId, outputSlot2.GridPosition);
     }
 
@@ -104,7 +104,7 @@ public class UISeparator : MonoBehaviour
             if (inventoryController.Model.GetSlot(inputSlot.GridPosition) == null)
                 return;
 
-            if(inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0)
+            if(inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0 && inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemId == "Wood")
             {
                 if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemResults.Count < 1)
                     return;

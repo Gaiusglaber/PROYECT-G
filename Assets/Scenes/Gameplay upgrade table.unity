@@ -3981,7 +3981,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 516735796}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 408333940}
+        m_TargetAssemblyTypeName: UISeparator, Assembly-CSharp
+        m_MethodName: TogglePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &516735796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30111,6 +30123,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f9390955b09ad6f409eb62b38fab7cc6, type: 2}
   - {fileID: 11400000, guid: aac68be38c41e564ea3cacf920c90672, type: 2}
   - {fileID: 11400000, guid: e8f46bef50efe2f46a71237211b03c44, type: 2}
+  - {fileID: 11400000, guid: 9c81abf5a08f35141bdc469026d356f2, type: 2}
+  - {fileID: 11400000, guid: 6b4486ac2ec0e9f43b6c606c9555ef30, type: 2}
+  - {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
 --- !u!4 &1317914052
 Transform:
   m_ObjectHideFlags: 0
