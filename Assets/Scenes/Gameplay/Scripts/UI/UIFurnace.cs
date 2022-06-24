@@ -199,6 +199,10 @@ public class UIFurnace : MonoBehaviour
             outputSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[1].GridPosition);
             fuelSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[2].GridPosition);
 
+            Debug.Log("extra slots del horno 1: " + inventoryController.GetExtraSlotsFromInventory()[0]);
+            Debug.Log("extra slots del horno 2: " + inventoryController.GetExtraSlotsFromInventory()[1]);
+            Debug.Log("extra slots del horno 3: " + inventoryController.GetExtraSlotsFromInventory()[2]);
+
             extraPositionsCreated = true;
         }
         else

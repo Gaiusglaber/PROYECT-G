@@ -140,11 +140,16 @@ public class UISeparator : MonoBehaviour
             //tendriamos que cambiarlo u encontrar algo mas optimo. Btw por ahora me sirve. :)
             Debug.Log("Creado de posiciones extra del inventario");
 
-            inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
             inputSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
             outputSlot1.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[1].GridPosition);
             outputSlot2.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[2].GridPosition);
+
+            Debug.Log("extra slots del separador 1: " + inventoryController.GetExtraSlotsFromInventory()[0]);
+            Debug.Log("extra slots del separador 2: " + inventoryController.GetExtraSlotsFromInventory()[1]);
+            Debug.Log("extra slots del separador 3: " + inventoryController.GetExtraSlotsFromInventory()[2]);
+
 
             extraPositionsCreated = true;
         }

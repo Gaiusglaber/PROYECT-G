@@ -45,6 +45,8 @@ public class UIUpgradeTable : MonoBehaviour
         thisUiSlotsView.Add(slotTrade1);
         thisUiSlotsView.Add(slotTrade2);
 
+        extraPositionsCreated = false;
+
         isSeparatorUnlockedFeedBack.gameObject.SetActive(false);
     }
 
@@ -140,8 +142,8 @@ public class UIUpgradeTable : MonoBehaviour
             //inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
             inventoryController.ExtendInventoryWithExtraSlots(90, 91, 90, 93, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
-            inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
-            inventoryController.ExtendInventoryWithExtraSlots(110, 111, 110, 113, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            //inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            //inventoryController.ExtendInventoryWithExtraSlots(110, 111, 110, 113, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
 
             slot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
