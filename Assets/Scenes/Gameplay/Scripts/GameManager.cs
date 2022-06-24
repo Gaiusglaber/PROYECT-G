@@ -61,12 +61,39 @@ namespace ProjectG.Gameplay.Managers
             inventory.GenerateItem("corn_syrup");
             inventory.GenerateItem("corn_syrup");
             inventory.GenerateItem("corn_syrup");
+
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+            inventory.GenerateItem("Salvia");
+
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
+            inventory.GenerateItem("table");
         }
 
         private void Start()
         {
             Time.timeScale = 1;
             EnergyHandler.Withoutenergy += StopGame;
+            UIUpgradeTable.TradeSuccessfully += StopGame;
         }
 
         private void Update()
@@ -77,6 +104,7 @@ namespace ProjectG.Gameplay.Managers
         private void OnDisable()
         {
             EnergyHandler.Withoutenergy -= StopGame;
+            UIUpgradeTable.TradeSuccessfully -= StopGame;
         }
 
         #endregion
