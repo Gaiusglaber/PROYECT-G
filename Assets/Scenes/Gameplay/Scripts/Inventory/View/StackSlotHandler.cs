@@ -143,6 +143,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 listOfItems[i].transform.SetParent(transform);
                 listOfItems[i].transform.position = transform.position;
+
+                listOfItems[i].SwitchStateItem(true);
+                listOfItems[i].SwitchStateCollider(false);
             }
             
             stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
@@ -229,14 +232,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
                 {
-                    slotFromItem.SwipeStacks(this);
+                    if (slotFromItem != ActualSlot)
+                    { 
+                        slotFromItem.SwipeStacks(this);
 
-                    if (actualSlot != slotFromItem)
-                    {
                         actualSlot = slotFromItem;
+
+                        return true;
                     }
-                    Debug.Log("Slot " + slotFromItem.GridPosition);
-                    return true;
                 }
             }
 

@@ -400,7 +400,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     allItemsToAdd.Add(newItem);
                 }
             }
-            
+
             stackHandler.AddItemsOnStack(allItemsToAdd);
         }
 
