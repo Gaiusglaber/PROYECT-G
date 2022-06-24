@@ -57,7 +57,7 @@ public class Separator : MonoBehaviour
 
                 energyHandler.ConsumeEnergyByProcess();
 
-                uiSeparator.UpdateProgressFill(timerProcess);
+                //uiSeparator.UpdateProgressFill(timerProcess);
 
                 //llamar al metodo llamado UpdateProgressFill(timerProcess); en UISeparator
 
@@ -137,9 +137,11 @@ public class Separator : MonoBehaviour
 
         itemProcessed = item;
 
+        //setea el tiempo de duracion del item
         timeToProcessObject = itemProcessed.timeToComplete;
         uiSeparator.SetDurationProcess(timeToProcessObject);
 
+        //consume energia
         energyHandler.SetCostOfProcessDecrement(itemProcessed.energyCost, itemProcessed.costInterval);
     }
 

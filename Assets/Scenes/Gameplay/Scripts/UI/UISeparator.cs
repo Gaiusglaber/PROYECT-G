@@ -55,7 +55,7 @@ public class UISeparator : MonoBehaviour
         outputSlot1.UpdateViewSlot(inventoryController.StackTake);
         outputSlot2.UpdateViewSlot(inventoryController.StackTake);
 
-        ProcessMaterials();
+        //ProcessMaterials();
     }
 
     public void SetDurationProcess(float timeToSeparate)
@@ -65,10 +65,10 @@ public class UISeparator : MonoBehaviour
 
     public void GenerateProcessedItems(ItemModel itemFrom1)
     {
-        ItemModel finalItem = itemFrom1.itemResults[1];
+        ItemModel finalItem = itemFrom1.itemResults[1]; //posicion 1 de la lista devuelve table item
         inventoryController.GenerateItem(finalItem.itemId, outputSlot1.GridPosition);
 
-        ItemModel finalItem2 = itemFrom1.itemResults[2];
+        ItemModel finalItem2 = itemFrom1.itemResults[2]; //posicion 2 de la lista devuelve salvia item
         inventoryController.GenerateItem(finalItem2.itemId, outputSlot2.GridPosition);
     }
 
@@ -82,7 +82,7 @@ public class UISeparator : MonoBehaviour
 
     public void OnEndProcess()
     {
-        progressFillProcess.fillAmount = 0;
+        //progressFillProcess.fillAmount = 0;
 
         inventoryController.RemoveItems(inputSlot.GridPosition, 1);
 
@@ -97,7 +97,7 @@ public class UISeparator : MonoBehaviour
         progressFillProcess.fillAmount = Mathf.MoveTowards(progressFillProcess.fillAmount, fillValue, Time.deltaTime);
     }
 
-    private void ProcessMaterials()
+    public void ProcessMaterials()
     {
         if (!IsSeparatorProcessing.Invoke())
         {
@@ -113,11 +113,13 @@ public class UISeparator : MonoBehaviour
 
                 ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
 
+                GenerateProcessedItems(firstItem);
+
+                OnEndProcess();
+
                 //Mandarle dos items al action OnProcessMaterial sirve para el combinador.
-                OnProcessMaterial?.Invoke(firstItem);
-
+                //OnProcessMaterial?.Invoke(firstItem);
             }
-
         }
     }
 

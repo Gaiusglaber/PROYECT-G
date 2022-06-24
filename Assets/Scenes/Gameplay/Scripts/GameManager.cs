@@ -49,18 +49,18 @@ namespace ProjectG.Gameplay.Managers
                 }
             }
 
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("corn_syrup");
-            //inventory.GenerateItem("crop");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
+            inventory.GenerateItem("corn_syrup");
         }
 
         private void Start()
