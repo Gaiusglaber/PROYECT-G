@@ -137,6 +137,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             for (int i = 0; i < amount; i++)
             {
+                if (itemToAttach!=null)
                 newStackOfItems.Add(itemToAttach);
             }
 
