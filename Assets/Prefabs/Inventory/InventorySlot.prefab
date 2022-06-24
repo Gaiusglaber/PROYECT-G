@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2041593705025505483}
   - component: {fileID: 7395315014002902098}
   - component: {fileID: 1059509129797799613}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: amountOutStack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1611043476879830901}
   - component: {fileID: 1611043476879830903}
   - component: {fileID: 1611043476879830902}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: ItemAttachView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 1603961316517353637}
   - component: {fileID: 1611043477229594254}
   - component: {fileID: 3550718971072326361}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: InventorySlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 6331414307099569980}
   - component: {fileID: 773258625994184104}
   - component: {fileID: 2529359169790024339}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: txtDebugGridPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

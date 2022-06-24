@@ -22,8 +22,6 @@ namespace ProyectG.Gameplay.Controllers
         {
             Ray mouseCheck = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            transform.position = Vector3.MoveTowards(transform.position, mouseCheck.origin, followSpeed * Time.fixedDeltaTime);
-
             Debug.DrawRay(mouseCheck.origin, mouseCheck.direction * distance, Color.red);
         }
         #endregion
@@ -34,13 +32,6 @@ namespace ProyectG.Gameplay.Controllers
             mainCamera = Camera.main;
 
             Cursor.visible = hideRealCursor;
-        }
-        #endregion
-
-        #region DEBUGIN
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, 5f);
         }
         #endregion
     }

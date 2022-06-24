@@ -18,6 +18,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private float followSpeed = 0;
         [SerializeField] private Image itemImage = null;
         [SerializeField] private bool useLerpAnimations = true;
+        [SerializeField] private LayerMask [] whereCanBePlaced = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -45,10 +46,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private (Vector2, Vector2Int ,Transform) slotPositionAttached = default;
         private Vector2Int slotGridPosition = default;
 
+        private SlotInventoryView mySlot = null;
+
         private string itemId;
 
         public ItemType itemViewType;
 
+        private RectTransform thisRect = null;
         #endregion
 
         #region PROPERTIES
@@ -84,6 +88,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             //slotGridPosition = slotAttached.SlotPosition;
+            thisRect = gameObject.transform as RectTransform;
 
             positionLerper = new Vector3Lerper(followSpeed * 0.5f, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
 
@@ -94,6 +99,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             //Aplica el lerp del nuevo item creado al slot al que fue enviado
             itemInitialized = false;
             isAttachedToSlot = true;
+
+            mySlot = slotAttached;
             AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition, slotAttached.gameObject.transform);
         }
         #endregion
@@ -104,19 +111,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         /// </summary>
         private void Update()
         {
-            if (isAttachedToSlot && prepareToAttachOnSlot)
-            {
-                if (time < timeToGoBackSlot)
-                    time += Time.deltaTime;
-                else
-                {
-                    time = 0;
-                    prepareToAttachOnSlot = false;
-                    myCollider.enabled = false;
-                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
-                }
-            }
-
             if (!Dragged || dragDisable)
                 return;
 
@@ -159,6 +153,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             this.eventData = eventData;
 
             SetDraggedPosition(eventData);
+
+            OnItemTake();
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -181,13 +177,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             this.eventData = eventData;
 
-            RectTransform objectDragging = gameObject.transform as RectTransform;
             Vector3 globalMouse = default;
 
             if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingPlane, eventData.position, eventData.pressEventCamera, out globalMouse))
             {
-                objectDragging.position = Vector3.Lerp(objectDragging.position, globalMouse, finalPerc);
-                objectDragging.rotation = draggingPlane.rotation;
+                thisRect.position = globalMouse;
+                thisRect.rotation = draggingPlane.rotation;
             }
         }
 
@@ -198,6 +193,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             isDragging = false;
 
             prepareToAttachOnSlot = true;
+
+            CheckOverSlot();
         }
 
         private bool CheckItemType(ItemType[] allowedTypes)
@@ -217,6 +214,60 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
             return check;
+        }
+
+        private void OnItemTake()
+        {
+            Ray2D rayFromThisItem = new Ray2D(thisRect.position - (Vector3.forward * 15f), thisRect.forward * 50f);
+
+            for (int i = 0; i < whereCanBePlaced.Length; i++)
+            {
+                RaycastHit2D[] allHits = Physics2D.RaycastAll(rayFromThisItem.origin, rayFromThisItem.direction, 50f, whereCanBePlaced[i]);
+
+                foreach (RaycastHit2D hit in allHits)
+                {
+                    if (hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
+                    {
+                        slotFromItem.RemoveItemFromSlot(this);
+                    }
+                }
+            }
+
+            Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
+        }
+
+        private bool CheckOverSlot()
+        {
+            Ray2D rayFromThisItem = new Ray2D(thisRect.position - (Vector3.forward * 15f), thisRect.forward * 50f);
+
+            for (int i = 0; i < whereCanBePlaced.Length; i++)
+            {
+                RaycastHit2D[] allHits = Physics2D.RaycastAll(rayFromThisItem.origin, rayFromThisItem.direction, 50f, whereCanBePlaced[i]);
+
+                foreach (RaycastHit2D hit in allHits)
+                {
+                    if(hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
+                    {
+                        slotFromItem.AddItemToSlot(this);
+
+                        if(mySlot != slotFromItem)
+                        {
+                            mySlot = slotFromItem;
+                        }
+                        Debug.Log("Slot " + slotFromItem.GridPosition);
+                        return true;
+                    }
+                }
+            }
+
+            if (mySlot != null)
+            {
+                mySlot.AddItemToSlot(this);
+            }
+
+            Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
+
+            return false;
         }
 
         public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, params ItemType[] allowedTypes)
@@ -317,12 +368,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             callbackAtEndPosition?.Invoke();
 
             yield return null;
-        }
-
-        public bool SwipeStackSlots(Vector2 positionSlot, Vector2Int gridPos, Transform parent, Action callback = null)
-        {
-            //Nope;
-            return false;
         }
         #endregion
     }

@@ -193,7 +193,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
                     {
                         if(NextGridSlot != null)
                         {
-                            NextGridSlot.PlaceItems(itemToAttach);
+                            NextGridSlot.PlaceItems(itemToAttach, updateView);
                         }
                     }
                 }

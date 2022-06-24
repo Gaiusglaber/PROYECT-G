@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,11 +52,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
             inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
-            
+
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);
             inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
             inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
+
+            if (!inventoryView.IsOpen)
+            {
+                stackTake = false;
+
+                inventoryView.OnChangeInteractionType(stackTake);
+            }
         }
 
         public List<SlotInventoryModel> GetExtraSlotsFromInventory()
@@ -95,17 +100,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             RemoveItems(pos, 1);
         }
 
-        public void UpdateInventory()
-        {
-            if (inventoryView == null)
-                return;
-
-            inventoryView.UpdateSlots(stackTake);
-        }
-
         public void ToggleInventory()
         {
             inventoryView.ToggleInventory();
+
+            if(!inventoryView.IsOpen)
+            {
+                DisableStackMode();
+            }
         }
 
         public void CheckState()
@@ -115,18 +117,21 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryView.ToggleInventory();
+
+                if(!inventoryView.IsOpen)
+                {
+                    DisableStackMode();
+                }
             }
 
             if (!inventoryView.IsOpen)
                 return;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                stackTake = true;
-            }
-            else
-            {
-                stackTake = false;
+                stackTake = !stackTake;
+
+                inventoryView.OnChangeInteractionType(stackTake);
             }
         }
 
@@ -189,6 +194,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         #endregion
 
         #region PRIVATE_METHODS
+        private void DisableStackMode()
+        {
+            stackTake = false;
+            inventoryView.OnChangeInteractionType(stackTake);
+        }
+
         private void InitilizeMVC()
         {
             inventoryModel = new InventoryModel();
@@ -210,7 +221,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         #region CORUTINES
         private IEnumerator LerpVolumeAttribute(DepthOfField component, float destIntensity)
         {
-            FloatLerper lerper = new FloatLerper(2, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
+            FloatLerper lerper = new FloatLerper(.5f, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
             lerper.SetValues(component.focusDistance.value, destIntensity, true);
             while (lerper.On)
             {

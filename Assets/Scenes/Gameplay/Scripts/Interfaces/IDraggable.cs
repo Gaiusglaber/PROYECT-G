@@ -19,6 +19,6 @@ namespace ProyectG.Gameplay.Interfaces
 
     public interface ISwitchable
     {
-        public bool SwipeStackSlots(SlotInventoryView newSlot, Action<SlotInventoryView> callback = null);
+        public bool SwipeStackSlots(SlotInventoryView newSlot, Action callback = null);
     }
 }

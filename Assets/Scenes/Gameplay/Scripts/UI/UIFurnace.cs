@@ -67,9 +67,9 @@ public class UIFurnace : MonoBehaviour
 
     void Update()
     {
-        inputSlot.UpdateViewSlot(inventoryController.StackTake);
-        outputSlot.UpdateViewSlot(inventoryController.StackTake);
-        fuelSlot.UpdateViewSlot(InverntoryController.StackTake);
+        inputSlot.SetOnInteractionInventoryChange(inventoryController.StackTake);
+        outputSlot.SetOnInteractionInventoryChange(inventoryController.StackTake);
+        fuelSlot.SetOnInteractionInventoryChange(InverntoryController.StackTake);
 
         ProcessMaterials();
 

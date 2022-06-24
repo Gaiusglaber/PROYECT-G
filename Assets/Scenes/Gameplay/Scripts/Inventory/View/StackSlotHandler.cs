@@ -48,38 +48,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         float time = 0;
 
         private BoxCollider2D myCollider = null;
+        private RectTransform thisRect = null;
 
-        private Stack<ItemView> stackedItems = new Stack<ItemView>();
+        private List<ItemView> stackedItems = new List<ItemView>();
         #endregion
 
         #region PROPERTIES
         public bool Dragged => isDragging;
         public int SizeStack => stackedItems.Count;
-        public string StackAmount { get { return stackAmount.text; } set { stackAmount.text = value; } }
-        public SlotInventoryView ActualSlot { get { return actualSlot; } }
+        public List<ItemView> Stack { get { return stackedItems; } }
+        public SlotInventoryView ActualSlot { get { return actualSlot; } set { actualSlot = value; } }
         public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
         public (Vector2, Vector2Int, Transform) LastslotPositionAttached { get { return lastslotPositionAttached; } }
-        #endregion
-
-        #region UNITY_CALLS
-        private void Update()
-        {
-            RestorePosition();
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            if (isDragging) { return; }
-
-            if (collision.TryGetComponent(out SlotInventoryView slotView))
-            {
-                if(!isAttachedToSlot)
-                {
-                    AttachToSlot(slotView.SlotPosition, slotView.GridPosition ,slotView.transform);
-                    isAttachedToSlot = true;
-                }
-            }
-        }
         #endregion
 
         #region PUBLIC_METHODS
@@ -100,7 +80,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             actualSlot = slotAttached;
 
-            StackAmount = string.Empty;
+            thisRect = transform as RectTransform;
+
+            stackAmount.text = string.Empty;
 
             if (!isAttachedToSlot)
             {
@@ -147,16 +129,44 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             prepareToAttachOnSlot = true;
             onRestoreDrag = true;
+
+            draggingPlane = null;
+
+            CheckOverSlot();
+        }
+
+        public void AddItemsOnStack(List<ItemView> listOfItems)
+        {
+            for (int i = 0; i < listOfItems.Count; i++)
+            {
+                stackedItems.Add(listOfItems[i]);
+
+                listOfItems[i].transform.SetParent(transform);
+                listOfItems[i].transform.position = transform.position;
+
+                listOfItems[i].SwitchStateItem(true);
+                listOfItems[i].SwitchStateCollider(false);
+            }
+            
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
+        }
+
+        public void ClearStackOfItems()
+        {
+            stackedItems.Clear();
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
         }
 
         public void StackItemsInside(List<ItemView> listOfItems)
         {
+            stackedItems.Clear();
+
             for (int i = 0; i < listOfItems.Count; i++)
             {
-                stackedItems.Push(listOfItems[i]);
+                stackedItems.Add(listOfItems[i]);
             }
 
-            StackAmount = SizeStack.ToString();
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
         }
 
         public List<ItemView> GetStackFormStack()   //no supe como llamarlo mejor xd
@@ -166,32 +176,18 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             allReturnedItems.AddRange(stackedItems);
             stackedItems.Clear();
 
-            StackAmount = string.Empty;
+            stackAmount.text = string.Empty;
 
             return allReturnedItems;
+        }
+
+        public void UpdateStackAmount()
+        {
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
         }
         #endregion
 
         #region PRIVATE_METHODS
-        private void RestorePosition()
-        {
-            if (onSwipingStack || !onRestoreDrag)
-                return;
-
-            if (isAttachedToSlot && prepareToAttachOnSlot)
-            {
-                if (time < timeToGoBackSlot)
-                    time += Time.deltaTime;
-                else
-                {
-                    time = 0;
-                    prepareToAttachOnSlot = false;
-                    myCollider.enabled = false;
-                    AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
-                }
-            }
-        }
-
         private void SetDraggedPosition(PointerEventData eventData)
         {
             if (eventData.pointerEnter != null && eventData.pointerEnter.transform as RectTransform != null)
@@ -224,6 +220,37 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     itemsCopy[i].UpdateItemSlot(SlotPositionAttached);
                 }
             }
+        }
+
+        private bool CheckOverSlot()
+        {
+            Ray2D rayFromThisItem = new Ray2D(thisRect.position - (Vector3.forward * 15f), thisRect.forward * 50f);
+
+            RaycastHit2D[] allHits = Physics2D.RaycastAll(rayFromThisItem.origin, rayFromThisItem.direction, 50f);
+
+            foreach (RaycastHit2D hit in allHits)
+            {
+                if (hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
+                {
+                    if (slotFromItem != ActualSlot)
+                    { 
+                        slotFromItem.SwipeStacks(this);
+
+                        actualSlot = slotFromItem;
+
+                        return true;
+                    }
+                }
+            }
+
+            if (actualSlot != null)
+            {
+                SwipeStackSlots(actualSlot);
+            }
+
+            Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
+
+            return false;
         }
 
         public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent, params ItemType[] allowedTypes)
@@ -273,17 +300,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             return false;
         }
 
-        public bool SwipeStackSlots(SlotInventoryView newSlot, Action<SlotInventoryView> callback = null)
+        public bool SwipeStackSlots(SlotInventoryView newSlot, Action callback = null)
         {
             myCollider.enabled = false;
             onSwipingStack = true;
 
-            SlotInventoryView auxSlot = actualSlot;
-
             if(!isDragging)
             {
-                actualSlot = newSlot;
-
                 slotPositionAttached.Item1 = newSlot.SlotPosition;
                 slotPositionAttached.Item2 = newSlot.GridPosition;
                 slotPositionAttached.Item3 = newSlot.transform;
@@ -292,7 +315,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     StartCoroutine(AttachToPosition(newSlot.SlotPosition, ()=> {
 
-                        actualSlot.StackHandler = this;
                         transform.SetParent(newSlot.transform);
                         myCollider.enabled = true;
                         onRestoreDrag = false;
@@ -301,13 +323,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                         UpdateItemsInsideSatckAfterMove();
 
-                        callback?.Invoke(auxSlot);
+                        callback?.Invoke();
                     }));
                 }
                 else
                 {
-                    actualSlot.StackHandler = this;
-
                     transform.position = newSlot.SlotPosition;
                     transform.SetParent(newSlot.transform);
                     myCollider.enabled = true;
@@ -316,7 +336,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                     UpdateItemsInsideSatckAfterMove();
 
-                    callback?.Invoke(auxSlot);
+                    callback?.Invoke();
                 }
 
                 return true;

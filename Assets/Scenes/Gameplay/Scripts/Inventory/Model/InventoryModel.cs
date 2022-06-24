@@ -245,6 +245,33 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             allFromItems.AddRange(GetSlot(fromSlot).StackOfItems);
             allToItems.AddRange(GetSlot(toSlot).StackOfItems);
 
+            if(allFromItems.Count > 0 && allToItems.Count > 0)
+            {
+                if(allFromItems[0].itemId == allToItems[0].itemId)
+                {
+                    allToItems.AddRange(GetSlot(fromSlot).StackOfItems);
+
+                    GetSlot(fromSlot).RemoveItems(0, true, false);
+                    GetSlot(toSlot).RemoveItems(0, true, false);
+
+                    GetSlot(toSlot).PlaceItems(allToItems, false);
+
+                    Debug.Log("SAME ITEMS FROM {" + fromSlot + "} TO {" + toSlot + "}");
+
+                    //Testing
+                    for (int x = 0; x < GridRows; x++)
+                    {
+                        for (int y = 0; y < GridCols; y++)
+                        {
+                            Vector2Int gridSlot = new Vector2Int(x, y);
+
+                            Debug.Log("SLOT {" + gridSlot + "} has " + GetSlot(gridSlot).StackOfItems.Count + " items");
+                        }
+                    }
+                    return;
+                }                
+            }
+
             GetSlot(toSlot).RemoveItems(0, true, false);
             GetSlot(toSlot).PlaceItems(allFromItems, false);
 
