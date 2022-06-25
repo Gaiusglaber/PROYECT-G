@@ -30,6 +30,8 @@ public class UIFurnace : MonoBehaviour
 
     private float durationProcess = 0f;
 
+    private List<Vector2Int> savedSlotPositons = new List<Vector2Int>();
+
     private bool extraPositionsCreated = false;
 
     private List<SlotInventoryView> thisUiSlotsView = new List<SlotInventoryView>();
@@ -86,7 +88,15 @@ public class UIFurnace : MonoBehaviour
     public void GenerateProcessedItem(ItemModel itemFrom)
     {
         ItemModel finalItem = itemFrom.itemResults[0];
-        inventoryController.GenerateItem(finalItem.itemId, outputSlot.GridPosition);
+
+        if(outputSlot.GridPosition != invalidPosition)
+        {
+            inventoryController.GenerateItem(finalItem.itemId, outputSlot.GridPosition);
+        }
+        else
+        {
+            inventoryController.GenerateItem(finalItem.itemId, savedSlotPositons[1]);
+        }
     }
 
     public void TogglePanel()
@@ -101,7 +111,14 @@ public class UIFurnace : MonoBehaviour
     {
         progressFillProcess.fillAmount = 0;
 
-        inventoryController.RemoveItems(inputSlot.GridPosition,1);
+        if(inputSlot.GridPosition != invalidPosition)
+        {
+            inventoryController.RemoveItems(inputSlot.GridPosition,1);
+        }
+        else
+        {
+            inventoryController.RemoveItems(savedSlotPositons[0], 1);
+        }
 
         inputSlot.UpdateTextOutStack();
     }
@@ -110,7 +127,14 @@ public class UIFurnace : MonoBehaviour
     {
         progressFuelConsumption.fillAmount = 0;
 
-        inventoryController.RemoveItems(fuelSlot.GridPosition, 1);
+        if(fuelSlot.GridPosition != invalidPosition)
+        {
+            inventoryController.RemoveItems(fuelSlot.GridPosition, 1);
+        }
+        else
+        {
+            inventoryController.RemoveItems(savedSlotPositons[2], 1);
+        }
 
         fuelSlot.UpdateTextOutStack();
     }
@@ -137,14 +161,22 @@ public class UIFurnace : MonoBehaviour
     {
         if (!IsFurnaceProcessing.Invoke())
         {
-            if (inventoryController.Model.GetSlot(inputSlot.GridPosition) == null)
-                return;
-
-            if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0)
+            if (inventoryController.Model.GetSlot(inputSlot.GridPosition) != null && inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0)
             {
                 if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemResults.Count < 1)
                     return;
                 
+                Debug.Log("Item send to procees");
+
+                ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
+
+                OnProcessMaterial?.Invoke(firstItem);
+            }
+            else if(savedSlotPositons.Count > 0 && inventoryController.Model.GetSlot(savedSlotPositons[0]) != null && inventoryController.Model.GetSlot(savedSlotPositons[0]).StackOfItems.Count > 0)
+            {
+                if (inventoryController.Model.GetSlot(savedSlotPositons[0]).StackOfItems[0].itemResults.Count < 1)
+                    return;
+
                 Debug.Log("Item send to procees");
 
                 ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
@@ -157,20 +189,29 @@ public class UIFurnace : MonoBehaviour
     private bool ProcessFuel()
     {
         if (!IsFurnaceBurning.Invoke())
-        {
-            if (inventoryController.Model.GetSlot(fuelSlot.GridPosition) == null)
-                return false;
-
-            if(inventoryController.Model.GetSlot(fuelSlot.GridPosition).StackOfItems.Count > 0)
+        {           
+            if(inventoryController.Model.GetSlot(fuelSlot.GridPosition) != null && inventoryController.Model.GetSlot(fuelSlot.GridPosition).StackOfItems.Count > 0)
             {
                 Debug.Log("Fuel send to burn");
+                //fuelSlot.StackHandler.SwitchStateItem(true);
 
                 FuelItem fuelBurning = inventoryController.Model.GetSlot(fuelSlot.GridPosition).StackOfItems[0] as FuelItem;
 
                 OnProcessFuel?.Invoke(fuelBurning);
 
                 return true;
-            }            
+            }
+            else if(savedSlotPositons.Count > 0 && inventoryController.Model.GetSlot(savedSlotPositons[2]) != null && inventoryController.Model.GetSlot(savedSlotPositons[2]).StackOfItems.Count > 0)
+            {
+                Debug.Log("Fuel send to burn");
+                //fuelSlot.StackHandler.SwitchStateItem(true);
+
+                FuelItem fuelBurning = inventoryController.Model.GetSlot(fuelSlot.GridPosition).StackOfItems[0] as FuelItem;
+
+                OnProcessFuel?.Invoke(fuelBurning);
+
+                return true;
+            }
         }
 
         return false;
@@ -193,15 +234,15 @@ public class UIFurnace : MonoBehaviour
             //tendriamos que cambiarlo u encontrar algo mas optimo. Btw por ahora me sirve. :)
             Debug.Log("Creado de posiciones extra del inventario");
 
-            inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView, ref savedSlotPositons);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
-            inputSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
-            outputSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[1].GridPosition);
-            fuelSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[2].GridPosition);
+            inputSlot.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]).GridPosition);
+            outputSlot.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]).GridPosition);
+            fuelSlot.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]).GridPosition);
 
-            Debug.Log("extra slots del horno 1: " + inventoryController.GetExtraSlotsFromInventory()[0]);
-            Debug.Log("extra slots del horno 2: " + inventoryController.GetExtraSlotsFromInventory()[1]);
-            Debug.Log("extra slots del horno 3: " + inventoryController.GetExtraSlotsFromInventory()[2]);
+            Debug.Log("extra slots del horno 1: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]));
+            Debug.Log("extra slots del horno 2: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]));
+            Debug.Log("extra slots del horno 3: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]));
 
             extraPositionsCreated = true;
         }
@@ -211,7 +252,7 @@ public class UIFurnace : MonoBehaviour
                 inventoryController.Model.GetSlot(outputSlot.GridPosition) == null ||
                 inventoryController.Model.GetSlot(fuelSlot.GridPosition) == null)
                 return;
- 
+
 
             if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0 ||
                 inventoryController.Model.GetSlot(outputSlot.GridPosition).StackOfItems.Count > 0 ||
@@ -219,8 +260,6 @@ public class UIFurnace : MonoBehaviour
                 return;
 
             Debug.Log("Limpiado de posiciones extra del inventario");
-
-            inventoryController.ClearExtraSlotsInventory();
 
             inputSlot.SetSlotGridPosition(invalidPosition);
             outputSlot.SetSlotGridPosition(invalidPosition);

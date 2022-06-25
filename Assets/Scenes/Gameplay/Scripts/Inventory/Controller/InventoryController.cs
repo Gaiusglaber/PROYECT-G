@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +61,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             if (!inventoryView.IsOpen)
             {
-                stackTake = false;
+                stackTake = true;
 
                 inventoryView.OnChangeInteractionType(stackTake);
             }
@@ -71,9 +72,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             return inventoryModel.ExtraGridSlots;
         }
 
-        public void ExtendInventoryWithExtraSlots(int fromX, int toX, int fromY, int toY, List<SlotInventoryView> extraSlotsView)
+        public SlotInventoryModel GetSlotFromGridPosition(Vector2Int gridPosition)
         {
-            inventoryModel.SetExtraSlots(fromX, toX, fromY, toY);
+            return inventoryModel.ExtraGridSlots.Find(t => t.GridPosition == gridPosition);
+        }
+
+        public void ExtendInventoryWithExtraSlots(int fromX, int toX, int fromY, int toY, List<SlotInventoryView> extraSlotsView, ref List<Vector2Int> positionsIntegrated)
+        {
+            inventoryModel.SetExtraSlots(fromX, toX, fromY, toY, ref positionsIntegrated);
 
             inventoryView.SetExtraViewSlots(extraSlotsView);
         }
@@ -124,15 +130,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
                 }
             }
 
-            if (!inventoryView.IsOpen)
-                return;
-
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                stackTake = !stackTake;
+                stackTake = false;
 
                 inventoryView.OnChangeInteractionType(stackTake);
+
+                return;
             }
+
+            stackTake = true;
+            inventoryView.OnChangeInteractionType(stackTake);
         }
 
         public void GenerateItems(string idItem, int amount, Vector2Int gridPosition = default)

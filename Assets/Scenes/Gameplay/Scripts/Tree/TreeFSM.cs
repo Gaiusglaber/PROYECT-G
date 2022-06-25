@@ -97,8 +97,12 @@ public class TreeFSM : MonoBehaviour, IHittable
         else
         {
             amountLogs--;
-            WorldItem wood = Instantiate(woodPrefab, transform.position, Quaternion.identity);
-            wood.SetOnItemTaked(InventoryController.GenerateItem);
+
+            for (int i = 0; i < 3; i++)
+            {
+                WorldItem wood = Instantiate(woodPrefab, transform.position, Quaternion.identity);
+                wood.SetOnItemTaked(InventoryController.GenerateItem);
+            }
         }
     }
 }

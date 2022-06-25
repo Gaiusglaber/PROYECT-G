@@ -7,11 +7,13 @@ using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.UI;
 
+using TMPro;
+
 public class Separator : MonoBehaviour
 {
     [SerializeField] private UISeparator uiSeparator;
     [SerializeField] private EnergyHandler energyHandler = null;
-    [SerializeField] private GameObject feedbackSeparator = null;
+    [SerializeField] private TMP_Text feedbackSeparator = null;
     private float timerProcess;
     private float timeToProcessObject = 0;
     private float timeToProcessObject2 = 0;
@@ -38,6 +40,8 @@ public class Separator : MonoBehaviour
 
         isProcessing = false;
         timerProcess = 0.0f;
+
+        feedbackSeparator.gameObject.SetActive(false);
 
         isEnabled = false;
     }
@@ -96,6 +100,8 @@ public class Separator : MonoBehaviour
             {
                 feedbackSeparator.gameObject.SetActive(true);
             }
+
+            feedbackSeparator.text = isEnabled ? "<color=yellow><size=.3>E</size></color> to Interact" : "You need to <color=red><size=.3>unlock</size></color> this";
         }
     }
 

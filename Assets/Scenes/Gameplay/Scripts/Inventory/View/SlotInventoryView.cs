@@ -21,6 +21,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private TextMeshProUGUI amountOutStack = null;
         [SerializeField] private TextMeshProUGUI debugGridPos = null;
         [SerializeField] private StackSlotHandler stackHandler = null;
+        [SerializeField] private bool blockItemsInside = false;
         [SerializeField] private LayerMask checkOnly = default;
         #endregion
 
@@ -247,6 +248,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void AddItemToSlot(ItemView itemToAttach)
         {
+            if(blockItemsInside)
+            {
+                itemToAttach.SwitchStateItem(true);
+            }
+
             if(objectsAttach.Count > 1)
             {
                 if (itemToAttach.ItemType == objectsAttach[0].ItemType)

@@ -1343,8 +1343,6 @@ MonoBehaviour:
   lowEneryThreshhold: 100
   energyTxt: {fileID: 1176769696}
   fillImage: {fileID: 27376962}
-  cantEnergyImg: {fileID: 0}
-  maxEnergyImg: {fileID: 0}
   lerperSpeed: 2
   maxEnergy: 2000
   initialEnergy: 1000

@@ -26,6 +26,8 @@ public class UISeparator : MonoBehaviour
 
     private List<SlotInventoryView> thisUiSlotsView = new List<SlotInventoryView>();
 
+    private List<Vector2Int> savedSlotPositons = new List<Vector2Int>();
+
     private Vector2Int invalidPosition = new Vector2Int(-1, -1);
 
     public Action<ItemModel> OnProcessMaterial;
@@ -51,9 +53,9 @@ public class UISeparator : MonoBehaviour
 
     void Update()
     {
-        inputSlot.UpdateViewSlot(inventoryController.StackTake);
-        outputSlot1.UpdateViewSlot(inventoryController.StackTake);
-        outputSlot2.UpdateViewSlot(inventoryController.StackTake);
+        inputSlot.SetOnInteractionInventoryChange(inventoryController.StackTake);
+        outputSlot1.SetOnInteractionInventoryChange(inventoryController.StackTake);
+        outputSlot2.SetOnInteractionInventoryChange(inventoryController.StackTake);
 
         //ProcessMaterials();
     }
@@ -140,20 +142,20 @@ public class UISeparator : MonoBehaviour
             //tendriamos que cambiarlo u encontrar algo mas optimo. Btw por ahora me sirve. :)
             Debug.Log("Creado de posiciones extra del inventario");
 
-            inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView, ref savedSlotPositons);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
-            inputSlot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
-            outputSlot1.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[1].GridPosition);
-            outputSlot2.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[2].GridPosition);
+            inputSlot.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]).GridPosition);
+            outputSlot1.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]).GridPosition);
+            outputSlot2.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]).GridPosition);
 
-            Debug.Log("extra slots del separador 1: " + inventoryController.GetExtraSlotsFromInventory()[0]);
-            Debug.Log("extra slots del separador 2: " + inventoryController.GetExtraSlotsFromInventory()[1]);
-            Debug.Log("extra slots del separador 3: " + inventoryController.GetExtraSlotsFromInventory()[2]);
+            Debug.Log("extra slots del separador 1: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]));
+            Debug.Log("extra slots del separador 2: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]));
+            Debug.Log("extra slots del separador 3: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]));
 
 
             extraPositionsCreated = true;
         }
-        else
+        /*else
         {
             if (inventoryController.Model.GetSlot(inputSlot.GridPosition) == null ||
                 inventoryController.Model.GetSlot(outputSlot1.GridPosition) == null ||
@@ -168,14 +170,12 @@ public class UISeparator : MonoBehaviour
 
             Debug.Log("Limpiado de posiciones extra del inventario");
 
-            inventoryController.ClearExtraSlotsInventory();
-
             inputSlot.SetSlotGridPosition(invalidPosition);
             outputSlot1.SetSlotGridPosition(invalidPosition);
             outputSlot2.SetSlotGridPosition(invalidPosition);
 
             extraPositionsCreated = false;
-        }
+        }*/
     }
 
 }

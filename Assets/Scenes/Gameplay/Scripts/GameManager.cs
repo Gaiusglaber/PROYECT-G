@@ -39,7 +39,7 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.Init();
             cameraHandler.Init(player);
-            //mouseController.Init();
+            mouseController.Init();
 
             for (int i = 0; i < testItems.Count; i++)
             {
@@ -48,52 +48,13 @@ namespace ProjectG.Gameplay.Managers
                     testItems[i].SetOnItemTaked(inventory.GenerateItem);
                 }
             }
-
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-            inventory.GenerateItem("corn_syrup");
-
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-            inventory.GenerateItem("Salvia");
-
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
-            inventory.GenerateItem("table");
         }
 
         private void Start()
         {
             Time.timeScale = 1;
-            EnergyHandler.Withoutenergy += StopGame;
-            UIUpgradeTable.TradeSuccessfully += StopGame;
+            //EnergyHandler.Withoutenergy += StopGame;
+            //UIUpgradeTable.TradeSuccessfully += StopGame;
         }
 
         private void Update()
@@ -103,8 +64,8 @@ namespace ProjectG.Gameplay.Managers
 
         private void OnDisable()
         {
-            EnergyHandler.Withoutenergy -= StopGame;
-            UIUpgradeTable.TradeSuccessfully -= StopGame;
+            //EnergyHandler.Withoutenergy -= StopGame;
+            //UIUpgradeTable.TradeSuccessfully -= StopGame;
         }
 
         #endregion

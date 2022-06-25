@@ -74,7 +74,7 @@ namespace ProyectG.Gameplay.UI
 
         public void OnClickRetry(string scene)
         {
-            SceneManager.LoadScene(scene);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         #endregion

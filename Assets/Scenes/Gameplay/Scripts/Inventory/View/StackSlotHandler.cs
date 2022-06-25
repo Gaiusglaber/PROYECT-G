@@ -36,6 +36,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private bool isAttachedToSlot = false;
         private bool onRestoreDrag = false;
         private bool onSwipingStack = false;
+        private bool dragDisable = false;
 
         private (Vector2,Vector2Int,Transform) slotPositionAttached = default;
         private (Vector2,Vector2Int,Transform) lastslotPositionAttached = default;
@@ -96,6 +97,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if (stackedItems.Count < 1)
                 return;
 
+            if (dragDisable)
+                return;
+
             isDragging = true;
 
             prepareToAttachOnSlot = false;
@@ -117,6 +121,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public void OnDrag(PointerEventData eventData)
         {
             if (!Dragged || gameObject == null || stackedItems.Count < 1)
+                return;
+
+            if (dragDisable)
                 return;
 
             SetDraggedPosition(eventData);
@@ -184,6 +191,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public void UpdateStackAmount()
         {
             stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
+        }
+
+        public void SwitchStateItem(bool state)
+        {
+            dragDisable = state;
         }
         #endregion
 

@@ -31,7 +31,7 @@ namespace ProyectG.Gameplay.Controllers
         {
             mainCamera = Camera.main;
 
-            Cursor.visible = hideRealCursor;
+            //Cursor.visible = hideRealCursor;
         }
         #endregion
     }

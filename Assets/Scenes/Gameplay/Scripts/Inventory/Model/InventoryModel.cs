@@ -77,7 +77,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         /// <param name="toX"></param>
         /// <param name="fromY"></param>
         /// <param name="toY"></param>
-        public void SetExtraSlots(int fromX, int toX, int fromY, int toY)
+        public void SetExtraSlots(int fromX, int toX, int fromY, int toY, ref List<Vector2Int> positionsAdded)
         {
             for (int x = fromX; x < toX; x++)
             {
@@ -91,6 +91,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
                     if(!extraSlots.Contains(newSlot))
                     {
+                        if(!positionsAdded.Contains(newVirtualPosition))
+                        {
+                            positionsAdded.Add(newVirtualPosition);
+                        }
                         extraSlots.Add(newSlot);
                     }
                 }
@@ -240,8 +244,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
             Debug.Log("SWITCHED STACK OF ITEMS FROM {" + fromSlot + "} TO {" + toSlot + "}");
 
+            if (GetSlot(fromSlot) == null || GetSlot(toSlot) == null)
+                return;
+
             List<ItemModel> allFromItems = new List<ItemModel>();
             List<ItemModel> allToItems = new List<ItemModel>();
+
             allFromItems.AddRange(GetSlot(fromSlot).StackOfItems);
             allToItems.AddRange(GetSlot(toSlot).StackOfItems);
 

@@ -25,6 +25,7 @@ public class UIUpgradeTable : MonoBehaviour
 
     private bool extraPositionsCreated = false;
     private bool unlockedSeparator = false;
+    private bool win = false;
 
     private List<SlotInventoryView> thisUiSlotsView = new List<SlotInventoryView>();
 
@@ -32,6 +33,8 @@ public class UIUpgradeTable : MonoBehaviour
     public InventoryController InverntoryController { get { return inventoryController; } }
 
     public Action<bool> UnlockSeparator;
+
+    private List<Vector2Int> savedSlotPositons = new List<Vector2Int>();
 
     static public Action<bool> TradeSuccessfully;
 
@@ -46,15 +49,16 @@ public class UIUpgradeTable : MonoBehaviour
         thisUiSlotsView.Add(slotTrade2);
 
         extraPositionsCreated = false;
+        win = false;
 
         isSeparatorUnlockedFeedBack.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        slot.UpdateViewSlot(inventoryController.StackTake);
-        slotTrade1.UpdateViewSlot(inventoryController.StackTake);
-        slotTrade2.UpdateViewSlot(inventoryController.StackTake);
+        slot.SetOnInteractionInventoryChange(inventoryController.StackTake);
+        slotTrade1.SetOnInteractionInventoryChange(inventoryController.StackTake);
+        slotTrade2.SetOnInteractionInventoryChange(inventoryController.StackTake);
 
         CheckItemForUpgrade();
         CheckIfUnlockedSeparator();
@@ -70,13 +74,16 @@ public class UIUpgradeTable : MonoBehaviour
 
     private void CheckItemForUpgrade()
     {
+        if (win)
+            return;
+
         if (inventoryController.Model.GetSlot(slot.GridPosition) == null)
             return;
 
-        if (inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count >= 10 && inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0].itemId == "corn_syrup")
+        if (inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count >= 9 && inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0].itemId == "corn_syrup")
         {
             //ItemModel cornSyrup = inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0];
-
+            int startAmount = inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count;
             Debug.Log("Desbloquear separador");
 
             //Llamar al evento de desbloqueo del separador
@@ -86,14 +93,26 @@ public class UIUpgradeTable : MonoBehaviour
 
             //Hago esto para evitar que la extension de slots se "pise" con la del separador
             //Ya que si no lo hago, al abrir el separador comienza el proceso y gasta energia.
-            inventoryController.Model.GetSlot(slot.GridPosition).RemoveItems();
+            inventoryController.Model.GetSlot(slot.GridPosition).RemoveItems(10, false, true);
+
+            if(inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems.Count > 1)
+            {
+                int difference = startAmount - 10;
+
+                for (int i = 0; i < difference; i++)
+                {
+                    inventoryController.GenerateItem(inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0].itemId);
+                }
+
+                inventoryController.Model.GetSlot(slot.GridPosition).RemoveItems();
+            }
         }
 
         if (inventoryController.Model.GetSlot(slotTrade1.GridPosition) == null && inventoryController.Model.GetSlot(slotTrade2.GridPosition) == null)
             return;
 
-        if (inventoryController.Model.GetSlot(slotTrade1.GridPosition).StackOfItems.Count >= 10 && inventoryController.Model.GetSlot(slotTrade1.GridPosition).StackOfItems[0].itemId == "Salvia" &&
-            inventoryController.Model.GetSlot(slotTrade2.GridPosition).StackOfItems.Count >= 10 && inventoryController.Model.GetSlot(slotTrade2.GridPosition).StackOfItems[0].itemId == "table")
+        if (inventoryController.Model.GetSlot(slotTrade1.GridPosition).StackOfItems.Count >= 9 && inventoryController.Model.GetSlot(slotTrade1.GridPosition).StackOfItems[0].itemId == "Salvia" &&
+            inventoryController.Model.GetSlot(slotTrade2.GridPosition).StackOfItems.Count >= 9 && inventoryController.Model.GetSlot(slotTrade2.GridPosition).StackOfItems[0].itemId == "table")
         {
             //ItemModel cornSyrup = inventoryController.Model.GetSlot(slot.GridPosition).StackOfItems[0];
 
@@ -111,6 +130,12 @@ public class UIUpgradeTable : MonoBehaviour
             //Hago esto para evitar que la extension de slots se "pise" con la del separador
             //Ya que si no lo hago, al abrir el separador comienza el proceso y gasta energia.
             inventoryController.Model.GetSlot(slot.GridPosition).RemoveItems();
+
+            if(!win)
+            {
+                inventoryController.ToggleInventory();
+                win = true;
+            }
         }
 
     }
@@ -140,19 +165,19 @@ public class UIUpgradeTable : MonoBehaviour
             Debug.Log("Creado de posiciones extra del inventario");
 
             //inventoryController.ExtendInventoryWithExtraSlots(80, 81, 80, 83, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
-            inventoryController.ExtendInventoryWithExtraSlots(90, 91, 90, 93, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
+            inventoryController.ExtendInventoryWithExtraSlots(90, 91, 90, 93, thisUiSlotsView, ref savedSlotPositons);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
             //inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
             //inventoryController.ExtendInventoryWithExtraSlots(110, 111, 110, 113, thisUiSlotsView);    //Puse 80/83 como para que sean slots imposibles de usar realmente
 
 
-            slot.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[0].GridPosition);
-            slotTrade1.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[1].GridPosition);
-            slotTrade2.SetSlotGridPosition(inventoryController.GetExtraSlotsFromInventory()[2].GridPosition);
+            slot.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]).GridPosition);
+            slotTrade1.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]).GridPosition);
+            slotTrade2.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]).GridPosition);
 
             extraPositionsCreated = true;
         }
-        else
+        /*else
         {
             if (inventoryController.Model.GetSlot(slot.GridPosition) == null)
                 return;
@@ -175,13 +200,11 @@ public class UIUpgradeTable : MonoBehaviour
 
             Debug.Log("Limpiado de posiciones extra del inventario");
 
-            inventoryController.ClearExtraSlotsInventory();
-
             slot.SetSlotGridPosition(invalidPosition);
             slotTrade1.SetSlotGridPosition(invalidPosition);
             slotTrade2.SetSlotGridPosition(invalidPosition);
 
             extraPositionsCreated = false;
-        }
+        }*/
     }
 }
