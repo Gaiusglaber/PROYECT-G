@@ -130,6 +130,7 @@ MonoBehaviour:
   timeFirstStage: 5
   timeSecondStage: 10
   timeThirdStage: 15
+  heightOffset: 1.5
   cropPrefab: {fileID: 7625708649754275758, guid: d4c17706a8b9a994eb44edeb3ce6414b, type: 3}
   spriteCycle:
   - {fileID: -8036940194713687359, guid: 57206283b8a2fc046a0ce273023aecda, type: 3}

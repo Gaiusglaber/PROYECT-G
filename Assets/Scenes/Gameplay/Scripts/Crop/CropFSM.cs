@@ -7,24 +7,34 @@ using ProyectG.Gameplay.Interfaces;
 
 public class CropFSM : MonoBehaviour, IHittable
 {
-    [SerializeField] private float timeFirstStage;
-    [SerializeField] private float timeSecondStage;
-    [SerializeField] private float timeThirdStage;
-    [SerializeField] private WorldItem cropPrefab;
-    [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
-
-    private InventoryController InventoryController;
-    private SpriteRenderer spriteRenderer;
-    private int amountCrops = 0;
+    #region ENUMS
     private enum CropState
     {
         first,
         second,
         third
     };
+    #endregion
+
+    #region EXPOSED_FIELDS
+    [SerializeField] private float timeFirstStage;
+    [SerializeField] private float timeSecondStage;
+    [SerializeField] private float timeThirdStage;
+    [SerializeField] private float heightOffset = 0;
+    [SerializeField] private WorldItem cropPrefab;
+    [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
+    #endregion
+
+    #region PRIVATE_FIELDS
+    private InventoryController InventoryController;
+    private SpriteRenderer spriteRenderer;
+    private int amountCrops = 0;
     private CropState state;
     private float timerCropFSM;
     private bool isStarted;
+    #endregion
+
+    #region UNITY_CALLS
     void Start()
     {
         timerCropFSM = 0.0f;
@@ -46,6 +56,9 @@ public class CropFSM : MonoBehaviour, IHittable
         }
         StartCylce();
     }
+    #endregion
+
+    #region PRIVATE_METHODS
 
     private void SetCycle(bool state)
     {
@@ -86,7 +99,9 @@ public class CropFSM : MonoBehaviour, IHittable
         state = stage;
         spriteRenderer.sprite = spriteCycle[(int)stage];
     }
+    #endregion
 
+    #region INTERFACES
     public void OnHit()
     {
         if (state != CropState.third)
@@ -101,8 +116,9 @@ public class CropFSM : MonoBehaviour, IHittable
         }else
         {
             amountCrops--;
-            WorldItem crop = Instantiate(cropPrefab, transform.position, Quaternion.identity);
+            WorldItem crop = Instantiate(cropPrefab, transform.position + (Vector3.up * heightOffset), Quaternion.identity);
             crop.SetOnItemTaked(InventoryController.GenerateItem);
         }
     }
+    #endregion
 }
