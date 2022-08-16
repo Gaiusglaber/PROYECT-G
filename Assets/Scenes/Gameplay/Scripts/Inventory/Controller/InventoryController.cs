@@ -47,24 +47,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             initialdof = dof.focusDistance.value;
 
             InitilizeMVC();
-
-            Vector2 initialPos = new Vector2(viewParent.position.x, viewParent.position.y);
-
-            //Main inits
-            inventoryModel.Init(bagSlots, slotsSize); //data del inventario
-            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
-
-            //Set actions
-            inventoryView.SetOnHandleInventory(BlendBackground);
-            inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
-            inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
-
-            if (!inventoryView.IsOpen)
-            {
-                stackTake = true;
-
-                inventoryView.OnChangeInteractionType(stackTake);
-            }
         }
 
         public List<SlotInventoryModel> GetExtraSlotsFromInventory()
@@ -211,6 +193,24 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         private void InitilizeMVC()
         {
             inventoryModel = new InventoryModel();
+
+            Vector2 initialPos = new Vector2(viewParent.position.x, viewParent.position.y);
+
+            //Main inits
+            inventoryModel.Init(bagSlots, slotsSize); //data del inventario
+            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
+
+            //Set actions
+            inventoryView.SetOnHandleInventory(BlendBackground);
+            inventoryModel.SetOnSomeItemAdded(inventoryView.UpdateInventoryView);
+            inventoryModel.SetOnGetItemModelFromDatabae(GetItemModelFromId);
+
+            if (!inventoryView.IsOpen)
+            {
+                stackTake = true;
+
+                inventoryView.OnChangeInteractionType(stackTake);
+            }
         }
 
         private void BlendBackground(bool state)

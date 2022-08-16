@@ -16,7 +16,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
         private Vector2 slotSize = default;
 
-        private SlotInventoryModel[,] gridSlots = null;
+        private SlotInventoryModel[,] inventorySlots = null;
 
         private List<SlotInventoryModel> extraSlots = new List<SlotInventoryModel>();
 
@@ -31,7 +31,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         public float OffsetSlots => offsetSlots;
         public int GridRows => maxRowsInventory;
         public int GridCols => maxColsInventory;
-        public SlotInventoryModel[,] GridSlots { get { return gridSlots; } }
+        public SlotInventoryModel[,] InventorySlots { get { return inventorySlots; } }
         public List<SlotInventoryModel> ExtraGridSlots { get { return extraSlots; } }
         #endregion
 
@@ -45,19 +45,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
             this.slotSize = slotSize;
 
-            gridSlots = new SlotInventoryModel[tamGridSlots.x, tamGridSlots.y];
+            inventorySlots = new SlotInventoryModel[tamGridSlots.x, tamGridSlots.y];
 
             for (int x = 0; x < maxRowsInventory; x++)
             {
                 for (int y = 0; y < maxColsInventory; y++)
                 {
-                    gridSlots[x, y] = new SlotInventoryModel();
+                    inventorySlots[x, y] = new SlotInventoryModel();
 
                     Vector2 slotPosition = new Vector2((x * (slotSize.x) + OffsetSlots), (y * (slotSize.y) + OffsetSlots));
                     Vector2 nextSlotPosition = new Vector2(slotPosition.x + (slotSize.x + OffsetSlots), slotPosition.y + (slotSize.y + OffsetSlots));
 
-                    gridSlots[x, y].SetupSlot(new Vector2Int(x, y), slotPosition, nextSlotPosition, AtInventoryChange);
-                    gridSlots[x, y].SetOnGetModelItem(GetItemModelFromID);
+                    inventorySlots[x, y].SetupSlot(new Vector2Int(x, y), slotPosition, nextSlotPosition, AtInventoryChange);
+                    inventorySlots[x, y].SetOnGetModelItem(GetItemModelFromID);
                 }
             }
 
@@ -127,7 +127,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         {
             if(IsValidPosition(gridPosition))
             {
-                return gridSlots[gridPosition.x, gridPosition.y];
+                return inventorySlots[gridPosition.x, gridPosition.y];
             }
 
             if(IsValidPositionInExtraSlots(gridPosition, out SlotInventoryModel thatSlot))

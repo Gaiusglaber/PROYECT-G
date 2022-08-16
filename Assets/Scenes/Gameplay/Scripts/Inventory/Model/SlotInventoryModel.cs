@@ -120,6 +120,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             {
                 OnItemAttached?.Invoke();
             }
+
+            if(stackOfItemsInSlot.Count < 1)
+            {
+                isEmpty = true;
+            }
         }
 
         public void PlaceOneItem(ItemModel itemToAttach)
