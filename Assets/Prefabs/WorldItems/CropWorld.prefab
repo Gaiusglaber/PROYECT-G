@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteAttach: {fileID: 7625708650300059409}
   data: {fileID: 11400000, guid: d67cb12c9b8b2024fa20d1670c6503fe, type: 2}
-  fallSpeed: 1
+  fallSpeed: 0.25
 --- !u!61 &7625708649754275753
 BoxCollider2D:
   m_ObjectHideFlags: 0
