@@ -5,8 +5,10 @@ using UnityEngine;
 
 namespace ProyectG.Gameplay.RoomSystem.Room
 {
-    public class RoomModel
+    [CreateAssetMenu(fileName = "RoomModel", menuName = "Rooms/RoomModel", order = 0)]
+    public class RoomModel : ScriptableObject
     {
+        public string id = string.Empty;
         public int cost = 0;
         public bool isBuyed = false;
         public Vector3 position = Vector3.zero;

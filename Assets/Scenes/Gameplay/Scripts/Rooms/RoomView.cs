@@ -10,7 +10,18 @@ namespace ProyectG.Gameplay.RoomSystem.View
     {
         public List<ResourceView> resourcesNeeded = new List<ResourceView>();
         public TMP_Text energyCost = null;
-        public RoomModel dataAttach = null;
+        public RoomModel roomModel = null;
         public Vector3 positionInWorld = Vector3.zero;
+
+        public void Init(RoomModel roomModel, List<(int,Sprite)> resourceData)
+        {
+            this.roomModel = roomModel;
+
+            for (int i = 0; i < resourcesNeeded.Count; i++)
+            {
+                resourcesNeeded[i].Init(resourceData[i].Item1, resourceData[i].Item2);
+            }
+        }
+        
     }
 }
