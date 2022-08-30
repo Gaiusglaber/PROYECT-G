@@ -1,9 +1,10 @@
+using ProyectG.Gameplay.RoomSystem.Room;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace ProyectG.Gameplay.Room
+namespace ProyectG.Gameplay.RoomSystem.View
 {
     public class RoomView : MonoBehaviour
     {

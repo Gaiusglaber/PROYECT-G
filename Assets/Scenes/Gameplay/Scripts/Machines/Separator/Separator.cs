@@ -8,6 +8,7 @@ using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.UI;
 
 using TMPro;
+using ProyectG.Gameplay.Objects;
 
 public class Separator : Machine
 {

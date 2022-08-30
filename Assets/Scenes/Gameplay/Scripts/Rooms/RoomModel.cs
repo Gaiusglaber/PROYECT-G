@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProyectG.Gameplay.Room
+namespace ProyectG.Gameplay.RoomSystem.Room
 {
     public class RoomModel
     {
