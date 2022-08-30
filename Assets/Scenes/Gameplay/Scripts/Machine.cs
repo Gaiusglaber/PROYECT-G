@@ -18,13 +18,6 @@ namespace ProyectG.Gameplay.Objects{
         #endregion
 
         #region UNITY_CALLS
-        private void Update()
-        {
-            /*if (Input.GetKeyDown(KeyCode.E))
-            {
-                OnInteract?.Invoke();
-            }*/
-        }
         #endregion
 
         #region PUBLIC_METHODS

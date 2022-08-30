@@ -9,7 +9,7 @@ using ProyectG.Gameplay.UI;
 
 using TMPro;
 
-public class Separator : MonoBehaviour
+public class Separator : Machine
 {
     [SerializeField] private UISeparator uiSeparator;
     [SerializeField] private EnergyHandler energyHandler = null;

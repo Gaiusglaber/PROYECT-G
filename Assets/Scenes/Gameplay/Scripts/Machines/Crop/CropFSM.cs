@@ -5,7 +5,7 @@ using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Interfaces;
 
-public class CropFSM : MonoBehaviour, IHittable
+public class CropFSM : Machine, IHittable
 {
     #region ENUMS
     private enum CropState

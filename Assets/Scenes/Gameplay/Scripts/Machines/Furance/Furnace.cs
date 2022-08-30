@@ -6,8 +6,9 @@ using UnityEngine;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.UI;
+using ProyectG.Gameplay.Objects;
 
-public class Furnace : MonoBehaviour
+public class Furnace : Machine
 {
     [SerializeField] private UIFurnace uiFurnace;
     [SerializeField] private EnergyHandler energyHandler = null;
