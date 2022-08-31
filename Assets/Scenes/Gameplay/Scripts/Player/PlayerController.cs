@@ -410,6 +410,11 @@ namespace ProyectG.Player.Controller
             deAcceleration = lowBatteryMode ? 1 : initialDeAceleration;
             movementClamp = lowBatteryMode ? 1 : initialMovementClamp;
         }
+
+        public void ToggleController(bool state)
+        {
+            controllerEnable = state;
+        }
         #endregion
 
         #region CORUTINES

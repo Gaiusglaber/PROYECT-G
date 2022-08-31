@@ -11,7 +11,8 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public string id = string.Empty;
         public int cost = 0;
         public bool isBuyed = false;
-        public Vector3 position = Vector3.zero;
+        public Vector3 worldPosition = Vector3.zero;
+        public Vector3 viewPosition = Vector3.zero;
         public List<Machine> machines = new List<Machine>();
     }
 }
