@@ -13,11 +13,18 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(int amount, Sprite resourceImg)
+        public void Init(ResourceModel resource)
         {
-            amountResources.text = amount.ToString();
-            imageResource.sprite = resourceImg;
+            amountResources.text = resource.amount.ToString();
+            imageResource.sprite = resource.resourceImage;
         }
         #endregion
+    }
+
+    [System.Serializable]
+    public class ResourceModel
+    {
+        public int amount;
+        public Sprite resourceImage;
     }
 }

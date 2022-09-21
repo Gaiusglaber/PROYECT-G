@@ -1,33 +1,40 @@
-using ProyectG.Gameplay.RoomSystem.Room;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+
 using UnityEngine;
+
+using ProyectG.Gameplay.RoomSystem.Room;
+
+using TMPro;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
     public class RoomView : MonoBehaviour
     {
-        public List<ResourceView> resourcesNeeded = new List<ResourceView>();
+        #region EXPOSED_FIELDS
         public TMP_Text roomName = null;
-        public TMP_Text energyCost = null;
         public RoomModel roomModel = null;
         public Vector3 positionInWorld = Vector3.zero;
+        #endregion
 
-        public void Init(RoomModel roomModel, List<(int,Sprite)> resourceData = null)
+        #region PUBLIC_METHODS
+        public void Init(RoomModel roomModel = null)
         {
             this.roomModel = roomModel;
+            roomName.text = "Building: EMPTY";
 
-            roomName.text = "Room " + roomModel.id;
-
-            if (resourceData == null)
-                return;
-
-            for (int i = 0; i < resourcesNeeded.Count; i++)
-            {
-                resourcesNeeded[i].Init(resourceData[i].Item1, resourceData[i].Item2);
-            }
+            roomName.gameObject.SetActive(false);
         }
-        
+
+        public void BuildInRoom(BuildModel buildModel)
+        {
+            if(roomModel == null)
+            {
+                Debug.Log("The room model is NULL");
+                return;
+            }
+
+            roomModel.SetBuild(buildModel);
+        }
+        #endregion
     }
 }

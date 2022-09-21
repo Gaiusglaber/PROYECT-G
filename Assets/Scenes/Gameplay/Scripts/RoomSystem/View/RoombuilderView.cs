@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+
 using ProyectG.Gameplay.RoomSystem.Room;
 
 namespace ProyectG.Gameplay.RoomSystem.View
@@ -114,6 +115,9 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     idSelectedRoom = selectedRoom.roomModel.id;
 
                     onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.worldPosition);
+
+                    
+
                     return true;
                 }
             }

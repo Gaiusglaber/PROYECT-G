@@ -74,6 +74,8 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             roombuilderView.OnSelectedRoom += (position) =>
             {
                 cameraHandler.MoveCamera(position);
+
+                previewRoom.SetPreviewRoom(roombuilderView.GetSelectedRoom());
             };
         }
         #endregion
