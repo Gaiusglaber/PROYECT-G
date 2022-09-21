@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using ProyectG.Gameplay.Objects.Inventory.Data;
+
 using TMPro;
 
 namespace ProyectG.Gameplay.RoomSystem.View
@@ -16,7 +18,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         public void Init(ResourceModel resource)
         {
             amountResources.text = resource.amount.ToString();
-            imageResource.sprite = resource.resourceImage;
+            imageResource.sprite = resource.item.itemSprite;
         }
         #endregion
     }
@@ -24,7 +26,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
     [System.Serializable]
     public class ResourceModel
     {
+        public string name;
         public int amount;
-        public Sprite resourceImage;
+        public ItemModel item;
     }
 }

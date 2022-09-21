@@ -6,6 +6,7 @@ using UnityEngine;
 using ProyectG.Player.Controller;
 using ProyectG.Gameplay.Controllers;
 using ProyectG.Gameplay.RoomSystem.View;
+using ProyectG.Gameplay.RoomSystem.Room;
 
 namespace ProyectG.Gameplay.RoomSystem.Handler
 {
@@ -15,6 +16,8 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
         [SerializeField] private GameObject feedbackView = null;
         [SerializeField] private RoombuilderView roombuilderView = null;
         [SerializeField] private PreviewRoomView previewRoom = null;
+
+        [SerializeField] private List<BuildModel> allBuildingAviables = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -65,6 +68,8 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
             roombuilderView.Init();
 
+            previewRoom.Init(camera.MainCamera, allBuildingAviables);
+
             roombuilderView.OnViewToggle += (viewActive) => 
             {
                 cameraHandler.ToggleAttachToPlayer(!viewActive);
@@ -76,6 +81,11 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
                 cameraHandler.MoveCamera(position);
 
                 previewRoom.SetPreviewRoom(roombuilderView.GetSelectedRoom());
+            };
+
+            roombuilderView.OnUnselectRoom += ()=>
+            {
+                previewRoom.SetPreviewRoom(null);
             };
         }
         #endregion

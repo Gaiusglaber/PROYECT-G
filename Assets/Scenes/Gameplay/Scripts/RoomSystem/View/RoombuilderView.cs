@@ -28,11 +28,13 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #region PRIVATE_FIELDS
         private string idSelectedRoom = string.Empty;
         private Action<bool> onViewToggle = null;
+        private Action onUnselectRoom = null;
         private Action<Vector3> onSelectedRoom = null;
         private Dictionary<string, RoomView> rooms = new Dictionary<string, RoomView>();
         #endregion
 
         #region PROPERTIES
+        public Action OnUnselectRoom { get => onUnselectRoom; set => onUnselectRoom = value; }
         public Action<Vector3> OnSelectedRoom { get => onSelectedRoom; set => onSelectedRoom = value; }
         public Action<bool> OnViewToggle { get => onViewToggle; set => onViewToggle = value; }
         public bool IsActive { get { return holder.gameObject.activeSelf; } }
@@ -54,7 +56,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     Debug.Log("Not room selected");
                     idSelectedRoom = string.Empty;
-
+                    onUnselectRoom?.Invoke();
                 }
             }
 
@@ -115,8 +117,6 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     idSelectedRoom = selectedRoom.roomModel.id;
 
                     onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.worldPosition);
-
-                    
 
                     return true;
                 }

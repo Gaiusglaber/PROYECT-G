@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
 
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.RoomSystem.View;
-using System;
 
 namespace ProyectG.Gameplay.RoomSystem.Room
 {
@@ -54,6 +54,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
     public class BuildModel
     {
         public string buildingName;
+        public Sprite buildingImage;
         public List<Machine> machines = new List<Machine>();
         public List<ResourceModel> viewResources = new List<ResourceModel>();
         public Vector3 worldPosition = Vector3.zero;
