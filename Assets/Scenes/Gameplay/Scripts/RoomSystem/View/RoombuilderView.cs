@@ -14,8 +14,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #region EXPOSED_FIELDS
         [Header("MAIN REFERENCES")]
         [SerializeField] private GameObject holder = null;
-        [SerializeField] private Button exit = null ;
-        [SerializeField] private Button build = null ;
+        [SerializeField] private Button exit = null;
 
         [SerializeField] private EventSystem eventSystem = null;
         [SerializeField] private GraphicRaycaster graphicsRaycaster = null;
@@ -56,14 +55,9 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     Debug.Log("Not room selected");
                     idSelectedRoom = string.Empty;
-                    onUnselectRoom?.Invoke();
+                    //onUnselectRoom?.Invoke();
                 }
             }
-
-            if (build == null)
-                return;
-
-            build.enabled = idSelectedRoom != null;
         }
         #endregion
 
@@ -73,8 +67,6 @@ namespace ProyectG.Gameplay.RoomSystem.View
             ToggleView(false);
 
             exit.onClick.AddListener(() => { ToggleView(false); } );
-
-            build.enabled = idSelectedRoom != null;
 
             for (int i = 0; i < allRooms.Count; i++)
             {

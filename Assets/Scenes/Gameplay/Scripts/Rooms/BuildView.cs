@@ -14,6 +14,10 @@ namespace ProyectG.Gameplay.RoomSystem.View
         [SerializeField] private GameObject holderResources = null;
         [SerializeField] private Image buildingImage = null;
         [SerializeField] private TMP_Text buildingName = null;
+
+        [Header("Interactions")]
+        [SerializeField] private Button btnBuild = null;
+        [SerializeField] private Button btnDestroy = null;
         #endregion
 
         #region PRIVATE_FIELDS
