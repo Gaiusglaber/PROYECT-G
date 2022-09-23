@@ -14,12 +14,19 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         #region EXPOSED_FIELDS
         public string name = string.Empty;
         public string id = string.Empty;
-        public bool isEmpty = false;
+        public int maxRoomSpace;
         [TextArea(2,10)] public string roomInfo = string.Empty;
-        public Vector3 worldPosition = Vector3.zero;
+        public Vector3 initialWorldPosition = Vector3.zero;
         public Vector3 viewPosition = Vector3.zero;
 
         public BuildModel buildAttach;
+        #endregion
+
+        #region PRIVATE_FIELDS
+        private Action onRemoveBuild = null;
+        private Action<Vector2> onBuild = null;
+
+        private bool isEmpty = true;
         #endregion
 
         #region PROPERTIES
@@ -27,20 +34,28 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         #endregion
 
         #region PUBLIC_METHODS
+        public void Init(Action<Vector2> onBuild, Action onRemoveBuild)
+        {
+            this.onBuild = onBuild;
+            this.onRemoveBuild = onRemoveBuild;
+        }
+
         public RoomModel() { }
 
         public void SetBuild(BuildModel build)
         {
             buildAttach = build;
-            
+            onBuild?.Invoke(initialWorldPosition);
+
             isEmpty = false;
         }
 
-        public void RemoveBuild(Action onRemovedBuild)
+        public void RemoveBuild()
         {
             isEmpty = true;
 
-            onRemovedBuild?.Invoke();
+            buildAttach = null;
+            onRemoveBuild?.Invoke();
         }
 
         public bool IsEmpty()
@@ -57,6 +72,5 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public Sprite buildingImage;
         public List<Machine> machines = new List<Machine>();
         public List<ResourceModel> viewResources = new List<ResourceModel>();
-        public Vector3 worldPosition = Vector3.zero;
     }
 }

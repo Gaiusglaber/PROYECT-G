@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using ProyectG.Gameplay.RoomSystem.Room;
 
 using TMPro;
+using System;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -29,7 +30,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
 
         #region PUBLIC_METHODS
-        public void Init(Camera camera, List<BuildModel> aviableBuildings)
+        public void Init(Camera camera, List<BuildModel> aviableBuildings, Action<string, Action<bool>> onBuildPressed)
         {
             refCamera = camera;
 
@@ -39,7 +40,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     BuildView newResource = Instantiate(prefabBuildView, holderBuildings);
 
-                    newResource.InitBuildView(aviableBuildings[i].buildingImage, aviableBuildings[i].buildingName, aviableBuildings[i].viewResources);
+                    newResource.InitBuildView(aviableBuildings[i].buildingImage, aviableBuildings[i].buildingName, aviableBuildings[i].viewResources, onBuildPressed);
 
                     allBuildsAviables.Add(newResource);
                 }
@@ -71,6 +72,11 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 : "<color=red>The room is already ocuped.</color>";
 
             infoRoom.text = roomState + '\n' + '\n' + selectedRoom.roomModel.roomInfo;
+        }
+
+        public RoomView GetSelectedRoom()
+        {
+            return selectedRoom;
         }
 
         public void TogglePreview(bool state)

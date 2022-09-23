@@ -51,18 +51,12 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     Debug.Log("Selected room " + idSelectedRoom);
                 }
-                else
-                {
-                    Debug.Log("Not room selected");
-                    idSelectedRoom = string.Empty;
-                    //onUnselectRoom?.Invoke();
-                }
             }
         }
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init()
+        public void Init(Action<Vector2> onBuild, Action onRemoveBuild)
         {
             ToggleView(false);
 
@@ -75,6 +69,10 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     RoomView roomView = Instantiate(prefabRoomView, Vector3.zero, Quaternion.identity ,holder.transform);
                     roomView.transform.localPosition = allRooms[i].viewPosition;
                     roomView.Init(allRooms[i]);
+
+                    roomView.OnBuild += onBuild;
+                    roomView.OnRemoveBuild += onRemoveBuild;
+
                     rooms.Add(allRooms[i].id, roomView);
                 }
             }
@@ -108,7 +106,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     idSelectedRoom = selectedRoom.roomModel.id;
 
-                    onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.worldPosition);
+                    onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.initialWorldPosition);
 
                     return true;
                 }

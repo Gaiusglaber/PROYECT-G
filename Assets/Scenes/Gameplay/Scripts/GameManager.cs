@@ -56,7 +56,7 @@ namespace ProjectG.Gameplay.Managers
         {
             Time.timeScale = 1;
 
-            roomSystem.Init(player, cameraHandler);
+            roomSystem.Init(player, cameraHandler, inventory);
             //EnergyHandler.Withoutenergy += StopGame;
             //UIUpgradeTable.TradeSuccessfully += StopGame;
         }

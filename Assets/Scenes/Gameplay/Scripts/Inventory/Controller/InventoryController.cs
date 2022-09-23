@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Toolbox.Lerpers;
+using System;
 
 namespace ProyectG.Gameplay.Objects.Inventory.Controller
 {
@@ -142,6 +143,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         public void RemoveItems(Vector2Int gridPosition, int amount= 0, bool allItems = true)
         {
             inventoryModel.DeattachItemsFromSlot(gridPosition, amount, allItems);
+        }
+
+        public bool ConsumeItems(ItemModel item, int amount, Action onCosumeItemsFailed = null)
+        {
+            return inventoryModel.ConsumeItems(item, amount, onCosumeItemsFailed);
+        }
+
+        public bool HasEnoughOfThisItem(ItemModel item, int amount)
+        {
+            return inventoryModel.CheckForItemsInSlot(item, amount);
         }
 
         public ItemModel GetItemModelFromId(string idItem)

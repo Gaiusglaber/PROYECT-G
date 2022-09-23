@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using System;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -25,10 +26,27 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void InitBuildView(Sprite image, string name, List<ResourceModel> resourcesNeeded)
+        public void InitBuildView(Sprite image, string name, List<ResourceModel> resourcesNeeded, Action<string, Action<bool> > onBuildPressed)
         {
             buildingImage.sprite = image;
             buildingName.text = name;
+
+            btnBuild.onClick.AddListener(() => 
+            {
+                onBuildPressed?.Invoke(name, (opState) => 
+                {
+                    if(opState)
+                    {
+                        btnBuild.gameObject.SetActive(false);
+                        btnDestroy.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        btnBuild.gameObject.SetActive(true);
+                        btnDestroy.gameObject.SetActive(false);
+                    }
+                });
+            });
 
             ConfigureBuildResources(resourcesNeeded);
         }
