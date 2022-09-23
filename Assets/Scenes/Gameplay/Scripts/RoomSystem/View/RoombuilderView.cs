@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using ProyectG.Gameplay.RoomSystem.Room;
+
+using TMPro;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -15,6 +18,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         [Header("MAIN REFERENCES")]
         [SerializeField] private GameObject holder = null;
         [SerializeField] private Button exit = null;
+        [SerializeField] private TMP_Text txtFeedbackOperation = null;
 
         [SerializeField] private EventSystem eventSystem = null;
         [SerializeField] private GraphicRaycaster graphicsRaycaster = null;
@@ -56,7 +60,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Action<Vector2> onBuild, Action onRemoveBuild)
+        public void Init(Action onBuild, Action onRemoveBuild)
         {
             ToggleView(false);
 
@@ -88,6 +92,38 @@ namespace ProyectG.Gameplay.RoomSystem.View
         public RoomView GetSelectedRoom()
         {
             return rooms[idSelectedRoom];   
+        }
+
+        public void ShowFeedbackBuild(bool state)
+        {
+            if(state)
+            {
+                if (!txtFeedbackOperation.gameObject.activeSelf)
+                {
+                    txtFeedbackOperation.gameObject.SetActive(true);
+                }
+                txtFeedbackOperation.text = "<color=green>Build succed!</color>";
+            }
+            else
+            {
+                if (!txtFeedbackOperation.gameObject.activeSelf)
+                {
+                    txtFeedbackOperation.gameObject.SetActive(true);
+                }
+                txtFeedbackOperation.text = "<color=red>You don´t have enough resources!</color>";
+            }
+
+            IEnumerator DisableTxtAfterDelay()
+            {
+                yield return new WaitForSeconds(2f);
+
+                if (txtFeedbackOperation.gameObject.activeSelf)
+                {
+                    txtFeedbackOperation.gameObject.SetActive(false);
+                }
+            }
+
+            StartCoroutine(DisableTxtAfterDelay());
         }
         #endregion
 

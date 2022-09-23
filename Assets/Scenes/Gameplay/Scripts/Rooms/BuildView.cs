@@ -26,7 +26,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void InitBuildView(Sprite image, string name, List<ResourceModel> resourcesNeeded, Action<string, Action<bool> > onBuildPressed)
+        public void InitBuildView(Sprite image, string name, List<ResourceModel> resourcesNeeded, Action<string, Action<bool>> onBuildPressed,
+             Action<Action<bool>> onDestroyPressed)
         {
             buildingImage.sprite = image;
             buildingName.text = name;
@@ -44,6 +45,23 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     {
                         btnBuild.gameObject.SetActive(true);
                         btnDestroy.gameObject.SetActive(false);
+                    }
+                });
+            });
+
+            btnDestroy.onClick.AddListener(() =>
+            {
+                onDestroyPressed?.Invoke((opState) => 
+                {
+                    if(opState)
+                    {
+                        btnBuild.gameObject.SetActive(true);
+                        btnDestroy.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        btnBuild.gameObject.SetActive(false);
+                        btnDestroy.gameObject.SetActive(true);
                     }
                 });
             });

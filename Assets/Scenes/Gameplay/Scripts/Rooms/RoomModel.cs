@@ -24,7 +24,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
 
         #region PRIVATE_FIELDS
         private Action onRemoveBuild = null;
-        private Action<Vector2> onBuild = null;
+        private Action onBuild = null;
 
         private bool isEmpty = true;
         #endregion
@@ -34,7 +34,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Action<Vector2> onBuild, Action onRemoveBuild)
+        public void Init(Action onBuild, Action onRemoveBuild)
         {
             this.onBuild = onBuild;
             this.onRemoveBuild = onRemoveBuild;
@@ -45,7 +45,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public void SetBuild(BuildModel build)
         {
             buildAttach = build;
-            onBuild?.Invoke(initialWorldPosition);
+            onBuild?.Invoke();
 
             isEmpty = false;
         }

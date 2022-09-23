@@ -30,7 +30,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
 
         #region PUBLIC_METHODS
-        public void Init(Camera camera, List<BuildModel> aviableBuildings, Action<string, Action<bool>> onBuildPressed)
+        public void Init(Camera camera, List<BuildModel> aviableBuildings, Action<string, Action<bool>> onBuildPressed, Action<Action<bool>> onDestroyPressed)
         {
             refCamera = camera;
 
@@ -40,7 +40,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     BuildView newResource = Instantiate(prefabBuildView, holderBuildings);
 
-                    newResource.InitBuildView(aviableBuildings[i].buildingImage, aviableBuildings[i].buildingName, aviableBuildings[i].viewResources, onBuildPressed);
+                    newResource.InitBuildView(aviableBuildings[i].buildingImage, aviableBuildings[i].buildingName, 
+                        aviableBuildings[i].viewResources, onBuildPressed, onDestroyPressed);
 
                     allBuildsAviables.Add(newResource);
                 }

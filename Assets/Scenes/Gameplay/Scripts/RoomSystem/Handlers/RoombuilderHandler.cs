@@ -20,6 +20,9 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
         [SerializeField] private PreviewRoomView previewRoom = null;
 
         [SerializeField] private List<BuildModel> allBuildingAviables = null;
+
+        [Header("Resources")]
+        [SerializeField, Range(0, 100)] private float porcentOnDestroyBuild = 100f;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -72,7 +75,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
             roombuilderView.Init(OnBuildSomething, OnDestroyBuilding);
 
-            previewRoom.Init(camera.MainCamera, allBuildingAviables, OnBuildInSelectedRoom);
+            previewRoom.Init(camera.MainCamera, allBuildingAviables, OnBuildInSelectedRoom, OnDestroyBuildOnSelectedRoom);
 
             roombuilderView.OnViewToggle += (viewActive) => 
             {
@@ -117,6 +120,12 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
                 return;
             }
 
+            if(!actualRoomInPreview.roomModel.IsRoomEmpty)
+            {
+                Debug.Log("The selected room already has a build in here.");
+                return;
+            }
+
             bool canMakeBuild = false;
             
             //We check with this if the player has enough resources to build this machine
@@ -136,6 +145,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             if(!canMakeBuild)
             {
                 Debug.Log("You don´t have enough resources to build that! Go farm more");
+                roombuilderView.ShowFeedbackBuild(false);
                 stateOperation?.Invoke(false); //We notify the final state of this build operation, false if failed.
                 return;
             }
@@ -153,16 +163,17 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             Machine building = Instantiate(buildToCreate.machines[0], positionToBuild, Quaternion.identity);
 
             //We pass the data to the room, to know that this room has now this machine/build
-            actualRoomInPreview.BuildInRoom(buildToCreate);
+            actualRoomInPreview.BuildInRoom(buildToCreate, building);
 
             //Update text state
             previewRoom.SetPreviewRoom(actualRoomInPreview);
 
             //We notify the final state of this build operation, true if succed. 
+            roombuilderView.ShowFeedbackBuild(true);
             stateOperation?.Invoke(true);
         }
 
-        private void OnDestroyBuildOnSelectedRoom(string name, Action<bool> stateOperation)
+        private void OnDestroyBuildOnSelectedRoom(Action<bool> stateOperation)
         {
             //We get the selected room from preview
             RoomView actualRoomInPreview = previewRoom.GetSelectedRoom();
@@ -173,11 +184,27 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             if (buildToRemove == null)
             {
                 Debug.Log("There is not room aviable with that name.");
+                stateOperation?.Invoke(false);
                 return;
-            } 
+            }
+
+            for (int i = 0; i < buildToRemove.viewResources.Count; i++)
+            {
+                if (buildToRemove.viewResources[i] != null)
+                {
+                    inventoryController.RetrivePorcentOfConsumed(buildToRemove.viewResources[i].item, buildToRemove.viewResources[i].amount, porcentOnDestroyBuild);                   
+                }
+            }
+
+            actualRoomInPreview.DestroyBuildInRoom();
+
+            //Update text state
+            previewRoom.SetPreviewRoom(actualRoomInPreview);
+
+            stateOperation?.Invoke(true);
         }
 
-        private void OnBuildSomething(Vector2 buildPosition)
+        private void OnBuildSomething()
         {
             Debug.Log("New build created!");
         }

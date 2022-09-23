@@ -150,6 +150,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             return inventoryModel.ConsumeItems(item, amount, onCosumeItemsFailed);
         }
 
+        public void RetrivePorcentOfConsumed(ItemModel item, int consumedAmount, float porcentToRetrive)
+        {
+            int finalAmountToRetrive = (int)((porcentToRetrive * consumedAmount) / 100f);
+
+            GenerateItems(item.itemId, finalAmountToRetrive);
+        }
+
         public bool HasEnoughOfThisItem(ItemModel item, int amount)
         {
             return inventoryModel.CheckForItemsInSlot(item, amount);

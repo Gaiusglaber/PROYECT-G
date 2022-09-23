@@ -1,11 +1,12 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
 
 using ProyectG.Gameplay.RoomSystem.Room;
+using ProyectG.Gameplay.Objects;
 
 using TMPro;
-using System;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -19,12 +20,14 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
         #region PRIVATE_FIELDS
         private Action onRemoveBuild = null;
-        private Action<Vector2> onBuild = null;
+        private Action onBuild = null;
+
+        private Machine machineCreated = null;
         #endregion
 
         #region PROPERTIES
         public Action OnRemoveBuild { get { return onRemoveBuild; } set { onRemoveBuild = value; } }
-        public Action<Vector2> OnBuild { get { return onBuild; } set { onBuild = value; } }
+        public Action OnBuild { get { return onBuild; } set { onBuild = value; } }
         #endregion
 
         #region PUBLIC_METHODS
@@ -38,7 +41,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
             roomName.gameObject.SetActive(false);
         }
 
-        public void BuildInRoom(BuildModel buildModel)
+        public void BuildInRoom(BuildModel buildModel, Machine machineCreated = null)
         {
             if(roomModel == null)
             {
@@ -47,6 +50,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
             }
 
             roomModel.SetBuild(buildModel);
+            this.machineCreated = machineCreated;
         }
 
         public void DestroyBuildInRoom()
@@ -55,6 +59,11 @@ namespace ProyectG.Gameplay.RoomSystem.View
             {
                 Debug.Log("The room model is NULL");
                 return;
+            }
+
+            if(machineCreated != null)
+            {
+                Destroy(machineCreated.gameObject);
             }
 
             roomModel.RemoveBuild();
