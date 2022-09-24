@@ -50,6 +50,9 @@ namespace ProyectG.Gameplay.RoomSystem.View
             }
 
             roomModel.SetBuild(buildModel);
+
+            roomName.text = buildModel.buildingName;
+
             this.machineCreated = machineCreated;
         }
 
@@ -65,6 +68,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
             {
                 Destroy(machineCreated.gameObject);
             }
+
+            roomName.text = "Building: EMPTY";
 
             roomModel.RemoveBuild();
         }

@@ -30,7 +30,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
 
         #region PUBLIC_METHODS
-        public void Init(Camera camera, List<BuildModel> aviableBuildings, Action<string, Action<bool>> onBuildPressed, Action<Action<bool>> onDestroyPressed)
+        public void Init(Camera camera, List<BuildModel> aviableBuildings, Action<string, Action<bool>> onBuildPressed, Action<string ,Action<bool>> onDestroyPressed)
         {
             refCamera = camera;
 

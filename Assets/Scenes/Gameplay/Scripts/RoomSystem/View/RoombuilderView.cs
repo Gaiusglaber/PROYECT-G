@@ -17,7 +17,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #region EXPOSED_FIELDS
         [Header("MAIN REFERENCES")]
         [SerializeField] private GameObject holder = null;
-        [SerializeField] private Button exit = null;
+        [SerializeField] private Button btnExit = null;
         [SerializeField] private TMP_Text txtFeedbackOperation = null;
 
         [SerializeField] private EventSystem eventSystem = null;
@@ -60,11 +60,15 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Action onBuild, Action onRemoveBuild)
+        public void Init(Action onBuild, Action onRemoveBuild, Action onExitView)
         {
             ToggleView(false);
 
-            exit.onClick.AddListener(() => { ToggleView(false); } );
+            btnExit.onClick.AddListener(() => 
+            {
+                onExitView?.Invoke();
+                ToggleView(false); 
+            });
 
             for (int i = 0; i < allRooms.Count; i++)
             {
@@ -94,15 +98,15 @@ namespace ProyectG.Gameplay.RoomSystem.View
             return rooms[idSelectedRoom];   
         }
 
-        public void ShowFeedbackBuild(bool state)
+        public void ShowFeedbackBuild(string feedbackText,bool state)
         {
-            if(state)
+            if (state)
             {
                 if (!txtFeedbackOperation.gameObject.activeSelf)
                 {
                     txtFeedbackOperation.gameObject.SetActive(true);
                 }
-                txtFeedbackOperation.text = "<color=green>Build succed!</color>";
+                txtFeedbackOperation.text = "<color=green>" + feedbackText + "</color>";
             }
             else
             {
@@ -110,7 +114,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     txtFeedbackOperation.gameObject.SetActive(true);
                 }
-                txtFeedbackOperation.text = "<color=red>You don´t have enough resources!</color>";
+                txtFeedbackOperation.text = "<color=red>" + feedbackText + "</color>";
             }
 
             IEnumerator DisableTxtAfterDelay()

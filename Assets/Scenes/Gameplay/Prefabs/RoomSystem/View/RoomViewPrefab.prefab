@@ -61,14 +61,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6509804}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.14901961}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 98e966f0fac49af49ba565101bf7d9a3, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -135,10 +135,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1abad472963187f42abfec245130bdd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcesNeeded: []
   roomName: {fileID: 8712970741597608940}
-  energyCost: {fileID: 0}
-  roomModel: {fileID: 0}
+  roomModel:
+    name: 
+    id: 
+    isOutsideRoom: 0
+    maxRoomSpace: 0
+    roomInfo: 
+    initialWorldPosition: {x: 0, y: 0, z: 0}
+    viewPosition: {x: 0, y: 0, z: 0}
+    buildAttach:
+      buildingName: 
+      isMachine: 0
+      buildingImage: {fileID: 0}
+      machines: []
+      viewResources: []
   positionInWorld: {x: 0, y: 0, z: 0}
 --- !u!1 &8712970741597608938
 GameObject:
@@ -214,8 +225,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

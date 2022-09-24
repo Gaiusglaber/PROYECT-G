@@ -73,9 +73,9 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             if (roombuilderView == null)
                 return;
 
-            roombuilderView.Init(OnBuildSomething, OnDestroyBuilding);
-
             previewRoom.Init(camera.MainCamera, allBuildingAviables, OnBuildInSelectedRoom, OnDestroyBuildOnSelectedRoom);
+
+            roombuilderView.Init(OnBuildSomething, OnDestroyBuilding, () => { previewRoom.TogglePreview(false); });
 
             roombuilderView.OnViewToggle += (viewActive) => 
             {
@@ -127,6 +127,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             }
 
             bool canMakeBuild = false;
+            bool wasNotEnoughResources = false;
             
             //We check with this if the player has enough resources to build this machine
 
@@ -141,11 +142,30 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
                 }
             }
 
-            //If the player doesn´t have enough resources we DO NOT build
             if(!canMakeBuild)
             {
+                wasNotEnoughResources = true;
+            }
+            else
+            {
+                if (buildToCreate.isMachine)
+                {
+                    canMakeBuild = !actualRoomInPreview.roomModel.isOutsideRoom;
+                }
+                else
+                {
+                    canMakeBuild = actualRoomInPreview.roomModel.isOutsideRoom;
+                }
+            }
+
+            //If the player doesn´t have enough resources we DO NOT build
+            if (!canMakeBuild)
+            {
                 Debug.Log("You don´t have enough resources to build that! Go farm more");
-                roombuilderView.ShowFeedbackBuild(false);
+
+                string feedback = wasNotEnoughResources ? "You don´t have enough resources!" : "You cannot build that on this room.";
+
+                roombuilderView.ShowFeedbackBuild(feedback, false);
                 stateOperation?.Invoke(false); //We notify the final state of this build operation, false if failed.
                 return;
             }
@@ -169,19 +189,26 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             previewRoom.SetPreviewRoom(actualRoomInPreview);
 
             //We notify the final state of this build operation, true if succed. 
-            roombuilderView.ShowFeedbackBuild(true);
+            roombuilderView.ShowFeedbackBuild("Build succed!",true);
             stateOperation?.Invoke(true);
         }
 
-        private void OnDestroyBuildOnSelectedRoom(Action<bool> stateOperation)
+        private void OnDestroyBuildOnSelectedRoom(string name, Action<bool> stateOperation)
         {
             //We get the selected room from preview
             RoomView actualRoomInPreview = previewRoom.GetSelectedRoom();
 
             //We find the build to make on the actual selected room
-            BuildModel buildToRemove = actualRoomInPreview.roomModel.buildAttach;
+            BuildModel buildToRemove = allBuildingAviables.Find(build => build.buildingName == name);
 
             if (buildToRemove == null)
+            {
+                Debug.Log("There is not room aviable with that name.");
+                stateOperation?.Invoke(false);
+                return;
+            }
+
+            if(buildToRemove != actualRoomInPreview.roomModel.buildAttach)
             {
                 Debug.Log("There is not room aviable with that name.");
                 stateOperation?.Invoke(false);

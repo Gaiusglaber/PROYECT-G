@@ -27,7 +27,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
         #region PUBLIC_METHODS
         public void InitBuildView(Sprite image, string name, List<ResourceModel> resourcesNeeded, Action<string, Action<bool>> onBuildPressed,
-             Action<Action<bool>> onDestroyPressed)
+             Action<string,Action<bool>> onDestroyPressed)
         {
             buildingImage.sprite = image;
             buildingName.text = name;
@@ -51,7 +51,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
             btnDestroy.onClick.AddListener(() =>
             {
-                onDestroyPressed?.Invoke((opState) => 
+                onDestroyPressed?.Invoke(name,(opState) => 
                 {
                     if(opState)
                     {
