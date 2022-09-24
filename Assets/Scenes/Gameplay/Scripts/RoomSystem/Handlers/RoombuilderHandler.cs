@@ -1,14 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-using ProyectG.Player.Controller;
+using ProyectG.Gameplay.UI;
+using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.Controllers;
 using ProyectG.Gameplay.RoomSystem.View;
 using ProyectG.Gameplay.RoomSystem.Room;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
-using ProyectG.Gameplay.Objects;
+using ProyectG.Player.Controller;
 
 namespace ProyectG.Gameplay.RoomSystem.Handler
 {
@@ -20,6 +21,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
         [SerializeField] private PreviewRoomView previewRoom = null;
 
         [SerializeField] private List<BuildModel> allBuildingAviables = null;
+        [SerializeField] private List<BaseView> allBaseViews = null;
 
         [Header("Resources")]
         [SerializeField, Range(0, 100)] private float porcentOnDestroyBuild = 100f;
@@ -128,21 +130,28 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
             bool canMakeBuild = false;
             bool wasNotEnoughResources = false;
-            
+
             //We check with this if the player has enough resources to build this machine
+
+            int amountResourcesPass = 0;
 
             for (int i = 0; i < buildToCreate.viewResources.Count; i++)
             {
                 if (buildToCreate.viewResources[i] != null)
                 {
-                    if(inventoryController.HasEnoughOfThisItem(buildToCreate.viewResources[i].item, buildToCreate.viewResources[i].amount))
+                    if (inventoryController.HasEnoughOfThisItem(buildToCreate.viewResources[i].item, buildToCreate.viewResources[i].amount))
                     {
-                        canMakeBuild = true;
+                        amountResourcesPass++;
                     }
                 }
             }
 
-            if(!canMakeBuild)
+            if(amountResourcesPass == buildToCreate.viewResources.Count)
+            {
+                canMakeBuild = true;
+            }
+
+            if (!canMakeBuild)
             {
                 wasNotEnoughResources = true;
             }
@@ -181,6 +190,14 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
             //We create the machine/farm
             Machine building = Instantiate(buildToCreate.machines[0], positionToBuild, Quaternion.identity);
+
+            BaseView machineUI = allBaseViews.Find(view => view.IdView == name);
+            
+            //Tiene UI la maquina?
+            if(machineUI != null)
+            {
+                building.Init(machineUI);
+            }
 
             //We pass the data to the room, to know that this room has now this machine/build
             actualRoomInPreview.BuildInRoom(buildToCreate, building);

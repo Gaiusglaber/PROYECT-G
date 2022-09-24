@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -7,8 +6,6 @@ using UnityEngine.UI;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
-
-using ProyectG.Toolbox.Lerpers;
 
 public class UIFurnace : MonoBehaviour
 {

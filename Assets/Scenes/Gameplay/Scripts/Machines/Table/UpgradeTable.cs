@@ -42,7 +42,7 @@ public class UpgradeTable : Machine
     {
         //Llamar evento para habilitar el separador
         energyHandler.ConsumeEnergyByUnlock();
-        separator.SetIsEnabled(state);
+        //separator.SetIsEnabled(state);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
