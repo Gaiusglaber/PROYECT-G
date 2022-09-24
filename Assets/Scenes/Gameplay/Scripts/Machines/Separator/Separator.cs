@@ -1,36 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
-using ProyectG.Gameplay.Objects.Inventory.Data;
-using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.UI;
+using ProyectG.Gameplay.Objects;
+using ProyectG.Gameplay.Objects.Inventory.Data;
 
 using TMPro;
 
-public class Separator : MonoBehaviour
+public class Separator : Machine
 {
+    #region EXPOSED_FIELDS
     [SerializeField] private UISeparator uiSeparator;
     [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] private TMP_Text feedbackSeparator = null;
-    private float timerProcess;
-    private float timeToProcessObject = 0;
-    private float timeToProcessObject2 = 0;
 
     [SerializeField] private bool isProcessing;
+    #endregion
+
+    #region PRIVATE_FIELDS
+    private float timerProcess;
+    private float timeToProcessObject = 0;
+
+    private bool isInitialized = false;
 
     private bool playerIsNear;
     private bool isEnabled;
 
     private ItemModel itemProcessed = null;
 
-    //Cambiar nombre de eventos y todos los atributos con respecto a "processed" a "separated" para entender mejor el codigo
     private Action OnItemProcessed = null;
-    //private Action OnFuelBurned = null;
+    #endregion
 
-    void Start()
+    #region INITIALIZATION
+    public override void Init(BaseView viewAttach)
     {
+        base.Init(viewAttach);
+
+        if(uiSeparator == null)
+        {
+            uiSeparator = viewAttach.GetComponent<UISeparator>();
+        }
+
+        uiSeparator.Init();
+
         uiSeparator.IsSeparatorProcessing = IsProcessing;
 
         uiSeparator.OnProcessMaterial = SetProcess;
@@ -43,19 +55,27 @@ public class Separator : MonoBehaviour
 
         feedbackSeparator.gameObject.SetActive(false);
 
-        isEnabled = false;
+        isEnabled = true;
+        isInitialized = true;
     }
+    #endregion
 
+    #region UNITY_CALLS
     void Update()
     {
-        if(playerIsNear && Input.GetKeyDown(KeyCode.E) && isEnabled)
+        if(!isInitialized)
+        {
+            return;
+        }
+
+        if (playerIsNear && Input.GetKeyDown(KeyCode.E) && isEnabled)
         {
             uiSeparator.TogglePanel();
         }
 
         if (isProcessing)
         {
-            if(timerProcess < timeToProcessObject)
+            if (timerProcess < timeToProcessObject)
             {
                 timerProcess += Time.deltaTime;
 
@@ -85,11 +105,6 @@ public class Separator : MonoBehaviour
                 Debug.Log("Item processed successfully");
             }
         }
-    }
-
-    public void SetIsEnabled(bool enabled)
-    {
-        isEnabled = enabled;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -126,6 +141,14 @@ public class Separator : MonoBehaviour
         }
     }
 
+    public void OnDestroy()
+    {
+        isInitialized = false;
+        isEnabled = false;
+    }
+    #endregion
+
+    #region PRIVATE_METHODS
     private void ResetProcessing()
     {
         timerProcess = 0f;
@@ -155,4 +178,5 @@ public class Separator : MonoBehaviour
     {
         isProcessing = true;
     }
+    #endregion
 }

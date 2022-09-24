@@ -178,6 +178,49 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             Debug.LogWarning("No hay mas espacio en el inventario!");
         }
 
+        public bool CheckForItemsInSlot(ItemModel itemType, int amount)
+        {
+            Vector2Int slotWithThisItem = FindSlotWithItem(itemType.itemId);
+
+            if (slotWithThisItem != invalidPosition)
+            {
+                if (GetSlot(slotWithThisItem).StackOfItems.Count >= amount)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        public bool ConsumeItems(ItemModel itemType, int amount, Action onFailConsumeItems = null)
+        {
+            Vector2Int slotWithThisItem = FindSlotWithItem(itemType.itemId);
+
+            if (slotWithThisItem != invalidPosition)
+            {
+                Debug.Log("Grid Position with this type of item");
+
+                if(GetSlot(slotWithThisItem).StackOfItems.Count >= amount)
+                {
+                    GetSlot(slotWithThisItem).RemoveItems(amount, false);
+                    return true;
+                }
+                else
+                {
+                    onFailConsumeItems?.Invoke();
+                    return false;
+                }
+            }
+
+            onFailConsumeItems?.Invoke();
+            return false;
+        }
+
         public void DeattachItemsFromSlot(Vector2Int gridPosition, int amount = 0, bool allItems = true)
         {
             GetSlot(gridPosition).RemoveItems(amount, allItems);

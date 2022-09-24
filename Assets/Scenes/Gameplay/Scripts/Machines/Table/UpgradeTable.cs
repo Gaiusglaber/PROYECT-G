@@ -8,8 +8,9 @@ using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 using ProyectG.Gameplay.UI;
+using ProyectG.Gameplay.Objects;
 
-public class UpgradeTable : MonoBehaviour
+public class UpgradeTable : Machine
 {
     [SerializeField] private UIUpgradeTable uiUpgradeTable = null;
     [SerializeField] private EnergyHandler energyHandler = null;
@@ -41,7 +42,7 @@ public class UpgradeTable : MonoBehaviour
     {
         //Llamar evento para habilitar el separador
         energyHandler.ConsumeEnergyByUnlock();
-        separator.SetIsEnabled(state);
+        //separator.SetIsEnabled(state);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+using ProyectG.Gameplay.UI;
+
 namespace ProyectG.Gameplay.Objects{
 
 	#region CLASSES
@@ -18,16 +20,12 @@ namespace ProyectG.Gameplay.Objects{
         #endregion
 
         #region UNITY_CALLS
-        private void Update()
-        {
-            /*if (Input.GetKeyDown(KeyCode.E))
-            {
-                OnInteract?.Invoke();
-            }*/
-        }
         #endregion
 
         #region PUBLIC_METHODS
+        public virtual void Init(BaseView viewAttach)
+        {
+        }
         #endregion
 
         #region PRIVATE_METHODS

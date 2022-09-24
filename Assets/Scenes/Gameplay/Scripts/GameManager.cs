@@ -8,6 +8,7 @@ using ProyectG.Gameplay.Objects.Inventory.Controller;
 
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.UI;
+using ProyectG.Gameplay.RoomSystem.Handler;
 
 namespace ProjectG.Gameplay.Managers
 {
@@ -23,6 +24,7 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private EnergyHandler energyHandler = null;
         [SerializeField] private CameraController cameraHandler = null;
         [SerializeField] private MouseController mouseController = null;
+        [SerializeField] private RoombuilderHandler roomSystem = null;
 
         [Header("FOR TESTING")]
         [SerializeField] private List<WorldItem> testItems = null;
@@ -53,6 +55,8 @@ namespace ProjectG.Gameplay.Managers
         private void Start()
         {
             Time.timeScale = 1;
+
+            roomSystem.Init(player, cameraHandler, inventory);
             //EnergyHandler.Withoutenergy += StopGame;
             //UIUpgradeTable.TradeSuccessfully += StopGame;
         }

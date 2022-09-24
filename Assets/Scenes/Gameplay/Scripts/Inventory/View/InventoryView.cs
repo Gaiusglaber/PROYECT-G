@@ -133,8 +133,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             for (int i = 0; i < inventoryModel.ExtraGridSlots.Count; i++)
             {
-                GetSlotFromGrid(inventoryModel.ExtraGridSlots[i].GridPosition)
-                    .UpdateSlotViewWithItems(inventoryModel.ExtraGridSlots[i].StackOfItems);
+                if(inventoryModel.ExtraGridSlots[i] != null)
+                {
+                    GetSlotFromGrid(inventoryModel.ExtraGridSlots[i].GridPosition)
+                        .UpdateSlotViewWithItems(inventoryModel.ExtraGridSlots[i].StackOfItems);
+                }
             }
         }
 

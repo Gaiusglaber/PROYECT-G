@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
-using ProyectG.Gameplay.Objects.Inventory.Data;
+
 public class UIUpgradeTable : MonoBehaviour
 {
     [SerializeField] private SlotInventoryView slot;
