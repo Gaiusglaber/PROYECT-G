@@ -12,6 +12,7 @@ namespace ProyectG.Gameplay.Controllers
         [SerializeField] private PlayerController target = null;
         [SerializeField] private float followSpeed = 0f;
         [SerializeField] private float offsetCamera = 0f;
+        [SerializeField] private float offsetHeightCamera = 0f;
         [SerializeField] private bool initialized = false;
         #endregion
 
@@ -25,16 +26,16 @@ namespace ProyectG.Gameplay.Controllers
             if (target == null)
                 return;
 
-            targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
+            targetPosition = new Vector3(target.transform.position.x, target.transform.position.y + offsetHeightCamera, transform.position.z);
 
             if(!target.CustomAnimator._armature.flipX)
             {
-                targetPosition = new Vector3(targetPosition.x + offsetCamera, targetPosition.y, targetPosition.z);
+                targetPosition = new Vector3(targetPosition.x + offsetCamera, targetPosition.y + offsetHeightCamera, targetPosition.z);
             }
 
             if(target.CustomAnimator._armature.flipX)
             {
-                targetPosition = new Vector3(targetPosition.x - offsetCamera, targetPosition.y, targetPosition.z);
+                targetPosition = new Vector3(targetPosition.x - offsetCamera, targetPosition.y + offsetHeightCamera, targetPosition.z);
             }
 
 
