@@ -22,7 +22,12 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #endregion
 
         #region PRIVATE_FIELDS
+        private string nameBuild = null;
         private List<ResourceView> resourcesNeeded = new List<ResourceView>();
+        #endregion
+
+        #region PROPERTIES
+        public string NameBuild { get { return nameBuild; } }
         #endregion
 
         #region PUBLIC_METHODS
@@ -31,6 +36,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
         {
             buildingImage.sprite = image;
             buildingName.text = name;
+
+            nameBuild = name;
 
             btnBuild.onClick.AddListener(() => 
             {
@@ -67,6 +74,20 @@ namespace ProyectG.Gameplay.RoomSystem.View
             });
 
             ConfigureBuildResources(resourcesNeeded);
+        }
+
+        public void OnBuildCreated(bool state)
+        {
+            if (state)
+            {
+                btnBuild.gameObject.SetActive(false);
+                btnDestroy.gameObject.SetActive(true);
+            }
+            else
+            {
+                btnBuild.gameObject.SetActive(true);
+                btnDestroy.gameObject.SetActive(false);
+            }
         }
         #endregion
 

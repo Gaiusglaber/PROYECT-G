@@ -75,6 +75,12 @@ namespace ProyectG.Gameplay.RoomSystem.View
             infoRoom.text = roomState + '\n' + '\n' + selectedRoom.roomModel.roomInfo;
         }
 
+        public BuildView GetBuildById(string buildID)
+        {
+            BuildView build = allBuildsAviables.Find(build => build.NameBuild == buildID);
+            return build;
+        }
+
         public RoomView GetSelectedRoom()
         {
             return selectedRoom;

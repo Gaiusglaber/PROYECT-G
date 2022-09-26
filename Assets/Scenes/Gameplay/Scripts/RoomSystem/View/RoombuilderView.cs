@@ -98,6 +98,11 @@ namespace ProyectG.Gameplay.RoomSystem.View
             return rooms[idSelectedRoom];   
         }
 
+        public RoomView GetRoomById(string idRoom)
+        {
+            return rooms[idRoom];
+        }
+
         public void ShowFeedbackBuild(string feedbackText,bool state)
         {
             if (state)
@@ -146,7 +151,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 {
                     idSelectedRoom = selectedRoom.roomModel.id;
 
-                    onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.initialWorldPosition);
+                    onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.cameraWorldPosition);
 
                     return true;
                 }

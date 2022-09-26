@@ -1307,7 +1307,8 @@ MonoBehaviour:
     isOutsideRoom: 1
     maxRoomSpace: 0
     roomInfo: A litlle room but beautiful. Perfect to a farm of esscentials resources.
-    initialWorldPosition: {x: -15, y: -7, z: 0}
+    cameraWorldPosition: {x: -11.55, y: -0.55, z: 0}
+    initialWorldPosition: {x: -3.75, y: -1.65, z: 0}
     viewPosition: {x: -660, y: -315, z: 0}
     buildAttach:
       buildingName: 
@@ -1320,19 +1321,22 @@ MonoBehaviour:
     isOutsideRoom: 1
     maxRoomSpace: 0
     roomInfo: A litlle room but beautiful. Perfect to a farm of esscentials resources.
-    initialWorldPosition: {x: 17, y: -5, z: 0}
+    cameraWorldPosition: {x: 16, y: -1.15, z: 0}
+    initialWorldPosition: {x: 16.25, y: -2.35, z: 0}
     viewPosition: {x: -80, y: -315, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
       buildingImage: {fileID: 0}
-      machines: []
+      machines:
+      - {fileID: 0}
       viewResources: []
   - name: Underground
     id: 2
     isOutsideRoom: 0
     maxRoomSpace: 0
     roomInfo: It is kinda wet in here, but is a useful place for some noise machines.
+    cameraWorldPosition: {x: 2.15, y: -1.05, z: 0}
     initialWorldPosition: {x: 0, y: -7.5, z: 0}
     viewPosition: {x: -385, y: -350, z: 0}
     buildAttach:
@@ -1346,6 +1350,7 @@ MonoBehaviour:
     isOutsideRoom: 0
     maxRoomSpace: 0
     roomInfo: A room placed high on the main tree, the view in here is awesome hehe.
+    cameraWorldPosition: {x: -8.1, y: 8.55, z: 0}
     initialWorldPosition: {x: -9, y: 10, z: 0}
     viewPosition: {x: -635, y: -20, z: 0}
     buildAttach:
@@ -1359,6 +1364,7 @@ MonoBehaviour:
     isOutsideRoom: 0
     maxRoomSpace: 0
     roomInfo: A room placed high on the main tree.
+    cameraWorldPosition: {x: 15.35, y: 11.85, z: 0}
     initialWorldPosition: {x: 16, y: 12, z: 0}
     viewPosition: {x: -130, y: 30, z: 0}
     buildAttach:
@@ -1373,6 +1379,7 @@ MonoBehaviour:
     maxRoomSpace: 0
     roomInfo: Okay, if you are afraid of height, you shouldn't have a build in here.
       Btw, the view is amazing.
+    cameraWorldPosition: {x: 2.15, y: 15.55, z: 0}
     initialWorldPosition: {x: 2.64, y: 17, z: 0}
     viewPosition: {x: -385, y: 100, z: 0}
     buildAttach:
@@ -1473,7 +1480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092280, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092282, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_RootOrder
@@ -6059,7 +6066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092280, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092282, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_RootOrder
@@ -42242,7 +42249,7 @@ MonoBehaviour:
     - {fileID: 8484401189889361835, guid: ea9e3ae1ac14c8841a438e7f4cbb80e4, type: 3}
     viewResources:
     - name: Wood
-      amount: 1
+      amount: 15
       item: {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
   - buildingName: TreeFarm
     isMachine: 0
@@ -42270,6 +42277,8 @@ MonoBehaviour:
       item: {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
   allBaseViews:
   - {fileID: 6363017379772415171}
+  idTreeFarm: TreeFarm
+  idRoomForTrees: 1
   porcentOnDestroyBuild: 50
 --- !u!61 &1678228309
 BoxCollider2D:
@@ -43756,7 +43765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -0.5, y: 1000}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1801063004
@@ -48580,7 +48589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092280, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092282, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_RootOrder
@@ -54692,7 +54701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092280, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2670130184077092282, guid: 642089a535751a74f81d0a3baf1b4bc3, type: 3}
       propertyPath: m_RootOrder

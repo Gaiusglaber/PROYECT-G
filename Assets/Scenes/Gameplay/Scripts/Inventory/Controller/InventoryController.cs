@@ -73,6 +73,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             inventoryView.ClearExtraSlots();
         }
 
+        public void GenerateItem(string idItem, int amount)
+        {
+            GenerateItems(idItem, amount);
+        }
+
         public void GenerateItem(string idItem)
         {
             GenerateItems(idItem, 1);
