@@ -1309,7 +1309,7 @@ MonoBehaviour:
     roomInfo: A litlle room but beautiful. Perfect to a farm of esscentials resources.
     cameraWorldPosition: {x: -11.55, y: -0.55, z: 0}
     initialWorldPosition: {x: -3.75, y: -1.65, z: 0}
-    viewPosition: {x: -660, y: -315, z: 0}
+    viewPosition: {x: -704, y: -281, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
@@ -1323,7 +1323,7 @@ MonoBehaviour:
     roomInfo: A litlle room but beautiful. Perfect to a farm of esscentials resources.
     cameraWorldPosition: {x: 16, y: -1.15, z: 0}
     initialWorldPosition: {x: 16.25, y: -2.35, z: 0}
-    viewPosition: {x: -80, y: -315, z: 0}
+    viewPosition: {x: -126, y: -292, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
@@ -1338,7 +1338,7 @@ MonoBehaviour:
     roomInfo: It is kinda wet in here, but is a useful place for some noise machines.
     cameraWorldPosition: {x: 2.15, y: -1.05, z: 0}
     initialWorldPosition: {x: 0, y: -7.5, z: 0}
-    viewPosition: {x: -385, y: -350, z: 0}
+    viewPosition: {x: -412, y: -295, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
@@ -1352,7 +1352,7 @@ MonoBehaviour:
     roomInfo: A room placed high on the main tree, the view in here is awesome hehe.
     cameraWorldPosition: {x: -8.1, y: 8.55, z: 0}
     initialWorldPosition: {x: -9, y: 10, z: 0}
-    viewPosition: {x: -635, y: -20, z: 0}
+    viewPosition: {x: -653, y: -25, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
@@ -1366,7 +1366,7 @@ MonoBehaviour:
     roomInfo: A room placed high on the main tree.
     cameraWorldPosition: {x: 15.35, y: 11.85, z: 0}
     initialWorldPosition: {x: 16, y: 12, z: 0}
-    viewPosition: {x: -130, y: 30, z: 0}
+    viewPosition: {x: -180, y: 73, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
@@ -1381,7 +1381,7 @@ MonoBehaviour:
       Btw, the view is amazing.
     cameraWorldPosition: {x: 2.15, y: 15.55, z: 0}
     initialWorldPosition: {x: 2.64, y: 17, z: 0}
-    viewPosition: {x: -385, y: 100, z: 0}
+    viewPosition: {x: -433, y: 157, z: 0}
     buildAttach:
       buildingName: 
       isMachine: 0
@@ -45785,7 +45785,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d05d229ac58c9db4ca183d8eb48c0806, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd550f8f71b4c704c8bb96abd2e7f8bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
