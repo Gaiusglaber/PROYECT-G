@@ -10,6 +10,7 @@ using ProyectG.Gameplay.RoomSystem.View;
 using ProyectG.Gameplay.RoomSystem.Room;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Player.Controller;
+using System.Collections;
 
 namespace ProyectG.Gameplay.RoomSystem.Handler
 {
@@ -22,6 +23,8 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
         [SerializeField] private List<BuildModel> allBuildingAviables = null;
         [SerializeField] private List<BaseView> allBaseViews = null;
+        [SerializeField] private string idTreeFarm = null;
+        [SerializeField] private string idRoomForTrees = null;
 
         [Header("Resources")]
         [SerializeField, Range(0, 100)] private float porcentOnDestroyBuild = 100f;
@@ -96,10 +99,27 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             {
                 previewRoom.SetPreviewRoom(null);
             };
+
+            PreCreateTreeFarm();
         }
         #endregion
 
         #region PRIVATE_METHODS
+        private void PreCreateTreeFarm()
+        {
+            BuildModel treeFarm = allBuildingAviables.Find(build => build.buildingName == idTreeFarm);
+            BuildView actualRoomInPreview = previewRoom.GetBuildById(idTreeFarm);
+            RoomView treeRoom = roombuilderView.GetRoomById(idRoomForTrees);
+
+            Vector3 positionToBuild = treeRoom.roomModel.initialWorldPosition;
+
+            Machine building = Instantiate(treeFarm.machines[0], positionToBuild, Quaternion.identity);
+
+            treeRoom.BuildInRoom(treeFarm, building);
+
+            actualRoomInPreview.OnBuildCreated(true);
+        }
+
         private void OnBuildInSelectedRoom(string name, Action<bool> stateOperation)
         {
             //We find the build to make on the actual selected room

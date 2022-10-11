@@ -17,6 +17,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public bool isOutsideRoom = false;
         public int maxRoomSpace;
         [TextArea(2,10)] public string roomInfo = string.Empty;
+        public Vector3 cameraWorldPosition = Vector3.zero;
         public Vector3 initialWorldPosition = Vector3.zero;
         public Vector3 viewPosition = Vector3.zero;
 
