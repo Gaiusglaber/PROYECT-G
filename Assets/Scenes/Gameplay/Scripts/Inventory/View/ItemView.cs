@@ -276,6 +276,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                             onAddedSomeItemFromExtraSlot?.Invoke(itemId ,1, slotFromItem.GridPosition);
 
                             mySlot = slotFromItem;
+
+                            Debug.Log("Added item that is coming from machine slot");
                         }
                         return true;
                     }
@@ -314,7 +316,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 if (itemInitialized)
                 {
-                    onMoveItemToExternalSlot.Invoke(positionItemMove, 1, false);
+                    onMoveItemToExternalSlot.Invoke(positionItemMove, 1, false);    //Remove item from player inventory
                 }
 
                 transform.SetParent(parent);

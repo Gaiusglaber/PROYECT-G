@@ -33,6 +33,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         private DepthOfField dof = null;
         private bool stackTake = false;
 
+        private Action<bool> onInteractionChange = null;
+
         private float initialdof = 0;
         #endregion
 
@@ -41,6 +43,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         public InventoryModel Model => inventoryModel;
         public Action<string, int, Vector2Int> OnAddItems { get { return GenerateItems; } } 
         public Action<Vector2Int, int, bool> OnRemoveItems { get { return RemoveItems; } } 
+        public Action<bool> OnInteractionChange { get { return onInteractionChange; } set { onInteractionChange = value; } }
         #endregion
 
         #region PUBLIC_METHODS
@@ -121,11 +124,15 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
                 inventoryView.OnChangeInteractionType(stackTake);
 
+                OnInteractionChange?.Invoke(stackTake);
+
                 return;
             }
 
             stackTake = true;
             inventoryView.OnChangeInteractionType(stackTake);
+
+            OnInteractionChange?.Invoke(stackTake);
         }
 
         public void GenerateItems(string idItem, int amount, Vector2Int gridPosition = default)

@@ -409,14 +409,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public bool HasEndedRestoreDrag()
         {
-            return !onRestoreDrag ? true : false;
+            return !onRestoreDrag;
         }
 
         public void ReturnToMachineSlot()
         {
             transform.SetParent(actualMachineSlot.transform);
-
             transform.position = actualMachineSlot.SlotPosition;
+
+            onRestoreDrag = false;
+            onSwipingStack = false;
         }
         #endregion
 

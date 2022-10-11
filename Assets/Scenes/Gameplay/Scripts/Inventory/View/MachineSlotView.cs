@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 using TMPro;
 using ProyectG.Gameplay.Objects.Inventory.Data;
+using ProyectG.Gameplay.Objects.Inventory.Controller;
 
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
@@ -22,6 +23,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private TextMeshProUGUI debugGridPos = null;
         [SerializeField] private StackSlotHandler stackHandler = null;
         [SerializeField] private Canvas mainCanvas = null;
+
+        [Header("TESTING")]
+        [SerializeField] private InventoryController inventoryController = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -30,6 +34,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private Action<Vector2Int, Vector2Int> callUpdateSlots = null;
         private Action<Vector2Int, Vector2Int> callUpdateStacks = null;
+        
+        private bool attachedStackDone = false;
 
         private List<ItemType> allowedItems = new List<ItemType>();
         #endregion
@@ -42,6 +48,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private void Start()
         {
             stackHandler.Init(mainCanvas, null, this, callUpdateStacks);
+
+            if (inventoryController == null)
+            {
+                return;
+            }
+
+            inventoryController.OnInteractionChange += SetOnInteractionInventoryChange;
         }
         #endregion
 
@@ -70,6 +83,53 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             ViewAddToSlot(itemToAttach);
+        }
+
+        public void SetOnInteractionInventoryChange(bool stackIntraction)
+        {
+            if (!gameObject.activeInHierarchy)
+                return;
+
+            if (stackIntraction)
+            {
+                if (!stackHandler.enabled)
+                {
+                    stackHandler.enabled = true;
+                }
+
+                if (!attachedStackDone)
+                {
+                    SaveItemsInStack();
+                    StartCoroutine(AttachItemsToParent(true, stackHandler.transform, () =>
+                    {
+                        objectsAttach.Clear();
+                    }));
+                    attachedStackDone = true;
+                }
+
+                amountOutStack.text = string.Empty;
+            }
+            else
+            {
+                if (attachedStackDone)
+                {
+                    if (!stackHandler.Dragged)
+                    {
+                        if (stackHandler.HasEndedRestoreDrag())
+                        {
+                            RestoreItemsFromStack();
+                            StartCoroutine(AttachItemsToParent(false, transform, () =>
+                            {
+                                if (stackHandler.enabled)
+                                {
+                                    stackHandler.enabled = false;
+                                }
+                            }));
+                            attachedStackDone = false;
+                        }
+                    }
+                }
+            }
         }
 
         public void PlaceStackOfItems(StackSlotHandler stackComing)
@@ -104,6 +164,28 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PRIVATE_METHODS
+        private void SaveItemsInStack()
+        {
+            stackHandler.StackItemsInside(objectsAttach);
+        }
+
+        private void RestoreItemsFromStack()
+        {
+            List<ItemView> allItemsFromStack = stackHandler.GetStackFormStack();
+
+            for (int i = 0; i < allItemsFromStack.Count; i++)
+            {
+                if (!objectsAttach.Contains(allItemsFromStack[i]))
+                {
+                    AddItemToSlot(allItemsFromStack[i]);
+                }
+                else
+                {
+                    amountOutStack.text = objectsAttach.Count.ToString();
+                }
+            }
+        }
+
         private void ViewAddToSlot(ItemView item)
         {
             if (!objectsAttach.Contains(item))
@@ -112,6 +194,39 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             amountOutStack.text = objectsAttach.Count.ToString();
+        }
+        #endregion
+
+        #region CORUTINES
+        private IEnumerator AttachItemsToParent(bool stateItemsInside, Transform newParent, Action onEndedAttch = null)
+        {
+            for (int i = 0; i < objectsAttach.Count; i++)
+            {
+                if (objectsAttach[i] != null)
+                {
+                    objectsAttach[i].transform.SetParent(newParent);
+                    objectsAttach[i].SwitchStateItem(stateItemsInside);
+
+                    objectsAttach[i].SwitchStateCollider(!stateItemsInside);
+                }
+            }
+
+            bool allWithNewParent = true;
+
+            for (int i = 0; i < objectsAttach.Count; i++)
+            {
+                if (objectsAttach[i].transform.parent != newParent)
+                {
+                    allWithNewParent = false;
+                }
+            }
+
+            if (allWithNewParent)
+            {
+                onEndedAttch?.Invoke();
+            }
+
+            yield break;
         }
         #endregion
 
