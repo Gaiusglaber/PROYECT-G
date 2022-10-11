@@ -33,6 +33,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private Action<bool> onInteractionChange = null;
         private Action<bool> onHandleInventory = null;
+        private Action<Vector2Int, int, bool> onSomeItemRemoved = null;
+        private Action<string, int, Vector2Int> onAddSomeItems = null;
+
         private Action<Vector2Int,Vector2Int> onSomeItemMoved = null;
         private Action<Vector2Int,Vector2Int> onSomeStackMoved = null;
         #endregion
@@ -42,7 +45,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved)
+        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved, 
+            Action<Vector2Int, int, bool> onSomeItemRemoved, Action<string, int, Vector2Int> onAddSomeItems)
         {
             parentView = parentTarget;
             maxRowsInventory = model.GridRows;
@@ -52,6 +56,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             this.onSomeItemMoved = onSomeItemMoved;
             this.onSomeStackMoved = onSomeStackMoved;
+            this.onSomeItemRemoved = onSomeItemRemoved;
+            this.onAddSomeItems = onAddSomeItems;
 
             for (int x = 0; x < maxRowsInventory; x++)
             {
@@ -65,6 +71,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     newSlotInv.Init(prefabItemView, mainCanvas, gridPos, false, allowedItems.ToArray());
                     newSlotInv.SetOnSomeItemMoved(this.onSomeItemMoved);
                     newSlotInv.SetOnSomeStackMoved(this.onSomeStackMoved);
+
+                    newSlotInv.SetOnSomeItemRemoved(this.onSomeItemRemoved);
+                    newSlotInv.SetOnSomeItemAdded(this.onAddSomeItems);
                     onInteractionChange += newSlotInv.SetOnInteractionInventoryChange;
 
                     model.SetSlotPosition(gridPos, finalWorldPosition);

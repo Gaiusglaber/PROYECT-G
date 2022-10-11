@@ -43,6 +43,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private Action<Vector2Int, Vector2Int> onEndedChangeOfSlot = null;
 
+        private Action<Vector2Int, int, bool> onMoveItemToExternalSlot = null;
+        private Action<string, int, Vector2Int> onAddedSomeItemFromExtraSlot = null;
+
         private (Vector2, Vector2Int ,Transform) slotPositionAttached = default;
         private Vector2Int slotGridPosition = default;
 
@@ -63,9 +66,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region INITIALIZATION
-        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, ItemModel itemData = null, Action<Vector2Int,Vector2Int> onEndDrag = null)
+        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, ItemModel itemData = null, Action<Vector2Int,Vector2Int> onEndDrag = null,
+            Action<Vector2Int, int, bool> onMoveItemToExternalSlot = null, Action<string, int, Vector2Int> onAddedItemFromOutside = null)
         {
             onEndedChangeOfSlot = onEndDrag;
+            this.onMoveItemToExternalSlot = onMoveItemToExternalSlot;
+            onAddedSomeItemFromExtraSlot = onAddedItemFromOutside;
 
             time = 0;
             timeToGoBackSlot = 0.5f;
@@ -101,7 +107,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             isAttachedToSlot = true;
 
             mySlot = slotAttached;
-            AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition, slotAttached.gameObject.transform);
+            AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition,slotAttached.gameObject.transform, true);
         }
         #endregion
 
@@ -230,6 +236,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         slotFromItem.RemoveItemFromSlot(this);
                     }
+                    else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))
+                    {
+                        machineSlot.RemoveItemFromSlot(this);
+                    }
                 }
             }
 
@@ -248,13 +258,34 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     if(hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
                     {
-                        slotFromItem.AddItemToSlot(this);
-
-                        if(mySlot != slotFromItem)
+                        if(mySlot != null)
                         {
+                            slotFromItem.AddItemToSlot(this, true);
+
+                            if(mySlot != slotFromItem)
+                            {
+                                mySlot = slotFromItem;
+                            }
+
+                            Debug.Log("Slot " + slotFromItem.GridPosition);
+                        }
+                        else
+                        {
+                            slotFromItem.AddItemToSlot(this, false);
+
+                            onAddedSomeItemFromExtraSlot?.Invoke(itemId ,1, slotFromItem.GridPosition);
+
                             mySlot = slotFromItem;
                         }
-                        Debug.Log("Slot " + slotFromItem.GridPosition);
+                        return true;
+                    }
+                    else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))
+                    {
+                        machineSlot.AddItemToSlot(this);
+
+                        mySlot = null;
+
+                        Debug.Log("Item moved to slot machine " + machineSlot);
                         return true;
                     }
                 }
@@ -262,7 +293,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (mySlot != null)
             {
-                mySlot.AddItemToSlot(this);
+                mySlot.AddItemToSlot(this, true);
             }
 
             Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
@@ -270,7 +301,29 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             return false;
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, params ItemType[] allowedTypes)
+        public void PlaceInMachineSlot(Vector2 positionSlot, Transform parent, params ItemType[] allowedTypes)
+        {
+            if (!CheckItemType(allowedTypes))
+                return;
+
+            if (!isDragging)
+            {
+                Vector2Int positionItemMove = slotPositionAttached.Item2;
+
+                transform.position = positionSlot;
+
+                if (itemInitialized)
+                {
+                    onMoveItemToExternalSlot.Invoke(positionItemMove, 1, false);
+                }
+
+                transform.SetParent(parent);
+                myCollider.enabled = true;
+                itemInitialized = true;
+            }
+        }
+
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, bool generateItem,params ItemType[] allowedTypes)
         {
             if (!CheckItemType(allowedTypes))
                 return false;
@@ -293,7 +346,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         if(itemInitialized)
                         {
-                            onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                            if(generateItem)
+                            {
+                                onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                            }
                         }
 
                         transform.SetParent(parent);
@@ -307,7 +363,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                     if (itemInitialized)
                     {
-                        onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                        if(generateItem)
+                        {
+                            onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                        }
                     }
 
                     transform.SetParent(parent);

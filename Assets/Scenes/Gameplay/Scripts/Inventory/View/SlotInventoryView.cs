@@ -41,6 +41,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private bool stackUpdated = false;
 
+        private Action<Vector2Int, int, bool> onRemoveFromSlot = null;
+        private Action<string, int, Vector2Int> onAddedToSlot = null;
+
         private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
         private Action<Vector2Int,Vector2Int> callUpdateStacks = null;
 
@@ -132,11 +135,21 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             callUpdateSlots = onSomeItemMoved;
         }
 
+        public void SetOnSomeItemRemoved(Action<Vector2Int, int, bool> onSomeItemRemoved)
+        {
+            onRemoveFromSlot = onSomeItemRemoved;
+        }
+
+        public void SetOnSomeItemAdded(Action<string, int, Vector2Int> onSomeItemAdded)
+        {
+            onAddedToSlot = onSomeItemAdded;
+        }
+
         public void SetOnSomeStackMoved(Action<Vector2Int, Vector2Int> onSomeStackMoved)
         {
             callUpdateStacks = onSomeStackMoved;
 
-            stackHandler.Init(mainCanvas, this, callUpdateStacks);
+            stackHandler.Init(mainCanvas, this, null,callUpdateStacks, onRemoveFromSlot, onAddedToSlot);
             stackHandler.enabled = false;
         }
 
@@ -215,9 +228,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             bool areStackItemsTheSame = false;
 
-            SlotInventoryView theSlotOfTheIncomingStack = stackIncoming.ActualSlot;
-            StackSlotHandler auxStack = stackHandler;
-
             if(stackHandler.Stack.Count > 0 && stackIncoming.Stack.Count > 0)
             {
                 if(stackHandler.Stack[0].ItemType == stackIncoming.Stack[0].ItemType)
@@ -225,6 +235,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     areStackItemsTheSame = true;
                 }
             }
+
+            SlotInventoryView theSlotOfTheIncomingStack = stackIncoming.ActualSlot;
+            StackSlotHandler auxStack = stackHandler;
 
             stackHandler = null;
 
@@ -237,16 +250,30 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackHandler = stackIncoming;
             theSlotOfTheIncomingStack.stackHandler = auxStack;
 
-            if(areStackItemsTheSame)
+            if (areStackItemsTheSame)
             {
                 stackHandler.AddItemsOnStack(theSlotOfTheIncomingStack.stackHandler.Stack);
                 theSlotOfTheIncomingStack.stackHandler.ClearStackOfItems();
             }
 
-            callUpdateStacks?.Invoke(theSlotOfTheIncomingStack.GridPosition, gridPosition);
+            callUpdateStacks?.Invoke(theSlotOfTheIncomingStack.GridPosition, gridPosition); 
         }
 
-        public void AddItemToSlot(ItemView itemToAttach)
+        public void PlaceStackOfItems(StackSlotHandler stackComing)
+        {
+            Debug.Log("Swipe de stacks");
+
+            List<ItemView> stackOfItems = new List<ItemView>();
+            stackOfItems.AddRange(stackComing.Stack);
+
+            stackComing.ClearStackOfItems();
+
+            stackHandler.AddItemsOnStack(stackOfItems);
+
+            onAddedToSlot?.Invoke(stackOfItems[0].ItemType, stackOfItems.Count, GridPosition);
+        }
+
+        public void AddItemToSlot(ItemView itemToAttach, bool generateItem)
         {
             if(blockItemsInside)
             {
@@ -257,29 +284,34 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (itemToAttach.ItemType == objectsAttach[0].ItemType)
                 {
-                    itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, allowedItems.ToArray());
+                    itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, generateItem, allowedItems.ToArray());
                 }
                 else
                 {
                     if (NextSlotFromThis != null)
                     {
-                        if (itemToAttach.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition, NextSlotFromThis.transform, allowedItems.ToArray()))
+                        if (itemToAttach.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition, NextSlotFromThis.transform, generateItem, allowedItems.ToArray()))
                         {
                             return;
                         }
                     }
                     else
                     {
-                        itemToAttach.AttachToSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, allowedItems.ToArray());
+                        itemToAttach.AttachToSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, generateItem, allowedItems.ToArray());
                     }
                 }
             }
             else
             {
-                itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, allowedItems.ToArray());
+                itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, generateItem, allowedItems.ToArray());
             }
 
             ViewAddToSlot(itemToAttach);
+        }
+
+        public void RemoveItemsFromSlot()
+        {
+            onRemoveFromSlot?.Invoke(GridPosition, objectsAttach.Count, true);
         }
 
         public void RemoveItemFromSlot(ItemView item)
@@ -363,7 +395,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             for (int i = 0; i < difference; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots);
+                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots, onRemoveFromSlot, onAddedToSlot);
 
                 if (!objectsAttach.Contains(newItem))
                 {
@@ -399,7 +431,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             for (int i = 0; i < difference; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, stackHandler.ActualSlot.SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots);
+                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots, onRemoveFromSlot, onAddedToSlot);
 
                 if (!allItemsToAdd.Contains(newItem))
                 {
@@ -534,7 +566,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if(!objectsAttach.Contains(allItemsFromStack[i]))
                 {
-                    AddItemToSlot(allItemsFromStack[i]);
+                    AddItemToSlot(allItemsFromStack[i], true);
                 }
                 else
                 {

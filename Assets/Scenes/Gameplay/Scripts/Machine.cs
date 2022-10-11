@@ -8,8 +8,7 @@ namespace ProyectG.Gameplay.Objects{
 	#region CLASSES
 	public class Machine : MonoBehaviour
 	{
-
-		#region EXPOSED_FIELDS
+        #region EXPOSED_FIELDS
 		#endregion
 
 		#region PRIVATE_FIELDS

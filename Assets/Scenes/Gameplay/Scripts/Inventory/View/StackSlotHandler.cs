@@ -21,6 +21,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private float speedFollow = 0;
         [SerializeField] private TextMeshProUGUI stackAmount = null;
         [SerializeField] private bool useLerpAnimations = true;
+        public bool isMachineStack = false;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -41,9 +42,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private (Vector2,Vector2Int,Transform) slotPositionAttached = default;
         private (Vector2,Vector2Int,Transform) lastslotPositionAttached = default;
 
+        private Action<Vector2Int, int, bool> onMoveStackToExternalSlot = null;
+        private Action<string, int, Vector2Int> onAddedStackFromOutside = null;
+
         private Action<Vector2Int, Vector2Int> onEndedChangeOfSlot = null;
 
         private SlotInventoryView actualSlot = null;
+        private MachineSlotView actualMachineSlot = null;
 
         float timeToGoBackSlot = 0.5f;
         float time = 0;
@@ -59,12 +64,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public int SizeStack => stackedItems.Count;
         public List<ItemView> Stack { get { return stackedItems; } }
         public SlotInventoryView ActualSlot { get { return actualSlot; } set { actualSlot = value; } }
+        public MachineSlotView ActualMachineSlot { get { return actualMachineSlot; } set { actualMachineSlot = value; } }
         public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
         public (Vector2, Vector2Int, Transform) LastslotPositionAttached { get { return lastslotPositionAttached; } }
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached, Action<Vector2Int,Vector2Int> onStackMoved)
+        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached, MachineSlotView machineSlot, Action<Vector2Int,Vector2Int> onStackMoved,
+            Action<Vector2Int, int, bool> onMoveStackToExternalSlot = null, Action<string, int, Vector2Int> onAddedStackFromOutside = null)
         {
             onEndedChangeOfSlot = onStackMoved;
 
@@ -75,11 +82,24 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             myCollider = GetComponent<BoxCollider2D>();
 
-            slotPositionAttached.Item1 = slotAttached.SlotPosition;
-            slotPositionAttached.Item2 = slotAttached.GridPosition;
-            slotPositionAttached.Item3 = slotAttached.transform;
+            this.onMoveStackToExternalSlot = onMoveStackToExternalSlot;
+            this.onAddedStackFromOutside = onAddedStackFromOutside;
 
-            actualSlot = slotAttached;
+            if(slotAttached != null)
+            {
+                slotPositionAttached.Item1 = slotAttached.SlotPosition;
+                slotPositionAttached.Item2 = slotAttached.GridPosition;
+                slotPositionAttached.Item3 = slotAttached.transform;
+
+                actualSlot = slotAttached;
+            }
+            else
+            {
+                slotPositionAttached.Item1 = machineSlot.SlotPosition;
+                slotPositionAttached.Item3 = machineSlot.transform;
+
+                actualMachineSlot = machineSlot;
+            }
 
             thisRect = transform as RectTransform;
 
@@ -87,7 +107,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (!isAttachedToSlot)
             {
-                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3, true);
                 isAttachedToSlot = true;
             }
         }
@@ -244,14 +264,34 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
                 {
-                    if (slotFromItem != ActualSlot)
-                    { 
-                        slotFromItem.SwipeStacks(this);
+                    if(!isMachineStack)
+                    {
+                        if (slotFromItem != ActualSlot)
+                        { 
+                            slotFromItem.SwipeStacks(this);
 
-                        actualSlot = slotFromItem;
-
-                        return true;
+                            actualSlot = slotFromItem;
+                        }
                     }
+                    else
+                    {
+                        slotFromItem.PlaceStackOfItems(this);
+
+                        ReturnToMachineSlot();
+                    }
+
+                    return true;
+                }
+                else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))
+                {
+                    //Update the inventory model to make him now that all items where moved somelse on other external slot.
+                    machineSlot.PlaceStackOfItems(this);
+
+                    actualSlot.RemoveItemsFromSlot();
+
+                    SwipeStackSlots(actualSlot);
+
+                    return true;
                 }
             }
 
@@ -259,17 +299,21 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 SwipeStackSlots(actualSlot);
             }
+            if(isMachineStack)
+            {
+                ReturnToMachineSlot();
+            }
 
             Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
 
             return false;
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent, params ItemType[] allowedTypes)
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos,Transform parent, bool generateItem ,params ItemType[] allowedTypes)
         {
             if (parent == null)
             {
-                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
+                AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3, true);
                 return false;
             }
 
@@ -289,7 +333,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     StartCoroutine(AttachToPosition(positionSlot, () =>
                     {
-                        onEndedChangeOfSlot?.Invoke(lastslotPositionAttached.Item2, slotPositionAttached.Item2);
+                        if(generateItem)
+                        {
+                            onEndedChangeOfSlot?.Invoke(lastslotPositionAttached.Item2, slotPositionAttached.Item2);
+                        }
 
                         transform.SetParent(parent);
                         myCollider.enabled = true;
@@ -298,7 +345,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
                 else
                 {
-                    onEndedChangeOfSlot?.Invoke(lastslotPositionAttached.Item2, slotPositionAttached.Item2);
+                    if(generateItem)
+                    {
+                        onEndedChangeOfSlot?.Invoke(lastslotPositionAttached.Item2, slotPositionAttached.Item2);
+                    }
 
                     transform.position = positionSlot;
                     transform.SetParent(parent);
@@ -362,6 +412,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             return !onRestoreDrag ? true : false;
         }
 
+        public void ReturnToMachineSlot()
+        {
+            transform.SetParent(actualMachineSlot.transform);
+
+            transform.position = actualMachineSlot.SlotPosition;
+        }
         #endregion
 
         #region CORUTINES

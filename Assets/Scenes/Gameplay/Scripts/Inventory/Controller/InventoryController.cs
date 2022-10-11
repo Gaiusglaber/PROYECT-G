@@ -39,6 +39,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         #region PROPERTIES
         public bool StackTake { get { return stackTake; } }
         public InventoryModel Model => inventoryModel;
+        public Action<string, int, Vector2Int> OnAddItems { get { return GenerateItems; } } 
+        public Action<Vector2Int, int, bool> OnRemoveItems { get { return RemoveItems; } } 
         #endregion
 
         #region PUBLIC_METHODS
@@ -216,7 +218,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
-            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
+            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots,
+                OnRemoveItems, OnAddItems); //visual del inventario
 
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);
