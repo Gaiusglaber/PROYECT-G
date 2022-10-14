@@ -49,6 +49,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private (Vector2, Vector2Int ,Transform) slotPositionAttached = default;
         private Vector2Int slotGridPosition = default;
 
+        private MachineSlotView machineSlot = null;
         private SlotInventoryView mySlot = null;
 
         private string itemId;
@@ -61,6 +62,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PROPERTIES
+        public MachineSlotView MachineSlot { get { return machineSlot; } set { machineSlot = value; } }
         public bool WasAttachedOnMachine { get { return wasAttachedOnMachine; } set { wasAttachedOnMachine = value; } }
         public string ItemType { get { return itemId; } }
         public bool Dragged => isDragging;
@@ -118,6 +120,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
             else
             {
+                this.machineSlot = machineSlot;
+
                 slotPositionAttached.Item1 = machineSlot.SlotPosition;
                 slotPositionAttached.Item2 = new Vector2Int(-1, -1);
                 slotPositionAttached.Item3 = machineSlot.transform;
@@ -127,7 +131,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 isAttachedToSlot = true;
 
                 mySlot = null;
-                PlaceInMachineSlot(machineSlot.SlotPosition, machineSlot.transform);
+                PlaceInMachineSlot(machineSlot.SlotPosition, machineSlot.transform, machineSlot);
 
                 wasAttachedOnMachine = true;
             }
@@ -293,11 +297,25 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                         if (!wasAttachedOnMachine)
                         {
-                            slotFromItem.PlaceItemOnSlotInternal(this, true);
+                            if(!slotFromItem.PlaceItemOnSlotInternal(this, true))
+                            {
+                                if (mySlot != null)
+                                {
+                                    mySlot.PlaceItemOnSlotInternal(this, false);
+                                    return false;
+                                }
+                            }
                         }
                         else
                         {
-                            slotFromItem.PlaceItemOnSlotInternal(this, false);
+                            if(!slotFromItem.PlaceItemOnSlotInternal(this, false))
+                            {
+                                if (machineSlot != null)
+                                {
+                                    machineSlot.AddItemToSlot(this);
+                                    return false;
+                                }
+                            }
 
                             onAddedSomeItemFromExtraSlot?.Invoke(itemId, 1, slotFromItem.GridPosition);
 
@@ -310,23 +328,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         }
 
                         Debug.Log("Slot " + slotFromItem.GridPosition);
-                        /*if(mySlot != null)
-                        {
-                            
-                        }
-                        else
-                        {
-                            *//*mySlot = slotFromItem;
-
-                            slotGridPosition = mySlot.GridPosition;
-                            slotPositionAttached = (mySlot.SlotPosition, mySlot.GridPosition, mySlot.transform);
-
-                            slotFromItem.AddItemToSlot(this, false);
-
-                            onAddedSomeItemFromExtraSlot.Invoke(itemId, 1, slotFromItem.GridPosition);
-
-                            Debug.Log("Added item that is coming from machine slot");*//*
-                        }*/
+                        
                         return true;
                     }
                     else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))
@@ -354,10 +356,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             return false;
         }
 
-        public void PlaceInMachineSlot(Vector2 positionSlot, Transform parent, params ItemType[] allowedTypes)
+        public void PlaceInMachineSlot(Vector2 positionSlot, Transform parent, MachineSlotView machineSlot,params ItemType[] allowedTypes)
         {
             if (!CheckItemType(allowedTypes))
                 return;
+
+            this.machineSlot = machineSlot;
 
             if (!isDragging)
             {

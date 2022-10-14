@@ -72,16 +72,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (itemToAttach.ItemType == objectsAttach[0].ItemType)
                 {
-                    itemToAttach.PlaceInMachineSlot(SlotPosition, transform, allowedItems.ToArray());
+                    itemToAttach.PlaceInMachineSlot(SlotPosition, transform, this,allowedItems.ToArray());
                 }
                 else
                 {
-                    itemToAttach.PlaceInMachineSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item3, allowedItems.ToArray());
+                    itemToAttach.PlaceInMachineSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item3, null,allowedItems.ToArray());
                 }
             }
             else
             {
-                itemToAttach.PlaceInMachineSlot(SlotPosition, transform, allowedItems.ToArray());
+                itemToAttach.PlaceInMachineSlot(SlotPosition, transform, this, allowedItems.ToArray());
             }
 
             ViewAddToSlot(itemToAttach);
@@ -156,6 +156,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 if (stackOfItems[i] != null)
                 {
                     stackOfItems[i].WasAttachedOnMachine = true;
+                    stackOfItems[i].MachineSlot = this;
                 }
             }
             stackComing.ClearStackOfItems();

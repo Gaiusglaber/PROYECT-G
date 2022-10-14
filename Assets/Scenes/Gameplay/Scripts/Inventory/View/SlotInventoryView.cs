@@ -283,6 +283,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     if (stackOfItems[i].WasAttachedOnMachine)
                     {
                         stackOfItems[i].WasAttachedOnMachine = false;
+                        stackOfItems[i].MachineSlot = null;
                     }
                 }
             }
@@ -320,7 +321,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             ViewAddToSlot(itemToAttach);
         }
 
-        public void PlaceItemOnSlotInternal(ItemView itemToAttach, bool swipeItems)
+        public bool PlaceItemOnSlotInternal(ItemView itemToAttach, bool swipeItems)
         {
             if(blockItemsInside)
             {
@@ -335,8 +336,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
                 else
                 {
-                    itemToAttach.AttachToSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, swipeItems, allowedItems.ToArray());
-                   
+                    /*if(itemToAttach.AttachToSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, swipeItems, allowedItems.ToArray()))
+                    {
+                    }*/
+                    
+                    return false;
+
                     /*if (NextSlotFromThis != null)
                     {
                         if (itemToAttach.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition, NextSlotFromThis.transform, generateItem, allowedItems.ToArray()))
@@ -356,6 +361,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             ViewAddToSlot(itemToAttach);
+
+            return true;
         }
 
         public void RemoveItemsFromSlot()
