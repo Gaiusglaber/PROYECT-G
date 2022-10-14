@@ -26,10 +26,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [SerializeField] private Volume volume = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
-
-        //TEST
-        [SerializeField] private Canvas mainCanvas = null;
-        [SerializeField] private MachineSlotView falopa = null;
         #endregion
 
         #region PRIVATE_FIELDS

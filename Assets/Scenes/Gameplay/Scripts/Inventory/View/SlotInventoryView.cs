@@ -451,7 +451,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             for (int i = 0; i < difference; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots, onRemoveFromSlot, onAddedToSlot);
+                newItem.GenerateItem(mainCanvas, this, null, itemsTypeOnSlotLogic, callUpdateSlots, onRemoveFromSlot, onAddedToSlot);
 
                 if (!objectsAttach.Contains(newItem))
                 {
@@ -487,7 +487,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             for (int i = 0; i < difference; i++)
             {
                 ItemView newItem = Instantiate(prefabItemView, stackHandler.ActualSlot.SlotPosition, Quaternion.identity, transform).GetComponent<ItemView>();
-                newItem.GenerateItem(mainCanvas, this, itemsTypeOnSlotLogic, callUpdateSlots, onRemoveFromSlot, onAddedToSlot);
+                newItem.GenerateItem(mainCanvas, this, null,itemsTypeOnSlotLogic, callUpdateSlots, onRemoveFromSlot, onAddedToSlot);
 
                 if (!allItemsToAdd.Contains(newItem))
                 {

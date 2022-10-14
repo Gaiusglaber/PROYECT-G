@@ -27,7 +27,9 @@ public class Furnace : Machine
 
     private Action OnItemProcessed = null;
     private Action OnFuelEnergyBurned = null;
+
     private Action OnFuelItemConsumed = null;
+    private Action OnItemConsumed = null;
 
     private ItemModel itemPorcessed = null;
 
@@ -41,8 +43,10 @@ public class Furnace : Machine
 
         uiFurnace.onCancelProcess += ResetProcessing;
         OnItemProcessed = uiFurnace.OnEndProcess;
+
         OnFuelEnergyBurned = uiFurnace.OnEndBurnOfFuel;
         OnFuelItemConsumed = uiFurnace.OnConsumeFuel;
+        OnItemConsumed = uiFurnace.OnConsumeItem;
 
         isProcessing = false;
         timerProcess = 0.0f;        
@@ -179,5 +183,7 @@ public class Furnace : Machine
         uiFurnace.SetDurationProcess(timeToProcessObject);
 
         energyHandler.SetCostOfProcessDecrement(itemPorcessed.energyCost, itemPorcessed.costInterval);
+
+        OnItemConsumed?.Invoke();
     }
 }

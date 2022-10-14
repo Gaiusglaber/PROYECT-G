@@ -69,7 +69,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region INITIALIZATION
-        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, ItemModel itemData = null, Action<Vector2Int,Vector2Int> onEndDrag = null,
+        public void GenerateItem(Canvas mainCanvas, SlotInventoryView slotAttached, MachineSlotView machineSlot,ItemModel itemData = null, Action<Vector2Int,Vector2Int> onEndDrag = null,
             Action<Vector2Int, int, bool> onMoveItemToExternalSlot = null, Action<string, int, Vector2Int> onAddedItemFromOutside = null)
         {
             onEndedChangeOfSlot = onEndDrag;
@@ -101,18 +101,36 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             positionLerper = new Vector3Lerper(followSpeed * 0.5f, Vector3Lerper.SMOOTH_TYPE.STEP_SMOOTHER);
 
-            slotPositionAttached.Item1 = slotAttached.SlotPosition;
-            slotPositionAttached.Item2 = slotAttached.GridPosition;
-            slotPositionAttached.Item3 = slotAttached.transform;
+            if(slotAttached != null)
+            {
+                slotPositionAttached.Item1 = slotAttached.SlotPosition;
+                slotPositionAttached.Item2 = slotAttached.GridPosition;
+                slotPositionAttached.Item3 = slotAttached.transform;
 
-            //Aplica el lerp del nuevo item creado al slot al que fue enviado
-            itemInitialized = false;
-            isAttachedToSlot = true;
+                //Aplica el lerp del nuevo item creado al slot al que fue enviado
+                itemInitialized = false;
+                isAttachedToSlot = true;
 
-            mySlot = slotAttached;
-            AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition,slotAttached.gameObject.transform, false);
+                mySlot = slotAttached;
+                AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition,slotAttached.gameObject.transform, false);
 
-            wasAttachedOnMachine = false;
+                wasAttachedOnMachine = false;
+            }
+            else
+            {
+                slotPositionAttached.Item1 = machineSlot.SlotPosition;
+                slotPositionAttached.Item2 = new Vector2Int(-1, -1);
+                slotPositionAttached.Item3 = machineSlot.transform;
+
+                //Aplica el lerp del nuevo item creado al slot al que fue enviado
+                itemInitialized = false;
+                isAttachedToSlot = true;
+
+                mySlot = null;
+                PlaceInMachineSlot(machineSlot.SlotPosition, machineSlot.transform);
+
+                wasAttachedOnMachine = true;
+            }
         }
 
         public void ClearSlot()
@@ -268,36 +286,37 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 {
                     if(hit.collider.TryGetComponent(out SlotInventoryView slotFromItem))
                     {
-                        if(mySlot != null)
+                        if (wasAttachedOnMachine)
                         {
-                            if (wasAttachedOnMachine)
-                            {
-                                Debug.Log("WAS ON MACHINE");
-                            }
+                            Debug.Log("WAS ON MACHINE");
+                        }
 
-                            if (!wasAttachedOnMachine)
-                            {
-                                slotFromItem.PlaceItemOnSlotInternal(this, true);
-                            }
-                            else
-                            {
-                                slotFromItem.PlaceItemOnSlotInternal(this, false);
-
-                                onAddedSomeItemFromExtraSlot?.Invoke(itemId, 1, slotFromItem.GridPosition);
-
-                                wasAttachedOnMachine = false;
-                            }
-
-                            if (mySlot != slotFromItem)
-                            {
-                                mySlot = slotFromItem;
-                            }
-
-                            Debug.Log("Slot " + slotFromItem.GridPosition);
+                        if (!wasAttachedOnMachine)
+                        {
+                            slotFromItem.PlaceItemOnSlotInternal(this, true);
                         }
                         else
                         {
-                            /*mySlot = slotFromItem;
+                            slotFromItem.PlaceItemOnSlotInternal(this, false);
+
+                            onAddedSomeItemFromExtraSlot?.Invoke(itemId, 1, slotFromItem.GridPosition);
+
+                            wasAttachedOnMachine = false;
+                        }
+
+                        if (mySlot != slotFromItem)
+                        {
+                            mySlot = slotFromItem;
+                        }
+
+                        Debug.Log("Slot " + slotFromItem.GridPosition);
+                        /*if(mySlot != null)
+                        {
+                            
+                        }
+                        else
+                        {
+                            *//*mySlot = slotFromItem;
 
                             slotGridPosition = mySlot.GridPosition;
                             slotPositionAttached = (mySlot.SlotPosition, mySlot.GridPosition, mySlot.transform);
@@ -306,8 +325,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                             onAddedSomeItemFromExtraSlot.Invoke(itemId, 1, slotFromItem.GridPosition);
 
-                            Debug.Log("Added item that is coming from machine slot");*/
-                        }
+                            Debug.Log("Added item that is coming from machine slot");*//*
+                        }*/
                         return true;
                     }
                     else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))

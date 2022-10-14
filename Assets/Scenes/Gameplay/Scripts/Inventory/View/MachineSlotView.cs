@@ -56,6 +56,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackHandler.Init(mainCanvas, null, this, callUpdateStacks);
         }
 
+        public void AddItemToStack(ItemView itemToAttach)
+        {
+            stackHandler.AddItemsOnStack(new List<ItemView> { itemToAttach });
+        }
+
         public void AddItemToSlot(ItemView itemToAttach)
         {
             if (blockItemsInside)
