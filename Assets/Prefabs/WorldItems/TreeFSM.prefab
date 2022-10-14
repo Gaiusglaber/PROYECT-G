@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeSecondStage: 5
+  amountPerFarm: 25
   woodPrefab: {fileID: 4195429864427930634, guid: d5ab24603e3caa74da4a544efa2e21b7, type: 3}
   spriteCycle:
   - {fileID: 4658587280046506220, guid: 7770167ec99ece84db18f3558926f1b4, type: 3}

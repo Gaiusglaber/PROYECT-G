@@ -602,9 +602,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             for (int i = 0; i < objectsAttach.Count; i++)
             {
-                if (objectsAttach[i].transform.parent != newParent)
+                if(objectsAttach[i] != null)
                 {
-                    allWithNewParent = false;
+                    if (objectsAttach[i].transform.parent != newParent)
+                    {
+                        allWithNewParent = false;
+                    }
                 }
             }
 

@@ -166,15 +166,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             for (int i = 0; i < listOfItems.Count; i++)
             {
-                stackedItems.Add(listOfItems[i]);
+                if(listOfItems[i] != null)
+                {
+                    stackedItems.Add(listOfItems[i]);
 
-                listOfItems[i].transform.SetParent(transform);
-                listOfItems[i].transform.position = transform.position;
+                    listOfItems[i].transform.SetParent(transform);
+                    listOfItems[i].transform.position = transform.position;
 
-                listOfItems[i].SwitchStateItem(true);
-                listOfItems[i].SwitchStateCollider(false);
-
-                //listOfItems[i].ClearSlot();
+                    listOfItems[i].SwitchStateItem(true);
+                    listOfItems[i].SwitchStateCollider(false);
+                }
             }
             
             stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;

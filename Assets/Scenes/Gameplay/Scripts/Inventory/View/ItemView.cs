@@ -346,9 +346,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
 
-            if (mySlot != null)
+            if (!wasAttachedOnMachine)
             {
-                mySlot.PlaceItemOnSlotInternal(this, false);
+                if (mySlot != null)
+                {
+                    mySlot.PlaceItemOnSlotInternal(this, false);
+                }
+            }
+            else
+            {
+                if (machineSlot != null)
+                {
+                    machineSlot.AddItemToSlot(this);
+                }
             }
 
             Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
