@@ -146,12 +146,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
         #region OTHERS
         //USE THIS TO ATTACH AN ITEM/ITEMS TO THE INVENTORY
-        public void AttachItemsToSlot(List<ItemModel> stackOfItems, Vector2Int gridPosition = default)
+        public void AttachItemsToSlot(List<ItemModel> stackOfItems, Vector2Int gridPosition = default, bool updateInventoryView = true)
         {
             if(gridPosition != default)
             {
                 Debug.Log("Custom Grid Position");
-                GetSlot(gridPosition).PlaceItems(stackOfItems);
+                GetSlot(gridPosition).PlaceItems(stackOfItems, updateInventoryView);
                 return;
             }
 
@@ -161,7 +161,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             {
                 Debug.Log("Grid Position with this type of item");
 
-                GetSlot(slotWithThisItem).PlaceItems(stackOfItems);
+                GetSlot(slotWithThisItem).PlaceItems(stackOfItems, updateInventoryView);
                 return;
             }
 
@@ -171,7 +171,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
             {
                 Debug.Log("Empty Grid Position");
 
-                GetSlot(emptySlot).PlaceItems(stackOfItems);
+                GetSlot(emptySlot).PlaceItems(stackOfItems, updateInventoryView);
                 return;
             }
 
@@ -223,7 +223,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
         public void DeattachItemsFromSlot(Vector2Int gridPosition, int amount = 0, bool allItems = true)
         {
-            GetSlot(gridPosition).RemoveItems(amount, allItems);
+            if(GetSlot(gridPosition) != null)
+            {
+                GetSlot(gridPosition).RemoveItems(amount, allItems);
+            }
         }
 
         /// <summary>
@@ -238,7 +241,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         {
             if (originalSlot == newSlot)
             {
-                Debug.Log("Mismo slot");
                 return;
             }
 

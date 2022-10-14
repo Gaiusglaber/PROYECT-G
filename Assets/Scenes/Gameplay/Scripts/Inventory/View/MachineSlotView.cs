@@ -20,12 +20,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private BoxCollider2D colliderSprite = null;
         [SerializeField] private bool blockItemsInside = false;
         [SerializeField] private TextMeshProUGUI amountOutStack = null;
-        [SerializeField] private TextMeshProUGUI debugGridPos = null;
         [SerializeField] private StackSlotHandler stackHandler = null;
-        [SerializeField] private Canvas mainCanvas = null;
-
-        [Header("TESTING")]
-        [SerializeField] private InventoryController inventoryController = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -37,28 +32,30 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         
         private bool attachedStackDone = false;
 
+        [SerializeField] private Canvas mainCanvas = null;
+        
         private List<ItemType> allowedItems = new List<ItemType>();
         #endregion
 
         #region PROPERTIES
+        public bool SlotIsEmpty { get { return objectsAttach.Count <= 0; } }
+        public StackSlotHandler StackOfItems { get { return stackHandler; } }
+        public List<ItemView> ObjectsAttach { get { return objectsAttach; } }
         public Vector2 SlotPosition { get { return transform.position; } set { transform.position = value; } }
         #endregion
 
-        #region UNITY_CALLS
-        private void Start()
-        {
-            stackHandler.Init(mainCanvas, null, this, callUpdateStacks);
-
-            if (inventoryController == null)
-            {
-                return;
-            }
-
-            inventoryController.OnInteractionChange += SetOnInteractionInventoryChange;
-        }
-        #endregion
-
         #region PUBLIC_METHODS
+        public void Init(Canvas mainCanvas, params ItemType[] allowedTypes)
+        {
+            this.mainCanvas = mainCanvas;
+
+            allowedItems.Clear();
+
+            allowedItems.AddRange(allowedTypes);
+
+            stackHandler.Init(mainCanvas, null, this, callUpdateStacks);
+        }
+
         public void AddItemToSlot(ItemView itemToAttach)
         {
             if (blockItemsInside)
@@ -87,7 +84,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void SetOnInteractionInventoryChange(bool stackIntraction)
         {
-            if (!gameObject.activeInHierarchy)
+            if (!gameObject.activeInHierarchy || !stackHandler.isMachineStack)
                 return;
 
             if (stackIntraction)
@@ -99,12 +96,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 if (!attachedStackDone)
                 {
-                    SaveItemsInStack();
-                    StartCoroutine(AttachItemsToParent(true, stackHandler.transform, () =>
+                    if(stackHandler.isMachineStack)
                     {
-                        objectsAttach.Clear();
-                    }));
-                    attachedStackDone = true;
+                        SaveItemsInStack();
+                        StartCoroutine(AttachItemsToParent(true, stackHandler.transform, () =>
+                        {
+                            objectsAttach.Clear();
+                        }));
+                        attachedStackDone = true;
+
+                        Debug.Log("CHANGE INTERACTION TYPE == STACK: MACHINE SLOT PA");
+                    }
                 }
 
                 amountOutStack.text = string.Empty;
@@ -117,17 +119,22 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         if (stackHandler.HasEndedRestoreDrag())
                         {
-                            RestoreItemsFromStack();
-                            StartCoroutine(AttachItemsToParent(false, transform, () =>
+                            if(stackHandler.isMachineStack)
                             {
-                                if (stackHandler.enabled)
+                                RestoreItemsFromStack();
+                                StartCoroutine(AttachItemsToParent(false, transform, () =>
                                 {
-                                    stackHandler.enabled = false;
-                                }
-                            }));
-                            attachedStackDone = false;
+                                    if (stackHandler.enabled)
+                                    {
+                                        stackHandler.enabled = false;
+                                    }
+                                }));
+                                attachedStackDone = false;
+                            }
                         }
                     }
+
+                    Debug.Log("CHANGE INTERACTION TYPE == NO STACK: MACHINE SLOT PA");
                 }
             }
         }
@@ -139,6 +146,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             List<ItemView> stackOfItems = new List<ItemView>();
             stackOfItems.AddRange(stackComing.Stack);
 
+            for (int i = 0; i < stackOfItems.Count; i++)
+            {
+                if (stackOfItems[i] != null)
+                {
+                    stackOfItems[i].WasAttachedOnMachine = true;
+                }
+            }
             stackComing.ClearStackOfItems();
 
             stackHandler.AddItemsOnStack(stackOfItems);
@@ -157,9 +171,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             amountOutStack.text = objectsAttach.Count > 0 ? objectsAttach.Count.ToString() : string.Empty;
         }
 
-        public void RemoveStackFromSlot()
+        public void RemoveItemFromStack(ItemView item)
         {
+            if (stackHandler.Stack.Count < 1)
+            {
+                return;
+            }
 
+            stackHandler.RemoveItemFromStack(item);
         }
         #endregion
 

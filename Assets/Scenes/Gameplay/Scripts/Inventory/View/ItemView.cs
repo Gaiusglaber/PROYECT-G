@@ -53,12 +53,15 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private string itemId;
 
+        private bool wasAttachedOnMachine = false;
+
         public ItemType itemViewType;
 
         private RectTransform thisRect = null;
         #endregion
 
         #region PROPERTIES
+        public bool WasAttachedOnMachine { get { return wasAttachedOnMachine; } set { wasAttachedOnMachine = value; } }
         public string ItemType { get { return itemId; } }
         public bool Dragged => isDragging;
 
@@ -107,7 +110,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             isAttachedToSlot = true;
 
             mySlot = slotAttached;
-            AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition,slotAttached.gameObject.transform, true);
+            AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition,slotAttached.gameObject.transform, false);
+
+            wasAttachedOnMachine = false;
+        }
+
+        public void ClearSlot()
+        {
+            mySlot = null;
         }
         #endregion
 
@@ -260,9 +270,25 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         if(mySlot != null)
                         {
-                            slotFromItem.AddItemToSlot(this, true);
+                            if (wasAttachedOnMachine)
+                            {
+                                Debug.Log("WAS ON MACHINE");
+                            }
 
-                            if(mySlot != slotFromItem)
+                            if (!wasAttachedOnMachine)
+                            {
+                                slotFromItem.PlaceItemOnSlotInternal(this, true);
+                            }
+                            else
+                            {
+                                slotFromItem.PlaceItemOnSlotInternal(this, false);
+
+                                onAddedSomeItemFromExtraSlot?.Invoke(itemId, 1, slotFromItem.GridPosition);
+
+                                wasAttachedOnMachine = false;
+                            }
+
+                            if (mySlot != slotFromItem)
                             {
                                 mySlot = slotFromItem;
                             }
@@ -271,13 +297,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                         }
                         else
                         {
+                            /*mySlot = slotFromItem;
+
+                            slotGridPosition = mySlot.GridPosition;
+                            slotPositionAttached = (mySlot.SlotPosition, mySlot.GridPosition, mySlot.transform);
+
                             slotFromItem.AddItemToSlot(this, false);
 
-                            onAddedSomeItemFromExtraSlot?.Invoke(itemId ,1, slotFromItem.GridPosition);
+                            onAddedSomeItemFromExtraSlot.Invoke(itemId, 1, slotFromItem.GridPosition);
 
-                            mySlot = slotFromItem;
-
-                            Debug.Log("Added item that is coming from machine slot");
+                            Debug.Log("Added item that is coming from machine slot");*/
                         }
                         return true;
                     }
@@ -285,7 +314,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         machineSlot.AddItemToSlot(this);
 
-                        mySlot = null;
+                        slotGridPosition = new Vector2Int(-1, -1);
+                        slotPositionAttached = (machineSlot.SlotPosition, slotGridPosition, machineSlot.transform);
+
+                        wasAttachedOnMachine = true;
 
                         Debug.Log("Item moved to slot machine " + machineSlot);
                         return true;
@@ -295,7 +327,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (mySlot != null)
             {
-                mySlot.AddItemToSlot(this, true);
+                mySlot.PlaceItemOnSlotInternal(this, false);
             }
 
             Debug.DrawRay(rayFromThisItem.origin, rayFromThisItem.direction * 50f, Color.green);
@@ -310,7 +342,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             if (!isDragging)
             {
-                Vector2Int positionItemMove = slotPositionAttached.Item2;
+                Vector2Int positionItemMove = new Vector2Int(-1,-1);
 
                 transform.position = positionSlot;
 
@@ -325,7 +357,27 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
-        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, bool generateItem,params ItemType[] allowedTypes)
+        public void PlaceOnSlotAgain(Vector2 positionSlot, Vector2Int gridPos, Transform parent, params ItemType[] allowedTypes)
+        {
+            if (!CheckItemType(allowedTypes))
+                return;
+
+            if (!isDragging)
+            {
+                transform.position = positionSlot;
+
+                if (itemInitialized)
+                {
+                    onAddedSomeItemFromExtraSlot.Invoke(itemId, 1, gridPos);    //Remove item from player inventory
+                }
+
+                transform.SetParent(parent);
+                myCollider.enabled = true;
+                itemInitialized = true;
+            }
+        }
+
+        public bool AttachToSlot(Vector2 positionSlot, Vector2Int gridPos, Transform parent, bool swipeItem,params ItemType[] allowedTypes)
         {
             if (!CheckItemType(allowedTypes))
                 return false;
@@ -348,7 +400,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         if(itemInitialized)
                         {
-                            if(generateItem)
+                            if(swipeItem)
                             {
                                 onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
                             }
@@ -365,9 +417,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                     if (itemInitialized)
                     {
-                        if(generateItem)
+                        if(swipeItem)
                         {
-                            onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                            if(transform.parent != parent)
+                            {
+                                onEndedChangeOfSlot.Invoke(lastSlotPosition.Item2, slotPositionAttached.Item2);
+                            }
                         }
                     }
 

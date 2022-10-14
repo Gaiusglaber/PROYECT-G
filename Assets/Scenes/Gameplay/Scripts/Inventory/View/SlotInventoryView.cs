@@ -155,7 +155,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void SetOnInteractionInventoryChange(bool stackIntraction)
         {
-            if (!gameObject.activeInHierarchy)
+            if (!gameObject.activeInHierarchy || stackHandler.isMachineStack)
                 return;
 
             if (stackIntraction)
@@ -167,12 +167,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 if (!attachedStackDone)
                 {
-                    SaveItemsInStack();
-                    StartCoroutine(AttachItemsToParent(true, stackHandler.transform, ()=> 
+                    if(!stackHandler.isMachineStack)
                     {
-                        objectsAttach.Clear();
-                    }));
-                    attachedStackDone = true;
+                        SaveItemsInStack();
+                        StartCoroutine(AttachItemsToParent(true, stackHandler.transform, ()=> 
+                        {
+                            objectsAttach.Clear();
+                        }));
+                        attachedStackDone = true;
+
+                        Debug.Log("CHANGE INTERACTION TYPE == STACK: SLOT INVENTORY PA");
+                    }
                 }
 
                 amountOutStack.text = string.Empty;
@@ -185,17 +190,22 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     {
                         if (stackHandler.HasEndedRestoreDrag())
                         {
-                            RestoreItemsFromStack();
-                            StartCoroutine(AttachItemsToParent(false, transform, () =>
+                            if (!stackHandler.isMachineStack)
                             {
-                                if (stackHandler.enabled)
+                                RestoreItemsFromStack();
+                                StartCoroutine(AttachItemsToParent(false, transform, () =>
                                 {
-                                    stackHandler.enabled = false;
-                                }
-                            }));
-                            attachedStackDone = false;
+                                    if (stackHandler.enabled)
+                                    {
+                                        stackHandler.enabled = false;
+                                    }
+                                }));
+                                attachedStackDone = false;
+                            }
                         }
                     }
+
+                    Debug.Log("CHANGE INTERACTION TYPE == NO STACK: SLOT INVENTORY PA");
                 }
             }
         }
@@ -266,6 +276,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             List<ItemView> stackOfItems = new List<ItemView>();
             stackOfItems.AddRange(stackComing.Stack);
 
+            for (int i = 0; i < stackOfItems.Count; i++)
+            {
+                if (stackOfItems[i] != null)
+                {
+                    if (stackOfItems[i].WasAttachedOnMachine)
+                    {
+                        stackOfItems[i].WasAttachedOnMachine = false;
+                    }
+                }
+            }
+
             stackComing.ClearStackOfItems();
 
             stackHandler.AddItemsOnStack(stackOfItems);
@@ -273,7 +294,33 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             onAddedToSlot?.Invoke(stackOfItems[0].ItemType, stackOfItems.Count, GridPosition);
         }
 
-        public void AddItemToSlot(ItemView itemToAttach, bool generateItem)
+        public void PlaceItemOnSlotExternal(ItemView itemToAttach)
+        {
+            if (blockItemsInside)
+            {
+                itemToAttach.SwitchStateItem(true);
+            }
+
+            if (objectsAttach.Count > 1)
+            {
+                if (itemToAttach.ItemType == objectsAttach[0].ItemType)
+                {
+                    itemToAttach.PlaceOnSlotAgain(SlotPosition, GridPosition, transform, allowedItems.ToArray());
+                }
+                else
+                {
+                    itemToAttach.PlaceOnSlotAgain(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, allowedItems.ToArray());
+                }
+            }
+            else
+            {
+                itemToAttach.PlaceOnSlotAgain(SlotPosition, GridPosition, transform, allowedItems.ToArray());
+            }
+
+            ViewAddToSlot(itemToAttach);
+        }
+
+        public void PlaceItemOnSlotInternal(ItemView itemToAttach, bool swipeItems)
         {
             if(blockItemsInside)
             {
@@ -284,11 +331,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if (itemToAttach.ItemType == objectsAttach[0].ItemType)
                 {
-                    itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, generateItem, allowedItems.ToArray());
+                    itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, swipeItems, allowedItems.ToArray());
                 }
                 else
                 {
-                    if (NextSlotFromThis != null)
+                    itemToAttach.AttachToSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, swipeItems, allowedItems.ToArray());
+                   
+                    /*if (NextSlotFromThis != null)
                     {
                         if (itemToAttach.AttachToSlot(NextSlotPosition, NextSlotFromThis.GridPosition, NextSlotFromThis.transform, generateItem, allowedItems.ToArray()))
                         {
@@ -298,12 +347,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     else
                     {
                         itemToAttach.AttachToSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item2, itemToAttach.SlotPositionAttached.Item3, generateItem, allowedItems.ToArray());
-                    }
+                    }*/
                 }
             }
             else
             {
-                itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, generateItem, allowedItems.ToArray());
+                itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, swipeItems, allowedItems.ToArray());
             }
 
             ViewAddToSlot(itemToAttach);
@@ -311,7 +360,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void RemoveItemsFromSlot()
         {
-            onRemoveFromSlot?.Invoke(GridPosition, objectsAttach.Count, true);
+            if (!stackHandler.enabled)
+            {
+                onRemoveFromSlot?.Invoke(GridPosition, objectsAttach.Count, true);
+            }
+            else
+            {
+                onRemoveFromSlot?.Invoke(GridPosition, stackHandler.Stack.Count, true);
+            }
         }
 
         public void RemoveItemFromSlot(ItemView item)
@@ -566,7 +622,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 if(!objectsAttach.Contains(allItemsFromStack[i]))
                 {
-                    AddItemToSlot(allItemsFromStack[i], true);
+                    PlaceItemOnSlotInternal(allItemsFromStack[i], true);
                 }
                 else
                 {

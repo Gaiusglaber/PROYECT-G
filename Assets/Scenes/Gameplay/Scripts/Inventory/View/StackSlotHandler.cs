@@ -173,8 +173,22 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 listOfItems[i].SwitchStateItem(true);
                 listOfItems[i].SwitchStateCollider(false);
+
+                //listOfItems[i].ClearSlot();
             }
             
+            stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
+        }
+
+        public void RemoveItemFromStack(ItemView item)
+        {
+            if (stackedItems.Count > 0)
+            {
+                stackedItems.Remove(item);
+
+                Destroy(item.gameObject);
+            }
+
             stackAmount.text = SizeStack > 0 ? SizeStack.ToString() : string.Empty;
         }
 
@@ -285,6 +299,12 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))
                 {
                     //Update the inventory model to make him now that all items where moved somelse on other external slot.
+                    if (isMachineStack)
+                    {
+                        ReturnToMachineSlot();
+                        return false;
+                    }
+
                     machineSlot.PlaceStackOfItems(this);
 
                     actualSlot.RemoveItemsFromSlot();

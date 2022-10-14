@@ -19,7 +19,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private TMP_Text stackModeState = null;
 
         [SerializeField]private List<ItemType> allowedItems = null;
-
         #endregion
 
         #region PRIVATE_FIELDS
@@ -140,14 +139,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
 
-            for (int i = 0; i < inventoryModel.ExtraGridSlots.Count; i++)
+            /*for (int i = 0; i < inventoryModel.ExtraGridSlots.Count; i++)
             {
                 if(inventoryModel.ExtraGridSlots[i] != null)
                 {
                     GetSlotFromGrid(inventoryModel.ExtraGridSlots[i].GridPosition)
                         .UpdateSlotViewWithItems(inventoryModel.ExtraGridSlots[i].StackOfItems);
                 }
-            }
+            }*/
         }
 
         public void SetExtraViewSlots(List<SlotInventoryView> extendedSlots)
