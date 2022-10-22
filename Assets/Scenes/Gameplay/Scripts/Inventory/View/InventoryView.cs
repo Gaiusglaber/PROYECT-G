@@ -42,7 +42,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved)
+        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved, 
+            Action<string, bool> onHoverSelection)
         {
             parentView = parentTarget;
             maxRowsInventory = model.GridRows;
@@ -64,6 +65,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     SlotInventoryView newSlotInv = Instantiate(prefabSlots, finalWorldPosition, Quaternion.identity, parentView);
                     newSlotInv.Init(prefabItemView, mainCanvas, gridPos, false, allowedItems.ToArray());
                     newSlotInv.SetOnSomeItemMoved(this.onSomeItemMoved);
+                    newSlotInv.SetOnHoverSelection(onHoverSelection);
                     newSlotInv.SetOnSomeStackMoved(this.onSomeStackMoved);
                     onInteractionChange += newSlotInv.SetOnInteractionInventoryChange;
 

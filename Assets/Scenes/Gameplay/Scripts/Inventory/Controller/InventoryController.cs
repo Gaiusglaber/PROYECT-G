@@ -26,6 +26,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [SerializeField] private Volume volume = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
+        [SerializeField] private HoverSelection hoverSelection;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -221,7 +222,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
-            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots); //visual del inventario
+            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots, hoverSelection.ToggleHoverSelection); //visual del inventario
 
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);

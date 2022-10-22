@@ -15,7 +15,7 @@ using ProyectG.Gameplay.Objects.Inventory.Data;
 
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
-    public class StackSlotHandler : MonoBehaviour, IDraggable, ISwitchable
+    public class StackSlotHandler : MonoBehaviour, IDraggable, ISwitchable, IPointerEnterHandler, IPointerExitHandler
     {
         #region EXPOSED_FIELDS
         [SerializeField] private float speedFollow = 0;
@@ -42,6 +42,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         private (Vector2,Vector2Int,Transform) lastslotPositionAttached = default;
 
         private Action<Vector2Int, Vector2Int> onEndedChangeOfSlot = null;
+        private Action<string, bool> OnHoverSelection;
 
         private SlotInventoryView actualSlot = null;
 
@@ -61,10 +62,11 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public SlotInventoryView ActualSlot { get { return actualSlot; } set { actualSlot = value; } }
         public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
         public (Vector2, Vector2Int, Transform) LastslotPositionAttached { get { return lastslotPositionAttached; } }
+
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached, Action<Vector2Int,Vector2Int> onStackMoved)
+        public void Init(Canvas mainCanvas, SlotInventoryView slotAttached, Action<Vector2Int,Vector2Int> onStackMoved, Action<string, bool> OnHoverSelection)
         {
             onEndedChangeOfSlot = onStackMoved;
 
@@ -90,6 +92,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 AttachToSlot(slotPositionAttached.Item1, slotPositionAttached.Item2, slotPositionAttached.Item3);
                 isAttachedToSlot = true;
             }
+
+            this.OnHoverSelection = OnHoverSelection;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -390,5 +394,19 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             yield return null;
         }
         #endregion
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            OnHoverSelection.Invoke("", false);
+            Debug.Log("Exit item");
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (SizeStack <= 0)
+                return;
+            OnHoverSelection.Invoke(stackedItems[0].ItemModelView.itemDescription, true);
+            Debug.Log("Enter item");
+        }
     }
 }

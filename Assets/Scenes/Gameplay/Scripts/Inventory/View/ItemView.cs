@@ -12,7 +12,7 @@ using ProyectG.Toolbox.Lerpers;
 namespace ProyectG.Gameplay.Objects.Inventory.View
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class ItemView : MonoBehaviour, IDraggable
+    public class ItemView : MonoBehaviour, IDraggable, IPointerEnterHandler, IPointerExitHandler
     {
         #region EXPOSED_FIELDS
         [SerializeField] private float followSpeed = 0;
@@ -53,6 +53,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public ItemType itemViewType;
 
         private RectTransform thisRect = null;
+
+        private ItemModel itemModel;
         #endregion
 
         #region PROPERTIES
@@ -60,6 +62,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         public bool Dragged => isDragging;
 
         public (Vector2, Vector2Int, Transform) SlotPositionAttached { get { return slotPositionAttached; } }
+
+        public ItemModel ItemModelView { set{ itemModel = value; } get { return itemModel; } }
         #endregion
 
         #region INITIALIZATION
@@ -102,6 +106,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             mySlot = slotAttached;
             AttachToSlot(slotAttached.SlotPosition, slotAttached.GridPosition, slotAttached.gameObject.transform);
+            itemModel = itemData;
         }
         #endregion
 
@@ -368,6 +373,16 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             callbackAtEndPosition?.Invoke();
 
             yield return null;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            Debug.Log("Exit item");
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.Log("Enter item");
         }
         #endregion
     }

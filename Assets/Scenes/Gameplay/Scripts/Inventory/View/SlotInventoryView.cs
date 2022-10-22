@@ -43,6 +43,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private Action<Vector2Int,Vector2Int> callUpdateSlots = null;
         private Action<Vector2Int,Vector2Int> callUpdateStacks = null;
+        private Action<string, bool> OnHoverSelection;
 
         private Vector2Int gridPosition = default;
 
@@ -136,8 +137,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             callUpdateStacks = onSomeStackMoved;
 
-            stackHandler.Init(mainCanvas, this, callUpdateStacks);
+            stackHandler.Init(mainCanvas, this, callUpdateStacks, OnHoverSelection);
             stackHandler.enabled = false;
+        }
+
+        public void SetOnHoverSelection(Action<string, bool> OnHoverSelection)
+        {
+            this.OnHoverSelection = OnHoverSelection;
         }
 
         public void SetOnInteractionInventoryChange(bool stackIntraction)
