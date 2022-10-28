@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837668b5954a13c4bba580f206e43b3c, type: 3}
+  m_Name: conversation0
+  m_EditorClassIdentifier: 
+  id: 0
+  actors:
+  - {fileID: 11400000, guid: 0816012260e52e24592e84978351292b, type: 2}
+  lines:
+  - {fileID: 11400000, guid: de0010d57880b824d8b8a6d9f4523100, type: 2}
+  - {fileID: 11400000, guid: ba8e6e71196f78d44ab53dda5380f416, type: 2}
+  - {fileID: 11400000, guid: 3fdf83a6cfee8604faffa1470c4c219b, type: 2}
+  - {fileID: 11400000, guid: 0b3fc219167b3794eb2cdaf2ed4d14b6, type: 2}
+  - {fileID: 11400000, guid: e9ec2a9b7f84fcd4885de4777a5c3451, type: 2}
+  - {fileID: 11400000, guid: 94b2995ab180cab4a8e64c69f40d5a94, type: 2}
+  - {fileID: 11400000, guid: 65e0f87ed1cb5f743ac7edfcf4442991, type: 2}
+  - {fileID: 11400000, guid: 45c9435d4d46dcd4095ee3deb9600161, type: 2}
