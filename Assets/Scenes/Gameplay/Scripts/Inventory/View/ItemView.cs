@@ -334,15 +334,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     }
                     else if(hit.collider.TryGetComponent(out MachineSlotView machineSlot))
                     {
-                        machineSlot.AddItemToSlot(this);
+                        if(machineSlot.AddItemToSlot(this))
+                        {
+                            slotGridPosition = new Vector2Int(-1, -1);
+                            slotPositionAttached = (machineSlot.SlotPosition, slotGridPosition, machineSlot.transform);
 
-                        slotGridPosition = new Vector2Int(-1, -1);
-                        slotPositionAttached = (machineSlot.SlotPosition, slotGridPosition, machineSlot.transform);
+                            wasAttachedOnMachine = true;
 
-                        wasAttachedOnMachine = true;
-
-                        Debug.Log("Item moved to slot machine " + machineSlot);
-                        return true;
+                            Debug.Log("Item moved to slot machine " + machineSlot);
+                            
+                            return true;
+                        }
                     }
                 }
             }

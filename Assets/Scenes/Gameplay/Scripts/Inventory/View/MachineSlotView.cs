@@ -61,7 +61,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackHandler.AddItemsOnStack(new List<ItemView> { itemToAttach });
         }
 
-        public void AddItemToSlot(ItemView itemToAttach)
+        public bool AddItemToSlot(ItemView itemToAttach)
         {
             if (blockItemsInside)
             {
@@ -76,7 +76,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
                 else
                 {
-                    itemToAttach.PlaceInMachineSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item3, null,allowedItems.ToArray());
+                    return false;
+                    //itemToAttach.PlaceInMachineSlot(itemToAttach.SlotPositionAttached.Item1, itemToAttach.SlotPositionAttached.Item3, null,allowedItems.ToArray());
                 }
             }
             else
@@ -85,6 +86,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
 
             ViewAddToSlot(itemToAttach);
+
+            return true;
         }
 
         public void SetOnInteractionInventoryChange(bool stackIntraction)
@@ -144,9 +147,22 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             }
         }
 
-        public void PlaceStackOfItems(StackSlotHandler stackComing)
+        public void PlaceStackOfItems(StackSlotHandler stackComing, out bool resultPlacement)
         {
+            resultPlacement = false;
             Debug.Log("Swipe de stacks");
+
+            if (stackHandler.Stack.Count >= 1)
+            {
+                if (stackComing.Stack.Count >= 1)
+                {
+                    if (stackHandler.Stack[0].ItemType != stackComing.Stack[0].ItemType)
+                    {
+                        resultPlacement = false;
+                        return;
+                    }
+                }
+            }
 
             List<ItemView> stackOfItems = new List<ItemView>();
             stackOfItems.AddRange(stackComing.Stack);
@@ -162,6 +178,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             stackComing.ClearStackOfItems();
 
             stackHandler.AddItemsOnStack(stackOfItems);
+
+            resultPlacement = true;
         }
 
         public void RemoveItemFromSlot(ItemView item)

@@ -302,17 +302,23 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     //Update the inventory model to make him now that all items where moved somelse on other external slot.
                     if (isMachineStack)
                     {
+                        machineSlot.PlaceStackOfItems(this, out bool fromMachineSucess);
+
                         ReturnToMachineSlot();
-                        return false;
+
+                        return fromMachineSucess;
                     }
 
-                    machineSlot.PlaceStackOfItems(this);
+                    machineSlot.PlaceStackOfItems(this, out bool fromInventorySlotSucces);
 
-                    actualSlot.RemoveItemsFromSlot();
+                    if(fromInventorySlotSucces)
+                    {
+                        actualSlot.RemoveItemsFromSlot();
 
-                    SwipeStackSlots(actualSlot);
-
-                    return true;
+                        SwipeStackSlots(actualSlot);
+                        
+                        return true;
+                    }
                 }
             }
 
