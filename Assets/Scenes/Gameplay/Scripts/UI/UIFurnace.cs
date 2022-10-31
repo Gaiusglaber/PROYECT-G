@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
+using System.Collections;
 
 public class UIFurnace : MonoBehaviour
 {
@@ -76,7 +77,7 @@ public class UIFurnace : MonoBehaviour
         durationProcess = timeToBurn;
     }
 
-    public void GenerateProcessedItem(ItemModel itemFrom)
+    public void GenerateProcessedItem(ItemModel itemFrom, Action<bool> canFinishSequence)
     {
         ItemModel finalItem = itemFrom.itemResults[0];
 
@@ -84,6 +85,37 @@ public class UIFurnace : MonoBehaviour
         {
             Debug.LogWarning("Failed to generat result for the procesed item, the output slot is NULL");
             return;
+        }
+
+        bool outputIsEmpty = false;
+        ItemModel firstItemOnOutput = null;
+
+        if (inventoryController.StackTake)
+        {
+            outputIsEmpty = outputSlot.StackOfItems.Stack.Count < 1;
+
+            if (!outputIsEmpty)
+            {
+                firstItemOnOutput = inventoryController.GetItemModelFromId(outputSlot.StackOfItems.Stack[0].ItemType);
+            }
+        }
+        else
+        {
+            outputIsEmpty = outputSlot.ObjectsAttach.Count < 1;
+
+            if (!outputIsEmpty)
+            {
+                firstItemOnOutput = inventoryController.GetItemModelFromId(outputSlot.ObjectsAttach[0].ItemType);
+            }
+        }
+
+        if (!outputIsEmpty && firstItemOnOutput != null)
+        {
+            if(finalItem.itemId != firstItemOnOutput.itemId)
+            {
+                canFinishSequence?.Invoke(false);
+                return;
+            }
         }
 
         ItemView newItem = Instantiate(prefabItemView, outputSlot.SlotPosition, Quaternion.identity, outputSlot.transform);
@@ -98,14 +130,7 @@ public class UIFurnace : MonoBehaviour
             outputSlot.AddItemToSlot(newItem);
         }
 
-        /*if (outputSlot.GridPosition != invalidPosition)
-        {
-            inventoryController.GenerateItem(finalItem.itemId, outputSlot.GridPosition);
-        }
-        else
-        {
-            inventoryController.GenerateItem(finalItem.itemId, savedSlotPositons[1]);
-        }*/
+        canFinishSequence?.Invoke(true);
     }
 
     public void TogglePanel()
@@ -117,33 +142,11 @@ public class UIFurnace : MonoBehaviour
     public void OnEndProcess()
     {
         progressFillProcess.fillAmount = 0;
-
-        /*if(inputSlot.GridPosition != invalidPosition)
-        {
-            inventoryController.RemoveItems(inputSlot.GridPosition,1);
-        }
-        else
-        {
-            inventoryController.RemoveItems(savedSlotPositons[0], 1);
-        }
-
-        inputSlot.UpdateTextOutStack();*/
     }
 
     public void OnEndBurnOfFuel()
     {
         progressFuelConsumption.fillAmount = 0;
-
-        /*if(fuelSlot.GridPosition != invalidPosition)
-        {
-            inventoryController.RemoveItems(fuelSlot.GridPosition, 1);
-        }
-        else
-        {
-            inventoryController.RemoveItems(savedSlotPositons[2], 1);
-        }
-
-        fuelSlot.UpdateTextOutStack();*/
     }
     public void OnConsumeItem()
     {

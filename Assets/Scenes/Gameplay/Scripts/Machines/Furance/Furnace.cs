@@ -73,15 +73,24 @@ public class Furnace : Machine
             }
             else
             {
-                timerProcess = 0;
-                isProcessing = false;
+                uiFurnace.GenerateProcessedItem(itemPorcessed, (state) => 
+                {
+                    if(state)
+                    {
+                        timerProcess = 0;
+                        isProcessing = false;
 
-                uiFurnace.GenerateProcessedItem(itemPorcessed);
-                itemPorcessed = null;
+                        itemPorcessed = null;
 
-                OnItemProcessed?.Invoke();
+                        OnItemProcessed?.Invoke();
 
-                Debug.Log("Item processed successfully");
+                        Debug.Log("Item processed successfully");
+                    }
+                    else
+                    {
+                        Debug.Log("The machine has in the output a item of different type, remove it and you will can process more items.");
+                    }
+                });
             }
         }
 
@@ -175,6 +184,20 @@ public class Furnace : Machine
 
     private void SetProcess(ItemModel item)
     {
+        if(item != null)
+        {
+            if(item.itemResults.Count < 1)
+            {
+                Debug.LogWarning("The item model hasn't any result to process");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("The item model to process is null");
+            return;
+        }
+        
         isProcessing = true;
 
         itemPorcessed = item;

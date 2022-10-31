@@ -339,7 +339,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &5787733852913513756
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -414,6 +414,7 @@ MonoBehaviour:
   blockItemsInside: 0
   amountOutStack: {fileID: 5234417412680721156}
   stackHandler: {fileID: 7946639786895546490}
+  mainCanvas: {fileID: 0}
 --- !u!1 &5785947490296808141
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c18259da733f16478ce80b94f8a9d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedFollow: 0.4
+  speedFollow: 0.25
   stackAmount: {fileID: 2944217109897226948}
   useLerpAnimations: 0
   isMachineStack: 1

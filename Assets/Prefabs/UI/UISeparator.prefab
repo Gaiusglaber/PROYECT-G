@@ -119,6 +119,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 4687015299336134609}
   useLerpAnimations: 0
+  isMachineStack: 1
 --- !u!1 &1980595027046126953
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +535,7 @@ MonoBehaviour:
   amountOutStack: {fileID: 2410561250078053905}
   debugGridPos: {fileID: 926122613723284031}
   stackHandler: {fileID: 547267070445251951}
+  blockItemsInside: 0
   checkOnly:
     serializedVersion: 2
     m_Bits: 128
@@ -1137,9 +1139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612cd09fd92644a4689cf86e3a0b9ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputSlot: {fileID: 2199614005517578869}
-  outputSlot1: {fileID: 6363017380510426089}
-  outputSlot2: {fileID: 6363017381008307005}
+  holder: {fileID: 0}
+  idView: 
+  inputSlot: {fileID: 0}
+  output1: {fileID: 0}
+  output2: {fileID: 0}
   inventoryController: {fileID: 0}
   prefabItemView: {fileID: 3507272483325874770, guid: d4c2cf2d8abc68849be5b15f8ab3e8a0, type: 3}
   panelSeparator: {fileID: 6363017380383474428}
@@ -1341,6 +1345,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 6363017380530543364}
   useLerpAnimations: 0
+  isMachineStack: 1
 --- !u!1 &6363017380093800110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,6 +1752,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 6363017381238682495}
   useLerpAnimations: 0
+  isMachineStack: 1
 --- !u!1 &6363017380485258026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2034,7 @@ MonoBehaviour:
   amountOutStack: {fileID: 6363017381396521060}
   debugGridPos: {fileID: 6363017380093800108}
   stackHandler: {fileID: 6363017380427640510}
+  blockItemsInside: 0
   checkOnly:
     serializedVersion: 2
     m_Bits: 128
@@ -2860,6 +2867,7 @@ MonoBehaviour:
   amountOutStack: {fileID: 6363017380541790065}
   debugGridPos: {fileID: 6363017380485258024}
   stackHandler: {fileID: 6363017380074853836}
+  blockItemsInside: 0
   checkOnly:
     serializedVersion: 2
     m_Bits: 128

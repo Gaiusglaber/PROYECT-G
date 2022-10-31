@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c18259da733f16478ce80b94f8a9d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedFollow: 0.4
+  speedFollow: 0.25
   stackAmount: {fileID: 135761330274883349}
   useLerpAnimations: 0
   isMachineStack: 0

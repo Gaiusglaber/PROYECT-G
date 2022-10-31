@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 1611043476879830901}
   - component: {fileID: 1611043476879830903}
   - component: {fileID: 1611043476879830902}
+  - component: {fileID: 2545320529293259288}
   m_Layer: 8
   m_Name: ItemAttachView
   m_TagString: Untagged
@@ -209,6 +210,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!210 &2545320529293259288
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611043476879830900}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
 --- !u!1 &1611043477229594252
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c18259da733f16478ce80b94f8a9d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedFollow: 0.4
+  speedFollow: 0.25
   stackAmount: {fileID: 7983675748447192957}
   useLerpAnimations: 0
   isMachineStack: 0

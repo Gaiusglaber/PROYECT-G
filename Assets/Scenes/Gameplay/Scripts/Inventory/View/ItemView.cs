@@ -62,6 +62,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PROPERTIES
+        public SlotInventoryView MySlot { get { return mySlot; } set { mySlot = value; } }
         public MachineSlotView MachineSlot { get { return machineSlot; } set { machineSlot = value; } }
         public bool WasAttachedOnMachine { get { return wasAttachedOnMachine; } set { wasAttachedOnMachine = value; } }
         public string ItemType { get { return itemId; } }
@@ -500,6 +501,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             {
                 isAttachedToSlot = true;
             }
+
+            transform.SetAsLastSibling();
 
             positionLerper.SetValues(transform.position, targetPosition, true);
 

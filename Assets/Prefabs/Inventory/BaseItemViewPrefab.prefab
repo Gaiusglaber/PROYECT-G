@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3507272483325874771}
   - component: {fileID: 3507272483325874769}
   - component: {fileID: 3507272483325874768}
+  - component: {fileID: 3189987271130357740}
   - component: {fileID: 3507272483325874774}
   - component: {fileID: 3507272483325874775}
   m_Layer: 7
@@ -77,6 +78,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!210 &3189987271130357740
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3507272483325874770}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
 --- !u!114 &3507272483325874774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c18bfc466c7064da8a624bbafb5b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followSpeed: 0.45
+  followSpeed: 0.1
   itemImage: {fileID: 3507272483325874768}
   useLerpAnimations: 0
   whereCanBePlaced:

@@ -273,6 +273,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             Debug.Log("Swipe de stacks");
 
+            if(StackHandler.Stack.Count >= 1)
+            {
+                if(stackComing.Stack.Count >= 1)
+                {
+                    if(StackHandler.Stack[0].ItemType != stackComing.Stack[0].ItemType)
+                    {
+                        return;
+                    }
+                }
+            }
+
             List<ItemView> stackOfItems = new List<ItemView>();
             stackOfItems.AddRange(stackComing.Stack);
 
@@ -328,11 +339,13 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 itemToAttach.SwitchStateItem(true);
             }
 
-            if(objectsAttach.Count > 1)
+            if(objectsAttach.Count >= 1)
             {
                 if (itemToAttach.ItemType == objectsAttach[0].ItemType)
                 {
                     itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, swipeItems, allowedItems.ToArray());
+
+                    itemToAttach.MySlot = this;
                 }
                 else
                 {
@@ -358,6 +371,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             else
             {
                 itemToAttach.AttachToSlot(SlotPosition, GridPosition, transform, swipeItems, allowedItems.ToArray());
+
+                itemToAttach.MySlot = this;
             }
 
             ViewAddToSlot(itemToAttach);
