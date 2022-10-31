@@ -50382,7 +50382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff64a174426b4bf4f9ddc0b362ed6bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  ids:
+  - 0
   feedbackUpgradeTable: {fileID: 801831715}
   dialogPlayer: {fileID: 456959394429757364}
 --- !u!114 &456959394429757364

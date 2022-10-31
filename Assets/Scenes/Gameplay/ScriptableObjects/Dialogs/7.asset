@@ -18,4 +18,14 @@ MonoBehaviour:
   lookingActorId: AMOGUS
   line: TURURURURUM TUM TUM
   loopOnBadAnswerws: 0
-  answers: []
+  answers:
+  - id: 1
+    feedback: AMOGUS
+    answer: OOOH YES AMOGUS
+    isCorrect: 1
+    scoreValue: 0
+  - id: 0
+    feedback: MOGUS
+    answer: OOH NO MOGUS
+    isCorrect: 0
+    scoreValue: 0

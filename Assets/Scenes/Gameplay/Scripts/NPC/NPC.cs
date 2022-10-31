@@ -6,18 +6,27 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField] private string id = string.Empty;
+    [SerializeField] private string[] ids = null;
     [SerializeField] private GameObject feedbackUpgradeTable = null;
     [SerializeField] private DialogPlayer dialogPlayer = null;
 
     private Action<string> onInteract = null;
-    public string Id { get => id; set => id = value; }
+    private int dialogIndex = 0;
+
+    public string[] Id { get => ids; set => ids = value; }
 
     public void Init(Action<string> onInteract)
     {
         this.onInteract = onInteract;
     }
-
+    public void IncreaseDialogIndex()
+    {
+        dialogIndex++;
+    }
+    public void SetDialogIndex(int index)
+    {
+        dialogIndex = index;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -33,7 +42,7 @@ public class NPC : MonoBehaviour
     {
         if (collision.CompareTag("Player")&& Input.GetKeyDown(KeyCode.E))
         {
-            dialogPlayer.PlayDialog(id);
+            dialogPlayer.PlayDialog(ids[dialogIndex]);
             Debug.Log("Interaction");
         }
     }
