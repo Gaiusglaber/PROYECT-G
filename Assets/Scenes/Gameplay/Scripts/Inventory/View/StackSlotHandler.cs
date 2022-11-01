@@ -482,7 +482,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            OnHoverSelection.Invoke("", false);
+            OnHoverSelection?.Invoke("", false);
             Debug.Log("Exit item");
         }
 
@@ -490,7 +490,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         {
             if (SizeStack <= 0)
                 return;
-            OnHoverSelection.Invoke(stackedItems[0].ItemModelView.itemDescription, true);
+
+            OnHoverSelection?.Invoke(stackedItems[0].ItemModelView.itemDescription, true);
             Debug.Log("Enter item");
         }
     }

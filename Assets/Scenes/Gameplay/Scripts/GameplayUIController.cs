@@ -56,11 +56,19 @@ namespace ProyectG.Gameplay.UI
             onCloseControlls.onClick.AddListener(HideControlls);
             onCloseControlls.gameObject.SetActive(false);
             EnergyHandler.Withoutenergy += ShowGameOverPanel;
-            npcHandler.Init(dialogManager.LoadDialogue);
-            dialogManager.Init();
-            dialogManager.InitAllDialogPlayers(OpenPanel, OnDialogStart, OnDialogEnd); 
-            dialogManager.SetConversations(conversationSOs);
-            dialogManager.OnDialogEnd += ClosePanel;
+
+            if(npcHandler != null)
+            {
+                npcHandler.Init(dialogManager.LoadDialogue);
+            }
+            
+            if(dialogManager != null)
+            {
+                dialogManager.Init();
+                dialogManager.InitAllDialogPlayers(OpenPanel, OnDialogStart, OnDialogEnd); 
+                dialogManager.SetConversations(conversationSOs);
+                dialogManager.OnDialogEnd += ClosePanel;
+            }
         }
 
         private void OnDisable()

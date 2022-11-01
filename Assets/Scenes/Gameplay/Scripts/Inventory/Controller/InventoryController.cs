@@ -24,6 +24,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [SerializeField] private Transform viewParent = default;
         [SerializeField] private InventoryView inventoryView = null;
         [SerializeField] private Volume volume = null;
+        [SerializeField] private HoverSelection hoverSelection = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
         #endregion
@@ -245,7 +246,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
             inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots,
-                OnRemoveItems, OnAddItems); //visual del inventario
+                OnRemoveItems, OnAddItems, hoverSelection.ToggleHoverSelection); //visual del inventario
 
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);
