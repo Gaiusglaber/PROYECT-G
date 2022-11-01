@@ -19,7 +19,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private TMP_Text stackModeState = null;
 
         [SerializeField]private List<ItemType> allowedItems = null;
-
         #endregion
 
         #region PRIVATE_FIELDS
@@ -33,6 +32,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         private Action<bool> onInteractionChange = null;
         private Action<bool> onHandleInventory = null;
+        private Action<Vector2Int, int, bool> onSomeItemRemoved = null;
+        private Action<string, int, Vector2Int> onAddSomeItems = null;
+
         private Action<Vector2Int,Vector2Int> onSomeItemMoved = null;
         private Action<Vector2Int,Vector2Int> onSomeStackMoved = null;
         #endregion
@@ -43,7 +45,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
         #region PUBLIC_METHODS
         public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved, 
-            Action<string, bool> onHoverSelection)
+            Action<Vector2Int, int, bool> onSomeItemRemoved, Action<string, int, Vector2Int> onAddSomeItems,Action<string, bool> onHoverSelection)
         {
             parentView = parentTarget;
             maxRowsInventory = model.GridRows;
@@ -53,6 +55,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             this.onSomeItemMoved = onSomeItemMoved;
             this.onSomeStackMoved = onSomeStackMoved;
+            this.onSomeItemRemoved = onSomeItemRemoved;
+            this.onAddSomeItems = onAddSomeItems;
 
             for (int x = 0; x < maxRowsInventory; x++)
             {
@@ -67,6 +71,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                     newSlotInv.SetOnSomeItemMoved(this.onSomeItemMoved);
                     newSlotInv.SetOnHoverSelection(onHoverSelection);
                     newSlotInv.SetOnSomeStackMoved(this.onSomeStackMoved);
+
+                    newSlotInv.SetOnSomeItemRemoved(this.onSomeItemRemoved);
+                    newSlotInv.SetOnSomeItemAdded(this.onAddSomeItems);
                     onInteractionChange += newSlotInv.SetOnInteractionInventoryChange;
 
                     model.SetSlotPosition(gridPos, finalWorldPosition);
@@ -133,14 +140,14 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
                 }
             }
 
-            for (int i = 0; i < inventoryModel.ExtraGridSlots.Count; i++)
+            /*for (int i = 0; i < inventoryModel.ExtraGridSlots.Count; i++)
             {
                 if(inventoryModel.ExtraGridSlots[i] != null)
                 {
                     GetSlotFromGrid(inventoryModel.ExtraGridSlots[i].GridPosition)
                         .UpdateSlotViewWithItems(inventoryModel.ExtraGridSlots[i].StackOfItems);
                 }
-            }
+            }*/
         }
 
         public void SetExtraViewSlots(List<SlotInventoryView> extendedSlots)

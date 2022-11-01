@@ -50,6 +50,10 @@ namespace ProjectG.Gameplay.Managers
                     testItems[i].SetOnItemTaked(inventory.GenerateItem);
                 }
             }
+
+            //inventory.GenerateItem("corn_syrup", 5);
+            //inventory.GenerateItem("Wood", 5);
+            //inventory.GenerateItem("Coal", 5);
         }
 
         private void Start()

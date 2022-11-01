@@ -81,10 +81,6 @@ public class Separator : Machine
 
                 energyHandler.ConsumeEnergyByProcess();
 
-                //uiSeparator.UpdateProgressFill(timerProcess);
-
-                //llamar al metodo llamado UpdateProgressFill(timerProcess); en UISeparator
-
                 Debug.Log("Item processing");
             }
             else
@@ -172,11 +168,6 @@ public class Separator : Machine
 
         //consume energia
         energyHandler.SetCostOfProcessDecrement(itemProcessed.energyCost, itemProcessed.costInterval);
-    }
-
-    private void StartProcess()
-    {
-        isProcessing = true;
     }
     #endregion
 }

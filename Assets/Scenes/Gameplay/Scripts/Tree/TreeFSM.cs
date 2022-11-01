@@ -8,6 +8,7 @@ using ProyectG.Gameplay.Interfaces;
 public class TreeFSM : MonoBehaviour, IHittable
 {
     [SerializeField] private float timeSecondStage;
+    [SerializeField] private int amountPerFarm = 3;
     [SerializeField] private WorldItem woodPrefab;
     [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
 
@@ -98,7 +99,7 @@ public class TreeFSM : MonoBehaviour, IHittable
         {
             amountLogs--;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < amountPerFarm; i++)
             {
                 WorldItem wood = Instantiate(woodPrefab, transform.position, Quaternion.identity);
                 wood.SetOnItemTaked(InventoryController.GenerateItem);

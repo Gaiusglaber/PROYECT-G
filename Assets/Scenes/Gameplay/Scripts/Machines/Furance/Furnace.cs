@@ -26,7 +26,10 @@ public class Furnace : Machine
     private bool playerIsNear = false;
 
     private Action OnItemProcessed = null;
-    private Action OnFuelBurned = null;
+    private Action OnFuelEnergyBurned = null;
+
+    private Action OnFuelItemConsumed = null;
+    private Action OnItemConsumed = null;
 
     private ItemModel itemPorcessed = null;
 
@@ -40,7 +43,10 @@ public class Furnace : Machine
 
         uiFurnace.onCancelProcess += ResetProcessing;
         OnItemProcessed = uiFurnace.OnEndProcess;
-        OnFuelBurned = uiFurnace.OnEndBurnOfFuel;
+
+        OnFuelEnergyBurned = uiFurnace.OnEndBurnOfFuel;
+        OnFuelItemConsumed = uiFurnace.OnConsumeFuel;
+        OnItemConsumed = uiFurnace.OnConsumeItem;
 
         isProcessing = false;
         timerProcess = 0.0f;        
@@ -67,15 +73,24 @@ public class Furnace : Machine
             }
             else
             {
-                timerProcess = 0;
-                isProcessing = false;
+                uiFurnace.GenerateProcessedItem(itemPorcessed, (state) => 
+                {
+                    if(state)
+                    {
+                        timerProcess = 0;
+                        isProcessing = false;
 
-                uiFurnace.GenerateProcessedItem(itemPorcessed);
-                itemPorcessed = null;
+                        itemPorcessed = null;
 
-                OnItemProcessed?.Invoke();
+                        OnItemProcessed?.Invoke();
 
-                Debug.Log("Item processed successfully");
+                        Debug.Log("Item processed successfully");
+                    }
+                    else
+                    {
+                        Debug.Log("The machine has in the output a item of different type, remove it and you will can process more items.");
+                    }
+                });
             }
         }
 
@@ -131,7 +146,7 @@ public class Furnace : Machine
         {
             burningFuel = false;
 
-            OnFuelBurned?.Invoke();
+            OnFuelEnergyBurned?.Invoke();
         }
     }
 
@@ -163,10 +178,26 @@ public class Furnace : Machine
         timerFuel = timeToBurnOutFuel;
 
         energyHandler.SetValueOfFuelIncrement(energyGenerated, fuelModel.energyPerTime);
+
+        OnFuelItemConsumed?.Invoke();
     }
 
     private void SetProcess(ItemModel item)
     {
+        if(item != null)
+        {
+            if(item.itemResults.Count < 1)
+            {
+                Debug.LogWarning("The item model hasn't any result to process");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("The item model to process is null");
+            return;
+        }
+        
         isProcessing = true;
 
         itemPorcessed = item;
@@ -175,5 +206,7 @@ public class Furnace : Machine
         uiFurnace.SetDurationProcess(timeToProcessObject);
 
         energyHandler.SetCostOfProcessDecrement(itemPorcessed.energyCost, itemPorcessed.costInterval);
+
+        OnItemConsumed?.Invoke();
     }
 }

@@ -26,7 +26,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         [SerializeField] private Volume volume = null;
         [Header("ITEM DATABASE")]
         [SerializeField] private List<ItemModel> allItemsAviable = null;
-        [SerializeField] private HoverSelection hoverSelection;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -34,12 +33,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         private DepthOfField dof = null;
         private bool stackTake = false;
 
+        private Action<bool> onInteractionChange = null;
+
         private float initialdof = 0;
         #endregion
 
         #region PROPERTIES
         public bool StackTake { get { return stackTake; } }
         public InventoryModel Model => inventoryModel;
+        public Action<string, int, Vector2Int> OnAddItems { get { return GenerateLogicItems; } } 
+        public Action<Vector2Int, int, bool> OnRemoveItems { get { return RemoveItems; } } 
+        public Action<bool> OnInteractionChange { get { return onInteractionChange; } set { onInteractionChange = value; } }
         #endregion
 
         #region PUBLIC_METHODS
@@ -125,11 +129,15 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
                 inventoryView.OnChangeInteractionType(stackTake);
 
+                OnInteractionChange?.Invoke(stackTake);
+
                 return;
             }
 
             stackTake = true;
             inventoryView.OnChangeInteractionType(stackTake);
+
+            OnInteractionChange?.Invoke(stackTake);
         }
 
         public void GenerateItems(string idItem, int amount, Vector2Int gridPosition = default)
@@ -144,6 +152,20 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             }
 
             inventoryModel.AttachItemsToSlot(newStackOfItems, gridPosition);
+        }
+
+        public void GenerateLogicItems(string idItem, int amount, Vector2Int gridPosition = default)
+        {
+            ItemModel itemToAttach = allItemsAviable.Find(t => t.itemId == idItem);
+            List<ItemModel> newStackOfItems = new List<ItemModel>();
+
+            for (int i = 0; i < amount; i++)
+            {
+                if (itemToAttach != null)
+                    newStackOfItems.Add(itemToAttach);
+            }
+
+            inventoryModel.AttachItemsToSlot(newStackOfItems, gridPosition, false);
         }
 
         public void RemoveItems(Vector2Int gridPosition, int amount= 0, bool allItems = true)
@@ -190,7 +212,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         public ItemModel GetItemModelFromView(ItemView viewItem)
         {
             ItemModel resultItem = null;
-
+            
             for (int i = 0; i < allItemsAviable.Count; i++)
             {
                 if (allItemsAviable[i].itemId == viewItem.ItemType)
@@ -222,7 +244,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
 
             //Main inits
             inventoryModel.Init(bagSlots, slotsSize); //data del inventario
-            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots, hoverSelection.ToggleHoverSelection); //visual del inventario
+            inventoryView.Init(inventoryModel, viewParent, inventoryModel.SiwtchItemsOnSlots, inventoryModel.SiwtchStackOfItemsOnSlots,
+                OnRemoveItems, OnAddItems); //visual del inventario
 
             //Set actions
             inventoryView.SetOnHandleInventory(BlendBackground);

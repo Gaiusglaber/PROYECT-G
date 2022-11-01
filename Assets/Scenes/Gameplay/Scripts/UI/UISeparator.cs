@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +13,12 @@ namespace ProyectG.Gameplay.UI
     {
         #region EXPOSED_FIELDS
         [Header("SEPARATOR VIEW")]
-        [SerializeField] private SlotInventoryView inputSlot;
-        [SerializeField] private SlotInventoryView outputSlot1;
-        [SerializeField] private SlotInventoryView outputSlot2;
+        [SerializeField] private MachineSlotView inputSlot;
+        [SerializeField] private MachineSlotView output1;
+        [SerializeField] private MachineSlotView output2;
+
         [SerializeField] private InventoryController inventoryController;
-        [SerializeField] private GameObject prefabItemView = null;
+        [SerializeField] private ItemView prefabItemView = null;
         [SerializeField] private GameObject panelSeparator = null;
         [SerializeField] private Canvas mainCanvas = null;
         [SerializeField] private Image progressFillProcess = null;
@@ -28,15 +28,7 @@ namespace ProyectG.Gameplay.UI
 
         #region PRIVATE_FIELDS
         private Func<bool> isSeparatorProcessing = null;
-
         private float durationProcess = 0.0f;
-        private bool extraPositionsCreated = false;
-
-        private List<SlotInventoryView> thisUiSlotsView = new List<SlotInventoryView>();
-
-        private List<Vector2Int> savedSlotPositons = new List<Vector2Int>();
-
-        private Vector2Int invalidPosition = new Vector2Int(-1, -1);
         #endregion
 
         #region PROPERTIES
@@ -44,32 +36,16 @@ namespace ProyectG.Gameplay.UI
         public Func<bool> IsSeparatorProcessing { set { isSeparatorProcessing = value; } get { return isSeparatorProcessing; } }
         #endregion
 
-        #region UNITY_CALLS
-        void Update()
-        {
-            if(!initialized)
-            {
-                return;
-            }
-
-            inputSlot.SetOnInteractionInventoryChange(inventoryController.StackTake);
-            outputSlot1.SetOnInteractionInventoryChange(inventoryController.StackTake);
-            outputSlot2.SetOnInteractionInventoryChange(inventoryController.StackTake);
-        }
-        #endregion
-
         #region PUBLIC_METHODS
         public override void Init()
         {
-            inputSlot.Init(prefabItemView, mainCanvas, invalidPosition, false);
-            outputSlot1.Init(prefabItemView, mainCanvas, invalidPosition, false);
-            outputSlot2.Init(prefabItemView, mainCanvas, invalidPosition, false);
+            inputSlot.Init(mainCanvas);
+            output1.Init(mainCanvas);
+            output2.Init(mainCanvas);
 
-            thisUiSlotsView.Add(inputSlot);
-            thisUiSlotsView.Add(outputSlot1);
-            thisUiSlotsView.Add(outputSlot2);
-
-            extraPositionsCreated = false;
+            inventoryController.OnInteractionChange += inputSlot.SetOnInteractionInventoryChange;
+            inventoryController.OnInteractionChange += output1.SetOnInteractionInventoryChange;
+            inventoryController.OnInteractionChange += output2.SetOnInteractionInventoryChange;
 
             onCancelProcess += StopFill;
 
@@ -83,28 +59,59 @@ namespace ProyectG.Gameplay.UI
 
         public void GenerateProcessedItems(ItemModel itemFrom1)
         {
-            ItemModel finalItem = itemFrom1.itemResults[1]; //posicion 1 de la lista devuelve table item
-            inventoryController.GenerateItem(finalItem.itemId, outputSlot1.GridPosition);
+            ItemModel finalItem = itemFrom1.itemResults[1];
+            ItemModel finalIte2 = itemFrom1.itemResults[2];
 
-            ItemModel finalItem2 = itemFrom1.itemResults[2]; //posicion 2 de la lista devuelve salvia item
-            inventoryController.GenerateItem(finalItem2.itemId, outputSlot2.GridPosition);
+            if (output1 == null)
+            {
+                Debug.LogWarning("Failed to generat result for the procesed item, the outpu1 slot is NULL");
+                return;
+            }
+
+            if (output2 == null)
+            {
+                Debug.LogWarning("Failed to generate result for the procesed item, the output2 slot is NULL");
+                return;
+            }
+
+            ItemView newHalftItem1 = Instantiate(prefabItemView, output1.SlotPosition, Quaternion.identity, output1.transform);
+            newHalftItem1.GenerateItem(mainCanvas, null, output1, finalItem, inventoryController.Model.SiwtchItemsOnSlots, inventoryController.OnRemoveItems, inventoryController.OnAddItems);
+
+            ItemView newHalftItem2 = Instantiate(prefabItemView, output2.SlotPosition, Quaternion.identity, output2.transform);
+            newHalftItem2.GenerateItem(mainCanvas, null, output2, finalIte2, inventoryController.Model.SiwtchItemsOnSlots, inventoryController.OnRemoveItems, inventoryController.OnAddItems);
+
+            if (inventoryController.StackTake)
+            {
+                output1.AddItemToStack(newHalftItem1);
+                output2.AddItemToStack(newHalftItem2);
+            }
+            else
+            {
+                output1.AddItemToSlot(newHalftItem1);
+                output2.AddItemToSlot(newHalftItem2);
+            }
         }
 
         public void TogglePanel()
         {
             panelSeparator.SetActive(!panelSeparator.activeSelf);
             inventoryController.ToggleInventory();
-
-            ThisIsAwfulButNeeded();
         }
 
         public void OnEndProcess()
         {
-            //progressFillProcess.fillAmount = 0;
+            ItemView itemToRemove = null;
 
-            inventoryController.RemoveItems(inputSlot.GridPosition, 1);
-
-            inputSlot.UpdateTextOutStack();
+            if (inventoryController.StackTake)
+            {
+                itemToRemove = inputSlot.StackOfItems.Stack[0];
+                inputSlot.RemoveItemFromStack(itemToRemove);
+            }
+            else
+            {
+                itemToRemove = inputSlot.ObjectsAttach[0];
+                inputSlot.RemoveItemFromSlot(itemToRemove);
+            }
         }
 
         public void UpdateProgressFill(float actualTime)
@@ -119,17 +126,24 @@ namespace ProyectG.Gameplay.UI
         {
             if (!IsSeparatorProcessing.Invoke())
             {
-                if (inventoryController.Model.GetSlot(inputSlot.GridPosition) == null)
-                    return;
-
-                if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0 && inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemId == "Wood")
+                if (inputSlot != null)
                 {
-                    if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemResults.Count < 1)
-                        return;
+                    ItemModel firstItem = null;
 
-                    Debug.Log("Item send to separate");
-
-                    ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
+                    if (inventoryController.StackTake)
+                    {
+                        if (inputSlot.StackOfItems.Stack.Count > 0)
+                        {
+                            firstItem = inventoryController.GetItemModelFromId(inputSlot.StackOfItems.Stack[0].ItemType);
+                        }
+                    }
+                    else
+                    {
+                        if (inputSlot.ObjectsAttach.Count > 0)
+                        {
+                            firstItem = inventoryController.GetItemModelFromId(inputSlot.ObjectsAttach[0].ItemType);
+                        }
+                    }
 
                     GenerateProcessedItems(firstItem);
 
@@ -146,54 +160,6 @@ namespace ProyectG.Gameplay.UI
         private void StopFill()
         {
             progressFillProcess.fillAmount = 0;
-        }
-
-        private void ThisIsAwfulButNeeded()
-        {
-            if (panelSeparator.activeSelf)
-            {
-                if (extraPositionsCreated)
-                    return;
-
-                //Ojo esta parte! Esto es muy feo pero tuve que hacerlo asi porque no encontraba forma de resolverlo
-                //literalmente estoy "extendiendo" el inventario para poder interactuar con la UI. Eventualmente esto
-                //tendriamos que cambiarlo u encontrar algo mas optimo. Btw por ahora me sirve. :)
-                Debug.Log("Creado de posiciones extra del inventario");
-
-                inventoryController.ExtendInventoryWithExtraSlots(100, 101, 100, 103, thisUiSlotsView, ref savedSlotPositons);    //Puse 80/83 como para que sean slots imposibles de usar realmente
-
-                inputSlot.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]).GridPosition);
-                outputSlot1.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]).GridPosition);
-                outputSlot2.SetSlotGridPosition(inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]).GridPosition);
-
-                Debug.Log("extra slots del separador 1: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[0]));
-                Debug.Log("extra slots del separador 2: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[1]));
-                Debug.Log("extra slots del separador 3: " + inventoryController.GetSlotFromGridPosition(savedSlotPositons[2]));
-
-
-                extraPositionsCreated = true;
-            }
-            /*else
-            {
-                if (inventoryController.Model.GetSlot(inputSlot.GridPosition) == null ||
-                    inventoryController.Model.GetSlot(outputSlot1.GridPosition) == null ||
-                    inventoryController.Model.GetSlot(outputSlot2.GridPosition) == null)
-                    return;
-
-
-                if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0 ||
-                    inventoryController.Model.GetSlot(outputSlot1.GridPosition).StackOfItems.Count > 0 ||
-                    inventoryController.Model.GetSlot(outputSlot2.GridPosition).StackOfItems.Count > 0)
-                    return;
-
-                Debug.Log("Limpiado de posiciones extra del inventario");
-
-                inputSlot.SetSlotGridPosition(invalidPosition);
-                outputSlot1.SetSlotGridPosition(invalidPosition);
-                outputSlot2.SetSlotGridPosition(invalidPosition);
-
-                extraPositionsCreated = false;
-            }*/
         }
         #endregion
     }
