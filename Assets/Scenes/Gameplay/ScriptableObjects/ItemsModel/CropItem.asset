@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: crop
   itemSprite: {fileID: 21300000, guid: 22b699692dedeee499c859ef106080d2, type: 3}
-  itemDescription: Item para cultivo
+  itemDescription: Maiz, se puede procesar en el horno para conseguir su aceite.
   itemValue: 1
   energyCost: 5
   timeToComplete: 7

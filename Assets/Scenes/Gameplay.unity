@@ -22175,8 +22175,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -30, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1154570513
 MonoBehaviour:
@@ -22225,10 +22225,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 66.35
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -34814,7 +34814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followObject: {fileID: 165494675}
   followText: {fileID: 1154570513}
-  offset: {x: 225, y: 15}
+  offset: {x: 235, y: 15}
   parentCanvas: {fileID: 2050846767}
   cam: {fileID: 2139589935}
   distanceRay: 5

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: table
   itemSprite: {fileID: 21300000, guid: c8b871faf0b3a68428991fe70fbd4f5d, type: 3}
-  itemDescription: Tabla
+  itemDescription: Tabla de madera, se puede quemar para obtener cenizas.
   itemValue: 1
   energyCost: 5
   timeToComplete: 10

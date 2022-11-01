@@ -45,7 +45,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(Canvas mainCanvas, params ItemType[] allowedTypes)
+        public void Init(Canvas mainCanvas, Action<string, bool> onHoverSelection,params ItemType[] allowedTypes)
         {
             this.mainCanvas = mainCanvas;
 
@@ -53,7 +53,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             allowedItems.AddRange(allowedTypes);
 
-            stackHandler.Init(mainCanvas, null, this, callUpdateStacks);
+            stackHandler.Init(mainCanvas, null, this, callUpdateStacks, null, null, onHoverSelection);
         }
 
         public void AddItemToStack(ItemView itemToAttach)

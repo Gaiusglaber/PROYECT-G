@@ -138,6 +138,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
                 mySlot = null;
                 PlaceInMachineSlot(machineSlot.SlotPosition, machineSlot.transform, machineSlot);
+                itemModel = itemData;
 
                 wasAttachedOnMachine = true;
             }

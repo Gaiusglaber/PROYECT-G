@@ -39,9 +39,9 @@ namespace ProyectG.Gameplay.UI
         #region PUBLIC_METHODS
         public override void Init()
         {
-            inputSlot.Init(mainCanvas);
-            output1.Init(mainCanvas);
-            output2.Init(mainCanvas);
+            inputSlot.Init(mainCanvas, inventoryController.OnHoverSelection);
+            output1.Init(mainCanvas, inventoryController.OnHoverSelection);
+            output2.Init(mainCanvas, inventoryController.OnHoverSelection);
 
             inventoryController.OnInteractionChange += inputSlot.SetOnInteractionInventoryChange;
             inventoryController.OnInteractionChange += output1.SetOnInteractionInventoryChange;

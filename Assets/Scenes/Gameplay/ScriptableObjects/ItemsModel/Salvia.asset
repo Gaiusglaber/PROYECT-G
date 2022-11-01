@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: Salvia
   itemSprite: {fileID: 21300000, guid: 40f905baeb0e01542b3f16d274b7e850, type: 3}
-  itemDescription: Viene de los arboles
+  itemDescription: Sabia extraida de un tronco. sirve para combinar con otros items.
   itemValue: 1
   energyCost: 1
   timeToComplete: 10

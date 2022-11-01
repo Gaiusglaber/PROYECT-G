@@ -50,9 +50,9 @@ public class UIFurnace : MonoBehaviour
     #region UNITY_CALLS
     void Start()
     {
-        inputSlot.Init(mainCanvas);
-        outputSlot.Init(mainCanvas);
-        fuelSlot.Init(mainCanvas, ItemType.fuel);
+        inputSlot.Init(mainCanvas, inventoryController.OnHoverSelection);
+        outputSlot.Init(mainCanvas, inventoryController.OnHoverSelection);
+        fuelSlot.Init(mainCanvas,inventoryController.OnHoverSelection, ItemType.fuel);
 
         extraPositionsCreated = false;
 

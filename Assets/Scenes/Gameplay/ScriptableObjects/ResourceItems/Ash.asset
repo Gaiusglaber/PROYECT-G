@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: Ash
   itemSprite: {fileID: 21300000, guid: 5517e3e559c71fe489c44f0557f2ce37, type: 3}
-  itemDescription: Inutil
+  itemDescription: Utilizada para desbloquear otras cosas, por ahora es inutil.
   itemValue: 1
   energyCost: 1
   timeToComplete: 25
