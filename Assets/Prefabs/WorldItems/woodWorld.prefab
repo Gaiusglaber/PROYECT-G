@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4195429864427930634}
   - component: {fileID: 4195429864427930633}
   - component: {fileID: 4195429864427930632}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: woodWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4195429864918748778}
   - component: {fileID: 4195429864918748777}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: itemVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

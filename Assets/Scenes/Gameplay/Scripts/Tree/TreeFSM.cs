@@ -1,21 +1,28 @@
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Interfaces;
 
-public class TreeFSM : MonoBehaviour, IHittable
+public class TreeFSM : Machine, IHittable
 {
     [SerializeField] private float timeSecondStage;
     [SerializeField] private int amountPerFarm = 3;
+    [SerializeField] private int hitsNeededToFarm = 0;
     [SerializeField] private WorldItem woodPrefab;
     [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
+    [SerializeField] private SpriteSkin spriteSkin = null;
+    [SerializeField] private List<Transform> bones = null;
 
     private InventoryController InventoryController;
     private SpriteRenderer spriteRenderer;
     private int amountLogs = 0;
 
+    private int amountHits = 0;
+    
     private enum TreeState
     {
         first,
@@ -34,6 +41,10 @@ public class TreeFSM : MonoBehaviour, IHittable
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         amountLogs = 1;
         state = TreeState.first;
+
+        amountHits = 0;
+
+        Init(null);
     }
 
     void Update()
@@ -88,7 +99,18 @@ public class TreeFSM : MonoBehaviour, IHittable
         if (state != TreeState.second)
             return;
 
-        if(amountLogs <= 0)
+        if (amountHits < hitsNeededToFarm - 1)
+        {
+            amountHits++;
+            Debug.Log("HIT");
+            TriggerAnimation("OnHit");
+            return;
+        }
+
+        Debug.Log("HIT");
+        TriggerAnimation("OnHit");
+
+        if (amountLogs <= 0)
         {
             SetCycle(true);
             timerTreeFSM = 0f;
@@ -105,5 +127,7 @@ public class TreeFSM : MonoBehaviour, IHittable
                 wood.SetOnItemTaked(InventoryController.GenerateItem);
             }
         }
+
+        amountHits = 0;
     }
 }

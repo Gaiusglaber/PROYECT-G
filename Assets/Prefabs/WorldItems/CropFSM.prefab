@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6221852101625676090}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6931018316229300737}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 5670562782018220152}
   - component: {fileID: 2766231218405460105}
   - component: {fileID: 5062378823146376640}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CropVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 5670562782362932561}
   - component: {fileID: 5670562782362932564}
   - component: {fileID: 5670562782362932566}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CropFSM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ MonoBehaviour:
   timeFirstStage: 5
   timeSecondStage: 10
   timeThirdStage: 15
-  heightOffset: 1.5
+  heightOffset: 1
   hitsNeededToFarm: 2
   cropPrefab: {fileID: 7625708649754275758, guid: d4c17706a8b9a994eb44edeb3ce6414b, type: 3}
   spriteCycle:
@@ -270,7 +270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3432056443122823268}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

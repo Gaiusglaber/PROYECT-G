@@ -13,6 +13,7 @@ namespace ProyectG.Player.Attack
     {
         [SerializeField] private float range;
         [SerializeField] private PlayerController playerController = null;
+        [SerializeField] private LayerMask layerToCheck;
         [Header("---ANIMATIONS---")]
         [SerializeField] private UnityArmatureComponent customAnimator = null;
 
@@ -51,10 +52,14 @@ namespace ProyectG.Player.Attack
                 SetAnimation("ataque");
 
                 Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range);
+
+                Debug.Log("Hits: " + hits.Length);
+
                 foreach (Collider2D hit in hits)
                 {
                     if (hit.TryGetComponent(out IHittable hittable))
                     {
+                        Debug.Log("Entro hit");
                         hittable.OnHit();
                     }
                 }
