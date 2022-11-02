@@ -1,18 +1,23 @@
 using System;
+using System.Collections.Generic;
+
 using UnityEngine;
 
 using ProyectG.Gameplay.UI;
 
-namespace ProyectG.Gameplay.Objects{
-
+namespace ProyectG.Gameplay.Objects
+{
 	#region CLASSES
 	public class Machine : MonoBehaviour
 	{
         #region EXPOSED_FIELDS
+        [SerializeField] protected List<string> animatorTriggers = null;
+        [SerializeField] protected Animator animator = null;
 		#endregion
 
 		#region PRIVATE_FIELDS
 		public Action OnInteract = null;
+
         #endregion
 
         #region PROPERTIES
@@ -24,6 +29,25 @@ namespace ProyectG.Gameplay.Objects{
         #region PUBLIC_METHODS
         public virtual void Init(BaseView viewAttach)
         {
+            if(animator == null)
+            {
+                animator = GetComponent<Animator>();
+            }
+        }
+
+        public virtual void TriggerAnimation(string triggerId)
+        {
+            if (animator == null) return;
+
+            string trigger = animatorTriggers.Find(trigger => trigger == triggerId);
+
+            if(trigger == null)
+            {
+                Debug.Log("That triggerID is not on the trigger list of this machine");
+                return;
+            }
+
+            animator.SetTrigger(trigger);
         }
         #endregion
 

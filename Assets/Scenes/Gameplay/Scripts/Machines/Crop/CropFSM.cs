@@ -21,6 +21,7 @@ public class CropFSM : Machine, IHittable
     [SerializeField] private float timeSecondStage;
     [SerializeField] private float timeThirdStage;
     [SerializeField] private float heightOffset = 0;
+    [SerializeField] private int hitsNeededToFarm = 0;
     [SerializeField] private WorldItem cropPrefab;
     [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
     #endregion
@@ -32,6 +33,8 @@ public class CropFSM : Machine, IHittable
     private CropState state;
     private float timerCropFSM;
     private bool isStarted;
+
+    private int amountHits = 0; 
     #endregion
 
     #region UNITY_CALLS
@@ -43,6 +46,8 @@ public class CropFSM : Machine, IHittable
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         amountCrops = 1;
         state = CropState.first;
+
+        Init(null);
     }
 
     void Update()
@@ -106,19 +111,31 @@ public class CropFSM : Machine, IHittable
     {
         if (state != CropState.third)
             return;
-        if(amountCrops <= 0)
+
+        if(amountHits < hitsNeededToFarm-1)
+        {
+            amountHits++;
+            TriggerAnimation("OnHit");
+            return;
+        }
+
+        TriggerAnimation("OnHit");
+
+        if (amountCrops <= 0)
         {
             SetCycle(true);
             timerCropFSM = 0.0f;
             amountCrops = 1;
             NextStage(CropState.first);
-            
-        }else
+        }
+        else
         {
             amountCrops--;
             WorldItem crop = Instantiate(cropPrefab, transform.position + (Vector3.up * heightOffset), Quaternion.identity);
             crop.SetOnItemTaked(InventoryController.GenerateItem);
         }
+
+        amountHits = 0;
     }
     #endregion
 }

@@ -19,7 +19,7 @@ namespace ProyectG.Player.Attack
         private string lastAnimationExecuted = string.Empty;
 
         private bool playerHasDoAttack = false;
-        private float timeToResetAttack = 0.75f;
+        private float timeToResetAttack = 0.95f;
         private float timer = 0f;
 
         public bool PlayerHasDoAttack { get { return playerHasDoAttack; } }
@@ -40,6 +40,8 @@ namespace ProyectG.Player.Attack
                     timer = 0;
                     playerHasDoAttack = false;
                 }
+
+                return;
             }
 
             if (Input.GetKeyDown(KeyCode.Mouse0))

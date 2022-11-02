@@ -16350,6 +16350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237cb1597800aef408a31b23d22faf2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorTriggers: []
+  animator: {fileID: 0}
   uiUpgradeTable: {fileID: 0}
   energyHandler: {fileID: 0}
   feedbackUpgradeTable: {fileID: 310795931}
@@ -26932,6 +26934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f875e1e72b6a84eb67cd383f009249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorTriggers: []
+  animator: {fileID: 0}
 --- !u!1 &1512812522
 GameObject:
   m_ObjectHideFlags: 0
@@ -33480,6 +33484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a12072743f1178c40ab9c9bb29468b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorTriggers: []
+  animator: {fileID: 0}
   uiFurnace: {fileID: 766479368}
   energyHandler: {fileID: 21614822}
   feedbackFurance: {fileID: 808177907}
@@ -41076,6 +41082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 237cb1597800aef408a31b23d22faf2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorTriggers: []
+  animator: {fileID: 0}
   uiUpgradeTable: {fileID: 4377949779318044248}
   energyHandler: {fileID: 21614822}
   feedbackUpgradeTable: {fileID: 2892596666754044801}
