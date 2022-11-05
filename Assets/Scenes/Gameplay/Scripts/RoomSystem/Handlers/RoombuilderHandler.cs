@@ -3,14 +3,15 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using ProyectG.Common.Modules.Audio.Channels.Sound;
+
+using ProyectG.Player.Controller;
 using ProyectG.Gameplay.UI;
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.Controllers;
 using ProyectG.Gameplay.RoomSystem.View;
 using ProyectG.Gameplay.RoomSystem.Room;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
-using ProyectG.Player.Controller;
-using System.Collections;
 
 namespace ProyectG.Gameplay.RoomSystem.Handler
 {
@@ -20,6 +21,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
         [SerializeField] private GameObject feedbackView = null;
         [SerializeField] private RoombuilderView roombuilderView = null;
         [SerializeField] private PreviewRoomView previewRoom = null;
+        [SerializeField] private SoundHandlerChannel soundsChannel = null;
 
         [SerializeField] private List<BuildModel> allBuildingAviables = null;
         [SerializeField] private List<BaseView> allBaseViews = null;

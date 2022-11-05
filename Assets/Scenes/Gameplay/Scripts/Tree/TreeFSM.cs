@@ -104,11 +104,13 @@ public class TreeFSM : Machine, IHittable
             amountHits++;
             Debug.Log("HIT");
             TriggerAnimation("OnHit");
+            TriggerSoundEffect("WoodChop");
             return;
         }
 
         Debug.Log("HIT");
         TriggerAnimation("OnHit");
+        TriggerSoundEffect("WoodChop");
 
         if (amountLogs <= 0)
         {

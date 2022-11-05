@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using ProyectG.Gameplay.UI;
+using ProyectG.Common.Modules.Audio.Channels.Sound;
 
 namespace ProyectG.Gameplay.Objects
 {
@@ -11,6 +12,7 @@ namespace ProyectG.Gameplay.Objects
 	public class Machine : MonoBehaviour
 	{
         #region EXPOSED_FIELDS
+        [SerializeField] protected SoundHandlerChannel soundsChannel = null;
         [SerializeField] protected List<string> animatorTriggers = null;
         [SerializeField] protected Animator animator = null;
 		#endregion
@@ -48,6 +50,13 @@ namespace ProyectG.Gameplay.Objects
             }
 
             animator.SetTrigger(trigger);
+        }
+
+        public virtual void TriggerSoundEffect(string idSound)
+        {
+            if (soundsChannel == null) return;
+
+            soundsChannel.OnPlaySound?.Invoke(idSound);
         }
         #endregion
 
