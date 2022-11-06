@@ -232,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91b87205236ee847a914fe7a8c8e62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundsChannel: {fileID: 11400000, guid: 13fdb80fee7c6c546a7f4152873818ec, type: 2}
   animatorTriggers:
   - OnHit
   animator: {fileID: 2766231218405460105}

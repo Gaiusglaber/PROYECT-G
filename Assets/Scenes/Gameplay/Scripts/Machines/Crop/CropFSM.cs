@@ -116,10 +116,12 @@ public class CropFSM : Machine, IHittable
         {
             amountHits++;
             TriggerAnimation("OnHit");
+            TriggerSoundEffect("PlantChop");
             return;
         }
 
         TriggerAnimation("OnHit");
+        TriggerSoundEffect("PlantChop");
 
         if (amountCrops <= 0)
         {
