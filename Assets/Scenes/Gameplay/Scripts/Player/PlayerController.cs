@@ -96,6 +96,8 @@ namespace ProyectG.Player.Controller
         private float initialMovementClamp = 0.0f;
 
         private LastDirection lastDirection = default;
+
+        private SoundHandlerChannel soundHandlerChannel = null;
         #endregion
 
         #region PROPERTIES
@@ -130,6 +132,7 @@ namespace ProyectG.Player.Controller
         {
             controllerEnable = true;
 
+            this.soundHandlerChannel = soundHandlerChannel;
             playerAttack.Init(soundHandlerChannel);
         }
 
@@ -311,6 +314,8 @@ namespace ProyectG.Player.Controller
             if (Input.GetButtonDown("Jump") && CanUseCoyote || BufferedJump)
             {
                 //Jump instantaneo
+                soundHandlerChannel.OnPlaySound?.Invoke("Jump");
+
                 verticalSpeed = jumpHeight;
 
                 endedJumpEarly = false;

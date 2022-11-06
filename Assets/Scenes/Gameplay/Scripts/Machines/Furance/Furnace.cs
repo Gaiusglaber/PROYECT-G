@@ -1,19 +1,27 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-using ProyectG.Gameplay.Objects.Inventory.Data;
-using ProyectG.Gameplay.Objects.Inventory.View;
+using ProyectG.Common.Modules.Audio.Objects;
+
 using ProyectG.Gameplay.UI;
 using ProyectG.Gameplay.Objects;
+using ProyectG.Gameplay.Objects.Inventory.Data;
+using ProyectG.Common.Modules.Audio.Data.Sound;
 
 public class Furnace : Machine
 {
+    #region EXPOSED_FIELDS
     [SerializeField] private UIFurnace uiFurnace;
     [SerializeField] private EnergyHandler energyHandler = null;
     [SerializeField] private GameObject feedbackFurance = null;
+    [Header("Sound Data")]
+    [Space(20)]
+    [SerializeField] private AudioSourceObject customSource = null;
+    [SerializeField] private SoundTrackData fireSoundData = null;
+    #endregion
 
+    #region PRIVATE_FIELDS
     private int energyGenerated = 0;
     private float timerFuel = 0;
     private float timeToBurnOutFuel = 0;
@@ -32,7 +40,9 @@ public class Furnace : Machine
     private Action OnItemConsumed = null;
 
     private ItemModel itemPorcessed = null;
+    #endregion
 
+    #region UNITY_CALLS
     void Start()
     {
         uiFurnace.IsFurnaceProcessing = IsProcessing;
@@ -49,7 +59,9 @@ public class Furnace : Machine
         OnItemConsumed = uiFurnace.OnConsumeItem;
 
         isProcessing = false;
-        timerProcess = 0.0f;        
+        timerProcess = 0.0f;
+
+        customSource.Configure(fireSoundData, true);
     }
 
     void Update()
@@ -131,7 +143,9 @@ public class Furnace : Machine
             }
         }
     }
+    #endregion
 
+    #region PRIVATE_METHODS
     private void BurnFuel()
     {
         if(timerFuel > 0)
@@ -209,4 +223,5 @@ public class Furnace : Machine
 
         OnItemConsumed?.Invoke();
     }
+    #endregion
 }
