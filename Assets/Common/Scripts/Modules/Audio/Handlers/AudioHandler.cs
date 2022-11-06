@@ -282,7 +282,20 @@ namespace ProyectG.Common.Modules.Audio.Handlers
         {
             if (soundsDictionary[id] != null)
             {
-                AudioSourceObject sourceSound = activeSources.Find(source => source.SourceData.id == id);
+                AudioSourceObject sourceSound = null;
+                for (int i = 0; i < activeSources.Count; i++)
+                {
+                    if (activeSources[i] != null)
+                    {
+                        if(activeSources[i].SourceData != null)
+                        {
+                            if(activeSources[i].SourceData.id == id)
+                            {
+                                sourceSound = activeSources[i];
+                            }
+                        }
+                    }
+                }
 
                 if(sourceSound == null)
                 {

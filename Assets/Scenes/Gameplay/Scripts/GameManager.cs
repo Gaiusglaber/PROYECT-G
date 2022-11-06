@@ -9,6 +9,8 @@ using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.UI;
 using ProyectG.Gameplay.RoomSystem.Handler;
+using ProyectG.Common.Modules.Audio.Channels.Sound;
+using ProyectG.Common.Modules.Audio.Channels.Music;
 
 namespace ProjectG.Gameplay.Managers
 {
@@ -25,6 +27,8 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private CameraController cameraHandler = null;
         [SerializeField] private MouseController mouseController = null;
         [SerializeField] private RoombuilderHandler roomSystem = null;
+        [SerializeField] private SoundHandlerChannel soundHandlerChannel = null;
+        [SerializeField] private MusicHandlerChannel musicHandlerChannel = null;
 
         [Header("FOR TESTING")]
         [SerializeField] private List<WorldItem> testItems = null;
@@ -49,11 +53,7 @@ namespace ProjectG.Gameplay.Managers
                 {
                     testItems[i].SetOnItemTaked(inventory.GenerateItem);
                 }
-            }
-
-            //inventory.GenerateItem("corn_syrup", 5);
-            //inventory.GenerateItem("Wood", 5);
-            //inventory.GenerateItem("Coal", 5);
+            }            
         }
 
         private void Start()
@@ -61,8 +61,9 @@ namespace ProjectG.Gameplay.Managers
             Time.timeScale = 1;
 
             roomSystem.Init(player, cameraHandler, inventory);
-            //EnergyHandler.Withoutenergy += StopGame;
-            //UIUpgradeTable.TradeSuccessfully += StopGame;
+
+            soundHandlerChannel.OnPlaySound?.Invoke("CalmForest");
+            musicHandlerChannel.OnPlayMusic?.Invoke("CalmMusic");
         }
 
         private void Update()
@@ -100,7 +101,7 @@ namespace ProjectG.Gameplay.Managers
                 
                 if (player != null)
                 {
-                    player.Init();
+                    player.Init(soundHandlerChannel);
                 }
             }
 

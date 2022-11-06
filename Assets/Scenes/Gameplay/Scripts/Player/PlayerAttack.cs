@@ -6,6 +6,7 @@ using ProyectG.Gameplay.Interfaces;
 using ProyectG.Player.Controller;
 
 using DragonBones;
+using ProyectG.Common.Modules.Audio.Channels.Sound;
 
 namespace ProyectG.Player.Attack
 {
@@ -20,11 +21,13 @@ namespace ProyectG.Player.Attack
         private string lastAnimationExecuted = string.Empty;
 
         private bool playerHasDoAttack = false;
-        private float timeToResetAttack = 0.95f;
+        private float timeToResetAttack = 1f;
         private float timer = 0f;
+        private SoundHandlerChannel soundChannel = null;
 
         public bool PlayerHasDoAttack { get { return playerHasDoAttack; } }
 
+        #region UNITY_CALLS
         void Update()
         {
             if (!playerController.IsControllerEnable)
@@ -55,6 +58,8 @@ namespace ProyectG.Player.Attack
 
                 Debug.Log("Hits: " + hits.Length);
 
+                soundChannel.OnPlaySound?.Invoke("Attack");
+
                 foreach (Collider2D hit in hits)
                 {
                     if (hit.TryGetComponent(out IHittable hittable))
@@ -65,6 +70,16 @@ namespace ProyectG.Player.Attack
                 }
             }
         }
+        #endregion
+
+        #region PUBLIC_METHODS
+        public void Init(SoundHandlerChannel soundHandlerChannel)
+        {
+            soundChannel = soundHandlerChannel;
+        }
+        #endregion
+
+        #region PRIVATE_METHODS
         private void SetAnimation(string idAnimation, int playTimes = 1)
         { 
             customAnimator.animation.Play(idAnimation, playTimes);
@@ -74,5 +89,6 @@ namespace ProyectG.Player.Attack
         {
             Gizmos.DrawWireSphere(transform.position, range);
         }
+        #endregion
     }
 }

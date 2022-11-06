@@ -13281,6 +13281,8 @@ MonoBehaviour:
   cameraHandler: {fileID: 2139589938}
   mouseController: {fileID: 293563183}
   roomSystem: {fileID: 1678228308}
+  soundHandlerChannel: {fileID: 11400000, guid: 13fdb80fee7c6c546a7f4152873818ec, type: 2}
+  musicHandlerChannel: {fileID: 11400000, guid: 13187e09096912a42bb462a0eb87be4b, type: 2}
   testItems:
   - {fileID: 0}
   - {fileID: 0}
@@ -23463,9 +23465,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroy: 1
   soundsData:
+  - {fileID: 11400000, guid: 8b4717b4fa245414894859d587125aec, type: 2}
+  - {fileID: 11400000, guid: 07beb645b0bd8ee4f96dc7ef7ec70ed0, type: 2}
   - {fileID: 11400000, guid: 7327acc134c7d8b4587f3e0b8d1df493, type: 2}
   musicsData:
-  - {fileID: 11400000, guid: 1879eecf7dd6cf948b185909f5233789, type: 2}
+  - {fileID: 11400000, guid: 960a4e06f432f3247a9d4d4bcc79b07a, type: 2}
   soundHandlerChannel: {fileID: 11400000, guid: 13fdb80fee7c6c546a7f4152873818ec, type: 2}
   musicHandlerChannel: {fileID: 11400000, guid: 13187e09096912a42bb462a0eb87be4b, type: 2}
   prefabSource: {fileID: 3286006440686661372, guid: 09d3c9da309c63a47bd2d72eaa0eab11, type: 3}

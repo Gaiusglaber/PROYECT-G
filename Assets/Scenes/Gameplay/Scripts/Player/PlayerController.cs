@@ -6,6 +6,7 @@ using UnityEngine;
 
 using ProyectG.Player.Attack;
 using DragonBones;
+using ProyectG.Common.Modules.Audio.Channels.Sound;
 
 namespace ProyectG.Player.Controller
 {
@@ -125,9 +126,11 @@ namespace ProyectG.Player.Controller
         #endregion
 
         #region UNITY_CALLS
-        public void Init()
+        public void Init(SoundHandlerChannel soundHandlerChannel)
         {
             controllerEnable = true;
+
+            playerAttack.Init(soundHandlerChannel);
         }
 
         public void Update()
