@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using ProyectG.Gameplay.RoomSystem.Room;
 
 using TMPro;
-using System;
+using ProyectG.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -19,15 +19,38 @@ namespace ProyectG.Gameplay.RoomSystem.View
         [SerializeField] private BuildView prefabBuildView = null;
         [SerializeField] private RawImage renderImage = null;
         [SerializeField] private TMP_Text infoRoom = null;
+
+        [Header("ROOM ANIMATIONS")]
+        [SerializeField] private Vector2 hidedPreviewView = default;
+        [SerializeField] private Vector2 showedPreviewView = default;
         #endregion
 
         #region PRIVATE_FIELDS
         private RoomView selectedRoom = null;
         private Camera refCamera = null;
 
+        private Vector2Lerper positionLerper = null;
+        private RectTransform rectTransform = null;
+
         private List<BuildView> allBuildsAviables = new List<BuildView>();
         #endregion
 
+        #region UNITY_CALLS
+        private void Update()
+        {
+            if(positionLerper == null)
+            {
+                return;
+            }
+
+            if(positionLerper.On)
+            {
+                positionLerper.Update();
+
+                rectTransform.anchoredPosition = positionLerper.CurrentValue;
+            }
+        }
+        #endregion
 
         #region PUBLIC_METHODS
         public void Init(Camera camera, List<BuildModel> aviableBuildings, Action<string, Action<bool>> onBuildPressed, Action<string ,Action<bool>> onDestroyPressed)
@@ -46,6 +69,10 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     allBuildsAviables.Add(newResource);
                 }
             }
+
+            rectTransform = transform as RectTransform;
+
+            positionLerper = new Vector2Lerper(.25f, Vector2Lerper.SMOOTH_TYPE.EASE_IN);
 
             TogglePreview(false);
         }
@@ -88,7 +115,13 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
         public void TogglePreview(bool state)
         {
-            holderPreview.SetActive(state);
+            if (!state)
+            {
+                rectTransform.anchoredPosition = hidedPreviewView;
+            }
+
+            positionLerper.SetValues(rectTransform.anchoredPosition, state ? showedPreviewView : hidedPreviewView, true);
+            //holderPreview.SetActive(state);
         }
         #endregion
     }

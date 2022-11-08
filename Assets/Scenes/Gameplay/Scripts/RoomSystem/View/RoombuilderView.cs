@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using ProyectG.Gameplay.RoomSystem.Room;
 
 using TMPro;
+using ProyectG.Toolbox.Lerpers;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -17,6 +18,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #region EXPOSED_FIELDS
         [Header("MAIN REFERENCES")]
         [SerializeField] private GameObject holder = null;
+        [SerializeField] private GameObject holderRoomViews = null;
         [SerializeField] private Button btnExit = null;
         [SerializeField] private TMP_Text txtFeedbackOperation = null;
 
@@ -26,6 +28,10 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
         [Header("ROOMS AVIABLE")]
         [SerializeField] private List<RoomModel> allRooms = null;
+
+        [Header("ROOM ANIMATIONS")]
+        [SerializeField] private Vector2 centerMapView = default;
+        [SerializeField] private Vector2 movedMapView = default;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -34,6 +40,10 @@ namespace ProyectG.Gameplay.RoomSystem.View
         private Action onUnselectRoom = null;
         private Action<Vector3> onSelectedRoom = null;
         private Dictionary<string, RoomView> rooms = new Dictionary<string, RoomView>();
+
+        private RectTransform rectTransform = null;
+
+        private Vector2Lerper positionLerper = null;
         #endregion
 
         #region PROPERTIES
@@ -46,6 +56,15 @@ namespace ProyectG.Gameplay.RoomSystem.View
         #region UNITY_CALLS
         private void Update()
         {
+            if(positionLerper != null)
+            {
+                if(positionLerper.On)
+                {
+                    positionLerper.Update();
+                    rectTransform.anchoredPosition = positionLerper.CurrentValue;
+                }
+            }
+
             if (!holder.activeInHierarchy)
                 return;
 
@@ -74,7 +93,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
             {
                 if (allRooms[i] != null)
                 {
-                    RoomView roomView = Instantiate(prefabRoomView, Vector3.zero, Quaternion.identity ,holder.transform);
+                    RoomView roomView = Instantiate(prefabRoomView, Vector3.zero, Quaternion.identity , holderRoomViews.transform);
                     roomView.transform.localPosition = allRooms[i].viewPosition;
                     roomView.Init(allRooms[i]);
 
@@ -84,11 +103,29 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     rooms.Add(allRooms[i].id, roomView);
                 }
             }
+
+            rectTransform = holderRoomViews.transform as RectTransform;
+
+            positionLerper = new Vector2Lerper(.25f, Vector2Lerper.SMOOTH_TYPE.EASE_IN);
+            positionLerper.SetValues(rectTransform.anchoredPosition, centerMapView, true);
         }
 
         public void ToggleView(bool state)
         {
             holder.SetActive(state);
+
+            if(!state)
+            {
+                if(rectTransform == null)
+                {
+                    rectTransform = holderRoomViews.transform as RectTransform;
+                }
+
+                if(positionLerper != null)
+                {
+                    positionLerper.SetValues(rectTransform.anchoredPosition, centerMapView, true);
+                }
+            }
 
             OnViewToggle?.Invoke(IsActive);
         }
@@ -152,6 +189,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
                     idSelectedRoom = selectedRoom.roomModel.id;
 
                     onSelectedRoom?.Invoke(GetSelectedRoom().roomModel.cameraWorldPosition);
+
+                    positionLerper.SetValues(rectTransform.anchoredPosition, movedMapView, true);
 
                     return true;
                 }
