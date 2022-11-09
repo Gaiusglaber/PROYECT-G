@@ -130,6 +130,11 @@ namespace ProyectG.Gameplay.RoomSystem.View
             OnViewToggle?.Invoke(IsActive);
         }
 
+        public void ToggleInput(bool state)
+        {
+            btnExit.enabled = state;
+        }
+
         public RoomView GetSelectedRoom()
         {
             return rooms[idSelectedRoom];   

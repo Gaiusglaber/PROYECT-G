@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Jump
   clip: {fileID: 8300000, guid: f78f4305666357b40b1380351b91728a, type: 3}
-  volume: 0.24
+  volume: 0.65
   pitch: 1.5
   loop: 0
   releaseAfterPlayfack: 1

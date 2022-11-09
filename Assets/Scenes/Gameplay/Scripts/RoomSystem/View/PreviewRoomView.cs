@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 using ProyectG.Gameplay.RoomSystem.Room;
 
-using TMPro;
 using ProyectG.Toolbox.Lerpers;
+using TMPro;
 
 namespace ProyectG.Gameplay.RoomSystem.View
 {
@@ -19,6 +19,7 @@ namespace ProyectG.Gameplay.RoomSystem.View
         [SerializeField] private BuildView prefabBuildView = null;
         [SerializeField] private RawImage renderImage = null;
         [SerializeField] private TMP_Text infoRoom = null;
+        [SerializeField] private TMP_Text stateRoom = null;
 
         [Header("ROOM ANIMATIONS")]
         [SerializeField] private Vector2 hidedPreviewView = default;
@@ -99,7 +100,12 @@ namespace ProyectG.Gameplay.RoomSystem.View
             string roomState = selectedRoom.roomModel.IsRoomEmpty ? "<color=green>Room is free to build.</color>" 
                 : "<color=red>The room is already ocuped.</color>";
 
-            infoRoom.text = roomState + '\n' + '\n' + selectedRoom.roomModel.roomInfo;
+            string roomType = !selectedRoom.roomModel.isOutsideRoom ? "<color=yellow>Room is for machines.</color>"
+                : "<color=yellow>The room is for organics.</color>";
+
+            stateRoom.text = roomState;
+
+            infoRoom.text = roomType + '\n' + '\n' + selectedRoom.roomModel.roomInfo;
         }
 
         public BuildView GetBuildById(string buildID)
