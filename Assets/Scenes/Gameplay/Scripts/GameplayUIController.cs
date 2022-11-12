@@ -31,7 +31,6 @@ namespace ProyectG.Gameplay.UI
         [SerializeField] private Button onCloseControlls = null;
         [SerializeField] private Vector2 panelOpenDestination = default;
         [SerializeField] private Vector2 panelCloseDestination = default;
-        [SerializeField] private DialogConversationSO[] conversationSOs = null;
         [SerializeField] private NPCHandler npcHandler = null;
         #endregion
         #region PRIVATE_FIELDS
@@ -40,8 +39,6 @@ namespace ProyectG.Gameplay.UI
         private Vector2Lerper panelLerper = null;
         private Vector2 initialPos = Vector2.zero;
         private float initialdof = 0;
-        private Action OnDialogStart = null;
-        private Action OnDialogEnd = null;
         #endregion
         #region UNTIY_CALLS
         private void Start()
@@ -56,19 +53,8 @@ namespace ProyectG.Gameplay.UI
             onCloseControlls.onClick.AddListener(HideControlls);
             onCloseControlls.gameObject.SetActive(false);
             EnergyHandler.Withoutenergy += ShowGameOverPanel;
-
-            if(npcHandler != null)
-            {
-                npcHandler.Init(dialogManager.LoadDialogue);
-            }
             
-            if(dialogManager != null)
-            {
-                dialogManager.Init();
-                dialogManager.InitAllDialogPlayers(OpenPanel, OnDialogStart, OnDialogEnd); 
-                dialogManager.SetConversations(conversationSOs);
-                dialogManager.OnDialogEnd += ClosePanel;
-            }
+
         }
 
         private void OnDisable()
@@ -78,15 +64,6 @@ namespace ProyectG.Gameplay.UI
 
         #endregion
         #region PUBLIC_METHODS
-        public void ClosePanel()
-        {
-            dialogPanel.SetBool("IsOpen", false);
-        }
-
-        public void OpenPanel()
-        {
-            dialogPanel.SetBool("IsOpen", true);
-        }
         public void ShowPanel()
         {
             panelHidden = !panelHidden;

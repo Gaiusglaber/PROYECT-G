@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
+using ProyectG.Gameplay.Objects.Inventory.Data;
 
 namespace ProyectG.Common.UI.Dialogs
 {
@@ -39,6 +39,8 @@ namespace ProyectG.Common.UI.Dialogs
         #endregion
 
         #region PRIVATE_FIELDS
+        private Func<ItemModel, int, bool> onTryToDeleteItem = null;
+        private Action<ItemModel, int> onTryGiveItem = null;
         private DialogConversationSO[] Conversation = null;
         private float initialWordSpeed;
         private Dictionary<string, GameObject> actors = new Dictionary<string, GameObject>();
@@ -64,11 +66,12 @@ namespace ProyectG.Common.UI.Dialogs
         private Action onDialogLineEnd = null;
         private Action onDialogStart = null;
         private Action openPanelUI = null;
-        public Action OnDialogEnd = null;
+        public Action<bool,string> OnDialogEnd = null;
         public Action<string> OnPlayDialog = null;
         #endregion
 
         #region PROPERTIES
+
         public UnityAction<int> OnCorrectAnswer
         {
             get
@@ -99,11 +102,16 @@ namespace ProyectG.Common.UI.Dialogs
                 return wordSpeed;
             }
         }
+
+        public DialogConversationSO ActualDialog { get => actualDialog;}
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init()
+        public void Init(Func<ItemModel,int,bool> onTryDeleteItem, Action<ItemModel, int> onTryGiveItem)
         {
+            this.onTryToDeleteItem = onTryDeleteItem;
+            this.onTryGiveItem = onTryGiveItem;
+
             initialWordSpeed = wordSpeed;
 
             lineTxt.text = string.Empty;
@@ -224,7 +232,34 @@ namespace ProyectG.Common.UI.Dialogs
                 canInteract = true;
                 lineTxt.text = string.Empty;
 
-                OnDialogEnd?.Invoke();                
+                if (ActualDialog.lines[lineIndex].item!=null)
+                {
+                    OnDialogEnd?.Invoke(true,string.Empty);
+                }
+                else
+                {
+                    if (goodAnswer)
+                    {
+                        if (onTryToDeleteItem(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity) && ActualDialog.lines[lineIndex].give)
+                        {
+                            OnDialogEnd?.Invoke(true, ActualDialog.lines[lineIndex].item.itemId);
+                        }
+                        else
+                        {
+                            OnDialogEnd?.Invoke(false, ActualDialog.lines[lineIndex].item.itemId);
+                        }
+
+                        if (ActualDialog.lines[lineIndex].recieve)
+                        {
+                            OnDialogEnd?.Invoke(true, ActualDialog.lines[lineIndex].item.itemId);
+                            onTryGiveItem?.Invoke(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity);
+                        }
+                    }
+                    else
+                    {
+                        OnDialogEnd?.Invoke(false, string.Empty);
+                    }
+                }
                 return;
             }
             foreach (var actor in actors)
@@ -232,12 +267,12 @@ namespace ProyectG.Common.UI.Dialogs
                 actor.Value.SetActive(false);
             }
             actualDialog = DialogPerId(ID);
-            if (lineIndex < actualDialog.lines.Length)
+            if (lineIndex < ActualDialog.lines.Length)
             {
-                actorTxt.text = "<uppercase>"+actualDialog.lines[lineIndex].actorId+"</uppercase>";
-                actors[actualDialog.lines[lineIndex].actorId].SetActive(true);
-                StartCoroutine(PlayLine(actualDialog.lines[lineIndex].line, false));
-                OnPlayDialog?.Invoke(actualDialog.lines[lineIndex].line);
+                actorTxt.text = "<uppercase>"+ActualDialog.lines[lineIndex].actorId+"</uppercase>";
+                actors[ActualDialog.lines[lineIndex].actorId].SetActive(true);
+                StartCoroutine(PlayLine(ActualDialog.lines[lineIndex].line, false));
+                OnPlayDialog?.Invoke(ActualDialog.lines[lineIndex].line);
             }
         }
         public void PlayNextLineActualDialog()
@@ -245,14 +280,14 @@ namespace ProyectG.Common.UI.Dialogs
             Debug.Log("APRETO PARA REPRODUCIR LINEA");
             if (dialogPanel.GetBool("IsOpen"))
             {
-                LoadDialogue(actualDialog.id);
+                LoadDialogue(ActualDialog.id);
             }
         }
 
         public void SkipDialog()
         {
-            lineIndex = actualDialog.lines.Length;
-            LoadDialogue(actualDialog.id);
+            lineIndex = ActualDialog.lines.Length;
+            LoadDialogue(ActualDialog.id);
             onDialogLineEnd?.Invoke();
         }
 
@@ -278,7 +313,7 @@ namespace ProyectG.Common.UI.Dialogs
         #endregion
 
         #region PROTECTED_METHODS
-        protected void ClearActorsAtEnd()
+        protected void ClearActorsAtEnd(bool toggle,string itemId)
         {
             IEnumerator WaitToClearActors()
             {
@@ -342,20 +377,20 @@ namespace ProyectG.Common.UI.Dialogs
         }
         protected IEnumerator ShowAnswerOptions()
         {
-            if (!IsLineIndexInRange() || actualDialog.lines[lineIndex].answers.Length < 1)
+            if (!IsLineIndexInRange() || ActualDialog.lines[lineIndex].answers.Length < 1)
             {
                 buttonAnswerPress = false;
                 yield break;
             }
 
             buttonAnswerPress = false;
-            int activeButtons = actualDialog.lines[lineIndex].answers.Length;
+            int activeButtons = ActualDialog.lines[lineIndex].answers.Length;
 
             for (int i = 0; i < activeButtons; i++)
             {
                 if(answerButtons[i] != null)
                 {
-                    answerButtons[i].SetData(actualDialog.lines[lineIndex].answers[i]);
+                    answerButtons[i].SetData(ActualDialog.lines[lineIndex].answers[i]);
                 }
             }
 
@@ -412,8 +447,16 @@ namespace ProyectG.Common.UI.Dialogs
             }
             else
             {
-                buttonAnswerPress = false;
-                goodAnswer = true;
+                if (ActualDialog.lines[lineIndex].give && !onTryToDeleteItem(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity))
+                {
+                    buttonAnswerPress = true;
+                    goodAnswer = false;
+                }
+                else
+                {
+                    buttonAnswerPress = false;
+                    goodAnswer = true;
+                }
             }
         }
         protected void SomeButtonPress()
@@ -451,7 +494,7 @@ namespace ProyectG.Common.UI.Dialogs
         #region PRIVATE_METHODS
         private bool IsLineIndexInRange()
         {
-            return lineIndex < actualDialog.lines.Length;
+            return lineIndex < ActualDialog.lines.Length;
         }
         /// <summary>
         /// Loads the actor GO and ID to a dictionary that displays the information on runtime
@@ -459,7 +502,7 @@ namespace ProyectG.Common.UI.Dialogs
         private void LoadDictionary(string ID)
         {
             actualDialog = DialogPerId(ID);
-            foreach (var actor in actualDialog.actors)
+            foreach (var actor in ActualDialog.actors)
             {
                 actors.Add(actor.id, actor.GO);
                 actors[actor.id] = Instantiate(actors[actor.id], actorImageTransform, false);
@@ -533,7 +576,7 @@ namespace ProyectG.Common.UI.Dialogs
             {
                 yield return StartCoroutine(ShowAnswerOptions());
 
-                if (!goodAnswer && buttonAnswerPress && actualDialog.lines[lineIndex].loopOnBadAnswerws)
+                if (!goodAnswer && buttonAnswerPress && ActualDialog.lines[lineIndex].loopOnBadAnswerws)
                 {
                     StartCoroutine(PlayLine(line, singleAnswer));
                     yield break;

@@ -5,11 +5,14 @@ public class NPCHandler : MonoBehaviour
 {
     [SerializeField] private NPC[] npcs = null;
 
-    public void Init(Action<string> onInteract)
+    public void OnConversationEnd(string id,bool toggle)
     {
         for (int i = 0; i < npcs.Length; i++)
         {
-            npcs[i].Init(onInteract);
+            if (npcs[i].Id.Contains(id))
+            {
+                npcs[i].IncreaseDialogIndex(toggle);
+            }
         }
     }
 

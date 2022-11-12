@@ -11,6 +11,9 @@ using ProyectG.Gameplay.UI;
 using ProyectG.Gameplay.RoomSystem.Handler;
 using ProyectG.Common.Modules.Audio.Channels.Sound;
 using ProyectG.Common.Modules.Audio.Channels.Music;
+using ProyectG.Common.UI.Dialogs;
+using System;
+using ProyectG.Gameplay.Objects.Inventory.Data;
 
 namespace ProjectG.Gameplay.Managers
 {
@@ -29,6 +32,10 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private RoombuilderHandler roomSystem = null;
         [SerializeField] private SoundHandlerChannel soundHandlerChannel = null;
         [SerializeField] private MusicHandlerChannel musicHandlerChannel = null;
+        [SerializeField] private DialogManager dialogManager = null;
+        [SerializeField] private DialogConversationSO[] conversationSOs = null;
+        [SerializeField] private Animator dialogPanel = null;
+        [SerializeField] private NPCHandler npcHandler = null;
 
         [Header("FOR TESTING")]
         [SerializeField] private List<WorldItem> testItems = null;
@@ -36,6 +43,9 @@ namespace ProjectG.Gameplay.Managers
 
         #region PRIVATE_FIELDS
         private PlayerController player = null;
+
+        private Action OnDialogStart = null;
+        private Action OnDialogEnd = null;
         #endregion
 
         #region UNITY_CALLS
@@ -53,7 +63,15 @@ namespace ProjectG.Gameplay.Managers
                 {
                     testItems[i].SetOnItemTaked(inventory.GenerateItem);
                 }
-            }            
+            }
+
+            if (dialogManager != null)
+            {
+                dialogManager.Init(TryDeleteItem, TryGiveItem);
+                dialogManager.InitAllDialogPlayers(OpenPanel, OnDialogStart, OnDialogEnd);
+                dialogManager.SetConversations(conversationSOs);
+                dialogManager.OnDialogEnd += OnEndDialog;
+            }
         }
 
         private void Start()
@@ -84,6 +102,29 @@ namespace ProjectG.Gameplay.Managers
         #endregion
 
         #region PRIVATE_METHODS
+        public void OnEndDialog(bool toggle, string itemId)
+        {
+            dialogPanel.SetBool("IsOpen", false);
+        }
+
+        private bool TryDeleteItem(ItemModel item, int quantity)
+        {
+            bool result = inventory.Model.ConsumeItems(item, quantity);
+            npcHandler.OnConversationEnd(dialogManager.ActualDialog.id, result);
+            return result;
+        }
+
+        private void TryGiveItem(ItemModel item, int quantity)
+        {
+            inventory.GenerateItem(item.itemId, quantity);
+            npcHandler.OnConversationEnd(dialogManager.ActualDialog.id, true);
+        }
+
+        public void OpenPanel()
+        {
+            dialogPanel.SetBool("IsOpen", true);
+        }
+
         private void InitializePlayer()
         {
             if(initialPosition != null)

@@ -1162,6 +1162,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 606832595}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!224 &136574510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1297,9 +1298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f84e9afaed1346a4fb93c30c6f75378c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputSlot: {fileID: 1478532164}
-  outputSlot: {fileID: 201736048}
-  fuelSlot: {fileID: 2079433182}
+  inputSlot: {fileID: 0}
+  outputSlot: {fileID: 0}
+  fuelSlot: {fileID: 0}
   inventoryController: {fileID: 1317914051}
   prefabItemView: {fileID: 3507272483325874770, guid: d4c2cf2d8abc68849be5b15f8ab3e8a0, type: 3}
   panelFurnace: {fileID: 1056122023}
@@ -3816,9 +3817,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holder: {fileID: 0}
   idView: 
-  inputSlot: {fileID: 5101280751018381487}
-  outputSlot1: {fileID: 1322352947}
-  outputSlot2: {fileID: 1619431911}
+  inputSlot: {fileID: 0}
+  output1: {fileID: 0}
+  output2: {fileID: 0}
   inventoryController: {fileID: 1317914051}
   prefabItemView: {fileID: 3507272483325874770, guid: d4c2cf2d8abc68849be5b15f8ab3e8a0, type: 3}
   panelSeparator: {fileID: 1195417638}
@@ -4751,6 +4752,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089a755ae7ddc794abefcc1c78b02a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundsChannel: {fileID: 0}
+  animatorTriggers: []
+  animator: {fileID: 0}
   uiSeparator: {fileID: 408333940}
   energyHandler: {fileID: 152223989}
   feedbackSeparator: {fileID: 1094363817}
@@ -6161,6 +6165,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 1275902430}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!61 &685504279
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12368,6 +12373,8 @@ MonoBehaviour:
   cameraHandler: {fileID: 2139589938}
   mouseController: {fileID: 0}
   roomSystem: {fileID: 0}
+  soundHandlerChannel: {fileID: 0}
+  musicHandlerChannel: {fileID: 0}
   testItems:
   - {fileID: 1697765882}
   - {fileID: 414345362}
@@ -28580,6 +28587,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 1920618917}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!61 &1109576805
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30746,6 +30754,7 @@ MonoBehaviour:
   viewParent: {fileID: 768717302}
   inventoryView: {fileID: 768717304}
   volume: {fileID: 176273866}
+  hoverSelection: {fileID: 0}
   allItemsAviable:
   - {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
   - {fileID: 11400000, guid: f93ca26977968014bbe9d6ce804dad45, type: 2}
@@ -30756,7 +30765,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9c81abf5a08f35141bdc469026d356f2, type: 2}
   - {fileID: 11400000, guid: 6b4486ac2ec0e9f43b6c606c9555ef30, type: 2}
   - {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
-  hoverSelection: {fileID: 0}
 --- !u!4 &1317914052
 Transform:
   m_ObjectHideFlags: 0
@@ -31243,6 +31251,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 2026334422}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!61 &1365766352
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31669,6 +31678,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 418636336}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!224 &1418683851
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34132,6 +34142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f875e1e72b6a84eb67cd383f009249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundsChannel: {fileID: 0}
+  animatorTriggers: []
+  animator: {fileID: 0}
 --- !u!1001 &1518861199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40449,9 +40462,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a12072743f1178c40ab9c9bb29468b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundsChannel: {fileID: 0}
+  animatorTriggers: []
+  animator: {fileID: 0}
   uiFurnace: {fileID: 138062184}
   energyHandler: {fileID: 152223989}
   feedbackFurance: {fileID: 808177907}
+  customSource: {fileID: 0}
+  fireSoundData: {fileID: 0}
 --- !u!50 &1754119052
 Rigidbody2D:
   serializedVersion: 4
@@ -50383,7 +50401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ids:
-  - 0
+  - npc_0_0
   feedbackUpgradeTable: {fileID: 801831715}
   dialogPlayer: {fileID: 456959394429757364}
 --- !u!114 &456959394429757364
@@ -51846,6 +51864,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 7983675749509537904}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!114 &2907181173344961340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51861,6 +51880,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 7983675749452624258}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!1 &3257555090540160347
 GameObject:
   m_ObjectHideFlags: 0
@@ -52181,6 +52201,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 8819809479419179933}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!224 &4623718190136199586
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52594,6 +52615,7 @@ MonoBehaviour:
   speedFollow: 0.4
   stackAmount: {fileID: 1821254205623778571}
   useLerpAnimations: 0
+  isMachineStack: 0
 --- !u!222 &7031688183806862285
 CanvasRenderer:
   m_ObjectHideFlags: 0

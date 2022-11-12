@@ -6,22 +6,21 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    [SerializeField] private string id = string.Empty;
     [SerializeField] private string[] ids = null;
     [SerializeField] private GameObject feedbackUpgradeTable = null;
     [SerializeField] private DialogPlayer dialogPlayer = null;
 
-    private Action<string> onInteract = null;
     private int dialogIndex = 0;
 
-    public string[] Id { get => ids; set => ids = value; }
-
-    public void Init(Action<string> onInteract)
+    public string Id { get { return id; } }
+    public string[] Ids { get => ids; set => ids = value; }
+    public void IncreaseDialogIndex(bool toggle)
     {
-        this.onInteract = onInteract;
-    }
-    public void IncreaseDialogIndex()
-    {
-        dialogIndex++;
+        if (toggle)
+        {
+            dialogIndex++;
+        }
     }
     public void SetDialogIndex(int index)
     {
