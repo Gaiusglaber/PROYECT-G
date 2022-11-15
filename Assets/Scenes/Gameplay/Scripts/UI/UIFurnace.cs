@@ -1,12 +1,12 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 using ProyectG.Gameplay.Objects.Inventory.View;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
-using System.Collections;
 
 public class UIFurnace : MonoBehaviour
 {
