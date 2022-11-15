@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Fuel fruit
   itemValue: 0
   energyCost: 0
-  timeToComplete: 0
-  costInterval: 0
+  timeToComplete: 60
+  costInterval: 1
   itemType: 0
   itemResults: []
