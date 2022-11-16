@@ -46,6 +46,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
         public Action<Vector2Int, int, bool> OnRemoveItems { get { return RemoveItems; } } 
         public Action<bool> OnInteractionChange { get { return onInteractionChange; } set { onInteractionChange = value; } }
         public Action<string, bool> OnHoverSelection { get { return hoverSelection.ToggleHoverSelection; } }
+        public List<ItemModel> AllItemsAviable { get { return allItemsAviable; } }
         #endregion
 
         #region PUBLIC_METHODS

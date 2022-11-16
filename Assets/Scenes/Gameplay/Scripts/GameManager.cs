@@ -82,6 +82,9 @@ namespace ProjectG.Gameplay.Managers
 
             soundHandlerChannel.OnPlaySound?.Invoke("CalmForest");
             musicHandlerChannel.OnPlayMusic?.Invoke("CalmMusic");
+
+            inventory.GenerateItem("Wood", 1);
+            inventory.GenerateItem("fruit", 1);
         }
 
         private void Update()

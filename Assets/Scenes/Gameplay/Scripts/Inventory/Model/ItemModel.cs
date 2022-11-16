@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace ProyectG.Gameplay.Objects.Inventory.Data
 {
@@ -29,7 +30,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
         public ItemType itemType;
 
+        [Header("ITEM PROCESS RESULT")]
         public List<ItemModel> itemResults = new List<ItemModel>();
+        [Header("GENERATED FROM ITEMS")]
+        public List<ItemModel> itemsFrom = new List<ItemModel>();
         #endregion
     }
 }

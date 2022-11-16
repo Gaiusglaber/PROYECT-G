@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Name: Item_DangerousUnstability
+  m_EditorClassIdentifier: 
+  itemId: Unstability
+  itemSprite: {fileID: 21300000, guid: 02786bba5c98d6349ad7e691afe5335a, type: 3}
+  itemDescription: Mi inestabilidad emocional, digo esta bueno este item :)
+  itemValue: 0
+  energyCost: 0
+  timeToComplete: 0
+  costInterval: 0
+  itemType: 0
+  itemResults: []
+  itemsFrom:
+  - {fileID: 11400000, guid: 50e91de3b75ea254cb96f803c5ada9d2, type: 2}
+  - {fileID: 11400000, guid: 9330a2bbb5aeb574ab02f11aef8afdc4, type: 2}

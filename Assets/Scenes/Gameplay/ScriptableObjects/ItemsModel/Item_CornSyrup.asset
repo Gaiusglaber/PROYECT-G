@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Name: Item_CornSyrup
+  m_EditorClassIdentifier: 
+  itemId: corn_syrup
+  itemSprite: {fileID: 21300000, guid: bceaffb4ed79b1443aebf3742be93903, type: 3}
+  itemDescription: Aceite de maiz, usado para desbloquear algunas maquinas.
+  itemValue: 1
+  energyCost: 2
+  timeToComplete: 10
+  costInterval: 1
+  itemType: 2
+  itemResults: []
