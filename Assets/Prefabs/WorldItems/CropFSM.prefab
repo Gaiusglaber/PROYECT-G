@@ -243,9 +243,9 @@ MonoBehaviour:
   hitsNeededToFarm: 2
   cropPrefab: {fileID: 7625708649754275758, guid: d4c17706a8b9a994eb44edeb3ce6414b, type: 3}
   spriteCycle:
-  - {fileID: 21300000, guid: 30804872f42dca44c9a9842175c47fe8, type: 3}
-  - {fileID: 21300000, guid: 77dd73a6764ccfb4db1cfc9bc3a421c6, type: 3}
-  - {fileID: 21300000, guid: ad285961e046c4b4a9b2b50209ce481f, type: 3}
+  - {fileID: 21300000, guid: 79d94cff80c170348b0654f92256bdcd, type: 3}
+  - {fileID: 21300000, guid: e60818139a7289146a60be4a707c52bb, type: 3}
+  - {fileID: 21300000, guid: ff0b7c04f9d18824e9ea20dc304067f3, type: 3}
 --- !u!70 &5670562782362932566
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

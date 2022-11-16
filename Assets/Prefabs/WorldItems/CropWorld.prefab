@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteAttach: {fileID: 7625708650300059409}
-  data: {fileID: 11400000, guid: d67cb12c9b8b2024fa20d1670c6503fe, type: 2}
+  data: {fileID: 11400000, guid: d39304c5d1d372149853d7bfc0110728, type: 2}
   fallSpeed: 0.25
 --- !u!61 &7625708649754275753
 BoxCollider2D:
@@ -167,7 +167,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 22b699692dedeee499c859ef106080d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 90cd07b0c0d5dfd4ca2d925ac03ccfcd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
