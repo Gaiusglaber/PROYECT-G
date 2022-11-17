@@ -1,14 +1,14 @@
 using System;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
 
+using ProyectG.Gameplay.UI;
 using ProyectG.Gameplay.Objects.Inventory.View;
-using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
+using ProyectG.Gameplay.Objects.Inventory.Controller;
 
-public class UIFurnace : MonoBehaviour
+public class UIFurnace : BaseView
 {
     #region EXPOSED_FIELDS
     [SerializeField] private MachineSlotView inputSlot;
@@ -27,12 +27,6 @@ public class UIFurnace : MonoBehaviour
     private Func<bool> isFurnaceBurningFuel = null;
 
     private float durationProcess = 0f;
-
-    private List<Vector2Int> savedSlotPositons = new List<Vector2Int>();
-
-    private bool extraPositionsCreated = false;
-
-    private Vector2Int invalidPosition = new Vector2Int(-1, -1);
     #endregion
 
     #region ACTIONS
@@ -53,8 +47,6 @@ public class UIFurnace : MonoBehaviour
         inputSlot.Init(mainCanvas, inventoryController.OnHoverSelection);
         outputSlot.Init(mainCanvas, inventoryController.OnHoverSelection);
         fuelSlot.Init(mainCanvas,inventoryController.OnHoverSelection, ItemType.fuel);
-
-        extraPositionsCreated = false;
 
         inventoryController.OnInteractionChange += inputSlot.SetOnInteractionInventoryChange;
         inventoryController.OnInteractionChange += outputSlot.SetOnInteractionInventoryChange;
@@ -133,7 +125,7 @@ public class UIFurnace : MonoBehaviour
         canFinishSequence?.Invoke(true);
     }
 
-    public void TogglePanel()
+    public override void TogglePanel()
     {
         panelFurnace.SetActive(!panelFurnace.activeSelf);
         inventoryController.ToggleInventory();
@@ -226,28 +218,6 @@ public class UIFurnace : MonoBehaviour
                     OnProcessMaterial?.Invoke(firstItem);
                 }
             }
-            /*if (inventoryController.Model.GetSlot(inputSlot.GridPosition) != null && inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems.Count > 0)
-            {
-                if (inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0].itemResults.Count < 1)
-                    return;
-                
-                Debug.Log("Item send to procees");
-
-                ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
-
-                OnProcessMaterial?.Invoke(firstItem);
-            }
-            else if(savedSlotPositons.Count > 0 && inventoryController.Model.GetSlot(savedSlotPositons[0]) != null && inventoryController.Model.GetSlot(savedSlotPositons[0]).StackOfItems.Count > 0)
-            {
-                if (inventoryController.Model.GetSlot(savedSlotPositons[0]).StackOfItems[0].itemResults.Count < 1)
-                    return;
-
-                Debug.Log("Item send to procees");
-
-                ItemModel firstItem = inventoryController.Model.GetSlot(inputSlot.GridPosition).StackOfItems[0];
-
-                OnProcessMaterial?.Invoke(firstItem);
-            }*/
         }
     }
 

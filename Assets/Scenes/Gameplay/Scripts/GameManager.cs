@@ -38,7 +38,7 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private NPCHandler npcHandler = null;
 
         [Header("FOR TESTING")]
-        [SerializeField] private List<WorldItem> testItems = null;
+        [SerializeField] private List<ItemModel> testItems = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -56,14 +56,6 @@ namespace ProjectG.Gameplay.Managers
             inventory.Init();
             cameraHandler.Init(player);
             mouseController.Init();
-
-            for (int i = 0; i < testItems.Count; i++)
-            {
-                if(testItems[i] != null)
-                {
-                    testItems[i].SetOnItemTaked(inventory.GenerateItem);
-                }
-            }
 
             if (dialogManager != null)
             {
@@ -83,8 +75,18 @@ namespace ProjectG.Gameplay.Managers
             soundHandlerChannel.OnPlaySound?.Invoke("CalmForest");
             musicHandlerChannel.OnPlayMusic?.Invoke("CalmMusic");
 
-            inventory.GenerateItem("Wood", 1);
-            inventory.GenerateItem("fruit", 1);
+            /*inventory.GenerateItem("Wood", 25);
+            inventory.GenerateItem("Coal", 25);
+            inventory.GenerateItem("Salvia", 25);
+            inventory.GenerateItem("fruit", 25);
+            inventory.GenerateItem("saturnita_fuel", 25);
+            inventory.GenerateItem("residue_toxic", 25);
+            inventory.GenerateItem("CommonSeed", 25);
+            inventory.GenerateItem("Rocks", 25);
+            inventory.GenerateItem("StoragedUnstability", 25);
+            inventory.GenerateItem("juice_fruit_toxic", 25);
+            inventory.GenerateItem("gashroom", 25);
+            inventory.GenerateItem("saturnita_core", 25);*/
         }
 
         private void Update()

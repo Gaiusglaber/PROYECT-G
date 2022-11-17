@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,6 +60,11 @@ namespace ProyectG.Gameplay.UI
 
         public void GenerateProcessedItems(ItemModel itemFrom1)
         {
+            if(!itemFrom1.itemResults.Any())
+            {
+                return;
+            }
+
             ItemModel finalItem = itemFrom1.itemResults[1];
             ItemModel finalIte2 = itemFrom1.itemResults[2];
 
@@ -92,7 +98,7 @@ namespace ProyectG.Gameplay.UI
             }
         }
 
-        public void TogglePanel()
+        public override void TogglePanel()
         {
             panelSeparator.SetActive(!panelSeparator.activeSelf);
             inventoryController.ToggleInventory();

@@ -5,14 +5,11 @@ using ProyectG.Gameplay.UI;
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
-using TMPro;
-
 public class Separator : Machine
 {
     #region EXPOSED_FIELDS
     [SerializeField] private UISeparator uiSeparator;
     [SerializeField] private EnergyHandler energyHandler = null;
-    [SerializeField] private TMP_Text feedbackSeparator = null;
 
     [SerializeField] private bool isProcessing;
     #endregion
@@ -21,9 +18,6 @@ public class Separator : Machine
     private float timerProcess;
     private float timeToProcessObject = 0;
 
-    private bool isInitialized = false;
-
-    private bool playerIsNear;
     private bool isEnabled;
 
     private ItemModel itemProcessed = null;
@@ -53,7 +47,7 @@ public class Separator : Machine
         isProcessing = false;
         timerProcess = 0.0f;
 
-        feedbackSeparator.gameObject.SetActive(false);
+        feedbackMachine.gameObject.SetActive(false);
 
         isEnabled = true;
         isInitialized = true;
@@ -61,16 +55,13 @@ public class Separator : Machine
     #endregion
 
     #region UNITY_CALLS
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if(!isInitialized)
         {
             return;
-        }
-
-        if (playerIsNear && Input.GetKeyDown(KeyCode.E) && isEnabled)
-        {
-            uiSeparator.TogglePanel();
         }
 
         if (isProcessing)
@@ -100,40 +91,6 @@ public class Separator : Machine
 
                 Debug.Log("Item processed successfully");
             }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (!feedbackSeparator.gameObject.activeSelf)
-            {
-                feedbackSeparator.gameObject.SetActive(true);
-            }
-
-            feedbackSeparator.text = isEnabled ? "<color=yellow><size=.3>E</size></color> to Interact" : "You need to <color=red><size=.3>unlock</size></color> this";
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (feedbackSeparator.gameObject.activeSelf)
-            {
-                feedbackSeparator.gameObject.SetActive(false);
-
-                playerIsNear = false;
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerIsNear = true;
         }
     }
 

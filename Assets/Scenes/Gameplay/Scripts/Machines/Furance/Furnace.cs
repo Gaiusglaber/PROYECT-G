@@ -14,7 +14,6 @@ public class Furnace : Machine
     #region EXPOSED_FIELDS
     [SerializeField] private UIFurnace uiFurnace;
     [SerializeField] private EnergyHandler energyHandler = null;
-    [SerializeField] private GameObject feedbackFurance = null;
     [Header("Sound Data")]
     [Space(20)]
     [SerializeField] private AudioSourceObject customSource = null;
@@ -30,8 +29,6 @@ public class Furnace : Machine
     private float timeToProcessObject = 0;
     private bool burningFuel = false;
     private bool isProcessing;
-
-    private bool playerIsNear = false;
 
     private Action OnItemProcessed = null;
     private Action OnFuelEnergyBurned = null;
@@ -62,14 +59,13 @@ public class Furnace : Machine
         timerProcess = 0.0f;
 
         customSource.Configure(fireSoundData, true);
+
+        isInitialized = true;
     }
 
-    void Update()
+    protected override void Update()
     {
-        if (playerIsNear && Input.GetKeyDown(KeyCode.E))
-        {
-            uiFurnace.TogglePanel();
-        }
+        base.Update();
 
         if (isProcessing)
         {
@@ -110,39 +106,7 @@ public class Furnace : Machine
             return;
 
         BurnFuel();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if(!feedbackFurance.gameObject.activeSelf)
-            {
-                feedbackFurance.gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            playerIsNear = true;
-        }    
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (feedbackFurance.gameObject.activeSelf)
-            {
-                feedbackFurance.gameObject.SetActive(false);
-
-                playerIsNear = false;
-            }
-        }
-    }
+    }    
     #endregion
 
     #region PRIVATE_METHODS

@@ -9,14 +9,18 @@ namespace ProyectG.Gameplay.Objects.Machines
 {
     public class Combinator : Machine
     {
-        #region EXPOSED_FIELDS
-        [SerializeField] private UICombinator uiCombinator;
+        #region PRIVATE_FIELDS
+        private UICombinator uiCombinator = null;
         #endregion
 
         #region OVERRIDES
         public override void Init(BaseView viewAttach)
         {
             base.Init(viewAttach);
+
+            uiCombinator = uiMachine as UICombinator;
+
+            uiCombinator.Init();
         }
 
         public override void TriggerAnimation(string triggerId)

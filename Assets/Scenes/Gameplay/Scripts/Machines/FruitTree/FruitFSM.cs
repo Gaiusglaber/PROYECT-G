@@ -27,7 +27,7 @@ public class FruitFSM : Machine, IHittable
         
     }
 
-    void Update()
+    protected override void Update()
     {
         
     }

@@ -32,6 +32,8 @@ namespace ProyectG.Gameplay.UI
             initialized = true;
         }
 
+        public virtual void TogglePanel(){ }
+
         public virtual void ToggleView(bool state)
         {
             holder.SetActive(state);

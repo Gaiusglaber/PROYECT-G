@@ -25,18 +25,15 @@ public class UICombinator : BaseView
     #endregion
 
     #region PRIVATE_FIELDS
-    private bool isInitialized = false;
     private List<ItemModel> possibleItemsResults = new List<ItemModel>();
+
+    private ItemModel lastLeftItemUsed = null;
+    private ItemModel lastRightItemUsed = null;
     #endregion
 
     #region CONSTANTS
     private const int maxInputItems = 2;
     #endregion
-
-    private void Start()
-    {
-        Init();
-    }
 
     #region PUBLIC_METHODS
     public override void Init()
@@ -51,13 +48,15 @@ public class UICombinator : BaseView
 
         possibleItemsResults = inventoryController.AllItemsAviable.Where(item => item.itemsFrom.Count >= maxInputItems).ToList();
 
-        btnCombine.onClick.AddListener(ProcessAndGenerateResult);
+        initialized = true;
     }
 
     public void ProcessAndGenerateResult()
     {
         ItemModel leftItem = null;
         ItemModel rightItem = null;
+
+        bool isResultEmpty = inventoryController.StackTake ? resultSlot.StackOfItems.IsEmpty : resultSlot.SlotIsEmpty;
 
         if (inventoryController.StackTake)
         {
@@ -68,7 +67,7 @@ public class UICombinator : BaseView
             if (inputSlot_Left.StackOfItems.Stack.Count > 0)
             {
                 leftItem = inventoryController.GetItemModelFromId(inputSlot_Left.StackOfItems.Stack[0].ItemType);
-            }
+            }            
         }
         else
         {
@@ -88,7 +87,26 @@ public class UICombinator : BaseView
             return;
         }
 
-        List<ItemModel> inputItems = new List<ItemModel> { leftItem, rightItem };
+        if (!isResultEmpty)
+        {
+            if (lastLeftItemUsed != null && leftItem != null)
+            {
+                if (lastLeftItemUsed.itemId != leftItem.itemId)
+                {
+                    Debug.LogWarning("The item that will be generated is something differente than the one that is on result slot. Remove the item from result first");
+                    return;
+                }
+            }
+            if (lastRightItemUsed != null && rightItem != null)
+            {
+                if (lastRightItemUsed.itemId != rightItem.itemId)
+                {
+                    Debug.LogWarning("The item that will be generated is something differente than the one that is on result slot. Remove the item from result first");
+                    return;
+                }
+            }
+        }
+
         ItemModel itemResult = null;
 
         bool leftValidated = false;
@@ -115,6 +133,11 @@ public class UICombinator : BaseView
                         itemResult = possibleItemsResults[i];
                         break;
                     }
+                }
+
+                if(itemResult != null)
+                {
+                    break;
                 }
             }
         }
@@ -154,6 +177,15 @@ public class UICombinator : BaseView
         {
             resultSlot.AddItemToSlot(newViewResult);
         }
+
+        lastLeftItemUsed = leftItem;
+        lastRightItemUsed = rightItem;
+    }
+
+    public override void TogglePanel()
+    {
+        ToggleView(!panelCombinator.activeSelf);
+        inventoryController.ToggleInventory();
     }
     #endregion
 }

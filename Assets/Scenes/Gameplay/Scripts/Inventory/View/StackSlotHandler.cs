@@ -61,6 +61,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PROPERTIES
+        public bool IsEmpty { get { return SizeStack <= 0; } }
         public bool Dragged => isDragging;
         public int SizeStack => stackedItems.Count;
         public List<ItemView> Stack { get { return stackedItems; } }

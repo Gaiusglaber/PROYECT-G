@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Interfaces;
@@ -50,8 +51,10 @@ public class CropFSM : Machine, IHittable
         Init(null);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (amountCrops <= 0)
         {
             SetCycle(true);

@@ -47,7 +47,7 @@ public class TreeFSM : Machine, IHittable
         Init(null);
     }
 
-    void Update()
+    protected override void Update()
     {
         if (amountLogs <= 0)
         {
