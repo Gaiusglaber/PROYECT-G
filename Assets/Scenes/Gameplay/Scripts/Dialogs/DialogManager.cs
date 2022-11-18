@@ -228,11 +228,10 @@ namespace ProyectG.Common.UI.Dialogs
             wordSpeed = initialWordSpeed;            
             if (!IsLineIndexInRange())
             {
-                lineIndex = 0;
                 canInteract = true;
                 lineTxt.text = string.Empty;
 
-                if (ActualDialog.lines[lineIndex].item!=null)
+                if (ActualDialog.lines[lineIndex-1].item!=null)
                 {
                     OnDialogEnd?.Invoke(true,string.Empty);
                 }
@@ -240,26 +239,14 @@ namespace ProyectG.Common.UI.Dialogs
                 {
                     if (goodAnswer)
                     {
-                        if (onTryToDeleteItem(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity) && ActualDialog.lines[lineIndex].give)
-                        {
-                            OnDialogEnd?.Invoke(true, ActualDialog.lines[lineIndex].item.itemId);
-                        }
-                        else
-                        {
-                            OnDialogEnd?.Invoke(false, ActualDialog.lines[lineIndex].item.itemId);
-                        }
-
-                        if (ActualDialog.lines[lineIndex].recieve)
-                        {
-                            OnDialogEnd?.Invoke(true, ActualDialog.lines[lineIndex].item.itemId);
-                            onTryGiveItem?.Invoke(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity);
-                        }
+                        OnDialogEnd?.Invoke(true, ActualDialog.lines[lineIndex - 1].item.itemId);
                     }
                     else
                     {
                         OnDialogEnd?.Invoke(false, string.Empty);
                     }
                 }
+                lineIndex = 0;
                 return;
             }
             foreach (var actor in actors)
@@ -422,11 +409,17 @@ namespace ProyectG.Common.UI.Dialogs
 
                         if(bttnPress.AnswerData.isCorrect)
                         {
-                            OnCorrectAnswer?.Invoke(bttnPress.AnswerData.scoreValue);
-
-                        }
-                        else
-                        {
+                            if (ActualDialog.lines[lineIndex].give)
+                            {
+                                if (!onTryToDeleteItem(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity))
+                                {
+                                    bttnPress = answerButtons.Find((x) =>x.ButtonPressed == false);
+                                }
+                            }
+                            else
+                            {
+                                onTryGiveItem(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity);
+                            }
                         }
 
                         break;
@@ -447,16 +440,8 @@ namespace ProyectG.Common.UI.Dialogs
             }
             else
             {
-                if (ActualDialog.lines[lineIndex].give && !onTryToDeleteItem(ActualDialog.lines[lineIndex].item, ActualDialog.lines[lineIndex].quantity))
-                {
-                    buttonAnswerPress = true;
-                    goodAnswer = false;
-                }
-                else
-                {
-                    buttonAnswerPress = false;
-                    goodAnswer = true;
-                }
+                buttonAnswerPress = false;
+                goodAnswer = true;
             }
         }
         protected void SomeButtonPress()
@@ -521,7 +506,7 @@ namespace ProyectG.Common.UI.Dialogs
                     return Conversation[i];
                 }
             }
-            Debug.LogError("Couldnt find conversation ID");
+            Debug.LogError("Couldnt find conversation ID -- "+ id);
             return null;
         }
         #endregion

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 837668b5954a13c4bba580f206e43b3c, type: 3}
-  m_Name: conversation0
+  m_Name: conversation0 1
   m_EditorClassIdentifier: 
-  id: npc_0_0
+  id: npc_0_2
   actors:
   - {fileID: 11400000, guid: 0816012260e52e24592e84978351292b, type: 2}
   lines:

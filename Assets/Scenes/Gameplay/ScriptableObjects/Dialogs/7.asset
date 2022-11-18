@@ -16,16 +16,20 @@ MonoBehaviour:
   actorId: AMOGUS
   emotion: AMOGUS
   lookingActorId: AMOGUS
-  line: TURURURURUM TUM TUM
+  item: {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: me das madera?
   loopOnBadAnswerws: 0
   answers:
   - id: 1
-    feedback: AMOGUS
+    feedback: yes ty wachin
     answer: OOOH YES AMOGUS
     isCorrect: 1
     scoreValue: 0
   - id: 0
-    feedback: MOGUS
+    feedback: volve cuando tengas madera rey
     answer: OOH NO MOGUS
     isCorrect: 0
     scoreValue: 0
