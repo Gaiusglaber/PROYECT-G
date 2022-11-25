@@ -134,7 +134,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 30804872f42dca44c9a9842175c47fe8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -235,7 +235,9 @@ MonoBehaviour:
   soundsChannel: {fileID: 11400000, guid: 13fdb80fee7c6c546a7f4152873818ec, type: 2}
   animatorTriggers:
   - OnHit
+  uiMachine: {fileID: 0}
   animator: {fileID: 2766231218405460105}
+  feedbackMachine: {fileID: 0}
   timeFirstStage: 5
   timeSecondStage: 10
   timeThirdStage: 15
