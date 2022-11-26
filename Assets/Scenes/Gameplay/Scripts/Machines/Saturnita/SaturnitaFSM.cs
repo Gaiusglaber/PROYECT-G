@@ -6,9 +6,9 @@ using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Interfaces;
 using UnityEngine.U2D.Animation;
 
-public class MineralSnailFSM : Machine, IHittable
+public class SaturnitaFSM : Machine, IHittable
 {
-    private enum SnailState
+    private enum SaturnitaState
     {
         first,
         second,
@@ -21,7 +21,7 @@ public class MineralSnailFSM : Machine, IHittable
     [SerializeField] private int amountPerFarm = 3;
     [SerializeField] private int hitsNeededToFarm = 0;
     [SerializeField] private float heightOffset = 0;
-    [SerializeField] private WorldItem rockPrefab;
+    [SerializeField] private WorldItem saturnitaPrefab;
     [SerializeField] private List<Sprite> spriteCycle = new List<Sprite>();
     [SerializeField] private SpriteSkin spriteSkin = null;
     [SerializeField] private List<Transform> bones = null;
@@ -29,20 +29,21 @@ public class MineralSnailFSM : Machine, IHittable
     //privaste fields
     private InventoryController inventoryController;
     private SpriteRenderer spriteRenderer;
-    private int amountSnail;
-    private SnailState state;
-    private float timerMineralSnailFSM;
+    private int amountSaturnita;
+    private SaturnitaState state;
+    private float timerSaturnitaFSM;
     private bool isStarted;
 
     private int amountHits = 0;
+
     void Start()
     {
-        timerMineralSnailFSM = 0.0f;
+        timerSaturnitaFSM = 0.0f;
         inventoryController = FindObjectOfType<InventoryController>();
         SetCycle(true);
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        amountSnail = 1;
-        state = SnailState.first;
+        amountSaturnita = 1;
+        state = SaturnitaState.first;
         Init(null);
     }
 
@@ -50,12 +51,12 @@ public class MineralSnailFSM : Machine, IHittable
     {
         base.Update();
 
-        if (amountSnail <= 0)
+        if (amountSaturnita <= 0)
         {
             SetCycle(true);
-            timerMineralSnailFSM = 0.0f;
-            amountSnail = 1;
-            NextStage(SnailState.first);
+            timerSaturnitaFSM = 0.0f;
+            amountSaturnita = 1;
+            NextStage(SaturnitaState.first);
         }
         StartCycle();
     }
@@ -69,24 +70,24 @@ public class MineralSnailFSM : Machine, IHittable
     {
         if (isStarted)
         {
-            timerMineralSnailFSM += Time.deltaTime;
+            timerSaturnitaFSM += Time.deltaTime;
             switch (state)
             {
-                case SnailState.first:
-                    if (timerMineralSnailFSM >= timeSecondStage)
+                case SaturnitaState.first:
+                    if (timerSaturnitaFSM >= timeSecondStage)
                     {
-                        NextStage(SnailState.second);
+                        NextStage(SaturnitaState.second);
                     }
                     break;
-                case SnailState.second:
-                    if (timerMineralSnailFSM >= timeThirdStage)
+                case SaturnitaState.second:
+                    if (timerSaturnitaFSM >= timeThirdStage)
                     {
-                        NextStage(SnailState.third);
+                        NextStage(SaturnitaState.third);
                     }
                     break;
-                case SnailState.third:
+                case SaturnitaState.third:
                     SetCycle(false);
-                    timerMineralSnailFSM = 0.0f;
+                    timerSaturnitaFSM = 0.0f;
                     break;
                 default:
                     break;
@@ -94,7 +95,7 @@ public class MineralSnailFSM : Machine, IHittable
         }
     }
 
-    private void NextStage(SnailState stage)
+    private void NextStage(SaturnitaState stage)
     {
         state = stage;
         spriteRenderer.sprite = spriteCycle[(int)stage];
@@ -102,7 +103,8 @@ public class MineralSnailFSM : Machine, IHittable
 
     public void OnHit()
     {
-        if (state != SnailState.third)
+
+        if (state != SaturnitaState.third)
             return;
 
         if (amountHits < hitsNeededToFarm - 1)
@@ -116,22 +118,21 @@ public class MineralSnailFSM : Machine, IHittable
         TriggerAnimation("OnHit");
         TriggerSoundEffect("PlantChop");
 
-        if (amountSnail <= 0)
+        if (amountSaturnita <= 0)
         {
             SetCycle(true);
-            timerMineralSnailFSM = 0.0f;
-            amountSnail = 1;
-            NextStage(SnailState.first);
+            timerSaturnitaFSM = 0.0f;
+            amountSaturnita = 1;
+            NextStage(SaturnitaState.first);
         }
         else
         {
-            amountSnail--;
-            WorldItem rock = Instantiate(rockPrefab, transform.position + (Vector3.up * heightOffset), Quaternion.identity);
-            rock.SetOnItemTaked(inventoryController.GenerateItem);
+            amountSaturnita--;
+            WorldItem saturnita = Instantiate(saturnitaPrefab, transform.position + (Vector3.up * heightOffset), Quaternion.identity);
+            saturnita.SetOnItemTaked(inventoryController.GenerateItem);
         }
 
         amountHits = 0;
-        //throw new System.NotImplementedException();
         //throw new System.NotImplementedException();
     }
 }

@@ -48685,6 +48685,67 @@ RectTransform:
   m_AnchoredPosition: {x: -1.2000008, y: 1.2999992}
   m_SizeDelta: {x: 28, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &9065689249093301650
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 9065689250585894825, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_Name
+      value: SaturnitaFSM
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894830, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065689250585894831, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
+      propertyPath: saturnitaPrefab
+      value: 
+      objectReference: {fileID: 5758833776275162158, guid: 690beffd8d843ce40ba53815bea004fb, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 77689b4768ad4194f9202bc369ce2425, type: 3}
 --- !u!224 &9131059366135945211
 RectTransform:
   m_ObjectHideFlags: 0
