@@ -76,5 +76,6 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public Sprite buildingImage;
         public List<Machine> machines = new List<Machine>();
         public List<ResourceModel> viewResources = new List<ResourceModel>();
+        public GameObject backgroundRoom;
     }
 }

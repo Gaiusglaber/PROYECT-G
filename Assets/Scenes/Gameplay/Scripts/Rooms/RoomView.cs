@@ -53,6 +53,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
             roomName.text = buildModel.buildingName;
 
+            //Instantiate(buildModel.backgroundRoom, buildModel.)
+
             this.machineCreated = machineCreated;
         }
 

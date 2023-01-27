@@ -219,6 +219,9 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
             //We create the machine/farm
             Machine building = Instantiate(buildToCreate.machines[0], positionToBuild, Quaternion.identity);
+            if(buildToCreate.backgroundRoom != null)
+                Instantiate(buildToCreate.backgroundRoom, positionToBuild, Quaternion.identity);
+            //Instanciar un sprite en la posicion donde se crea la maquina, obtener el sprite de la maquina que quiero construir
 
             BaseView machineUI = allBaseViews.Find(view => view.IdView == name);
             
