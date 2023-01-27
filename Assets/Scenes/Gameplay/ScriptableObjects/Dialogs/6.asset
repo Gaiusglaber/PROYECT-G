@@ -16,6 +16,10 @@ MonoBehaviour:
   actorId: AMOGUS
   emotion: AMOGUS
   lookingActorId: AMOGUS
-  line: 'TUM TUM TUM TIM TUM TUM TIM '
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: "creo que me voy a tomar un descanso. Es incre\xEDble pero no me pienso rendir."
   loopOnBadAnswerws: 0
   answers: []

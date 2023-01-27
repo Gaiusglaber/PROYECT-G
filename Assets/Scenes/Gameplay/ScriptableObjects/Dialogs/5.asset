@@ -16,6 +16,10 @@ MonoBehaviour:
   actorId: AMOGUS
   emotion: AMOGUS
   lookingActorId: AMOGUS
-  line: PUM PUM
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: "No, es solo agua de lluvia. \xBFNecesitas algo?"
   loopOnBadAnswerws: 0
   answers: []

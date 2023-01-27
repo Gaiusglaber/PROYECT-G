@@ -16,6 +16,11 @@ MonoBehaviour:
   actorId: AMOGUS
   emotion: AMOGUS
   lookingActorId: AMOGUS
-  line: AMOGUS
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: "No importa, llegue a este \xE1rbol hace tiempo, pero intent\xE9 llegar al
+    centro del \xE1rbol y no lo pude romper. "
   loopOnBadAnswerws: 0
   answers: []

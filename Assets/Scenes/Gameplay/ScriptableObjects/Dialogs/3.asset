@@ -16,6 +16,10 @@ MonoBehaviour:
   actorId: AMOGUS
   emotion: AMOGUS
   lookingActorId: AMOGUS
-  line: TU TU TU TU TU TU TU
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: "creo que despu\xE9s de intentarlo al fin pude sacar algo del \xE1rbol"
   loopOnBadAnswerws: 0
   answers: []

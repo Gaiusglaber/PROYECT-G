@@ -20,7 +20,8 @@ MonoBehaviour:
   quantity: 1
   give: 1
   recieve: 0
-  line: me das madera?
+  line: "mi amigo est\xE1 enfermo y me dijo que los \xE1rboles en el centro tienen
+    la cura, pero da igual lo que haga, este \xE1rbol no parece da\xF1arse."
   loopOnBadAnswerws: 0
   answers:
   - id: 1

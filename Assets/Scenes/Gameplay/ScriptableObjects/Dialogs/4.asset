@@ -16,6 +16,10 @@ MonoBehaviour:
   actorId: AMOGUS
   emotion: AMOGUS
   lookingActorId: AMOGUS
-  line: TURURU
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: ...
   loopOnBadAnswerws: 0
   answers: []
