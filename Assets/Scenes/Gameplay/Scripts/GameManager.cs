@@ -75,11 +75,11 @@ namespace ProjectG.Gameplay.Managers
             soundHandlerChannel.OnPlaySound?.Invoke("CalmForest");
             musicHandlerChannel.OnPlayMusic?.Invoke("CalmMusic");
 
-            /*inventory.GenerateItem("Wood", 25);
-            inventory.GenerateItem("Coal", 25);
-            inventory.GenerateItem("Salvia", 25);
-            inventory.GenerateItem("fruit", 25);
-            inventory.GenerateItem("saturnita_fuel", 25);
+            inventory.GenerateItem("Wood", 50);
+            inventory.GenerateItem("Coal", 50);
+            //inventory.GenerateItem("Salvia", 25);
+            inventory.GenerateItem("fruit", 50);
+            /*inventory.GenerateItem("saturnita_fuel", 25);
             inventory.GenerateItem("residue_toxic", 25);
             inventory.GenerateItem("CommonSeed", 25);
             inventory.GenerateItem("Rocks", 25);

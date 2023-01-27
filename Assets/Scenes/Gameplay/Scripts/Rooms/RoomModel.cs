@@ -20,6 +20,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public Vector3 cameraWorldPosition = Vector3.zero;
         public Vector3 initialWorldPosition = Vector3.zero;
         public Vector3 viewPosition = Vector3.zero;
+        public Vector3 roomBackgroundPosition = Vector3.zero;
 
         public BuildModel buildAttach;
         #endregion
