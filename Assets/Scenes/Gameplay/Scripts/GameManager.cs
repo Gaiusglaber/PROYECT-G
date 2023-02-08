@@ -79,6 +79,7 @@ namespace ProjectG.Gameplay.Managers
             inventory.GenerateItem("Coal", 50);
             //inventory.GenerateItem("Salvia", 25);
             inventory.GenerateItem("fruit", 50);
+            inventory.GenerateItem("pollu", 1);
             /*inventory.GenerateItem("saturnita_fuel", 25);
             inventory.GenerateItem("residue_toxic", 25);
             inventory.GenerateItem("CommonSeed", 25);

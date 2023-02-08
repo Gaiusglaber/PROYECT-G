@@ -47,6 +47,7 @@ namespace ProyectG.Gameplay.UI
 
 		#region PROPERTIES
 		static public Action<bool> Withoutenergy;
+		public int SetMaxEnergy { get { return maxEnergy; } set { maxEnergy = value; } }
 		#endregion
 
 		#region ACTIONS

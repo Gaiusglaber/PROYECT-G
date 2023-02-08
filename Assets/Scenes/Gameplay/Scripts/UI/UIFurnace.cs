@@ -20,6 +20,7 @@ public class UIFurnace : BaseView
     [SerializeField] private Canvas mainCanvas = null;
     [SerializeField] private Image progressFillProcess = null;
     [SerializeField] private Image progressFuelConsumption = null;
+    [SerializeField] private EnergyHandler energyHandler = null;
     #endregion
 
     #region PRIVATE_FIELDS
@@ -234,6 +235,13 @@ public class UIFurnace : BaseView
                     if(fuelSlot.StackOfItems.Stack.Count > 0)
                     {
                         fuelToBurn = inventoryController.GetItemModelFromId(fuelSlot.StackOfItems.Stack[0].ItemType) as FuelItem;
+                        if(fuelToBurn.itemType == ItemType.pollutants)
+                        {
+                            //Crear una variable en fuel item para setear el valor nuevo del maximo de energia que otorgara el pollutante
+                            energyHandler.SetMaxEnergy = fuelToBurn.pollutantMaxEnergy;
+                            if(energyHandler.cantEnergy > fuelToBurn.pollutantMaxEnergy)
+                                energyHandler.UpdateEnergy(energyHandler.SetMaxEnergy);
+                        }
                     }
                 }
                 else

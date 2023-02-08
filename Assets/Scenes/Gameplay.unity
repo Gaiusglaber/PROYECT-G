@@ -14832,8 +14832,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
   - {fileID: 11400000, guid: 2d16ef53a105ba4438fdd2e77d53ec76, type: 2}
   - {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 1703bdf51fdb126459c25d322fcd8135, type: 2}
+  - {fileID: 11400000, guid: 9671b7d852dd47941b730c3598245187, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -16328,6 +16328,7 @@ MonoBehaviour:
   mainCanvas: {fileID: 717702597}
   progressFillProcess: {fileID: 255106722}
   progressFuelConsumption: {fileID: 1186136489}
+  energyHandler: {fileID: 21614822}
 --- !u!114 &766479369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25615,6 +25616,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 77f643cd5ea5b824ab37992cfcdf6229, type: 2}
   - {fileID: 11400000, guid: 6b4486ac2ec0e9f43b6c606c9555ef30, type: 2}
   - {fileID: 11400000, guid: 8f054ffe336803e4791e324767e12a29, type: 2}
+  - {fileID: 11400000, guid: 1703bdf51fdb126459c25d322fcd8135, type: 2}
+  - {fileID: 11400000, guid: 9671b7d852dd47941b730c3598245187, type: 2}
 --- !u!4 &1317914052
 Transform:
   m_ObjectHideFlags: 0

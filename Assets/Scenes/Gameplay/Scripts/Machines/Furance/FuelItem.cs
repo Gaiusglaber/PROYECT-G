@@ -8,4 +8,5 @@ public class FuelItem : ItemModel
     public float timeToBurnOut;
     public float energyPerTime;
     public int energyGenerated;
+    public int pollutantMaxEnergy;
 }

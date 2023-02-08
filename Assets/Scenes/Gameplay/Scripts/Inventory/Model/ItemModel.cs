@@ -10,7 +10,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
     {
         fuel,
         common,
-        crop
+        crop,
+        pollutants
     }
     [Serializable]
     [CreateAssetMenu(fileName = "ItemModel", menuName = "ScriptableObjects/Data/Items", order = 0)]
