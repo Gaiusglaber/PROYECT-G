@@ -34,6 +34,7 @@ public class UIFurnace : BaseView
     public Action<ItemModel> OnProcessMaterial;
     public Action<FuelItem> OnProcessFuel;
     public Action onCancelProcess = null;
+    public Action ActivateSecondBar = null;
     #endregion
 
     #region PROPERTIES
@@ -238,9 +239,20 @@ public class UIFurnace : BaseView
                         if(fuelToBurn.itemType == ItemType.pollutants)
                         {
                             //Crear una variable en fuel item para setear el valor nuevo del maximo de energia que otorgara el pollutante
-                            energyHandler.SetMaxEnergy = fuelToBurn.pollutantMaxEnergy;
-                            if(energyHandler.cantEnergy > fuelToBurn.pollutantMaxEnergy)
-                                energyHandler.UpdateEnergy(energyHandler.SetMaxEnergy);
+                            //energyHandler.SetMaxEnergy = fuelToBurn.pollutantMaxEnergy;
+                            energyHandler.cantEnergy -= fuelToBurn.pollutantMaxEnergy; //test
+                            energyHandler.SetValueSecondBar = fuelToBurn.pollutantMaxEnergy;
+                            int newMaxEnergy = energyHandler.SetMaxEnergy - energyHandler.SetValueSecondBar;
+                            Debug.Log("Ahora el maximo de la barra de energia queda en: " + newMaxEnergy);
+                            Debug.Log("Cant energy es: " + energyHandler.cantEnergy);
+                            //energyHandler.SetMaxEnergy = newMaxEnergy;
+                            ActivateSecondBar?.Invoke();
+                            //energyHandler.GetFillBar.color = Color.Lerp(Color.red, energyHandler.GetFillBar.color, Time.deltaTime);
+                            if (energyHandler.cantEnergy > newMaxEnergy)
+                            {
+                                //Debug.Log("La energia es mayor!, seteando el maximo en: " + newMaxEnergy);
+                                energyHandler.UpdateEnergy(newMaxEnergy);
+                            }
                         }
                     }
                 }

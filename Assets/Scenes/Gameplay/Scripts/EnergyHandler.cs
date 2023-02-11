@@ -16,6 +16,7 @@ namespace ProyectG.Gameplay.UI
 		[SerializeField] private int lowEneryThreshhold = 0;
 		[SerializeField] private TMPro.TMP_Text energyTxt = null;
 		[SerializeField] private Image fillImage = null;
+		[SerializeField] private Image fillImage2 = null;
 		[SerializeField] private float lerperSpeed = 0;
 		[SerializeField] private int maxEnergy = 0;
 		[SerializeField] private int initialEnergy = 0;
@@ -25,9 +26,11 @@ namespace ProyectG.Gameplay.UI
 		[SerializeField] private int decreceEnergy = 150;
 		[SerializeField] private Light2D[] factoryLights = null;
 		[SerializeField] public Player.Controller.PlayerController playerController = null;
+		[SerializeField] private UIFurnace uiFurnace;
 
 		private float timer = 0;
 		private float timerFuel = 0;
+		private int valueSecondBar = 0;
 
 		#endregion
 
@@ -41,6 +44,7 @@ namespace ProyectG.Gameplay.UI
 		private int fuelBurnIncreaseValue = 0;
 
 		private FloatLerper fillLerper = null;
+		private FloatLerper fillLerper2 = null;
 		private FloatLerper txtLerper = null;
 		private bool ToggleLowEnergy = false;
 		#endregion
@@ -48,6 +52,9 @@ namespace ProyectG.Gameplay.UI
 		#region PROPERTIES
 		static public Action<bool> Withoutenergy;
 		public int SetMaxEnergy { get { return maxEnergy; } set { maxEnergy = value; } }
+
+		public int SetValueSecondBar { get { return valueSecondBar; } set { valueSecondBar = value; } }
+		public Image GetFillBar { get { return fillImage; } set { fillImage = value; } }
 		#endregion
 
 		#region ACTIONS
@@ -60,10 +67,16 @@ namespace ProyectG.Gameplay.UI
 			cantEnergy = initialEnergy;
 			fillLerper = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
 			txtLerper = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
+			fillLerper2 = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
 			StartCoroutine(LerpBar(GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
+			//StartCoroutine(LerpBar2(GetFillAmmount2()));
 			OnUpdateEnergy = ChangeLightValue;
-        }
+
+			valueSecondBar = 0;
+
+			uiFurnace.ActivateSecondBar += ActivateSecondBar;
+		}
 
 		private void Update()
 		{
@@ -72,6 +85,12 @@ namespace ProyectG.Gameplay.UI
 			{
 				Withoutenergy?.Invoke(true);
 			}
+			Debug.Log("cantidad de valueSecondBar en UpdateEnergy: " + valueSecondBar);
+		}
+
+        private void OnDisable()
+        {
+			uiFurnace.ActivateSecondBar -= ActivateSecondBar;
 		}
 
 		#endregion
@@ -93,8 +112,13 @@ namespace ProyectG.Gameplay.UI
 				playerController.ChangeSpeed(false);
 				OnUpdateEnergy?.Invoke(1f);
 			}
+			else if (cantEnergy > maxEnergy - valueSecondBar)
+            {
+				cantEnergy = maxEnergy - valueSecondBar;
+            }
 			StartCoroutine(LerpBar(GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
+			//StartCoroutine(LerpBar2(GetFillAmmount2()));
 		}
 
 		public void DecreaseEnergyOverTime()
@@ -183,10 +207,21 @@ namespace ProyectG.Gameplay.UI
 		#endregion
 
 		#region PRIVATE_METHODS
+		private void ActivateSecondBar()
+        {
+			StartCoroutine(LerpBar2(GetFillAmmount2()));
+		}
+
 		private float GetFillAmmount()
         {
 			return (float)cantEnergy / (float)maxEnergy;
         }
+
+		private float GetFillAmmount2()
+		{
+			return (float)valueSecondBar / 1000.0f;
+		}
+
 		private void ChangeLightValue(float value)
         {
 			foreach(var light in factoryLights)
@@ -221,6 +256,19 @@ namespace ProyectG.Gameplay.UI
 				yield return new WaitForEndOfFrame();
             }
         }
+
+		private IEnumerator LerpBar2(float valueToChange)
+		{
+			//fillLerper2.SetValues(valueToChange, fillImage2.fillAmount, true);
+			fillLerper2.SetValues(0.0f, valueToChange, true);
+			while (fillLerper2.On)
+			{
+				fillLerper2.Update();
+				fillImage2.fillAmount = fillLerper2.CurrentValue;
+				yield return new WaitForEndOfFrame();
+			}
+		}
+
 		private IEnumerator LerpTxtValue(int valueToChange)
         {
 			txtLerper.SetValues(cantEnergy, valueToChange, true);
@@ -229,7 +277,7 @@ namespace ProyectG.Gameplay.UI
 				txtLerper.Update();
 				energyTxt.text = "<color=#"+ ColorUtility.ToHtmlStringRGB(energyColor) + ">" + txtLerper.CurrentValue.ToString() +
 					"<color=#" + ColorUtility.ToHtmlStringRGB(Color.white) + ">" + "/" +
-					"<color=#" + ColorUtility.ToHtmlStringRGB(maxEnergyColor) + ">" + maxEnergy.ToString();
+					"<color=#" + ColorUtility.ToHtmlStringRGB(maxEnergyColor) + ">" + (maxEnergy - valueSecondBar).ToString();
 				yield return new WaitForEndOfFrame();
             }
         }
