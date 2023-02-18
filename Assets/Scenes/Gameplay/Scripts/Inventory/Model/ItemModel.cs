@@ -28,6 +28,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         public int energyCost = 0;
         public float timeToComplete = 0;
         public float costInterval = 0;
+        public int pollutantDecreaseMaxEnergy;
 
         public ItemType itemType;
 

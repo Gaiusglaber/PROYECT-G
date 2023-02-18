@@ -19,5 +19,7 @@ MonoBehaviour:
   energyCost: 50
   timeToComplete: 70
   costInterval: 1
-  itemType: 0
+  pollutantDecreaseMaxEnergy: 50
+  itemType: 3
   itemResults: []
+  itemsFrom: []
