@@ -1860,6 +1860,7 @@ MonoBehaviour:
       buildingName: 
       isMachine: 0
       buildingImage: {fileID: 0}
+      buildingImagePreview: {fileID: 0}
       machines: []
       viewResources: []
       backgroundRoom: {fileID: 0}
@@ -1876,6 +1877,7 @@ MonoBehaviour:
       buildingName: 
       isMachine: 0
       buildingImage: {fileID: 0}
+      buildingImagePreview: {fileID: 0}
       machines:
       - {fileID: 0}
       viewResources: []
@@ -1893,6 +1895,7 @@ MonoBehaviour:
       buildingName: 
       isMachine: 0
       buildingImage: {fileID: 0}
+      buildingImagePreview: {fileID: 0}
       machines: []
       viewResources: []
       backgroundRoom: {fileID: 0}
@@ -1909,6 +1912,7 @@ MonoBehaviour:
       buildingName: Hongos
       isMachine: 0
       buildingImage: {fileID: 0}
+      buildingImagePreview: {fileID: 0}
       machines:
       - {fileID: 0}
       viewResources: []
@@ -1926,6 +1930,7 @@ MonoBehaviour:
       buildingName: 
       isMachine: 0
       buildingImage: {fileID: 0}
+      buildingImagePreview: {fileID: 0}
       machines: []
       viewResources: []
       backgroundRoom: {fileID: 0}
@@ -1943,6 +1948,7 @@ MonoBehaviour:
       buildingName: 
       isMachine: 0
       buildingImage: {fileID: 0}
+      buildingImagePreview: {fileID: 0}
       machines: []
       viewResources: []
       backgroundRoom: {fileID: 0}
@@ -35272,6 +35278,7 @@ MonoBehaviour:
   - buildingName: CornFarm
     isMachine: 0
     buildingImage: {fileID: 21300000, guid: 22b699692dedeee499c859ef106080d2, type: 3}
+    buildingImagePreview: {fileID: 21300000, guid: ad285961e046c4b4a9b2b50209ce481f, type: 3}
     machines:
     - {fileID: 8484401189889361835, guid: ea9e3ae1ac14c8841a438e7f4cbb80e4, type: 3}
     viewResources:
@@ -35282,6 +35289,7 @@ MonoBehaviour:
   - buildingName: TreeFarm
     isMachine: 0
     buildingImage: {fileID: 21300000, guid: 6bb71587ffd19534ca38fc331c9e8a14, type: 3}
+    buildingImagePreview: {fileID: -5498557897038260392, guid: be52860548e22e146948f7a70b49aecb, type: 3}
     machines:
     - {fileID: 1387645683455881444, guid: 3558f46ecdd392446adb70ae9c8cb133, type: 3}
     viewResources:
@@ -35292,6 +35300,7 @@ MonoBehaviour:
   - buildingName: Separator
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: 2a9de81545836034a9d05f09e94511c7, type: 3}
+    buildingImagePreview: {fileID: 21300000, guid: 2a9de81545836034a9d05f09e94511c7, type: 3}
     machines:
     - {fileID: 52836118078313743, guid: 3cd6c1fb0f7e2ff40bc6c193e9c4f6b3, type: 3}
     viewResources:
@@ -35308,6 +35317,7 @@ MonoBehaviour:
   - buildingName: Combinator
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: c6bd673e29d1d0c4797e37565e931418, type: 3}
+    buildingImagePreview: {fileID: 21300000, guid: c6bd673e29d1d0c4797e37565e931418, type: 3}
     machines:
     - {fileID: 356592517197138943, guid: 5a364e36780fcaa4e92952790f946aa5, type: 3}
     viewResources:
@@ -35324,6 +35334,7 @@ MonoBehaviour:
   - buildingName: Mineral Sanil
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: d392665ac4e4f2e43b973a17d7bb67cd, type: 3}
+    buildingImagePreview: {fileID: 0}
     machines:
     - {fileID: 0}
     viewResources:
@@ -35337,6 +35348,7 @@ MonoBehaviour:
   - buildingName: Tree Saturnita
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: 9bf1df0b6bc9ba544b3ab8a750a62267, type: 3}
+    buildingImagePreview: {fileID: 21300000, guid: 9bf1df0b6bc9ba544b3ab8a750a62267, type: 3}
     machines:
     - {fileID: 0}
     viewResources:
@@ -35350,6 +35362,7 @@ MonoBehaviour:
   - buildingName: Mushroom
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: d710835bb4264704ca81aa28cf9cef4f, type: 3}
+    buildingImagePreview: {fileID: 21300000, guid: d710835bb4264704ca81aa28cf9cef4f, type: 3}
     machines:
     - {fileID: 0}
     viewResources:

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 using ProyectG.Gameplay.Objects;
 using ProyectG.Gameplay.RoomSystem.View;
@@ -75,6 +76,7 @@ namespace ProyectG.Gameplay.RoomSystem.Room
         public string buildingName;
         public bool isMachine = false;
         public Sprite buildingImage;
+        public Sprite buildingImagePreview;
         public List<Machine> machines = new List<Machine>();
         public List<ResourceModel> viewResources = new List<ResourceModel>();
         public GameObject backgroundRoom;

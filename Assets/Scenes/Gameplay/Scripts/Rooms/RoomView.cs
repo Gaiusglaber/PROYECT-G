@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 using ProyectG.Gameplay.RoomSystem.Room;
 using ProyectG.Gameplay.Objects;
@@ -16,6 +17,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
         public TMP_Text roomName = null;
         public RoomModel roomModel = null;
         public Vector3 positionInWorld = Vector3.zero;
+        public GameObject imageMachinePreview = null;
+        public Sprite emptyRoom = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -53,6 +56,10 @@ namespace ProyectG.Gameplay.RoomSystem.View
 
             roomName.text = buildModel.buildingName;
 
+            imageMachinePreview.SetActive(true);
+
+            imageMachinePreview.GetComponentInChildren<Image>().sprite = buildModel.buildingImagePreview;
+
             //Instantiate(buildModel.backgroundRoom, buildModel.)
 
             this.machineCreated = machineCreated;
@@ -72,6 +79,8 @@ namespace ProyectG.Gameplay.RoomSystem.View
             }
 
             roomName.text = "Building: EMPTY";
+
+            imageMachinePreview.GetComponentInChildren<Image>().sprite = emptyRoom;
 
             roomModel.RemoveBuild();
         }
