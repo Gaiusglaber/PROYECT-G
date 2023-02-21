@@ -1,19 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using ProyectG.Player.Controller;
-using ProyectG.Gameplay.Controllers;
-using ProyectG.Gameplay.Objects.Inventory.Controller;
 
-using ProyectG.Gameplay.Objects;
-using ProyectG.Gameplay.UI;
-using ProyectG.Gameplay.RoomSystem.Handler;
 using ProyectG.Common.Modules.Audio.Channels.Sound;
 using ProyectG.Common.Modules.Audio.Channels.Music;
 using ProyectG.Common.UI.Dialogs;
-using System;
+
+using ProyectG.Gameplay.Controllers;
+using ProyectG.Gameplay.Objects.Inventory.Controller;
 using ProyectG.Gameplay.Objects.Inventory.Data;
+using ProyectG.Gameplay.UI;
+using ProyectG.Gameplay.RoomSystem.Handler;
+
 
 namespace ProjectG.Gameplay.Managers
 {
@@ -36,9 +37,6 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private DialogConversationSO[] conversationSOs = null;
         [SerializeField] private Animator dialogPanel = null;
         [SerializeField] private NPCHandler npcHandler = null;
-
-        [Header("FOR TESTING")]
-        [SerializeField] private List<ItemModel> testItems = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -79,8 +77,7 @@ namespace ProjectG.Gameplay.Managers
             inventory.GenerateItem("Coal", 50);
             //inventory.GenerateItem("Salvia", 25);
             inventory.GenerateItem("fruit", 50);
-            inventory.GenerateItem("pollu", 1);
-            inventory.GenerateItem("gashroom", 1);
+            inventory.GenerateItem("gashroom", 10);
             /*inventory.GenerateItem("saturnita_fuel", 25);
             inventory.GenerateItem("residue_toxic", 25);
             inventory.GenerateItem("CommonSeed", 25);

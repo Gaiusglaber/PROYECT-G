@@ -135,10 +135,12 @@ namespace ProyectG.Common.UI.Dialogs
         {
             return (dialogsExecuted == maxDialogLinesToExecute - Conversation[Conversation.Length-1].lines.Length) ? true : false;
         }
+        
         public bool AllDialogsExecuted()
         {
             return (dialogsExecuted >= maxDialogLinesToExecute) ? true : false;
         }
+        
         public void SetConversations(DialogConversationSO[] conversations)
         {
             if (conversations == null)
@@ -182,6 +184,11 @@ namespace ProyectG.Common.UI.Dialogs
             }
         }
 
+        public void ToggleDialogPanel(bool state)
+        {
+            parentPanel.gameObject.SetActive(state);
+        }
+        
         public void DeinitAllDialogPlayers()
         {
             if (dialogPlayers.Length < 0)

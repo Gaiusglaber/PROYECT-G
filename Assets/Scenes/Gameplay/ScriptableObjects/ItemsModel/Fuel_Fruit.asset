@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Script: {fileID: 11500000, guid: 062e037dd4b7efe429f5216a3d7e06a7, type: 3}
   m_Name: Fuel_Fruit
   m_EditorClassIdentifier: 
   itemId: fuel_fruit
@@ -20,6 +20,10 @@ MonoBehaviour:
   timeToComplete: 60
   costInterval: 1
   pollutantDecreaseMaxEnergy: 50
+  isPollutant: 1
   itemType: 0
   itemResults: []
   itemsFrom: []
+  timeToBurnOut: 15
+  energyPerTime: 1
+  energyGenerated: 10

@@ -15,10 +15,15 @@ MonoBehaviour:
   itemId: Rocks
   itemSprite: {fileID: 21300000, guid: 02e867c54e67e1945ad62f9eb5a1c055, type: 3}
   itemDescription: Just a rock
-  itemValue: 0
+  itemValue: 5
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
-  itemType: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
+  itemType: 1
   itemResults: []
   itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
+  costOpposite: 500

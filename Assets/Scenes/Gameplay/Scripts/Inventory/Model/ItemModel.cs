@@ -10,8 +10,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
     {
         fuel,
         common,
-        crop,
-        pollutants
+        crop
     }
     [Serializable]
     [CreateAssetMenu(fileName = "ItemModel", menuName = "ScriptableObjects/Data/Items", order = 0)]
@@ -29,6 +28,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         public float timeToComplete = 0;
         public float costInterval = 0;
         public int pollutantDecreaseMaxEnergy;
+        public bool isPollutant = false;
 
         public ItemType itemType;
 
@@ -36,6 +36,10 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         public List<ItemModel> itemResults = new List<ItemModel>();
         [Header("GENERATED FROM ITEMS")]
         public List<ItemModel> itemsFrom = new List<ItemModel>();
+        
+        [Header("OPPOSITE ITEMS")]
+        public List<ItemModel> oppositeItems = new List<ItemModel>();
+        public float costOpposite = 0f;
         #endregion
     }
 }

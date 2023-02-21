@@ -19,8 +19,13 @@ MonoBehaviour:
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 0
   itemResults: []
   itemsFrom:
   - {fileID: 11400000, guid: f6ffecd28cfb49f4bae4699df2632bd7, type: 2}
   - {fileID: 11400000, guid: 56690ef06e2ec4049823f797b058058c, type: 2}
+  oppositeItems:
+  - {fileID: 11400000, guid: 3dba4b6a2b3c0c440a53b9c9d9e270dd, type: 2}
+  costOpposite: 500

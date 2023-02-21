@@ -9,17 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Script: {fileID: 11500000, guid: 062e037dd4b7efe429f5216a3d7e06a7, type: 3}
   m_Name: Fuel_Gashroom
   m_EditorClassIdentifier: 
   itemId: gashroom
   itemSprite: {fileID: 21300000, guid: 68b37d40068800c43a0090edde4d1ca3, type: 3}
-  itemDescription: gashroom
-  itemValue: 13
-  energyCost: 50
-  timeToComplete: 70
-  costInterval: 1
+  itemDescription: 'Combustible escencial para generar energia alta. Duracion: 70seg
+    | Energia: <color=green>+13 x 1seg</color> | Energia Max: <color=red> -50 </color>'
+  itemValue: 1
+  energyCost: 5
+  timeToComplete: 10
+  costInterval: 2
   pollutantDecreaseMaxEnergy: 50
-  itemType: 3
-  itemResults: []
+  isPollutant: 1
+  itemType: 0
+  itemResults:
+  - {fileID: 11400000, guid: 18bfaa714a3872e408f293244b8d5ba6, type: 2}
   itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: e5f736c8ad6360340afed4e5be00e79e, type: 2}
+  costOpposite: 500
+  timeToBurnOut: 70
+  energyPerTime: 1
+  energyGenerated: 13

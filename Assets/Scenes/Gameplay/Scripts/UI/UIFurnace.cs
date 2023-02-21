@@ -74,6 +74,8 @@ public class UIFurnace : BaseView
     public void GenerateProcessedItem(ItemModel itemFrom, Action<bool> canFinishSequence)
     {
         ItemModel finalItem = itemFrom.itemResults[0];
+        
+        ConsumePollutant(itemFrom);
 
         if(outputSlot == null)
         {
@@ -142,6 +144,7 @@ public class UIFurnace : BaseView
     {
         progressFuelConsumption.fillAmount = 0;
     }
+    
     public void OnConsumeItem()
     {
         ItemView itemToRemove = null;
@@ -205,22 +208,6 @@ public class UIFurnace : BaseView
                     if(inputSlot.StackOfItems.Stack.Count > 0)
                     {
                         firstItem = inventoryController.GetItemModelFromId(inputSlot.StackOfItems.Stack[0].ItemType);
-                        if(firstItem.itemType == ItemType.pollutants)
-                        {
-                            //energyHandler.cantEnergy -= firstItem.pollutantDecreaseMaxEnergy; //test
-                            energyHandler.SetValueSecondBar = firstItem.pollutantDecreaseMaxEnergy;
-                            int newMaxEnergy = energyHandler.SetMaxEnergy - energyHandler.SetValueSecondBar;
-                            Debug.Log("Ahora el maximo de la barra de energia queda en: " + newMaxEnergy);
-                            Debug.Log("Cant energy es: " + energyHandler.cantEnergy);
-                            //energyHandler.SetMaxEnergy = newMaxEnergy;
-                            ActivateSecondBar?.Invoke();
-                            //energyHandler.GetFillBar.color = Color.Lerp(Color.red, energyHandler.GetFillBar.color, Time.deltaTime);
-                            if (energyHandler.cantEnergy > newMaxEnergy)
-                            {
-                                //Debug.Log("La energia es mayor!, seteando el maximo en: " + newMaxEnergy);
-                                energyHandler.UpdateEnergy(newMaxEnergy);
-                            }
-                        }
                     }
                 }
                 else
@@ -252,24 +239,6 @@ public class UIFurnace : BaseView
                     if(fuelSlot.StackOfItems.Stack.Count > 0)
                     {
                         fuelToBurn = inventoryController.GetItemModelFromId(fuelSlot.StackOfItems.Stack[0].ItemType) as FuelItem;
-                        //if(fuelToBurn.itemType == ItemType.pollutants)
-                        //{
-                        //    //Crear una variable en fuel item para setear el valor nuevo del maximo de energia que otorgara el pollutante
-                        //    //energyHandler.SetMaxEnergy = fuelToBurn.pollutantMaxEnergy;
-                        //    energyHandler.cantEnergy -= fuelToBurn.pollutantMaxEnergy; //test
-                        //    energyHandler.SetValueSecondBar = fuelToBurn.pollutantMaxEnergy;
-                        //    int newMaxEnergy = energyHandler.SetMaxEnergy - energyHandler.SetValueSecondBar;
-                        //    Debug.Log("Ahora el maximo de la barra de energia queda en: " + newMaxEnergy);
-                        //    Debug.Log("Cant energy es: " + energyHandler.cantEnergy);
-                        //    //energyHandler.SetMaxEnergy = newMaxEnergy;
-                        //    ActivateSecondBar?.Invoke();
-                        //    //energyHandler.GetFillBar.color = Color.Lerp(Color.red, energyHandler.GetFillBar.color, Time.deltaTime);
-                        //    if (energyHandler.cantEnergy > newMaxEnergy)
-                        //    {
-                        //        //Debug.Log("La energia es mayor!, seteando el maximo en: " + newMaxEnergy);
-                        //        energyHandler.UpdateEnergy(newMaxEnergy);
-                        //    }
-                        //}
                     }
                 }
                 else
@@ -280,8 +249,9 @@ public class UIFurnace : BaseView
                     }
                 }
 
+                ConsumePollutant(fuelToBurn);
                 OnProcessFuel?.Invoke(fuelToBurn);
-
+                
                 return true;
             }
         }
@@ -292,6 +262,27 @@ public class UIFurnace : BaseView
     private void StopFill()
     {
         progressFillProcess.fillAmount = 0;
+    }
+
+    private void ConsumePollutant(ItemModel itemFrom)
+    {
+        if (itemFrom == null)
+        {
+            return;
+        }
+        
+        if(itemFrom.isPollutant)
+        {
+            energyHandler.SetValueSecondBar = itemFrom.pollutantDecreaseMaxEnergy;
+            int newMaxEnergy = energyHandler.SetMaxEnergy - energyHandler.SetValueSecondBar;
+            Debug.Log("Ahora el maximo de la barra de energia queda en: " + newMaxEnergy);
+            Debug.Log("Cant energy es: " + energyHandler.cantEnergy);
+            ActivateSecondBar?.Invoke();
+            if (energyHandler.cantEnergy > newMaxEnergy)
+            {
+                energyHandler.UpdateEnergy(newMaxEnergy);
+            }
+        }
     }
     #endregion
 }

@@ -118,7 +118,6 @@ namespace ProyectG.Gameplay.UI
             }
 			StartCoroutine(LerpBar(GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
-			//StartCoroutine(LerpBar2(GetFillAmmount2()));
 		}
 
 		public void DecreaseEnergyOverTime()

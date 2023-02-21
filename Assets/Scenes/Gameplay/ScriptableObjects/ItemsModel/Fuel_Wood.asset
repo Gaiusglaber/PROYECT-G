@@ -22,12 +22,17 @@ MonoBehaviour:
   energyCost: 2
   timeToComplete: 20
   costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 0
   itemResults:
   - {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
   - {fileID: 11400000, guid: 6b4486ac2ec0e9f43b6c606c9555ef30, type: 2}
   - {fileID: 11400000, guid: 9c81abf5a08f35141bdc469026d356f2, type: 2}
   itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: c7af521b9686c27458c047a56142f2c7, type: 2}
+  costOpposite: 500
   timeToBurnOut: 20
   energyPerTime: 1
   energyGenerated: 2

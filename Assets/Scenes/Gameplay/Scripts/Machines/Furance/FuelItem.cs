@@ -1,12 +1,13 @@
 using UnityEngine;
 
-using ProyectG.Gameplay.Objects.Inventory.Data;
-
-public class FuelItem : ItemModel
+namespace ProyectG.Gameplay.Objects.Inventory.Data
 {
-    [Header("FUEL SETTINGS")]
-    public float timeToBurnOut;
-    public float energyPerTime;
-    public int energyGenerated;
-    public int pollutantMaxEnergy;
+    [CreateAssetMenu(fileName = "FuelModel", menuName = "ScriptableObjects/Data/Items/FuelModel", order = 0)]
+    public class FuelItem : ItemModel
+    {
+        [Header("FUEL SETTINGS")] 
+        public float timeToBurnOut;
+        public float energyPerTime;
+        public int energyGenerated;
+    }
 }

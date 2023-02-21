@@ -82,7 +82,7 @@ public class Separator : Machine
                 uiSeparator.GenerateProcessedItems(itemProcessed);
                 itemProcessed = null;
 
-                //llamar al metodo GenerateProcessedItem(itemProcessed); y ver como generamos dos en vez de uno
+                //llamar al metodo GenerateOppositeItem(itemProcessed); y ver como generamos dos en vez de uno
 
                 itemProcessed = null;
 
