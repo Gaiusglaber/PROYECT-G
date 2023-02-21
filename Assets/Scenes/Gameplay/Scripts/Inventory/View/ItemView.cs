@@ -227,7 +227,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingPlane, eventData.position, eventData.pressEventCamera, out globalMouse))
             {
                 thisRect.position = globalMouse;
-                thisRect.rotation = draggingPlane.rotation;
             }
         }
 

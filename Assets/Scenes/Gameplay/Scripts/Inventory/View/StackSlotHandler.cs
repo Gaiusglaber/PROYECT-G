@@ -255,7 +255,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
             if (RectTransformUtility.ScreenPointToWorldPointInRectangle(draggingPlane, eventData.position, eventData.pressEventCamera, out globalMouse))
             {
                 objectDragging.position = Vector3.Lerp(objectDragging.position, globalMouse, speedFollow);
-                objectDragging.rotation = draggingPlane.rotation;
             }
         }
 
