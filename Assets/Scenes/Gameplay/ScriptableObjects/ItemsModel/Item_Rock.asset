@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Just a rock
   itemValue: 5
   energyCost: 0
-  timeToComplete: 0
+  timeToComplete: 20
   costInterval: 0
   pollutantDecreaseMaxEnergy: 0
   isPollutant: 0
