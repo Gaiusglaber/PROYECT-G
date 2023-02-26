@@ -14,7 +14,6 @@ namespace ProyectG.Gameplay.UI
     public class GameplayUIController : MonoBehaviour
     {
         #region EXPOSED_FIELDS
-        [SerializeField] private Machine machine = null;
         [Space(10)]
         [Header("UI Data")]
         [SerializeField] private float panelLerperSpeed = 0;
@@ -43,8 +42,8 @@ namespace ProyectG.Gameplay.UI
         #region UNTIY_CALLS
         private void Start()
         {
-            machine.OnInteract += ShowPanel;
             volume.profile.TryGet(out dof);
+            
             initialPos = panel.GetComponent<RectTransform>().anchoredPosition;
             initialdof = dof.focusDistance.value;
             panelLerper = new Vector2Lerper(panelLerperSpeed, AbstractLerper<Vector2>.SMOOTH_TYPE.EASE_OUT);

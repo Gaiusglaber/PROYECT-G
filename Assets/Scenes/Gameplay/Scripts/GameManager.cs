@@ -75,9 +75,13 @@ namespace ProjectG.Gameplay.Managers
 
             inventory.GenerateItem("Wood", 50);
             inventory.GenerateItem("Coal", 50);
-            //inventory.GenerateItem("Salvia", 25);
             inventory.GenerateItem("fruit", 50);
             inventory.GenerateItem("gashroom", 10);
+            inventory.GenerateItem("MineralSeed", 10);
+            inventory.GenerateItem("Salvia", 10);
+            inventory.GenerateItem("wood_fammable", 10);
+            inventory.GenerateItem("CommonSeed", 10);
+            inventory.GenerateItem("juice_fruit_toxic", 10);
             /*inventory.GenerateItem("saturnita_fuel", 25);
             inventory.GenerateItem("residue_toxic", 25);
             inventory.GenerateItem("CommonSeed", 25);

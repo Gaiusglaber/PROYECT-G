@@ -283,7 +283,6 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         {
             if (fromSlot == toSlot)
             {
-                Debug.Log("Mismo slot");
                 return;
             }
 

@@ -1,8 +1,6 @@
-using ProyectG.Common.UI.Dialogs;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+using ProyectG.Common.UI.Dialogs;
 
 public class NPC : MonoBehaviour
 {

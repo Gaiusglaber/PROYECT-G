@@ -15,4 +15,4 @@ MonoBehaviour:
   id: gashroom
   name: Gashroom
   sprite: {fileID: 21300000, guid: 68b37d40068800c43a0090edde4d1ca3, type: 3}
-  itemModel: {fileID: 11400000, guid: 56690ef06e2ec4049823f797b058058c, type: 2}
+  itemModel: {fileID: 11400000, guid: 9671b7d852dd47941b730c3598245187, type: 2}

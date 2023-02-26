@@ -125,6 +125,9 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
 
             Machine building = Instantiate(treeFarm.machines[0], positionToBuild, Quaternion.identity);
 
+            if(treeFarm.backgroundRoom != null)
+                roomBackground = Instantiate(treeFarm.backgroundRoom, treeRoom.roomModel.roomBackgroundPosition, Quaternion.identity);
+            
             treeRoom.BuildInRoom(treeFarm, building);
 
             actualRoomInPreview.OnBuildCreated(true);
@@ -197,12 +200,12 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
                 }
             }
 
-            //If the player doesn´t have enough resources we DO NOT build
+            //If the player doesnï¿½t have enough resources we DO NOT build
             if (!canMakeBuild)
             {
-                Debug.Log("You don´t have enough resources to build that! Go farm more");
+                Debug.Log("You donï¿½t have enough resources to build that! Go farm more");
 
-                string feedback = wasNotEnoughResources ? "You don´t have enough resources!" : "You cannot build that on this room.";
+                string feedback = wasNotEnoughResources ? "You donï¿½t have enough resources!" : "You cannot build that on this room.";
 
                 roombuilderView.ShowFeedbackBuild(feedback, false);
                 stateOperation?.Invoke(false); //We notify the final state of this build operation, false if failed.

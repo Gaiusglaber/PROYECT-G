@@ -15,8 +15,8 @@ namespace ProyectG.Gameplay.UI
 		#region EXPOSED_FIELDS
 		[SerializeField] private int lowEneryThreshhold = 0;
 		[SerializeField] private TMPro.TMP_Text energyTxt = null;
-		[SerializeField] private Image fillImage = null;
-		[SerializeField] private Image fillImage2 = null;
+		[SerializeField] private Image fillMainBar = null;
+		[SerializeField] private Image fillSecondBar = null;
 		[SerializeField] private float lerperSpeed = 0;
 		[SerializeField] private int maxEnergy = 0;
 		[SerializeField] private int initialEnergy = 0;
@@ -44,7 +44,6 @@ namespace ProyectG.Gameplay.UI
 		private int fuelBurnIncreaseValue = 0;
 
 		private FloatLerper fillLerper = null;
-		private FloatLerper fillLerper2 = null;
 		private FloatLerper txtLerper = null;
 		private bool ToggleLowEnergy = false;
 		#endregion
@@ -54,7 +53,7 @@ namespace ProyectG.Gameplay.UI
 		public int SetMaxEnergy { get { return maxEnergy; } set { maxEnergy = value; } }
 
 		public int SetValueSecondBar { get { return valueSecondBar; } set { valueSecondBar = value; } }
-		public Image GetFillBar { get { return fillImage; } set { fillImage = value; } }
+		public Image GetFillBar { get { return fillMainBar; } set { fillMainBar = value; } }
 		#endregion
 
 		#region ACTIONS
@@ -67,8 +66,7 @@ namespace ProyectG.Gameplay.UI
 			cantEnergy = initialEnergy;
 			fillLerper = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
 			txtLerper = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
-			fillLerper2 = new FloatLerper(lerperSpeed, AbstractLerper<float>.SMOOTH_TYPE.STEP_SMOOTHER);
-			StartCoroutine(LerpBar(GetFillAmmount()));
+			StartCoroutine(LerpBar(fillMainBar, fillMainBar.fillAmount,GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
 			//StartCoroutine(LerpBar2(GetFillAmmount2()));
 			OnUpdateEnergy = ChangeLightValue;
@@ -116,7 +114,7 @@ namespace ProyectG.Gameplay.UI
             {
 				cantEnergy = maxEnergy - valueSecondBar;
             }
-			StartCoroutine(LerpBar(GetFillAmmount()));
+			StartCoroutine(LerpBar(fillMainBar, fillMainBar.fillAmount,GetFillAmmount()));
 			StartCoroutine(LerpTxtValue(cantEnergy));
 		}
 
@@ -208,7 +206,7 @@ namespace ProyectG.Gameplay.UI
 		#region PRIVATE_METHODS
 		private void ActivateSecondBar()
         {
-			StartCoroutine(LerpBar2(GetFillAmmount2()));
+			StartCoroutine(LerpBar(fillSecondBar, 0.0f, GetFillAmmount2()));
 		}
 
 		private float GetFillAmmount()
@@ -245,25 +243,19 @@ namespace ProyectG.Gameplay.UI
 				yield return new WaitForEndOfFrame();
             }
         }
-		private IEnumerator LerpBar(float valueToChange)
-        {
-			fillLerper.SetValues(fillImage.fillAmount, valueToChange, true);
+
+		private IEnumerator LerpBar(Image fillImage, float initialValue, float valueToChange)
+		{
+			if (fillLerper == null)
+			{
+				yield break;
+			}
+			
+			fillLerper.SetValues(initialValue, valueToChange, true);
 			while (fillLerper.On)
-            {
+			{
 				fillLerper.Update();
 				fillImage.fillAmount = fillLerper.CurrentValue;
-				yield return new WaitForEndOfFrame();
-            }
-        }
-
-		private IEnumerator LerpBar2(float valueToChange)
-		{
-			//fillLerper2.SetValues(valueToChange, fillImage2.fillAmount, true);
-			fillLerper2.SetValues(0.0f, valueToChange, true);
-			while (fillLerper2.On)
-			{
-				fillLerper2.Update();
-				fillImage2.fillAmount = fillLerper2.CurrentValue;
 				yield return new WaitForEndOfFrame();
 			}
 		}

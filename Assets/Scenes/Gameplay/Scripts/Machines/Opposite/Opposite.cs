@@ -102,7 +102,7 @@ namespace ProyectG.Gameplay.Objects.Machines
         {
             if(item != null)
             {
-                if(item.itemResults.Count < 1)
+                if(item.oppositeItems.Count < 1)
                 {
                     Debug.LogWarning("The item model hasn't any result to process");
                     return;

@@ -1,6 +1,8 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+
+using UnityEngine;
+using UnityEngine.UI;
 
 using ProyectG.Gameplay.Objects.Inventory.Data;
 
@@ -19,6 +21,9 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         [SerializeField] private TMP_Text stackModeState = null;
 
         [SerializeField]private List<ItemType> allowedItems = null;
+
+        [Header("INVENTORY SLOTS")] 
+        [SerializeField] private GridLayoutGroup gridElement = null;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -44,13 +49,15 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #endregion
 
         #region PUBLIC_METHODS
-        public void Init(InventoryModel model, Transform parentTarget, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved, 
+        public void Init(InventoryModel model, Transform parentTarget, Vector2 slotsSize, Action<Vector2Int, Vector2Int> onSomeItemMoved, Action<Vector2Int,Vector2Int> onSomeStackMoved, 
             Action<Vector2Int, int, bool> onSomeItemRemoved, Action<string, int, Vector2Int> onAddSomeItems,Action<string, bool> onHoverSelection)
         {
             parentView = parentTarget;
             maxRowsInventory = model.GridRows;
             maxColsInventory = model.GridCols;
 
+            gridElement.cellSize = slotsSize;
+            
             InitializeSlotsView(maxRowsInventory, maxColsInventory);
 
             this.onSomeItemMoved = onSomeItemMoved;
@@ -86,6 +93,17 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
 
             CheckNextSlotsFromSlots(model);
 
+            for (int x = 0; x < maxRowsInventory; x++)
+            {
+                for (int y = 0; y < maxColsInventory; y++)
+                {
+                    if (slotsView[x, y] != null)
+                    {
+                        slotsView[x, y].transform.SetParent(gridElement.transform);
+                    }
+                }
+            }
+            
             IsOpen = false;
         }
 
