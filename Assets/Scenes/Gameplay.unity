@@ -3729,6 +3729,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC_[Confidencial] Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[3].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[6].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[0].conversationId
+      value: Mango_Recurso_1_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[1].conversationId
+      value: Mango_Recurso_1_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[2].conversationId
+      value: Mango_Recurso_1_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[3].conversationId
+      value: Mango_Recurso_1_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[4].conversationId
+      value: Mango_Recurso_2_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[5].conversationId
+      value: Mango_Recurso_2_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[6].conversationId
+      value: Mango_Recurso_2_2
+      objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160425, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -22076,6 +22116,46 @@ PrefabInstance:
     - target: {fileID: 9010694899367884572, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.000020864438
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[3].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[6].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[0].conversationId
+      value: Mango_Recurso_1_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[1].conversationId
+      value: Mango_Recurso_1_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[2].conversationId
+      value: Mango_Recurso_1_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[3].conversationId
+      value: Mango_Recurso_1_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[4].conversationId
+      value: Mango_Recurso_2_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[5].conversationId
+      value: Mango_Recurso_2_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[6].conversationId
+      value: Mango_Recurso_2_2
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664213, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: m_Name
