@@ -4276,11 +4276,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
       propertyPath: ids.Array.size
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
       propertyPath: ids.Array.data[0]
-      value: Mango_Recurso_1
+      value: Mango_Recurso_1_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[1]
+      value: Mango_Recurso_1_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[2]
+      value: Mango_Recurso_1_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[3]
+      value: Mango_Recurso_1_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[4]
+      value: Mango_Recurso_2_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[5]
+      value: Mango_Recurso_2_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[6]
+      value: Mango_Recurso_2_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[3].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[6].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[0].conversationId
+      value: Mango_Recurso_1_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[1].conversationId
+      value: Mango_Recurso_1_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[2].conversationId
+      value: Mango_Recurso_1_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[3].conversationId
+      value: Mango_Recurso_1_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[4].conversationId
+      value: Mango_Recurso_2_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[5].conversationId
+      value: Mango_Recurso_2_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496078689610792045, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: ids.Array.data[6].conversationId
+      value: Mango_Recurso_2_2
       objectReference: {fileID: 0}
     - target: {fileID: 7691885267079465846, guid: d360365a5d009314ab464c35e989ea23, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9328,9 +9388,13 @@ MonoBehaviour:
   musicHandlerChannel: {fileID: 11400000, guid: 13187e09096912a42bb462a0eb87be4b, type: 2}
   dialogManager: {fileID: 1645422044}
   conversationSOs:
-  - {fileID: 11400000, guid: 6b859688bbab39b40b1b2ad6b1503306, type: 2}
-  - {fileID: 11400000, guid: 7714771c6255d034e8d0f0df18be212a, type: 2}
+  - {fileID: 11400000, guid: a9615383567e70f4ea7f16c246e56fb0, type: 2}
   - {fileID: 11400000, guid: f2921e4376ce10a4c81c87a464dc586d, type: 2}
+  - {fileID: 11400000, guid: 2dc9feadcb0265340ac28a11fe48195d, type: 2}
+  - {fileID: 11400000, guid: 2fe374c687c1c094faa23fe4b963aecd, type: 2}
+  - {fileID: 11400000, guid: 8766bb49a6a12214f88931d7c7f84a92, type: 2}
+  - {fileID: 11400000, guid: 56024256dcd09094aaad0e484360bcbb, type: 2}
+  - {fileID: 11400000, guid: 9257a554fd4661948b804775e71a2672, type: 2}
   dialogPanel: {fileID: 1645422045}
   npcHandler: {fileID: 79446242}
 --- !u!4 &760085930

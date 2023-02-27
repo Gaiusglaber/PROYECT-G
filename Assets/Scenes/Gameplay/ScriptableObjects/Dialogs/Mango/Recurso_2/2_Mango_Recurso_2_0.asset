@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
-  m_Name: 1_Mango_Recurso_1
+  m_Name: 2_Mango_Recurso_2_0
   m_EditorClassIdentifier: 
   id: 0
   actorId: Mango
@@ -20,7 +20,17 @@ MonoBehaviour:
   quantity: 0
   give: 0
   recieve: 0
-  line: "Hola querido\xBFComo te llamas?... No importa, llegue a este \xE1rbol hace
-    tiempo, pero intent\xE9 llegar al centro del \xE1rbol y no lo pude romper. "
+  line: HOLA QUERIDO TANTO TIEMPO, gracias a ese ayuda que me diste mi amigo esta
+    mejor, vine porque hay otras cosas que necesito pero no quiero molestarte.
   loopOnBadAnswerws: 0
-  answers: []
+  answers:
+  - id: 1
+    feedback: Ah, ahora mismo no lo recuerdo
+    answer: Que necesitas?
+    isCorrect: 0
+    scoreValue: 0
+  - id: 1
+    feedback: Ah, no te preocupes. Nos vemos luego
+    answer: Ahora estoy ocupado
+    isCorrect: 0
+    scoreValue: 0

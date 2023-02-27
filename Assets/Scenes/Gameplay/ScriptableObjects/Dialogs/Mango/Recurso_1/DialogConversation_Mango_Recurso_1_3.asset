@@ -10,14 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 837668b5954a13c4bba580f206e43b3c, type: 3}
-  m_Name: DialogConversation_Mango_Recurso_1
+  m_Name: DialogConversation_Mango_Recurso_1_3
   m_EditorClassIdentifier: 
-  id: Mango_Recurso_1
+  id: Mango_Recurso_1_3
   actors:
   - {fileID: 11400000, guid: 26df0ad4fd494c54693e7d694e314777, type: 2}
   lines:
-  - {fileID: 11400000, guid: c0bd095458e2578459450bf53f176dd3, type: 2}
-  - {fileID: 11400000, guid: 6381ebfe233000247a17f6c87487b38e, type: 2}
-  - {fileID: 11400000, guid: 86974d6d876aa0745a30be03c6cf31b1, type: 2}
-  - {fileID: 11400000, guid: eb2e05ed335a5c44d88327f8d0b83380, type: 2}
   - {fileID: 11400000, guid: 6d2bece2d753e6f41a51191c748b23f5, type: 2}

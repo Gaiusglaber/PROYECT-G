@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
-  m_Name: 3_Mango_Recurso_1
+  m_Name: 1_Mango_Recurso_1_2
   m_EditorClassIdentifier: 
-  id: 2
+  id: 0
   actorId: Mango
   emotion: Mango
   lookingActorId: Mango
@@ -25,4 +25,16 @@ MonoBehaviour:
     en el centro tienen la cura, pero da igual lo que haga, este \xE1rbol no parece
     da\xF1arse."
   loopOnBadAnswerws: 0
-  answers: []
+  answers:
+  - id: 1
+    feedback: 'Ah, no. Serviria cortar esos?
+
+      Porque no lo intentas?'
+    answer: Probaste con los arboles detras tuyo?
+    isCorrect: 0
+    scoreValue: 0
+  - id: 0
+    feedback: Eh claro, hare lo que pueda. Nos vemos!
+    answer: Okay suerte con eso
+    isCorrect: 0
+    scoreValue: 0

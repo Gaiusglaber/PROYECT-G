@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 2_Mango_Recurso_2_2
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Mango
+  emotion: Mango
+  lookingActorId: Mango
+  item: {fileID: 11400000, guid: 2d16ef53a105ba4438fdd2e77d53ec76, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: '[cantando]Yo no bailo tango, mi nombre es Mango, Yo solo soy como Django,
+    y estoy buscando Algo.[cantando]....'
+  loopOnBadAnswerws: 1
+  answers:
+  - id: 1
+    feedback: Eh, no pero supongo una simple fruta me servira. Graciasss
+    answer: Ya recordaste?
+    isCorrect: 1
+    scoreValue: 0
+  - id: 0
+    feedback: Ah, gracias, pero parece que no puedes ayudarme seguire cantando.
+    answer: a, linda voz
+    isCorrect: 0
+    scoreValue: 0

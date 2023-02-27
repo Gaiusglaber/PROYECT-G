@@ -1,18 +1,28 @@
+using System;
+using System.Collections.Generic;
+
 using UnityEngine;
 
 using ProyectG.Common.UI.Dialogs;
 
+[Serializable]
+public class ConversationData
+{
+    [SerializeField] public string conversationId;
+    [SerializeField] public bool isItemCheck = false;
+}
+
 public class NPC : MonoBehaviour
 {
     [SerializeField] private string id = string.Empty;
-    [SerializeField] private string[] ids = null;
+    [SerializeField] private List<ConversationData> ids = null;
     [SerializeField] private GameObject feedbackUpgradeTable = null;
     [SerializeField] private DialogPlayer dialogPlayer = null;
 
     private int dialogIndex = 0;
 
     public string Id { get { return id; } }
-    public string[] Ids { get => ids; set => ids = value; }
+    public List<ConversationData> Ids { get => ids; set => ids = value; }
     public void IncreaseDialogIndex(bool toggle)
     {
         if (toggle)
@@ -39,7 +49,7 @@ public class NPC : MonoBehaviour
     {
         if (collision.CompareTag("Player")&& Input.GetKeyDown(KeyCode.E))
         {
-            dialogPlayer.PlayDialog(ids[dialogIndex]);
+            dialogPlayer.PlayDialog(ids[dialogIndex].conversationId);
             Debug.Log("Interaction");
         }
     }

@@ -12,12 +12,19 @@ public class NPCHandler : MonoBehaviour
     {
         for (int i = 0; i < npcs.Length; i++)
         {
-            if (npcs[i].Id.Contains(id))
+            ConversationData converData = npcs[i].Ids.Find(converData => converData.conversationId == id);
+            if (converData != null)
             {
-                npcs[i].IncreaseDialogIndex(toggle);
+                if (!converData.isItemCheck && !toggle)
+                {
+                    npcs[i].IncreaseDialogIndex(true);
+                }
+                else
+                {
+                    npcs[i].IncreaseDialogIndex(toggle);
+                }
             }
         }
     }
     #endregion
-
 }

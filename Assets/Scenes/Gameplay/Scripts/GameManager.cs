@@ -113,6 +113,7 @@ namespace ProjectG.Gameplay.Managers
         public void OnEndDialog(bool toggle, string itemId)
         {
             dialogPanel.SetBool("IsOpen", false);
+            npcHandler.OnConversationEnd(dialogManager.ActualDialog.id, false);
         }
 
         private bool TryDeleteItem(ItemModel item, int quantity)
