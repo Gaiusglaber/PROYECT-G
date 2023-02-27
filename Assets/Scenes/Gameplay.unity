@@ -23611,7 +23611,7 @@ MonoBehaviour:
   - {fileID: 1254616175}
   idTreeFarm: TreeFarm
   idRoomForTrees: 1
-  porcentOnDestroyBuild: 100
+  porcentOnDestroyBuild: 50
 --- !u!61 &1678228309
 BoxCollider2D:
   m_ObjectHideFlags: 0

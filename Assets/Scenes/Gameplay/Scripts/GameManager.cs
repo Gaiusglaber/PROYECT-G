@@ -37,6 +37,8 @@ namespace ProjectG.Gameplay.Managers
         [SerializeField] private DialogConversationSO[] conversationSOs = null;
         [SerializeField] private Animator dialogPanel = null;
         [SerializeField] private NPCHandler npcHandler = null;
+
+        [SerializeField] private bool debugModeItems = false;
         #endregion
 
         #region PRIVATE_FIELDS
@@ -73,15 +75,18 @@ namespace ProjectG.Gameplay.Managers
             soundHandlerChannel.OnPlaySound?.Invoke("CalmForest");
             musicHandlerChannel.OnPlayMusic?.Invoke("CalmMusic");
 
-            inventory.GenerateItem("Wood", 50);
-            inventory.GenerateItem("Coal", 50);
-            inventory.GenerateItem("fruit", 50);
-            inventory.GenerateItem("gashroom", 10);
-            inventory.GenerateItem("MineralSeed", 10);
-            inventory.GenerateItem("Salvia", 10);
-            inventory.GenerateItem("wood_fammable", 10);
-            inventory.GenerateItem("CommonSeed", 10);
-            inventory.GenerateItem("juice_fruit_toxic", 10);
+            if (debugModeItems)
+            {
+                inventory.GenerateItem("Wood", 100);
+                inventory.GenerateItem("Coal", 100);
+                inventory.GenerateItem("fruit", 100);
+                inventory.GenerateItem("gashroom", 100);
+                inventory.GenerateItem("MineralSeed", 100);
+                inventory.GenerateItem("Salvia", 100);
+                inventory.GenerateItem("wood_fammable", 100);
+                inventory.GenerateItem("CommonSeed", 100);
+                inventory.GenerateItem("juice_fruit_toxic", 100);
+            }
             /*inventory.GenerateItem("saturnita_fuel", 25);
             inventory.GenerateItem("residue_toxic", 25);
             inventory.GenerateItem("CommonSeed", 25);
