@@ -251,7 +251,7 @@ namespace ProyectG.Common.Modules.Audio.Handlers
 
         protected virtual void PlaySound(string id)
         {
-            if(soundsDictionary[id] != null)
+            if(soundsDictionary.ContainsKey(id) && soundsDictionary[id] != null)
             {
                 AudioSourceObject newSourceSound = poolOfSources.Get();
                 newSourceSound.transform.SetParent(holderSoundSources);
@@ -313,7 +313,7 @@ namespace ProyectG.Common.Modules.Audio.Handlers
 
         protected virtual void PlayMusic(string id)
         {
-            if (musicsDictionary[id] != null)
+            if (musicsDictionary.ContainsKey(id) && musicsDictionary[id] != null)
             {
                 AudioSourceObject newSourceMusic = poolOfSources.Get();
                 newSourceMusic.transform.SetParent(holderMusicSources);

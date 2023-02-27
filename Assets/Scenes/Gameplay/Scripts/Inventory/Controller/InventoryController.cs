@@ -56,6 +56,8 @@ namespace ProyectG.Gameplay.Objects.Inventory.Controller
             initialdof = dof.focusDistance.value;
 
             InitilizeMVC();
+            
+            hoverSelection.Init();
         }
 
         public List<SlotInventoryModel> GetExtraSlotsFromInventory()

@@ -8,6 +8,7 @@ using ProyectG.Gameplay.Objects;
 using UnityEngine.SceneManagement;
 using ProyectG.Common.UI.Dialogs;
 using System;
+using ProyectG.Common.Modules.Audio.Handlers;
 
 namespace ProyectG.Gameplay.UI
 {
@@ -80,6 +81,12 @@ namespace ProyectG.Gameplay.UI
 
         public void OnClickRetry(string scene)
         {
+            AudioHandler audioHandler = FindObjectOfType<AudioHandler>();
+            if (audioHandler != null)
+            {
+                Destroy(audioHandler.gameObject);
+            }
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 

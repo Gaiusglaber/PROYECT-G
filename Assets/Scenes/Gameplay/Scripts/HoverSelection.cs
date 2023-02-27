@@ -19,12 +19,6 @@ public class HoverSelection : MonoBehaviour
 
     [SerializeField] private int distanceRay;
 
-
-    void Start()
-    {
-        ToggleHoverSelection("", false);
-    }
-
     void Update()
     {
         MoveObject();
@@ -47,8 +41,18 @@ public class HoverSelection : MonoBehaviour
         }
     }
 
+    public void Init()
+    {
+        ToggleHoverSelection("", false);
+    }
+
     public void ToggleHoverSelection(string description, bool state)
     {
+        if (followObject == null)
+        {
+            return;
+        }
+        
         followObject.gameObject.SetActive(state);
         followText.text = description;
     }
