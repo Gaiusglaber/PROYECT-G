@@ -1,5 +1,5 @@
 <p align="center">
-<img src="Logos/logo.png" alt="Growing Grounds"/>
+<img src="logos/logo.png" alt="Growing Grounds"/>
 </p>
 
 # Growing Grounds
@@ -10,7 +10,7 @@ This is a game being developed by students from <a href="https://www.imagecampus
 
 <p align="center">
   <a href="https://www.imagecampus.edu.ar/">
-    <img src="Logos/logo-image-campus.png" alt="Image Campus"/>
+    <img src="logos/logo-image-campus.png" alt="Image Campus"/>
   </a> 
 </p>
 
