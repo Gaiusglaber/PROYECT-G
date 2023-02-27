@@ -10,7 +10,11 @@ PrefabInstance:
     - target: {fileID: 3171671473075289009, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 45e4d5ce727a8884aadf83d71839a309, type: 3}
+      objectReference: {fileID: 21300000, guid: 224a81f61110c514085883c75c303c32, type: 3}
+    - target: {fileID: 3171671473075289009, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3171671473075289010, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -93,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3171671473075289010, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0896759
+      value: -0.089660645
       objectReference: {fileID: 0}
     - target: {fileID: 3171671473075289010, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -109,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3171671473075289011, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}
       propertyPath: m_Name
-      value: MangoActor
+      value: MangoActor Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faa4501a2f2c63049b3e38612e6c367a, type: 3}

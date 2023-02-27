@@ -499,6 +499,12 @@ namespace ProyectG.Common.UI.Dialogs
                 actors.Add(actor.id, actor.GO);
                 actors[actor.id] = Instantiate(actors[actor.id], actorImageTransform, false);
                 actors[actor.id].SetActive(false);
+                
+                RectTransform actorTransform = actors[actor.id].transform as RectTransform;
+                if (actorTransform != null)
+                {
+                    actorTransform.anchoredPosition = Vector2.zero;
+                }
             }
         }
         /// <summary>

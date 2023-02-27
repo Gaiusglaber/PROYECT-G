@@ -10,10 +10,14 @@ PrefabInstance:
     - target: {fileID: 7587721836934895888, guid: fb1344ef15992224ca0c442aeed7e705, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c2c7b03d65eeda248ae45d9f515dfa69, type: 3}
+      objectReference: {fileID: 21300000, guid: dd20652e767cc5c4388cb892b1b4110a, type: 3}
+    - target: {fileID: 7587721836934895888, guid: fb1344ef15992224ca0c442aeed7e705, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7587721836934895890, guid: fb1344ef15992224ca0c442aeed7e705, type: 3}
       propertyPath: m_Name
-      value: ConfidentialActor Variant
+      value: ConfidentialActor Variant Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7587721836934895891, guid: fb1344ef15992224ca0c442aeed7e705, type: 3}
       propertyPath: m_Pivot.x
@@ -85,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7587721836934895891, guid: fb1344ef15992224ca0c442aeed7e705, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0896759
+      value: -0.089660645
       objectReference: {fileID: 0}
     - target: {fileID: 7587721836934895891, guid: fb1344ef15992224ca0c442aeed7e705, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

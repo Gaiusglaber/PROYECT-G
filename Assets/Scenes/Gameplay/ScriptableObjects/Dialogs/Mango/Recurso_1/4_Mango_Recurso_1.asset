@@ -20,6 +20,6 @@ MonoBehaviour:
   quantity: 0
   give: 0
   recieve: 0
-  line: Has encontrado algo que podria servirme?
+  line: Has encontrado algo que podria ayudarme?
   loopOnBadAnswerws: 0
   answers: []

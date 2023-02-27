@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DialogActor_Mango
   m_EditorClassIdentifier: 
   id: Mango
-  _name: El Mango
+  _name: Mango
   GO: {fileID: 5847776420472257866, guid: 471c7aee97139d644be1a4a396061bdb, type: 3}

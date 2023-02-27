@@ -48,12 +48,15 @@ namespace ProyectG.Gameplay.Objects
         {
             if (collision.CompareTag("Player"))
             {
-                if (!feedbackMachine.gameObject.activeSelf)
+                if (feedbackMachine != null)
                 {
-                    feedbackMachine.gameObject.SetActive(true);
+                    if (!feedbackMachine.gameObject.activeSelf)
+                    {
+                        
+                        feedbackMachine.gameObject.SetActive(true);
+                    }
+                    feedbackMachine.text = "<color=yellow><size=.3>E</size></color> to Interact";
                 }
-
-                feedbackMachine.text = "<color=yellow><size=.3>E</size></color> to Interact";
             }
         }
 
@@ -61,11 +64,14 @@ namespace ProyectG.Gameplay.Objects
         {
             if (collision.CompareTag("Player"))
             {
-                if (feedbackMachine.gameObject.activeSelf)
+                if (feedbackMachine != null)
                 {
-                    feedbackMachine.gameObject.SetActive(false);
-
-                    playerIsNear = false;
+                    if (feedbackMachine.gameObject.activeSelf)
+                        
+                    {
+                        feedbackMachine.gameObject.SetActive(false);
+                        playerIsNear = false;
+                    }
                 }
             }
         }

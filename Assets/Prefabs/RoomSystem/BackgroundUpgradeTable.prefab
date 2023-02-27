@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2281336909662807932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.064, z: 0}
   m_LocalScale: {x: 0.9037037, y: 0.41695264, z: 1.1111112}
   m_Children: []
   m_Father: {fileID: 2946882950016582806}
@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LightType: 1
-  m_BlendStyleIndex: 3
+  m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.757
-  m_Color: {r: 0.6320754, g: 0.55157524, b: 0.59707534, a: 1}
-  m_Intensity: 1.45
+  m_Color: {r: 0.8301887, g: 0.39551443, b: 0.6345854, a: 1}
+  m_Intensity: 1
   m_LightVolumeOpacity: 0.173
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -87,8 +87,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flickInterval: 2
-  maxIntensity: 1.45
-  minIntensity: 1.05
+  maxIntensity: 1
+  minIntensity: 0.45
   smoothType: 5
 --- !u!1 &2946882950016582807
 GameObject:
