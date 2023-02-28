@@ -104,10 +104,10 @@ namespace ProyectG.Gameplay.UI
 				playerController.ChangeSpeed(true);
 				ToggleLowEnergy = true;
             }
-            else if (cantEnergy > lowEneryThreshhold&& ToggleLowEnergy)
+            else if (cantEnergy > lowEneryThreshhold && ToggleLowEnergy)
             {
 				ToggleLowEnergy = false;
-				playerController.ChangeSpeed(false);
+				playerController.RestoreSpeed();
 				OnUpdateEnergy?.Invoke(1f);
 			}
 			else if (cantEnergy > maxEnergy - valueSecondBar)

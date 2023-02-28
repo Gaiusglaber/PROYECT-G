@@ -98,6 +98,10 @@ namespace ProyectG.Player.Controller
         private LastDirection lastDirection = default;
 
         private SoundHandlerChannel soundHandlerChannel = null;
+
+        private float normalAcceleration;
+        private float normalDeAcceleration;
+        private float normalmovementClamp;
         #endregion
 
         #region PROPERTIES
@@ -134,6 +138,10 @@ namespace ProyectG.Player.Controller
 
             this.soundHandlerChannel = soundHandlerChannel;
             playerAttack.Init(soundHandlerChannel);
+
+            normalAcceleration = acceleration;
+            normalDeAcceleration = deAcceleration;
+            normalmovementClamp = movementClamp;
         }
 
         public void Update()
@@ -417,6 +425,13 @@ namespace ProyectG.Player.Controller
             acceleration = lowBatteryMode ? 1 : initialAceleration;
             deAcceleration = lowBatteryMode ? 1 : initialDeAceleration;
             movementClamp = lowBatteryMode ? 1 : initialMovementClamp;
+        }
+
+        public void RestoreSpeed()
+        {
+            acceleration = normalAcceleration;
+            deAcceleration = normalDeAcceleration;
+            movementClamp = normalmovementClamp;
         }
 
         public void ToggleController(bool state)

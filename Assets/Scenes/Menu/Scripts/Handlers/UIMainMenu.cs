@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +14,7 @@ namespace ProyectG.MainMenu.UI
         [SerializeField] private Button btnExit = null;
         [Header("MENU SETTINGS")]
         [SerializeField] private float delayToSHowTitle = 0.5f;
+        [SerializeField] private TMP_Text versionText;
 
         #endregion
 
@@ -25,6 +26,8 @@ namespace ProyectG.MainMenu.UI
         {
             btnPlay.onClick.AddListener(() => { onPlayPressed?.Invoke(); });
             btnExit.onClick.AddListener(() => { onExitPressed?.Invoke(); });
+
+            versionText.text = "V" + Application.version;
         }
 
         public void DeInit()
