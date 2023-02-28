@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: Coal
   itemSprite: {fileID: 21300000, guid: 9057c7321848c3a4197e62337fbcff09, type: 3}
-  itemDescription: 'Combustible escencial para hacer funcionar el horno y mantener
-    la energia alta.
-
-    Duracion: 40seg | Energia: <color=green>+16 x 2seg</color>'
+  itemDescription: "Combustible confiable. No tiene otro uso m\xE1s que dar energ\xEDa.\n\nDuracion:
+    40seg | Energia: <color=green>+16 x 2seg</color>"
   itemValue: 1
   energyCost: 5
   timeToComplete: 10
   costInterval: 2
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 0
-  itemResults:
-  - {fileID: 11400000, guid: 18bfaa714a3872e408f293244b8d5ba6, type: 2}
+  itemResults: []
+  itemsFrom: []
+  oppositeItems: []
+  costOpposite: 0
+  timeToCompleteOpposite: 5
   timeToBurnOut: 40
   energyPerTime: 2
   energyGenerated: 16

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: fuel_fruit
   itemSprite: {fileID: 21300000, guid: d8c657392d0e8e642b86a386851b57fb, type: 3}
-  itemDescription: Fuel fruit
+  itemDescription: "Combustible poderoso, pero peligroso. No tiene otro uso m\xE1s
+    que dar energ\xEDa. Probablemente su poder no sea gratis\u2026\n\nDuracion: 15seg
+    | Energia: <color=green>+10 x 1seg</color>"
   itemValue: 0
   energyCost: 0
   timeToComplete: 60
@@ -24,6 +26,10 @@ MonoBehaviour:
   itemType: 0
   itemResults: []
   itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: f6ffecd28cfb49f4bae4699df2632bd7, type: 2}
+  costOpposite: 0
+  timeToCompleteOpposite: 5
   timeToBurnOut: 15
   energyPerTime: 1
   energyGenerated: 10

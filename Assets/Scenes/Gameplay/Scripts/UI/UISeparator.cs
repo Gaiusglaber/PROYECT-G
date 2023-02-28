@@ -58,11 +58,11 @@ namespace ProyectG.Gameplay.UI
             durationProcess = timeToSeparate;
         }
 
-        public void GenerateProcessedItems(ItemModel itemFrom1)
+        public bool GenerateProcessedItems(ItemModel itemFrom1)
         {
             if(!itemFrom1.itemResults.Any())
             {
-                return;
+                return false;
             }
 
             ItemModel finalItem = itemFrom1.itemResults[1];
@@ -71,13 +71,13 @@ namespace ProyectG.Gameplay.UI
             if (output1 == null)
             {
                 Debug.LogWarning("Failed to generat result for the procesed item, the outpu1 slot is NULL");
-                return;
+                return false;
             }
 
             if (output2 == null)
             {
                 Debug.LogWarning("Failed to generate result for the procesed item, the output2 slot is NULL");
-                return;
+                return false;
             }
 
             ItemView newHalftItem1 = Instantiate(prefabItemView, output1.SlotPosition, Quaternion.identity, output1.transform);
@@ -96,6 +96,8 @@ namespace ProyectG.Gameplay.UI
                 output1.AddItemToSlot(newHalftItem1);
                 output2.AddItemToSlot(newHalftItem2);
             }
+
+            return true;
         }
 
         public override void TogglePanel()
@@ -151,9 +153,10 @@ namespace ProyectG.Gameplay.UI
                         }
                     }
 
-                    GenerateProcessedItems(firstItem);
-
-                    OnEndProcess();
+                    if (GenerateProcessedItems(firstItem))
+                    {
+                        OnEndProcess();
+                    }
 
                     //Mandarle dos items al action OnProcessMaterial sirve para el combinador.
                     //OnProcessMaterial?.Invoke(firstItem);

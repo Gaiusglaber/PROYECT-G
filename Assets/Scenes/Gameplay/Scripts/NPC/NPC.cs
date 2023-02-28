@@ -14,15 +14,31 @@ public class ConversationData
 
 public class NPC : MonoBehaviour
 {
+    #region EXPOSED_FIELDS
     [SerializeField] private string id = string.Empty;
     [SerializeField] private List<ConversationData> ids = null;
     [SerializeField] private GameObject feedbackUpgradeTable = null;
     [SerializeField] private DialogPlayer dialogPlayer = null;
 
+    [Header("DEBUG")]
+    [SerializeField] private bool debugIndexActive = false;
+    [SerializeField] private int debugIndex = 0;
+    #endregion
+
     private int dialogIndex = 0;
 
     public string Id { get { return id; } }
     public List<ConversationData> Ids { get => ids; set => ids = value; }
+
+    #region EXPOSED_FIELDS
+    public void Init()
+    {
+        if (debugIndexActive)
+        {
+            dialogIndex = debugIndex;
+        }
+    }
+    
     public void IncreaseDialogIndex(bool toggle)
     {
         if (toggle)
@@ -30,10 +46,14 @@ public class NPC : MonoBehaviour
             dialogIndex++;
         }
     }
+    
     public void SetDialogIndex(int index)
     {
         dialogIndex = index;
     }
+    #endregion
+
+    #region PRIVATE_METHODS
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -49,8 +69,11 @@ public class NPC : MonoBehaviour
     {
         if (collision.CompareTag("Player")&& Input.GetKeyDown(KeyCode.E))
         {
-            dialogPlayer.PlayDialog(ids[dialogIndex].conversationId);
-            Debug.Log("Interaction");
+            if (dialogIndex <= ids.Count - 1)
+            {
+                dialogPlayer.PlayDialog(ids[dialogIndex].conversationId);
+                Debug.Log("Interaction");
+            }
         }
     }
 
@@ -64,4 +87,5 @@ public class NPC : MonoBehaviour
             }
         }
     }
+    #endregion
 }

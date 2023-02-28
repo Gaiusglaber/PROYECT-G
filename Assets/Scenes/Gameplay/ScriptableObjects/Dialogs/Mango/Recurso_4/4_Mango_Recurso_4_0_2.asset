@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 4_Mango_Recurso_4_0_2
+  m_EditorClassIdentifier: 
+  id: 2
+  actorId: Mango
+  emotion: Mango
+  lookingActorId: Mango
+  item: {fileID: 11400000, guid: 260fac60cc8b3d248a4019f75e7eb511, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: "No tengas miedo... Discupa querido estaba pensando algo que me dijo alguien
+    en un sue\xF1o, o supongo que era alguien por la forma en la que se ve\xEDa.
+    Ni siquiera s\xE9 si ten\xEDa vida."
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 1
+    feedback: Si? Pues entregalo!
+    answer: Creo que tengo lo que buscas... [Juan Sagrado]
+    isCorrect: 1
+    scoreValue: 0
+  - id: 0
+    feedback: Cosas que pasan. Cuando lo descubras vuelve...
+    answer: No tengo nada para lo que describes
+    isCorrect: 0
+    scoreValue: 0

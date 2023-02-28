@@ -14,10 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: juice_fruit_toxic
   itemSprite: {fileID: 21300000, guid: 124d24a339daccd4b90ddeb92989c804, type: 3}
-  itemDescription: Juice fruit toxic
+  itemDescription: "Jugo de la peligrosa fruta. Civilizaciones antiguas afirmaban
+    que, combinado con ciertos hongos, brindaba efectos alucin\xF3genos."
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
-  itemType: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
+  itemType: 1
   itemResults: []
+  itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: 8d64aa53dc9432c49810f17f618baa60, type: 2}
+  costOpposite: 0
+  timeToCompleteOpposite: 5

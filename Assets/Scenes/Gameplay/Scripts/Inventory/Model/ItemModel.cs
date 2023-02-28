@@ -32,6 +32,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
 
         public ItemType itemType;
 
+
         [Header("ITEM PROCESS RESULT")]
         public List<ItemModel> itemResults = new List<ItemModel>();
         [Header("GENERATED FROM ITEMS")]
@@ -40,6 +41,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.Data
         [Header("OPPOSITE ITEMS")]
         public List<ItemModel> oppositeItems = new List<ItemModel>();
         public float costOpposite = 0f;
+        public float timeToCompleteOpposite = 0;
         #endregion
     }
 }

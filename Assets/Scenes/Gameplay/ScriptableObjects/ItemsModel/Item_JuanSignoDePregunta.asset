@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Name: Item_JuanSignoDePregunta
+  m_EditorClassIdentifier: 
+  itemId: juan_signo_de_pregunta
+  itemSprite: {fileID: 21300000, guid: 2221e4eaf72d88b4c82b5d566d5344b1, type: 3}
+  itemDescription: "Parece un Juan, pero hay algo raro. Huele a Ketchup. Le hace
+    falta F\xE9."
+  itemValue: 1
+  energyCost: 1
+  timeToComplete: 1
+  costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
+  itemType: 0
+  itemResults: []
+  itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: 1703bdf51fdb126459c25d322fcd8135, type: 2}
+  costOpposite: 0
+  timeToCompleteOpposite: 5

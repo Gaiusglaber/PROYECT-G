@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: MineralSeed
   itemSprite: {fileID: 21300000, guid: a4daff31176fe3d489d193863b922a2c, type: 3}
-  itemDescription: Mineral seed, this one is better. And came from the combination
-    of normal seeds and some rocks.
+  itemDescription: Wow. Hubo una forma. Parece que pueden dar fruto a un mineral
+    extremadamente poderoso.
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 1
   itemResults: []
   itemsFrom:
   - {fileID: 11400000, guid: f0d14b910c9832e4098f581a8e4010a2, type: 2}
   - {fileID: 11400000, guid: c7af521b9686c27458c047a56142f2c7, type: 2}
+  oppositeItems: []
+  costOpposite: 0

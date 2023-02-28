@@ -14,13 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: Unstability
   itemSprite: {fileID: 21300000, guid: 02786bba5c98d6349ad7e691afe5335a, type: 3}
-  itemDescription: Mi inestabilidad emocional, digo esta bueno este item :)
+  itemDescription: "No deber\xEDa ser posible que algo as\xED exista. No se le puede
+    dar un uso en su estado actual. Se conoce que los gases de los que proviene consolidan
+    una forma f\xEDsica si se exponen a suficiente temperatura."
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 0
-  itemResults: []
+  itemResults:
+  - {fileID: 11400000, guid: 8f054ffe336803e4791e324767e12a29, type: 2}
   itemsFrom:
   - {fileID: 11400000, guid: 50e91de3b75ea254cb96f803c5ada9d2, type: 2}
-  - {fileID: 11400000, guid: 9330a2bbb5aeb574ab02f11aef8afdc4, type: 2}
+  - {fileID: 11400000, guid: 3d82a828d3a0e894aae6fb7f3e94c64e, type: 2}
+  oppositeItems: []
+  costOpposite: 0

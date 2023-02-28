@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 3_Mango_Recurso_3_0
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Mango
+  emotion: Mango
+  lookingActorId: Mango
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: "Hola pibe, no me digas que me vas a ayudar de nuevo, mi papa siempre me
+    dijo que los buenos amigos siempre ayudan los unos a los otros, pero ahora que
+    recuerdo no conozco a mi papa, as\xED que no me acuerdo qui\xE9n me lo dijo."
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 1
+    feedback: "No lo vas a creer pero a mi generador se le rompi\xF3 la bater\xEDa
+      y vine a ver si consegu\xEDa algo que me pueda ayudar. No s\xE9 mucho del tema
+      pero me acuerdo que mi generador utilizaba una piedras roja o algo as\xED."
+    answer: Ahora que quieres?
+    isCorrect: 0
+    scoreValue: 0

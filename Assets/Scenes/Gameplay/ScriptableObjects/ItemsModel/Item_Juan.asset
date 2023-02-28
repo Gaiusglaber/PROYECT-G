@@ -10,15 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
-  m_Name: ItemTest
+  m_Name: Item_Juan
   m_EditorClassIdentifier: 
-  itemId: pollu_test
-  itemSprite: {fileID: 21300000, guid: c69e3304c74350d41a24c9c62f4a8e00, type: 3}
-  itemDescription: Item to test eco friendly energy system
+  itemId: juan
+  itemSprite: {fileID: 21300000, guid: b5588167c0ae4834bbee43bc1762e731, type: 3}
+  itemDescription: "Una masa amorfa de errores combinados que parece tener voluntad
+    propia. Por alg\xFAn motivo, huele a mayonesa."
   itemValue: 1
   energyCost: 1
   timeToComplete: 1
   costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 0
   itemResults: []
   itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: 260fac60cc8b3d248a4019f75e7eb511, type: 2}
+  costOpposite: 0
+  timeToCompleteOpposite: 5

@@ -14,18 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: saturnita_battery
   itemSprite: {fileID: 21300000, guid: 02a22a2958c1f464cb8696a3b0a78b48, type: 3}
-  itemDescription: Saturnita Battery
+  itemDescription: "La energ\xEDa dentro de una saturnita almacenada de forma pura.
+    Podria ser de los combustibles m\xE1s poderosos del mundo, pero no lo es. \xBFQu\xE9
+    pasar\xEDa si se juntara con uno de igual calibre, pero distinto origen?"
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
   pollutantDecreaseMaxEnergy: 0
   isPollutant: 0
-  itemType: 0
+  itemType: 1
   itemResults: []
   itemsFrom:
   - {fileID: 11400000, guid: 77f643cd5ea5b824ab37992cfcdf6229, type: 2}
   - {fileID: 11400000, guid: 9417eaee456933c40b8914679ecd9e6b, type: 2}
   oppositeItems:
   - {fileID: 11400000, guid: 8f054ffe336803e4791e324767e12a29, type: 2}
-  costOpposite: 500
+  costOpposite: 5
+  timeToCompleteOpposite: 5

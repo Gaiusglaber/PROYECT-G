@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: Rocks
   itemSprite: {fileID: 21300000, guid: 02e867c54e67e1945ad62f9eb5a1c055, type: 3}
-  itemDescription: Just a rock
+  itemDescription: "Simple trozo de piedra. No es muy \xFAtil por s\xED sola. Se
+    dice que los primeros minerales surgieron como \u201Cfrutos\u201D de piedras."
   itemValue: 5
   energyCost: 0
   timeToComplete: 20
@@ -27,3 +28,4 @@ MonoBehaviour:
   oppositeItems:
   - {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
   costOpposite: 500
+  timeToCompleteOpposite: 5

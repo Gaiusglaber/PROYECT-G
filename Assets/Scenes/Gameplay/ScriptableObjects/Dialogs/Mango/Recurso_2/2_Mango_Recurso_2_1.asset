@@ -16,22 +16,21 @@ MonoBehaviour:
   actorId: Mango
   emotion: Mango
   lookingActorId: Mango
-  item: {fileID: 0}
-  quantity: 0
-  give: 0
+  item: {fileID: 11400000, guid: 2d16ef53a105ba4438fdd2e77d53ec76, type: 2}
+  quantity: 1
+  give: 1
   recieve: 0
-  line: X-surmato...X-barballo, oh, querido como estas, mi amigo me pidio que algo
-    de una fruta, pero me olvide el nombre de la fruta y no tengo ganas de volver
-    sin lo que me pidio, que tampoco me acuerdo que era.
-  loopOnBadAnswerws: 0
+  line: '[cantando]Yo no bailo tango, mi nombre es Mango, Yo solo soy como Django,
+    y estoy buscando Algo.[cantando]....'
+  loopOnBadAnswerws: 1
   answers:
   - id: 1
-    feedback: Ah, si intentare recordar...
-    answer: Eh no puedo hacer mucho
-    isCorrect: 0
+    feedback: Eh, no recuerdo aun, pero supongo una simple fruta me servira. Graciasss
+    answer: Ya recordaste?
+    isCorrect: 1
     scoreValue: 0
   - id: 0
-    feedback: Okay, lamento mi memoria. Hare lo que pueda
-    answer: Y bueno, arreglate
+    feedback: Ah, gracias, pero parece que no puedes ayudarme seguire cantando.
+    answer: a, linda voz
     isCorrect: 0
     scoreValue: 0

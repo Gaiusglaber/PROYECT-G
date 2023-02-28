@@ -40,7 +40,10 @@ namespace ProyectG.Gameplay.Objects
 
             if (playerIsNear && Input.GetKeyDown(KeyCode.E))
             {
-                uiMachine.TogglePanel();
+                if (uiMachine != null)
+                {
+                    uiMachine.TogglePanel();
+                }
             }
         }
 

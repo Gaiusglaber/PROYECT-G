@@ -8,6 +8,17 @@ public class NPCHandler : MonoBehaviour
     #endregion
 
     #region PUBLIC_METHODS
+    public void Init()
+    {
+        for (int i = 0; i < npcs.Length; i++)
+        {
+            if (npcs[i] != null)
+            {
+                npcs[i].Init();
+            }
+        }
+    }
+    
     public void OnConversationEnd(string id,bool toggle)
     {
         for (int i = 0; i < npcs.Length; i++)

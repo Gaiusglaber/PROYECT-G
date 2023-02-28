@@ -56,6 +56,7 @@ namespace ProjectG.Gameplay.Managers
             inventory.Init();
             cameraHandler.Init(player);
             mouseController.Init();
+            npcHandler.Init();
 
             if (dialogManager != null)
             {

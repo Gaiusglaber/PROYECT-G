@@ -118,7 +118,7 @@ namespace ProyectG.Gameplay.Objects.Machines
 
             itemPorcessed = item;
 
-            timeToProcessObject = itemPorcessed.timeToComplete;
+            timeToProcessObject = itemPorcessed.timeToCompleteOpposite;
             uiOppositeMachine.SetDurationProcess(timeToProcessObject);
 
             energyHandler.SetCostOfProcessDecrement(itemPorcessed.energyCost, itemPorcessed.costInterval);

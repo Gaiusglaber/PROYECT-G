@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: gashroom
   itemSprite: {fileID: 21300000, guid: 68b37d40068800c43a0090edde4d1ca3, type: 3}
-  itemDescription: 'Combustible escencial para generar energia alta. Duracion: 70seg
-    | Energia: <color=green>+13 x 1seg</color> | Energia Max: <color=red> -50 </color>'
+  itemDescription: "Un misterioso gas que proviene de hongos, provoca una reacci\xF3n
+    negativa en material org\xE1nico tras su exposici\xF3n.\n \nDuracion: 70seg |
+    Energia: <color=green>+13 x 1seg</color> | Energia Max: <color=red> -50 </color>"
   itemValue: 1
   energyCost: 5
   timeToComplete: 10
@@ -29,6 +30,7 @@ MonoBehaviour:
   oppositeItems:
   - {fileID: 11400000, guid: e5f736c8ad6360340afed4e5be00e79e, type: 2}
   costOpposite: 500
+  timeToCompleteOpposite: 5
   timeToBurnOut: 70
   energyPerTime: 1
   energyGenerated: 13

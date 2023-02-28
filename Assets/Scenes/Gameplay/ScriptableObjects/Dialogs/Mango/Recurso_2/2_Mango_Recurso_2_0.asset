@@ -23,14 +23,4 @@ MonoBehaviour:
   line: HOLA QUERIDO TANTO TIEMPO, gracias a ese ayuda que me diste mi amigo esta
     mejor, vine porque hay otras cosas que necesito pero no quiero molestarte.
   loopOnBadAnswerws: 0
-  answers:
-  - id: 1
-    feedback: Ah, ahora mismo no lo recuerdo
-    answer: Que necesitas?
-    isCorrect: 0
-    scoreValue: 0
-  - id: 1
-    feedback: Ah, no te preocupes. Nos vemos luego
-    answer: Ahora estoy ocupado
-    isCorrect: 0
-    scoreValue: 0
+  answers: []

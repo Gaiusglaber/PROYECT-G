@@ -14,10 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: fruit
   itemSprite: {fileID: 21300000, guid: 90cd07b0c0d5dfd4ca2d925ac03ccfcd, type: 3}
-  itemDescription: fruit
+  itemDescription: "Fruto con apariencia mineral. Infame entre humanos por dar mucha
+    energ\xEDa pero soltar gases t\xF3xicos al cocinarlo. Por m\xE1s que se le puedan
+    dar varios usos, no se conoce ninguno que no sea potencialmente peligroso."
   itemValue: 0
   energyCost: 5
   timeToComplete: 7
   costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 1
-  itemResults: []
+  itemResults:
+  - {fileID: 11400000, guid: 8d64aa53dc9432c49810f17f618baa60, type: 2}
+  - {fileID: 11400000, guid: f0d14b910c9832e4098f581a8e4010a2, type: 2}
+  - {fileID: 11400000, guid: f6ffecd28cfb49f4bae4699df2632bd7, type: 2}
+  itemsFrom: []
+  oppositeItems: []
+  costOpposite: 0

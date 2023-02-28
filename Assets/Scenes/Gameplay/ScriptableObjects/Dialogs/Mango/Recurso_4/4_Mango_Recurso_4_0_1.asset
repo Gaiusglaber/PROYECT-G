@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
-  m_Name: 2_Mango_Recurso_2_2
+  m_Name: 4_Mango_Recurso_4_0_1
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
   actorId: Mango
   emotion: Mango
   lookingActorId: Mango
-  item: {fileID: 11400000, guid: 2d16ef53a105ba4438fdd2e77d53ec76, type: 2}
-  quantity: 1
-  give: 1
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
   recieve: 0
-  line: '[cantando]Yo no bailo tango, mi nombre es Mango, Yo solo soy como Django,
-    y estoy buscando Algo.[cantando]....'
-  loopOnBadAnswerws: 1
+  line: "No sabes querido, el otro dia so\xF1\xE9 con una masa mistica, era rara,
+    tenia alas y un olor peculiar, como de a gloria. Y no s\xE9 por qu\xE9 pero me
+    pidi\xF3 si tenia mayonesa."
+  loopOnBadAnswerws: 0
   answers:
   - id: 1
-    feedback: Eh, no pero supongo una simple fruta me servira. Graciasss
-    answer: Ya recordaste?
-    isCorrect: 1
+    feedback: Claro que si, la tuya!
+    answer: Creo que necesitas ayuda Mango...
+    isCorrect: 0
     scoreValue: 0
   - id: 0
-    feedback: Ah, gracias, pero parece que no puedes ayudarme seguire cantando.
-    answer: a, linda voz
+    feedback: Okis dokis
+    answer: Mango, estoy ocupado, luego vengo
     isCorrect: 0
     scoreValue: 0

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: Wood
   itemSprite: {fileID: 7440981132975211316, guid: af0d6783f27796940ab3bbc4cf40f161, type: 3}
-  itemDescription: 'Madera que funciona como combustible y para generar carbon, una
-    variante mas eficiente.
+  itemDescription: 'Un simple tronco de madera. Parece que puede usarse como combustible.
+    Probablemente pueda tener varios usos.
 
-    Duracion: 20seg | Energia: <color=yellow>+2 x 1seg</color>'
+
+    Duracion: 20seg | Energia: <color=yellow>+2
+    x 1seg</color>'
   itemValue: 1
   energyCost: 2
   timeToComplete: 20
@@ -32,7 +34,8 @@ MonoBehaviour:
   itemsFrom: []
   oppositeItems:
   - {fileID: 11400000, guid: c7af521b9686c27458c047a56142f2c7, type: 2}
-  costOpposite: 500
+  costOpposite: 10
+  timeToCompleteOpposite: 5
   timeToBurnOut: 20
   energyPerTime: 1
   energyGenerated: 2

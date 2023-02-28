@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: table
   itemSprite: {fileID: 21300000, guid: c8b871faf0b3a68428991fe70fbd4f5d, type: 3}
-  itemDescription: Tabla de madera, se puede quemar para obtener cenizas.
+  itemDescription: "Un tronco cortado. No es muy \xFAtil por s\xED sola. Podr\xEDa
+    usarse para construir algo si se tuvieran m\xE1s materiales."
   itemValue: 1
   energyCost: 5
   timeToComplete: 10
   costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 2
-  itemResults:
-  - {fileID: 11400000, guid: 18bfaa714a3872e408f293244b8d5ba6, type: 2}
+  itemResults: []
+  itemsFrom: []
+  oppositeItems: []
+  costOpposite: 0
+  timeToCompleteOpposite: 0

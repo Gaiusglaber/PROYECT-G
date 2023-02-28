@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: StoragedUnstability
   itemSprite: {fileID: 21300000, guid: 63cf120b13b73df438f19af84071cb37, type: 3}
-  itemDescription: Si
+  itemDescription: "Tras almacenar una Inestabilidad peligrosa, se consigue al menos
+    encapsularla en forma s\xF3lida. Debido a que sigue siendo inestable, debe proporcionar
+    una cantidad de energ\xEDa inmensa, pero a un costo a\xFAn mayor."
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
@@ -27,3 +29,4 @@ MonoBehaviour:
   oppositeItems:
   - {fileID: 11400000, guid: e184ff9eca5732143a6af07015fd5a75, type: 2}
   costOpposite: 500
+  timeToCompleteOpposite: 5

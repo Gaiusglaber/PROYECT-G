@@ -14,16 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: saturnita
   itemSprite: {fileID: 21300000, guid: 196f3b0885dd6eb4e915f645217cca44, type: 3}
-  itemDescription: Saturnita
+  itemDescription: "El mineral m\xE1s resistente que existe, con una fuerte energ\xEDa
+    almacenada en su interior. Crece de la tierra misma, y existen rumores de civilizaciones
+    que experimentaron para extraer energ\xEDa pura de adentro suyo."
   itemValue: 0
-  energyCost: 500
+  energyCost: 1
   timeToComplete: 40
   costInterval: 1
   pollutantDecreaseMaxEnergy: 0
   isPollutant: 0
   itemType: 1
-  itemResults: []
+  itemResults:
+  - {fileID: 11400000, guid: 3dba4b6a2b3c0c440a53b9c9d9e270dd, type: 2}
+  - {fileID: 11400000, guid: 77f643cd5ea5b824ab37992cfcdf6229, type: 2}
+  - {fileID: 11400000, guid: c7af521b9686c27458c047a56142f2c7, type: 2}
   itemsFrom: []
   oppositeItems:
   - {fileID: 11400000, guid: 9671b7d852dd47941b730c3598245187, type: 2}
-  costOpposite: 500
+  costOpposite: 1
+  timeToCompleteOpposite: 5

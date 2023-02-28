@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Name: Item_JuanSagrado
+  m_EditorClassIdentifier: 
+  itemId: juan_sagrado
+  itemSprite: {fileID: 21300000, guid: 529d3cf6ff1a2dc4694cc5827e441fd0, type: 3}
+  itemDescription: "\xBFSignifica esto que un Juan normal es un ser diab\xF3lico?
+    No, pero se considera agn\xF3stico. Huele a Gloria. Siente curiosidad por probar
+    aderezos nuevos."
+  itemValue: 1
+  energyCost: 1
+  timeToComplete: 1
+  costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
+  itemType: 0
+  itemResults: []
+  itemsFrom: []
+  oppositeItems:
+  - {fileID: 11400000, guid: 59ae8f3ffc184044a8691aa189eaab0c, type: 2}
+  costOpposite: 0
+  timeToCompleteOpposite: 5

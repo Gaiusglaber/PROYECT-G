@@ -14,18 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: residue_toxic
   itemSprite: {fileID: 21300000, guid: 2ebc852cd86af4348b225239938b6ecb, type: 3}
-  itemDescription: Residue Toxic
+  itemDescription: "Tras juntarse con el jugod del X-Curballo, la energ\xEDa negativa
+    del Gashroom se volvi\xF3 m\xE1s fuerte, y m\xE1s inestable. A\xFAn as\xED, parece
+    que si se junta con algo igual de peligroso, puede llegar incluso m\xE1s lejos."
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
   pollutantDecreaseMaxEnergy: 0
   isPollutant: 0
-  itemType: 0
+  itemType: 1
   itemResults: []
   itemsFrom:
   - {fileID: 11400000, guid: f6ffecd28cfb49f4bae4699df2632bd7, type: 2}
-  - {fileID: 11400000, guid: 56690ef06e2ec4049823f797b058058c, type: 2}
+  - {fileID: 11400000, guid: 9671b7d852dd47941b730c3598245187, type: 2}
   oppositeItems:
   - {fileID: 11400000, guid: 3dba4b6a2b3c0c440a53b9c9d9e270dd, type: 2}
-  costOpposite: 500
+  costOpposite: 5
+  timeToCompleteOpposite: 5

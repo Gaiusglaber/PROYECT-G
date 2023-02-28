@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
-  m_Name: Fuel_Eco
+  m_Name: Item_TruelyCore
   m_EditorClassIdentifier: 
-  itemId: eco_fuel
-  itemSprite: {fileID: 21300000, guid: ae02427b1fc784c48a87f391b2dcd3d3, type: 3}
-  itemDescription: Eco Fuel
-  itemValue: 50
-  energyCost: 750
-  timeToComplete: 15
-  costInterval: 1
-  itemType: 0
+  itemId: TruelyCore
+  itemSprite: {fileID: 21300000, guid: ed7014820a5a36745bf0dc3d252f5803, type: 3}
+  itemDescription: "El origen de toda creaci\xF3n. "
+  itemValue: 0
+  energyCost: 0
+  timeToComplete: 0
+  costInterval: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
+  itemType: 1
   itemResults: []
-  itemsFrom:
-  - {fileID: 11400000, guid: 3dba4b6a2b3c0c440a53b9c9d9e270dd, type: 2}
-  - {fileID: 11400000, guid: 9c81abf5a08f35141bdc469026d356f2, type: 2}
+  itemsFrom: []
+  oppositeItems: []
+  costOpposite: 0
+  timeToCompleteOpposite: 0

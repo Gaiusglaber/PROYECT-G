@@ -14,13 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: nova037
   itemSprite: {fileID: 21300000, guid: 8b0cc314e9d29f44a841d9f8fc314086, type: 3}
-  itemDescription: Nova037
+  itemDescription: "Energ\xEDa en su estado m\xE1s puro, en la palma de tu mano.
+    Si lo pusieras frente a un espejo, la energ\xEDa viajar\xEDa m\xE1s r\xE1pido
+    que la luz, desfigurando la im\xE1gen, o eso dicen."
   itemValue: 6000
   energyCost: 100
   timeToComplete: 60
   costInterval: 1
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 1
   itemResults: []
   itemsFrom:
   - {fileID: 11400000, guid: e184ff9eca5732143a6af07015fd5a75, type: 2}
   - {fileID: 11400000, guid: 8f054ffe336803e4791e324767e12a29, type: 2}
+  oppositeItems: []
+  costOpposite: 0

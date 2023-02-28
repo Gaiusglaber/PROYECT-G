@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837668b5954a13c4bba580f206e43b3c, type: 3}
+  m_Name: DialogConversation_Zem_Recurso1_Dialog1
+  m_EditorClassIdentifier: 
+  id: Zem_Recurso_1_1
+  actors:
+  - {fileID: 11400000, guid: d1c3c274870a50543a263c365b6fb430, type: 2}
+  lines:
+  - {fileID: 11400000, guid: ce2bb67deeabfdc4e8688f204d52d484, type: 2}

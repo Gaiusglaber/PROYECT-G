@@ -14,11 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: CommonSeed
   itemSprite: {fileID: 21300000, guid: 838d643f3f81a904a90107d1a80696a5, type: 3}
-  itemDescription: Just normal seeds.
+  itemDescription: "Semillas de X-Curballo. No es necesario generar m\xE1s realmente.
+    Pueden crecer en casi cualquier superficie, excepto en piedra. Si tan s\xF3lo
+    hubiera una forma\u2026"
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
   costInterval: 0
+  pollutantDecreaseMaxEnergy: 0
+  isPollutant: 0
   itemType: 1
-  itemResults: []
+  itemResults:
+  - {fileID: 11400000, guid: 1703bdf51fdb126459c25d322fcd8135, type: 2}
+  - {fileID: 11400000, guid: 1703bdf51fdb126459c25d322fcd8135, type: 2}
+  - {fileID: 11400000, guid: 1703bdf51fdb126459c25d322fcd8135, type: 2}
   itemsFrom: []
+  oppositeItems: []
+  costOpposite: 0

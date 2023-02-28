@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: wood_fammable
   itemSprite: {fileID: 21300000, guid: 44eef073e6a1a694bad1aa7907ad6ef8, type: 3}
-  itemDescription: 'Madera con la propiedad de ser super inflamable. Duracion: 5seg
-    | Energia: <color=green>+50 x 1seg</color> | Energia Max: <color=red> -50 </color>'
+  itemDescription: "Me arden los ojos al ver esto. No parece seguro. Debe generar
+    mucha energ\xEDa, pero \xBFA qu\xE9 costo?\n\nDuracion: 5seg | Energia: <color=green>+50
+    x 1seg</color> | Energia Max: <color=red> -50 </color>"
   itemValue: 50
   energyCost: 50
   timeToComplete: 60
@@ -24,7 +25,11 @@ MonoBehaviour:
   isPollutant: 1
   itemType: 0
   itemResults: []
-  itemsFrom: []
+  itemsFrom:
+  - {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
+  - {fileID: 11400000, guid: 2d16ef53a105ba4438fdd2e77d53ec76, type: 2}
+  oppositeItems: []
+  costOpposite: 0
   timeToBurnOut: 5
   energyPerTime: 1
   energyGenerated: 50

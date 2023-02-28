@@ -9,12 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d93d4854bc40b742a94f26043f46dba, type: 3}
+  m_Script: {fileID: 11500000, guid: 062e037dd4b7efe429f5216a3d7e06a7, type: 3}
   m_Name: Fuel_Saturnita
   m_EditorClassIdentifier: 
   itemId: saturnita_fuel
   itemSprite: {fileID: 21300000, guid: 46867005cb64e6744ba27e38379b076c, type: 3}
-  itemDescription: Saturnita Fuel
+  itemDescription: "Combustible confiable que brinda buena cantidad de energ\xEDa.
+    De las formas m\xE1s eficientes de energ\xEDa que se conocen. A\xFAn as\xED,
+    se pierde bastante energ\xEDa en el proceso de obtenci\xF3n. Probablemente existen
+    maneras de hacerlo un poco m\xE1s eficiente.\n\nDuracion: 80seg | Energia: <color=pink>+15
+    x 1seg</color>"
   itemValue: 0
   energyCost: 0
   timeToComplete: 0
@@ -26,4 +30,8 @@ MonoBehaviour:
   itemsFrom: []
   oppositeItems:
   - {fileID: 11400000, guid: 50e91de3b75ea254cb96f803c5ada9d2, type: 2}
-  costOpposite: 500
+  costOpposite: 10
+  timeToCompleteOpposite: 5
+  timeToBurnOut: 80
+  energyPerTime: 1
+  energyGenerated: 15
