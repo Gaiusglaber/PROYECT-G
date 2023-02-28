@@ -58,7 +58,7 @@ namespace ProyectG.Gameplay.Objects
                         
                         feedbackMachine.gameObject.SetActive(true);
                     }
-                    feedbackMachine.text = "<color=yellow><size=.3>E</size></color> to Interact";
+                    feedbackMachine.text = "<color=yellow><size=.3>E</size></color> para interactuar";
                 }
             }
         }

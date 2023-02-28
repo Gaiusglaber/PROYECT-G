@@ -3817,6 +3817,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3192817470138675462, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: m_text
+      value: <color=yellow><size=0.5>E</size></color> para interactuar
+      objectReference: {fileID: 0}
     - target: {fileID: 3288836548129684609, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.9999999
@@ -4417,6 +4421,10 @@ PrefabInstance:
     - target: {fileID: 7691885267079465846, guid: d360365a5d009314ab464c35e989ea23, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.0053738384
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948881928867837244, guid: d360365a5d009314ab464c35e989ea23, type: 3}
+      propertyPath: m_text
+      value: <color=yellow><size=0.5>E</size></color> para interactuar
       objectReference: {fileID: 0}
     - target: {fileID: 7948881929286836474, guid: d360365a5d009314ab464c35e989ea23, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -17242,7 +17250,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<color=yellow><size=1>E</size></color> To Interact '
+  m_text: <color=yellow><size=1>E</size></color> para interactuar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17533,7 +17541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<color=yellow><size=.3>E</size></color> To Interact '
+  m_text: <color=yellow><size=.3>E</size></color> para interactuar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17560,7 +17568,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.25
+  m_fontSize: 0.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22122,6 +22130,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8932732336237586117, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: m_text
+      value: <color=yellow><size=0.5>E</size></color> para interactuar
+      objectReference: {fileID: 0}
     - target: {fileID: 9010694899367884572, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -23697,7 +23709,7 @@ MonoBehaviour:
   - buildingName: Mineral Snail
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: d392665ac4e4f2e43b973a17d7bb67cd, type: 3}
-    buildingImagePreview: {fileID: 0}
+    buildingImagePreview: {fileID: 21300000, guid: d392665ac4e4f2e43b973a17d7bb67cd, type: 3}
     machines:
     - {fileID: 261761011064870272, guid: 9a7f9ed8f29a46547a34463eab500a04, type: 3}
     viewResources:
