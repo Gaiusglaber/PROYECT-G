@@ -205,7 +205,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             {
                 Debug.Log("You don�t have enough resources to build that! Go farm more");
 
-                string feedback = wasNotEnoughResources ? "You don�t have enough resources!" : "You cannot build that on this room.";
+                string feedback = wasNotEnoughResources ? "No tienes suficientes recursos!" : "No puedes construir eso aqui!";
 
                 roombuilderView.ShowFeedbackBuild(feedback, false);
                 stateOperation?.Invoke(false); //We notify the final state of this build operation, false if failed.
@@ -242,7 +242,7 @@ namespace ProyectG.Gameplay.RoomSystem.Handler
             previewRoom.SetPreviewRoom(actualRoomInPreview);
 
             //We notify the final state of this build operation, true if succed. 
-            roombuilderView.ShowFeedbackBuild("Build succed!",true);
+            roombuilderView.ShowFeedbackBuild("Construccion realizada!",true);
             stateOperation?.Invoke(true);
         }
 

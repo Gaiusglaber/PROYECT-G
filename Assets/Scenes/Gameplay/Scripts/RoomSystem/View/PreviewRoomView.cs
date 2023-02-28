@@ -97,11 +97,11 @@ namespace ProyectG.Gameplay.RoomSystem.View
                 return;
             }
 
-            string roomState = selectedRoom.roomModel.IsRoomEmpty ? "<color=green>Room is free to build.</color>" 
-                : "<color=red>The room is already ocuped.</color>";
+            string roomState = selectedRoom.roomModel.IsRoomEmpty ? "<color=green>La habitacion esta libre.</color>" 
+                : "<color=red>La habitacion esta ocupada!.</color>";
 
-            string roomType = !selectedRoom.roomModel.isOutsideRoom ? "<color=yellow>Room is for machines.</color>"
-                : "<color=yellow>The room is for organics.</color>";
+            string roomType = !selectedRoom.roomModel.isOutsideRoom ? "<color=yellow>Habitacion para maquinas.</color>"
+                : "<color=yellow>Habitacion para organicos.</color>";
 
             stateRoom.text = roomState;
 

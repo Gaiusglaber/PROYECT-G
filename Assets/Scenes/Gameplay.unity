@@ -1322,7 +1322,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SPACE - jump
+  m_text: SPACE - Saltar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -1668,7 +1668,7 @@ RectTransform:
   m_Children:
   - {fileID: 1501072522}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1699,7 +1699,8 @@ MonoBehaviour:
     id: 0
     isOutsideRoom: 1
     maxRoomSpace: 0
-    roomInfo: A litlle room but beautiful. Perfect to a farm of esscentials resources.
+    roomInfo: "Una habitaci\xF3n peque\xF1a pero hermosa. Perfecto para una granja
+      de recursos esenciales."
     cameraWorldPosition: {x: -11.55, y: -0.55, z: 0}
     initialWorldPosition: {x: -10.7, y: -1.65, z: 0}
     viewPosition: {x: -312.9, y: -281, z: 0}
@@ -1716,7 +1717,8 @@ MonoBehaviour:
     id: 1
     isOutsideRoom: 1
     maxRoomSpace: 0
-    roomInfo: A litlle room but beautiful. Perfect to a farm of esscentials resources.
+    roomInfo: "Una habitaci\xF3n peque\xF1a pero hermosa. Perfecto para una granja
+      de recursos esenciales."
     cameraWorldPosition: {x: 16, y: -1.15, z: 0}
     initialWorldPosition: {x: 16.25, y: -2.35, z: 0}
     viewPosition: {x: 320.7, y: -296.6, z: 0}
@@ -1734,7 +1736,8 @@ MonoBehaviour:
     id: 2
     isOutsideRoom: 0
     maxRoomSpace: 0
-    roomInfo: It is kinda wet in here, but is a useful place for some noise machines.
+    roomInfo: "Est\xE1 un poco h\xFAmedo aqu\xED, pero es un lugar \xFAtil para algunas
+      m\xE1quinas."
     cameraWorldPosition: {x: 2.15, y: -1.05, z: 0}
     initialWorldPosition: {x: 1.85, y: -1.4, z: 0}
     viewPosition: {x: -1.1, y: -296.1, z: 0}
@@ -1751,7 +1754,8 @@ MonoBehaviour:
     id: 3
     isOutsideRoom: 0
     maxRoomSpace: 0
-    roomInfo: A room placed high on the main tree, the view in here is awesome hehe.
+    roomInfo: "Una habitaci\xF3n ubicada en lo alto del \xE1rbol principal, la vista
+      aqu\xED es impresionante, jeje."
     cameraWorldPosition: {x: -8.1, y: 8.55, z: 0}
     initialWorldPosition: {x: -9.5, y: 8.23, z: 0}
     viewPosition: {x: -254.3, y: -15.7, z: 0}
@@ -1769,7 +1773,7 @@ MonoBehaviour:
     id: 4
     isOutsideRoom: 0
     maxRoomSpace: 0
-    roomInfo: A room placed high on the main tree.
+    roomInfo: "Una habitaci\xF3n situada en lo alto del \xE1rbol principal."
     cameraWorldPosition: {x: 15.35, y: 11.85, z: 0}
     initialWorldPosition: {x: 14.38, y: 12, z: 0}
     viewPosition: {x: 264.4, y: 84, z: 0}
@@ -1786,8 +1790,8 @@ MonoBehaviour:
     id: 5
     isOutsideRoom: 0
     maxRoomSpace: 0
-    roomInfo: Okay, if you are afraid of height, you shouldn't have a build in here.
-      Btw, the view is amazing.
+    roomInfo: "De acuerdo, si tienes miedo a la altura, no deber\xEDas tener una
+      construcci\xF3n aqu\xED. Por cierto, la vista es incre\xEDble."
     cameraWorldPosition: {x: 2.15, y: 15.55, z: 0}
     initialWorldPosition: {x: 0.95, y: 15.75, z: 0}
     viewPosition: {x: -13.5, y: 157, z: 0}
@@ -2087,7 +2091,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tab - Open inventory
+  m_text: Tab - Abrir Inventario
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3141,7 +3145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 351.5, y: -408.70273}
+  m_AnchoredPosition: {x: 351.5, y: -425}
   m_SizeDelta: {x: 600, y: 135.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &265142464
@@ -3164,7 +3168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: (Works only near something)
+  m_text: (Funciona solo cerca de algo)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -3706,6 +3710,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2494302071498332470, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2494302071498332470, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2494302071498332470, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.013106
       objectReference: {fileID: 0}
@@ -3976,6 +3988,10 @@ PrefabInstance:
     - target: {fileID: 7730074718911940213, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7730074718911940213, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7730074718911940213, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4833,13 +4849,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 768717302}
-  m_RootOrder: 0
+  m_Father: {fileID: 717702598}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 51, y: -82}
-  m_SizeDelta: {x: 318.4213, y: 32.1962}
+  m_AnchorMin: {x: 0.024, y: 0.017}
+  m_AnchorMax: {x: 0.18752085, y: 0.048}
+  m_AnchoredPosition: {x: -0.19995117, y: -0.30004883}
+  m_SizeDelta: {x: 0.42129517, y: 0.19620132}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363321671
 MonoBehaviour:
@@ -5094,7 +5110,7 @@ RectTransform:
   m_Children:
   - {fileID: 1817501649}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6164,7 +6180,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 768717302}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6436,7 +6452,7 @@ RectTransform:
   m_Father: {fileID: 1484044365}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.672}
+  m_AnchorMin: {x: 0, y: 0.75703704}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -6562,7 +6578,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 524601753}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.32799998
+  m_Size: 0.24296296
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7015,7 +7031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: e - interact
+  m_text: e - interactuar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -7423,9 +7439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Room Info
-
-'
+  m_text: Informacion disponible
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -7452,7 +7466,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.65
+  m_fontSize: 24.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9118,6 +9132,7 @@ RectTransform:
   - {fileID: 6363017379772415172}
   - {fileID: 1837649078}
   - {fileID: 1254616174}
+  - {fileID: 363321670}
   - {fileID: 768717302}
   - {fileID: 371645752}
   - {fileID: 107068395}
@@ -9511,7 +9526,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 487bdf8722aeb97459f7f7df66c9de91, type: 2}
   dialogPanel: {fileID: 1645422045}
   npcHandler: {fileID: 79446242}
-  debugModeItems: 1
+  debugModeItems: 0
 --- !u!4 &760085930
 Transform:
   m_ObjectHideFlags: 0
@@ -9706,10 +9721,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 363321670}
   - {fileID: 519044207}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11640,7 +11654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Available Builds
+  m_text: Habitaciones disponibles
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -11667,7 +11681,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.5
+  m_fontSize: 37.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22872,7 +22886,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A & S - Move Player
+  m_text: A & S - Mover Jugador
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -23247,7 +23261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3085258498505242847, guid: bba92e9c12728854c830d4c90a7203ec, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3085258498505242847, guid: bba92e9c12728854c830d4c90a7203ec, type: 3}
       propertyPath: m_AnchorMax.x
@@ -23699,9 +23713,9 @@ MonoBehaviour:
   previewRoom: {fileID: 38252311}
   soundsChannel: {fileID: 11400000, guid: 13fdb80fee7c6c546a7f4152873818ec, type: 2}
   allBuildingAviables:
-  - buildingName: CornFarm
+  - buildingName: Cosecha X-Curballo
     isMachine: 0
-    buildingImage: {fileID: 21300000, guid: 22b699692dedeee499c859ef106080d2, type: 3}
+    buildingImage: {fileID: 21300000, guid: 90cd07b0c0d5dfd4ca2d925ac03ccfcd, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: ad285961e046c4b4a9b2b50209ce481f, type: 3}
     machines:
     - {fileID: 8484401189889361835, guid: ea9e3ae1ac14c8841a438e7f4cbb80e4, type: 3}
@@ -23710,7 +23724,7 @@ MonoBehaviour:
       amount: 15
       item: {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
     backgroundRoom: {fileID: 2597845635996311840, guid: 8e30a2e06bd883b40b6f2409b3cda9c0, type: 3}
-  - buildingName: TreeFarm
+  - buildingName: Bosque
     isMachine: 0
     buildingImage: {fileID: 21300000, guid: 6bb71587ffd19534ca38fc331c9e8a14, type: 3}
     buildingImagePreview: {fileID: -5498557897038260392, guid: be52860548e22e146948f7a70b49aecb, type: 3}
@@ -23721,7 +23735,7 @@ MonoBehaviour:
       amount: 6
       item: {fileID: 11400000, guid: 70a77417730203340baabc141091ee30, type: 2}
     backgroundRoom: {fileID: 2597845635996311840, guid: 8e30a2e06bd883b40b6f2409b3cda9c0, type: 3}
-  - buildingName: Separator
+  - buildingName: Separacion
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: 2a9de81545836034a9d05f09e94511c7, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: 2a9de81545836034a9d05f09e94511c7, type: 3}
@@ -23738,7 +23752,7 @@ MonoBehaviour:
       amount: 5
       item: {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
     backgroundRoom: {fileID: 5958555305738283370, guid: 9a6cdfef56ff5b84db8c16c54faedaca, type: 3}
-  - buildingName: Combinator
+  - buildingName: Combinacion
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: c6bd673e29d1d0c4797e37565e931418, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: c6bd673e29d1d0c4797e37565e931418, type: 3}
@@ -23755,7 +23769,7 @@ MonoBehaviour:
       amount: 5
       item: {fileID: 11400000, guid: 0c7aad68d7abd6545a987636a363a061, type: 2}
     backgroundRoom: {fileID: 3708152420621790545, guid: 02e6307e9f657b844b78afc63ac14b54, type: 3}
-  - buildingName: Opposite
+  - buildingName: Maquina Opuesta
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: b559b67e78e1b1e4a941fa349b9a15f5, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: b559b67e78e1b1e4a941fa349b9a15f5, type: 3}
@@ -23769,7 +23783,7 @@ MonoBehaviour:
       amount: 15
       item: {fileID: 11400000, guid: 2d16ef53a105ba4438fdd2e77d53ec76, type: 2}
     backgroundRoom: {fileID: 4221204299444394254, guid: 87ca69a6f5f0bff449654958b782ae8a, type: 3}
-  - buildingName: Mineral Snail
+  - buildingName: Caracol
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: d392665ac4e4f2e43b973a17d7bb67cd, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: d392665ac4e4f2e43b973a17d7bb67cd, type: 3}
@@ -23783,7 +23797,7 @@ MonoBehaviour:
       amount: 5
       item: {fileID: 11400000, guid: f6ffecd28cfb49f4bae4699df2632bd7, type: 2}
     backgroundRoom: {fileID: 5958555305738283370, guid: 9a6cdfef56ff5b84db8c16c54faedaca, type: 3}
-  - buildingName: Tree Saturnita
+  - buildingName: Planta de Saturnita
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: 9bf1df0b6bc9ba544b3ab8a750a62267, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: 9bf1df0b6bc9ba544b3ab8a750a62267, type: 3}
@@ -23797,7 +23811,7 @@ MonoBehaviour:
       amount: 5
       item: {fileID: 11400000, guid: 9c81abf5a08f35141bdc469026d356f2, type: 2}
     backgroundRoom: {fileID: 2597845635996311840, guid: 8e30a2e06bd883b40b6f2409b3cda9c0, type: 3}
-  - buildingName: Mushroom
+  - buildingName: Habitacion de Hongos
     isMachine: 1
     buildingImage: {fileID: 21300000, guid: d710835bb4264704ca81aa28cf9cef4f, type: 3}
     buildingImagePreview: {fileID: 21300000, guid: d710835bb4264704ca81aa28cf9cef4f, type: 3}
@@ -23815,7 +23829,7 @@ MonoBehaviour:
   - {fileID: 6363017379772415171}
   - {fileID: 1837649079}
   - {fileID: 1254616175}
-  idTreeFarm: TreeFarm
+  idTreeFarm: Bosque
   idRoomForTrees: 1
   porcentOnDestroyBuild: 50
 --- !u!61 &1678228309
@@ -24420,7 +24434,7 @@ RectTransform:
   - {fileID: 673935163}
   - {fileID: 911573470}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -31996,7 +32010,7 @@ RectTransform:
   - {fileID: 6418459151852424441}
   - {fileID: 6418459152031295927}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

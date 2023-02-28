@@ -207,7 +207,7 @@ namespace ProyectG.Gameplay.Objects.Inventory.View
         #region PRIVATE_METHODS
         private void SetStateTxtStackInfo(bool stackState)
         {
-            stackModeState.text = stackState ? "STACK DRAG: ENABLE" : "STACK DRAG: DISABLE";
+            stackModeState.text = stackState ? "STACK DRAG: Habilitado" : "STACK DRAG: Deshabilitado";
         }
 
         private bool IsValidPosition(Vector2Int pos)
