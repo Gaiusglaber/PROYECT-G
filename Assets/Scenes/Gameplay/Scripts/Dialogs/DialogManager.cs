@@ -318,6 +318,8 @@ namespace ProyectG.Common.UI.Dialogs
                     actor.Value.SetActive(false);
                 }
 
+                conversationAwake = false;
+
                 yield break;
             }
 
@@ -496,14 +498,17 @@ namespace ProyectG.Common.UI.Dialogs
             actualDialog = DialogPerId(ID);
             foreach (var actor in ActualDialog.actors)
             {
-                actors.Add(actor.id, actor.GO);
-                actors[actor.id] = Instantiate(actors[actor.id], actorImageTransform, false);
-                actors[actor.id].SetActive(false);
-                
-                RectTransform actorTransform = actors[actor.id].transform as RectTransform;
-                if (actorTransform != null)
+                if (!actors.ContainsKey(actor.id))
                 {
-                    actorTransform.anchoredPosition = Vector2.zero;
+                    actors.Add(actor.id, actor.GO);
+                    actors[actor.id] = Instantiate(actors[actor.id], actorImageTransform, false);
+                    actors[actor.id].SetActive(false);
+                    
+                    RectTransform actorTransform = actors[actor.id].transform as RectTransform;
+                    if (actorTransform != null)
+                    {
+                        actorTransform.anchoredPosition = Vector2.zero;
+                    }
                 }
             }
         }

@@ -19,7 +19,7 @@ public class NPCHandler : MonoBehaviour
         }
     }
     
-    public void OnConversationEnd(string id,bool toggle)
+    public void OnConversationEnd(string id, bool toggle)
     {
         for (int i = 0; i < npcs.Length; i++)
         {

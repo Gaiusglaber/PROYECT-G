@@ -15,4 +15,6 @@ MonoBehaviour:
   id: Zem_Recurso_2_0
   actors:
   - {fileID: 11400000, guid: d1c3c274870a50543a263c365b6fb430, type: 2}
-  lines: []
+  lines:
+  - {fileID: 11400000, guid: 70d078749a567594ab48323eceb58f7d, type: 2}
+  - {fileID: 11400000, guid: 075202077a2515449a6c17dfd1d7e190, type: 2}

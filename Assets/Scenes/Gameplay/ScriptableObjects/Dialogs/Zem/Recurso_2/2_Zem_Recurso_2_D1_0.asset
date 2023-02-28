@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 2_Zem_Recurso_2_D1_0
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Zem
+  emotion: Zem
+  lookingActorId: Zem
+  item: {fileID: 0}
+  quantity: 0
+  give: 0
+  recieve: 0
+  line: "Desde chico me encant\xF3 el concepto de los Hongos, un ser vivo que se
+    nutre de la humedad y la putrefacci\xF3n, hacen lo que sea para mantenerse con
+    vida, por mas repulsivo que sea el ambiente."
+  loopOnBadAnswerws: 0
+  answers: []

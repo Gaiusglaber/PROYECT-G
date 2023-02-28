@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 4_Confidencial_Recurso_4_D1_0
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Confidencial
+  emotion: Confidencial
+  lookingActorId: Confidencial
+  item: {fileID: 11400000, guid: 1cceefa7db55cc64b8d566d1cc55aaeb, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: "Lo \xFAnico que resta es incorporar algo que realmente le de EQUILIBRIO,
+    pero \xBFc\xF3mo lograr que dos fuerzas opuestas se junten en una sola? Ni bueno
+    ni malo, simplemente poderoso...."
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 
+    feedback: "Por dios! Es increible! \nMuchisimas gracias! Con esto podre completar
+      mi investigaci\xF3n!"
+    answer: 'Esto te servira. Dar: 1 Nucleo Verdadero'
+    isCorrect: 1
+    scoreValue: 0
+  - id: 
+    feedback: 
+    answer: 
+    isCorrect: 0
+    scoreValue: 0

@@ -3731,6 +3731,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[0].isItemCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[1].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[2].isItemCheck
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
@@ -3738,36 +3750,52 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[4].isItemCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[5].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[6].isItemCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[7].isItemCheck
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[0].conversationId
-      value: Mango_Recurso_1_0
+      value: Confidencial_Recurso_1_0
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[1].conversationId
-      value: Mango_Recurso_1_1
+      value: Confidencial_Recurso_1_1
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[2].conversationId
-      value: Mango_Recurso_1_2
+      value: Confidencial_Recurso_2_0
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[3].conversationId
-      value: Mango_Recurso_1_3
+      value: Confidencial_Recurso_2_1
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[4].conversationId
-      value: Mango_Recurso_2_0
+      value: Confidencial_Recurso_3_0
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[5].conversationId
-      value: Mango_Recurso_2_1
+      value: Confidencial_Recurso_3_1
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: ids.Array.data[6].conversationId
-      value: Mango_Recurso_2_2
+      value: Confidencial_Recurso_4_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033271893535160407, guid: 961cb289fbc3c134e92443648170790d, type: 3}
+      propertyPath: ids.Array.data[7].conversationId
+      value: Confidencial_Recurso_4_1
       objectReference: {fileID: 0}
     - target: {fileID: 3033271893535160425, guid: 961cb289fbc3c134e92443648170790d, type: 3}
       propertyPath: m_RootOrder
@@ -9466,6 +9494,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5393f68978d5e084fbdd5a6768ea7a2a, type: 2}
   - {fileID: 11400000, guid: bc082505fdf1d044a9e2e9d10285b382, type: 2}
   - {fileID: 11400000, guid: 1128e6a911b1a5a4692482ba4a656573, type: 2}
+  - {fileID: 11400000, guid: 32e7129c42bd32b43898670b59073828, type: 2}
+  - {fileID: 11400000, guid: 00d1e19fb568293478f134cd9ebe2663, type: 2}
+  - {fileID: 11400000, guid: 727f6a0073d02de409503d2f0ea1a900, type: 2}
+  - {fileID: 11400000, guid: bf9436322f2c96046bed7056b8188796, type: 2}
+  - {fileID: 11400000, guid: 78e695a71508c404fa304cee884d4cf2, type: 2}
+  - {fileID: 11400000, guid: 7c44d0de7ce94664ca5b79b7e65fad2b, type: 2}
+  - {fileID: 11400000, guid: 9840aaa473fd3994e81fec8b110748be, type: 2}
+  - {fileID: 11400000, guid: 5eb3e5331ef4f52418f02f3408722432, type: 2}
+  - {fileID: 11400000, guid: eeb2256ce0a1d144a8c3bbf3a28077c7, type: 2}
+  - {fileID: 11400000, guid: 6fcb6dc2f059fa147b5f6cc28d6423d3, type: 2}
+  - {fileID: 11400000, guid: 545bd372bca27d24ba7a802b507f3fb2, type: 2}
+  - {fileID: 11400000, guid: a95660817871a954ea0fbafa95c2afc0, type: 2}
+  - {fileID: 11400000, guid: 4f9f63314e7568e49a2b0443be962cd0, type: 2}
+  - {fileID: 11400000, guid: 487bdf8722aeb97459f7f7df66c9de91, type: 2}
   dialogPanel: {fileID: 1645422045}
   npcHandler: {fileID: 79446242}
   debugModeItems: 1
@@ -22160,7 +22202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.size
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[0].isItemCheck
@@ -22171,11 +22213,27 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[2].isItemCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[3].isItemCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[4].isItemCheck
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[5].isItemCheck
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[6].isItemCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[7].isItemCheck
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
@@ -22188,23 +22246,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[2].conversationId
-      value: Mango_Recurso_1_2
+      value: Zem_Recurso_2_0
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[3].conversationId
-      value: Mango_Recurso_1_3
+      value: Zem_Recurso_2_1
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[4].conversationId
-      value: Mango_Recurso_2_0
+      value: Zem_Recurso_2_2
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[5].conversationId
-      value: Mango_Recurso_2_1
+      value: Zem_Recurso_3_0
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: ids.Array.data[6].conversationId
-      value: Mango_Recurso_2_2
+      value: Zem_Recurso_4_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052238131092664212, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
+      propertyPath: ids.Array.data[7].conversationId
+      value: Zem_Recurso_4_1
       objectReference: {fileID: 0}
     - target: {fileID: 9052238131092664213, guid: 4982dbdc0c9b9394d830a9f4f7b96702, type: 3}
       propertyPath: m_Name

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 4_Zem_Recurso_4_D1_0
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Zem
+  emotion: Zem
+  lookingActorId: Zem
+  item: {fileID: 11400000, guid: 59ae8f3ffc184044a8691aa189eaab0c, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: "\xBFConoc\xE9s como todos tienen un \"yo\" malvado y un \"yo\" bueno en
+    sus hombros d\xE1ndoles consejos? Mi \"yo\" malvado es un compa\xF1ero decente,
+    pero me gustar\xEDa que fuese real..."
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 1
+    feedback: Sii!! Es lo que siempre quise. Gracias
+    answer: 'Dar: Juan (?)'
+    isCorrect: 1
+    scoreValue: 0
+  - id: 0
+    feedback: Tiene una especie de forma gelatinosa...
+    answer: Ehh, vere que consigo...
+    isCorrect: 0
+    scoreValue: 0

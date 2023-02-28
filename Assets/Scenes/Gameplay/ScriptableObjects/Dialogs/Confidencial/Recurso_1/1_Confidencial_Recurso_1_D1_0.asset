@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 1_Confidencial_Recurso_1_D1_0
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Confidencial
+  emotion: Confidencial
+  lookingActorId: Confidencial
+  item: {fileID: 11400000, guid: c7af521b9686c27458c047a56142f2c7, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: "No necesito mucho para empezar,  mis herrmamientas me permiten arreglarme
+    con materiales base sin procesar por estas... m\xE1quinas. Tengo un don \xFAtil
+    a la hora de usar mis manos para moldear lo que sea."
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 1
+    feedback: "Perfecto! Eso me servira para empezar. \nNos vemos"
+    answer: 'Tengo lo que necesitas. Dar: 1 Piedra'
+    isCorrect: 1
+    scoreValue: 0
+  - id: 0
+    feedback: Okay, vuelve cuando lo encuentres!
+    answer: Ya encontrare algo...
+    isCorrect: 0
+    scoreValue: 0

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 3_Confidencial_Recurso_3_D1_2
+  m_EditorClassIdentifier: 
+  id: 0
+  actorId: Confidencial
+  emotion: Confidencial
+  lookingActorId: Confidencial
+  item: {fileID: 11400000, guid: fca60398d4ba109438fac2edae101379, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: "Quiz\xE1 no sea seguro que este construyendo esto dentro de tu f\xE1brica,
+    pero asumir\xE9 debido a la entrega constante de materiales que no existe problema.
+    Aunque quizas este sea el fin de mi investigaci\xF3n, a no ser que logre encontrar
+    algo tan poderoso como para potenciar el sistema entero..."
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 1
+    feedback: "Vaya! Eso es perfecto! Creo que podria servirme. \nNos vemos luego."
+    answer: 'Raro, pero toma. Dar: 1 Combustible Eco-Saturnita'
+    isCorrect: 1
+    scoreValue: 0
+  - id: 0
+    feedback: Okay, mientras seguire investigando...
+    answer: Mmm vere que puedo hacer...
+    isCorrect: 0
+    scoreValue: 0

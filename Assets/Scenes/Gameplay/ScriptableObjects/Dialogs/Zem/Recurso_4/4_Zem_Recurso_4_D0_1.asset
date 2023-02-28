@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
-  m_Name: 2_Zem_Recurso_2_D0_1
+  m_Name: 4_Zem_Recurso_4_D0_1
   m_EditorClassIdentifier: 
   id: 1
   actorId: Zem
@@ -20,20 +20,16 @@ MonoBehaviour:
   quantity: 0
   give: 0
   recieve: 0
-  line: "El otro d\xEDa un par de payasos me criticaron por utilizar X-Curballos,
-    \xBFA vos te parece?, supuestamente tienen un impacto negativo en el ambiente,
-    yo lo \xFAnico que veo es ganancia."
+  line: "No s\xE9 si te coment\xE9, pero me gusta el Ketchup."
   loopOnBadAnswerws: 0
   answers:
   - id: 1
-    feedback: Exacto, veo que pensamos parecido... Ahora ponte a trabajar y encuentra
-      una nueva forma de explotarlos...
-    answer: Las ganancias son lo mas importante
+    feedback: Si, increible...
+    answer: Estas bien?
     isCorrect: 0
     scoreValue: 0
   - id: 0
-    feedback: "Pff, parece que piensas como esos payasos. \nBah no importa. Avisame
-      si encuntras otra utilidad para ellos. Nos vemos"
-    answer: Eh, es importante el medio ambiente
+    feedback: ....
+    answer: Ehhhh, volvere luego
     isCorrect: 0
     scoreValue: 0

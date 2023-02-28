@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 837668b5954a13c4bba580f206e43b3c, type: 3}
-  m_Name: DialogConversation_Zem_Recurso2_Dialog1
+  m_Name: DialogConversation_Confidencial_Recurso_2_0
   m_EditorClassIdentifier: 
-  id: Zem_Recurso_2_1
+  id: Confidencial_Recurso_2_0
   actors:
-  - {fileID: 11400000, guid: d1c3c274870a50543a263c365b6fb430, type: 2}
+  - {fileID: 11400000, guid: 9254ca325c06b4e42bb267ed966e7dd5, type: 2}
   lines:
-  - {fileID: 11400000, guid: 94519c6ca70cb014e9bf9bd5cdf0a5ba, type: 2}
-  - {fileID: 11400000, guid: 3916db3a863c24a4796f21e9af342194, type: 2}
+  - {fileID: 11400000, guid: 5cb4e2b8e3996e542980581fef320f9a, type: 2}
+  - {fileID: 11400000, guid: 4b2a2f5a351c3e6488af32023a9d4212, type: 2}
+  - {fileID: 11400000, guid: 494ce395ad6a377439f5e4e530e1e29e, type: 2}

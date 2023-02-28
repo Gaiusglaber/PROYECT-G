@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbff6df82a32ae40b6db66130a37a7a, type: 3}
+  m_Name: 3_Zem_Recurso_3_D0_2
+  m_EditorClassIdentifier: 
+  id: 2
+  actorId: Zem
+  emotion: Zem
+  lookingActorId: Zem
+  item: {fileID: 11400000, guid: 3dfbf02f77fd18d47bc5c5ee09a3799a, type: 2}
+  quantity: 1
+  give: 1
+  recieve: 0
+  line: "Intent\xE9 combinar por mi parte unir los poderes de la Madera Ultrainflamable
+    y los residuos t\xF3xicos, pero no logro almacenar la energ\xEDa. Si te importa
+    el bien de tu f\xE1brica, te sugiero que encuentres la forma"
+  loopOnBadAnswerws: 0
+  answers:
+  - id: 
+    feedback: 'Increible! No pense que seria posible combinarlos... Me srive...
+
+      Nos
+      vemos luego '
+    answer: 'Lo encontre! Dar: 1 Inestabilidad peligrosa'
+    isCorrect: 1
+    scoreValue: 0
+  - id: 
+    feedback: Mas te vale descubirlo... por el bien de tu fabrica...
+    answer: Ehh vere que puedo hacer...
+    isCorrect: 0
+    scoreValue: 0
