@@ -1668,7 +1668,7 @@ RectTransform:
   m_Children:
   - {fileID: 1501072522}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5094,7 +5094,7 @@ RectTransform:
   m_Children:
   - {fileID: 1817501649}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9114,7 +9114,6 @@ RectTransform:
   - {fileID: 633962296}
   - {fileID: 404458478}
   - {fileID: 2127909267}
-  - {fileID: 6418459152886659773}
   - {fileID: 766479367}
   - {fileID: 6363017379772415172}
   - {fileID: 1837649078}
@@ -9123,6 +9122,7 @@ RectTransform:
   - {fileID: 371645752}
   - {fileID: 107068395}
   - {fileID: 1645422043}
+  - {fileID: 6418459152886659773}
   - {fileID: 1733693008}
   m_Father: {fileID: 0}
   m_RootOrder: 18
@@ -9149,6 +9149,7 @@ MonoBehaviour:
   panel: {fileID: 2127909266}
   volume: {fileID: 176273866}
   gameOverPanel: {fileID: 1733693007}
+  victoryPanel: {fileID: 6418459152886659772}
   panelControlls: {fileID: 633962295}
   dialogManager: {fileID: 0}
   dialogPanel: {fileID: 0}
@@ -9156,7 +9157,7 @@ MonoBehaviour:
   onCloseControlls: {fileID: 549270394}
   panelOpenDestination: {x: 353, y: -275}
   panelCloseDestination: {x: -309, y: -275}
-  npcHandler: {fileID: 0}
+  npcHandler: {fileID: 79446242}
 --- !u!1 &737030432
 GameObject:
   m_ObjectHideFlags: 0
@@ -9607,7 +9608,7 @@ RectTransform:
   m_Children:
   - {fileID: 2083809239}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9708,7 +9709,7 @@ RectTransform:
   - {fileID: 363321670}
   - {fileID: 519044207}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -17691,7 +17692,7 @@ RectTransform:
   m_Children:
   - {fileID: 419146809}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -23246,7 +23247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3085258498505242847, guid: bba92e9c12728854c830d4c90a7203ec, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3085258498505242847, guid: bba92e9c12728854c830d4c90a7203ec, type: 3}
       propertyPath: m_AnchorMax.x
@@ -25526,7 +25527,7 @@ RectTransform:
   m_Children:
   - {fileID: 1348615642}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -31086,7 +31087,7 @@ RectTransform:
   m_Children:
   - {fileID: 6363017380426068624}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -31568,7 +31569,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Victory
+  m_text: Ganaste!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fed49356ff32d394aa934ae7130c3611, type: 2}
   m_sharedMaterial: {fileID: 6742690532610889956, guid: fed49356ff32d394aa934ae7130c3611, type: 2}
@@ -31843,7 +31844,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY AGAIN
+  m_text: menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fed49356ff32d394aa934ae7130c3611, type: 2}
   m_sharedMaterial: {fileID: 6742690532610889956, guid: fed49356ff32d394aa934ae7130c3611, type: 2}
@@ -31875,7 +31876,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 110.38
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -31995,7 +31996,7 @@ RectTransform:
   - {fileID: 6418459151852424441}
   - {fileID: 6418459152031295927}
   m_Father: {fileID: 717702598}
-  m_RootOrder: 3
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

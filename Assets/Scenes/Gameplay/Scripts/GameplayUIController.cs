@@ -22,7 +22,8 @@ namespace ProyectG.Gameplay.UI
         [SerializeField] private GameObject panel = null;
         [SerializeField] private Volume volume = null;
         [SerializeField] private GameObject gameOverPanel;
-
+        [SerializeField] private GameObject victoryPanel;
+        
         [Header("TEMPORAL")]
         [SerializeField] private GameObject panelControlls = null;
         [SerializeField] private DialogManager dialogManager = null;
@@ -33,6 +34,7 @@ namespace ProyectG.Gameplay.UI
         [SerializeField] private Vector2 panelCloseDestination = default;
         [SerializeField] private NPCHandler npcHandler = null;
         #endregion
+        
         #region PRIVATE_FIELDS
         private DepthOfField dof = null;
         private bool panelHidden = true;
@@ -40,6 +42,7 @@ namespace ProyectG.Gameplay.UI
         private Vector2 initialPos = Vector2.zero;
         private float initialdof = 0;
         #endregion
+        
         #region UNTIY_CALLS
         private void Start()
         {
@@ -53,8 +56,8 @@ namespace ProyectG.Gameplay.UI
             onCloseControlls.onClick.AddListener(HideControlls);
             onCloseControlls.gameObject.SetActive(false);
             EnergyHandler.Withoutenergy += ShowGameOverPanel;
-            
 
+            npcHandler.OnAllDialogsExecuted += () => { ShowVictoryPanel(true); };
         }
 
         private void OnDisable()
@@ -89,6 +92,17 @@ namespace ProyectG.Gameplay.UI
             
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        
+        public void OnClickMenu(string scene)
+        {
+            AudioHandler audioHandler = FindObjectOfType<AudioHandler>();
+            if (audioHandler != null)
+            {
+                Destroy(audioHandler.gameObject);
+            }
+            
+            SceneManager.LoadScene(scene);
+        }
 
         #endregion
         #region PRIVATE_METHODS
@@ -104,6 +118,11 @@ namespace ProyectG.Gameplay.UI
         private void ShowGameOverPanel(bool state)
         {
             gameOverPanel.SetActive(state);
+        }
+        
+        private void ShowVictoryPanel(bool state)
+        {
+            victoryPanel.SetActive(state);
         }
         #endregion
         #region PUBLIC_CORROUTINES

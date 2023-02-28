@@ -27,6 +27,7 @@ public class NPC : MonoBehaviour
 
     private int dialogIndex = 0;
 
+    public Action OnIndexUpdated { get; set; }
     public string Id { get { return id; } }
     public List<ConversationData> Ids { get => ids; set => ids = value; }
 
@@ -44,6 +45,7 @@ public class NPC : MonoBehaviour
         if (toggle)
         {
             dialogIndex++;
+            OnIndexUpdated?.Invoke();
         }
     }
     

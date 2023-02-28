@@ -10,7 +10,6 @@ namespace ProyectG.MainMenu.UI
     public class UIMainMenu : MonoBehaviour
     {
         #region EXPOSED_FIELDS
-        [SerializeField] private Animator titleAnimator = null;
         [SerializeField] private Button btnPlay = null;
         [SerializeField] private Button btnExit = null;
         [Header("MENU SETTINGS")]
@@ -26,14 +25,6 @@ namespace ProyectG.MainMenu.UI
         {
             btnPlay.onClick.AddListener(() => { onPlayPressed?.Invoke(); });
             btnExit.onClick.AddListener(() => { onExitPressed?.Invoke(); });
-
-            IEnumerator PlayTitleAnimation()
-            {
-                yield return new WaitForSeconds(delayToSHowTitle);
-                titleAnimator.SetTrigger("Init");
-            }
-
-            StartCoroutine(PlayTitleAnimation());
         }
 
         public void DeInit()

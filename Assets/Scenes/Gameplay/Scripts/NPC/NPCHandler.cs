@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 public class NPCHandler : MonoBehaviour
@@ -7,6 +8,15 @@ public class NPCHandler : MonoBehaviour
     [SerializeField] private NPC[] npcs = null;
     #endregion
 
+    #region PRIVATE_FIELDS
+    private int dialogsExecuted = 0;
+    private const int maxDialogsToWin = 24;
+    #endregion
+    
+    #region ACTIONS
+    public Action OnAllDialogsExecuted { get; set; }
+    #endregion
+    
     #region PUBLIC_METHODS
     public void Init()
     {
@@ -15,6 +25,7 @@ public class NPCHandler : MonoBehaviour
             if (npcs[i] != null)
             {
                 npcs[i].Init();
+                npcs[i].OnIndexUpdated += OnNPCConversationIndexUpdate;
             }
         }
     }
@@ -35,6 +46,18 @@ public class NPCHandler : MonoBehaviour
                     npcs[i].IncreaseDialogIndex(toggle);
                 }
             }
+        }
+    }
+    #endregion
+
+    #region PRIVATE_METHODS
+    private void OnNPCConversationIndexUpdate()
+    {
+        dialogsExecuted++;
+
+        if (dialogsExecuted >= maxDialogsToWin-1)
+        {
+            OnAllDialogsExecuted.Invoke();
         }
     }
     #endregion
